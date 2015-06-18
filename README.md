@@ -10,7 +10,7 @@ See the COPYING and COPYING.LESSER files for more details.
 
 For online documentation, visit :
 
-    http://www.beaengine.org
+    [www.beaengine.org](http://www.beaengine.org)
 
 
 ## quick start
