@@ -18,16 +18,20 @@
 from headers.BeaEnginePython import *
 from nose.tools import *
 import struct
+import yaml
 
 class TestOpcode1Byte:
 
     def test_SimpleInstructions(self):
+        stream = open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'opcode1byte.yml')), "r")
+        instructions = yaml.load(stream)
         Instruction = DISASM()
-        Buffer = struct.pack('<B', 0x90) 
-        Target = create_string_buffer(Buffer,len(Buffer))
-        Instruction.EIP = addressof(Target)
-        InstrLength = Disasm(addressof(Instruction))
-        assert_equal(Instruction.CompleteInstr, "nop ")
+        for instr in instructions:
+          Buffer = struct.pack('<B', instr['seq']) 
+          Target = create_string_buffer(Buffer,len(Buffer))
+          Instruction.EIP = addressof(Target)
+          InstrLength = Disasm(addressof(Instruction))
+          assert_equal(Instruction.CompleteInstr, instr['entry'])
 
 
 
