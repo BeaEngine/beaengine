@@ -273,10 +273,12 @@ ShowSegmentRegs   = 0x01000000
 
 # ====================================== Import Disasm function
 import os
+
 if os.name == 'nt':
   __module = WinDLL('BeaEngine')
 elif os.name == 'posix':
-  __module = CDLL('libBeaEngine.so')
+  linuxso = os.path.abspath(os.path.join(os.path.dirname(__file__), 'libBeaEngine.so'))
+  __module = CDLL(linuxso)
 Disasm = __module.Disasm
 BeaEngineVersion = __module.BeaEngineVersion
 BeaEngineRevision = __module.BeaEngineRevision
