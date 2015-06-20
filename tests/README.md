@@ -14,7 +14,7 @@ git clone https://github.com/BeaEngine/beaengine.git
 cmake -DoptHAS_OPTIMIZED=TRUE -DoptHAS_SYMBOLS=TRUE -DoptBUILD_64BIT=FALSE -DoptBUILD_DLL=TRUE -DoptBUILD_LITE=FALSE beaengine
 make
 cp beaengine/lib/Linux.gnu.relwithdebinfo/libBeaEngine.so beaengine/headers
-nosetests tests
+cd beaengine & nosetests tests
 ```
 
 

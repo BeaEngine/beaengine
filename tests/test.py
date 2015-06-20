@@ -20,7 +20,7 @@ from nose.tools import *
 import struct
 import yaml
 
-class TestOpcode1Byte:
+class TestSuite:
 
     def test_SimpleInstructions(self):
         stream = open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'opcode1byte.yml')), "r")
@@ -33,5 +33,11 @@ class TestOpcode1Byte:
           InstrLength = Disasm(addressof(Instruction))
           assert_equal(Instruction.CompleteInstr, instr['entry'])
 
-
-
+    def test_manyPrefixes(self):
+        Buffer = b'\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\x90'
+        Instruction = DISASM()
+        Target = create_string_buffer(Buffer,len(Buffer))
+        Instruction.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(Instruction))
+        assert_equal(Instruction.Prefix.Number, 15)
+        assert_equal(Instruction.CompleteInstr, '')

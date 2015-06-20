@@ -65,12 +65,24 @@ void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm) {
 /* ====================================================================
  *
  * ==================================================================== */
+void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
+{
+	#ifndef BEA_LIGHT_DISASSEMBLY
+   (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "??? ");
+    #endif
+	GV.ERROR_OPCODE = 1;
+}
+
+/* ====================================================================
+ *
+ * ==================================================================== */
 int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
 
     (void) memset (&GV, 0, sizeof (InternalDatas));
     GV.EIP_ = (*pMyDisasm).EIP;
     GV.EIP_REAL = GV.EIP_;
     GV.EIP_VA = (*pMyDisasm).VirtualAddr;
+    GV.EndOfBlock = GV.EIP_ + 15;
     if ((*pMyDisasm).SecurityBlock != 0) GV.EndOfBlock = GV.EIP_+(*pMyDisasm).SecurityBlock;
     GV.OperandSize = 32;
     GV.OriginalOperandSize = 32;

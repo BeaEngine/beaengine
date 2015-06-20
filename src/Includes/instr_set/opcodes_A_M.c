@@ -16,13 +16,7 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
-{
-	#ifndef BEA_LIGHT_DISASSEMBLY
-   (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "??? ");
-#endif
-	GV.ERROR_OPCODE = 1;
-}
+
 /* ====================================================================
  *
  * ==================================================================== */
