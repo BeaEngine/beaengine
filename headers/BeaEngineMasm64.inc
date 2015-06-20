@@ -61,7 +61,7 @@ EFLStruct ENDS
 INSTRTYPE STRUCT
     Category                DWORD   0
     Opcode                  DWORD   0
-    Mnemonic                BYTE    16 dup(0)
+    Mnemonic                BYTE    64 dup(0)
     BranchType              SDWORD   0
     Flags                   EFLStruct <>
     AddrValue               QWORD   0

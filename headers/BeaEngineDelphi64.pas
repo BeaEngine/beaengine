@@ -104,7 +104,7 @@ uses Windows,SysUtils;
      TINSTRTYPE = packed record
           Category : longint;
           Opcode : longint;
-          Mnemonic : array[0..15] of AnsiChar;
+          Mnemonic : array[0..63] of AnsiChar;
           BranchType : longint;
           Flags : TEFLStruct;
           AddrValue : int64;

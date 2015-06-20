@@ -65,7 +65,7 @@ class INSTRTYPE(Structure):
    _pack_= 1
    _fields_= [("Category", c_int32),
               ("Opcode", c_int32),
-              ("Mnemonic", c_char * 16),
+              ("Mnemonic", c_char * 64),
               ("BranchType", c_int32),
               ("Flags", EFLStruct),
               ("AddrValue", c_uint64),

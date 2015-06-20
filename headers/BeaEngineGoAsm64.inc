@@ -62,7 +62,7 @@ EFLStruct ENDS
 INSTRTYPE STRUCT
     Category                dd   0
     Opcode                  dd   0
-    Mnemonic                db    16 dup 0
+    Mnemonic                db    64 dup 0
     BranchType              dd   0
     Flags                   EFLStruct <>
     AddrValue               dq   0

@@ -66,7 +66,7 @@ ENDSTRUC
 STRUC INSTRTYPE
     Category:                resd   1
     Opcode:                  resd   1
-    Mnemonic:                resb   16
+    Mnemonic:                resb   64
     BranchType:              resd   1
     Flags:                   resb   EFLStruct_size
     AddrValue:               resq   1

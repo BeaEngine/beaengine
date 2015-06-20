@@ -67,7 +67,7 @@ namespace Bea
     {
         public Int32 Category;
         public Int32 Opcode;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
         public string Mnemonic;
         public Int32 BranchType;
         public EFLStruct Flags;
