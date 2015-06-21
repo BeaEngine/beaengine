@@ -114,6 +114,7 @@ void __bea_callspec__ aaa_(PDISASM);
 void __bea_callspec__ aad_(PDISASM);
 void __bea_callspec__ aas_(PDISASM);
 void __bea_callspec__ aam_(PDISASM);
+void __bea_callspec__ adcx_GyEy(PDISASM);
 void __bea_callspec__ add_EbGb(PDISASM);
 void __bea_callspec__ add_EvGv(PDISASM);
 void __bea_callspec__ add_GbEb(PDISASM);

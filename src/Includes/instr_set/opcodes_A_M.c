@@ -114,6 +114,46 @@ void __bea_callspec__ aas_(PDISASM pMyDisasm)
 }
 
 /* =======================================
+ *      0Fh 38h F6h
+ * ======================================= */
+void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
+{
+
+    /* ========= 0xf3 */
+    if (GV.PrefRepe == 1) {
+
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adox ");
+        #endif
+        GvEv(pMyDisasm);
+        FillFlags(pMyDisasm,124);
+    }
+    /* ========= 0xf2 */
+    else if (GV.PrefRepne == 1) {
+        /* @TODO : VEX */
+        FailDecode(pMyDisasm);
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mulx ");
+        #endif
+
+        FillFlags(pMyDisasm,125);
+    }
+
+    /* ========== 0x66 */
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adcx ");
+        #endif
+        GvEv(pMyDisasm);
+        FillFlags(pMyDisasm,123);
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+
+}
+
+/* =======================================
  *      00h
  * ======================================= */
 void __bea_callspec__ add_EbGb(PDISASM pMyDisasm)

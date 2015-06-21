@@ -41,3 +41,32 @@ class TestSuite:
         InstrLength = Disasm(addressof(Instruction))
         assert_equal(Instruction.Prefix.Number, 15)
         assert_equal(Instruction.CompleteInstr, '')
+
+    def test_adcx(self):
+        Buffer = b'\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        Instruction = DISASM()
+        Target = create_string_buffer(Buffer,len(Buffer))
+        Instruction.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(Instruction))
+        assert_equal(Instruction.CompleteInstr, '??? ')
+
+        Buffer = b'\x66\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        Instruction = DISASM()
+        Target = create_string_buffer(Buffer,len(Buffer))
+        Instruction.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(Instruction))
+        assert_equal(Instruction.CompleteInstr, 'adcx dx, word ptr [eax-6F6F6F70h]')
+
+        Buffer = b'\xf3\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        Instruction = DISASM()
+        Target = create_string_buffer(Buffer,len(Buffer))
+        Instruction.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(Instruction))
+        assert_equal(Instruction.CompleteInstr, 'adox edx, dword ptr [eax-6F6F6F70h]')
+
+        Buffer = b'\xf2\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        Instruction = DISASM()
+        Target = create_string_buffer(Buffer,len(Buffer))
+        Instruction.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(Instruction))
+        assert_equal(Instruction.CompleteInstr, 'mulx @todo')
