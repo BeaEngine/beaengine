@@ -52,12 +52,29 @@ class TestExample:
                 InstrLength = Disasm(addressof(Instruction))
                 if InstrLength != UNKNOWN_OPCODE and InstrLength != OUT_OF_BLOCK:
                     Instruction.EIP = Instruction.EIP + InstrLength
-                    print Instruction.CompleteInstr
-                    print Instruction.EIP
-                    print Instruction.SecurityBlock
             else :
                 OutOfBlock = True
 
         assert_equal(OutOfBlock, True)
         assert_equal(Instruction.EIP, EndOfSection)
+
+    def test_VirtualAddrUseCase(self):
+        myDisasm = DISASM()
+        myDisasm.VirtualAddr = 0x401000
+        Buffer = b'\xe9\x00\x00\x00\x00'
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Instruction.AddrValue, 0x401005)
+
+    def test_OptionsUseCase(self):
+        myDisasm = DISASM()
+        myDisasm.Options = NasmSyntax + PrefixedNumeral + ShowSegmentRegs
+        Buffer = b'\x89\x94\x88\x00\x20\x40\x00 '
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'mov  [ds:eax+ecx*4+0x00402000], edx')
+
+
 
