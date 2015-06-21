@@ -83,7 +83,7 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     GV.EIP_REAL = GV.EIP_;
     GV.EIP_VA = (*pMyDisasm).VirtualAddr;
     GV.EndOfBlock = GV.EIP_ + 15;
-    if ((*pMyDisasm).SecurityBlock != 0) GV.EndOfBlock = GV.EIP_+(*pMyDisasm).SecurityBlock;
+    if ((*pMyDisasm).SecurityBlock != 0) GV.EndOfBlock = GV.EIP_ + (*pMyDisasm).SecurityBlock;
     GV.OperandSize = 32;
     GV.OriginalOperandSize = 32;
     GV.AddressSize = 32;
