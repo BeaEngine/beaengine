@@ -4853,15 +4853,46 @@ void __bea_callspec__ lar_GvEw(PDISASM pMyDisasm)
 }
 
 /* =======================================
- *
+ *   0c5h
  * ======================================= */
 void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
 {
     /* if MOD == 11b, invalid instruction */
-    /* or VEX Prefix - implemented in next release (AVX) */
 
     if (GV.Architecture == 64) {
-        FailDecode(pMyDisasm);
+
+        /* VEX2Bytes prefix */
+
+        if (!Security(1, pMyDisasm)) return;
+        GV.REX.R_ = ~(((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 7) & 0x1);
+        GV.VEX.vvvv = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0xF;
+        GV.VEX.L = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 2) & 0x1;
+        GV.VEX.pp = ((*((UInt8*)(UIntPtr) (GV.EIP_+1)))) & 0x3;
+
+        GV.REX.state = InUsePrefix;
+        GV.VEX.state = InUsePrefix;
+
+        GV.NB_PREFIX++;
+        (*pMyDisasm).Prefix.Number++;
+
+        if (GV.VEX.pp == 0x1) {
+            /* 66h */
+            PrefOpSize(pMyDisasm);
+        }
+        else if (GV.VEX.pp == 0x2) {
+            /* F3h */
+            PrefREPE(pMyDisasm);
+        }
+        else if (GV.VEX.pp == 0x3) {
+            /* F2h */
+            PrefREPNE(pMyDisasm);
+        }
+
+        GV.EIP_+= 1;
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+
+        /* FailDecode(pMyDisasm); */
     }
     else {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SEGMENT_REGISTER;
@@ -4906,7 +4937,6 @@ void __bea_callspec__ lea_GvM(PDISASM pMyDisasm)
 {
 
     /* if MOD == 11b, invalid instruction */
-    /* or VEX Prefix - implemented in next release (AVX) */
 
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -4930,6 +4960,7 @@ void __bea_callspec__ lea_GvM(PDISASM pMyDisasm)
         GV.EIP_+= GV.DECALAGE_EIP+2;
     }
     (*pMyDisasm).Argument2.AccessMode = 0;
+
 }
 
 /* =======================================
@@ -4939,7 +4970,57 @@ void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
 {
 
     if (GV.Architecture == 64) {
-        FailDecode(pMyDisasm);
+
+        /* VEX3Bytes prefix */
+
+        if (!Security(1, pMyDisasm)) return;
+        GV.REX.B_ = ~(((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 5) & 0x1);
+        GV.REX.X_ = ~(((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x1);
+        GV.REX.R_ = ~(((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 7) & 0x1);
+        GV.VEX.mmmmm = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x1F;
+
+        if (!Security(2, pMyDisasm)) return;
+        GV.REX.W_ = ~(((*((UInt8*)(UIntPtr) (GV.EIP_+2))) >> 7) & 0x1);
+        GV.VEX.vvvv = ((*((UInt8*)(UIntPtr) (GV.EIP_+2))) >> 3) & 0xF;
+        GV.VEX.L = ((*((UInt8*)(UIntPtr) (GV.EIP_+2))) >> 2) & 0x1;
+        GV.VEX.pp = ((*((UInt8*)(UIntPtr) (GV.EIP_+2)))) & 0x3;
+
+        GV.REX.state = InUsePrefix;
+        GV.VEX.state = InUsePrefix;
+
+        GV.NB_PREFIX++;
+        (*pMyDisasm).Prefix.Number++;
+
+        if (GV.VEX.pp == 0x1) {
+            /* 66h */
+            PrefOpSize(pMyDisasm);
+        }
+        else if (GV.VEX.pp == 0x2) {
+            /* F3h */
+            PrefREPE(pMyDisasm);
+        }
+        else if (GV.VEX.pp == 0x3) {
+            /* F2h */
+            PrefREPNE(pMyDisasm);
+        }
+
+        GV.EIP_+= 2;
+        (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+
+        if (GV.VEX.mmmmm == 0x1) {
+            (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+        }
+        else if (GV.VEX.mmmmm == 0x2) {
+            (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+        }
+        else if (GV.VEX.mmmmm == 0x3){
+            (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+        }
+
+        GV.OperandSize = 32;
+
+
+        /* FailDecode(pMyDisasm); */
     }
     else {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SEGMENT_REGISTER;

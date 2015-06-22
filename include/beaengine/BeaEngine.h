@@ -23,6 +23,16 @@ namespace BeaEngine {
 
 #pragma pack(1)
 typedef struct {
+   UInt8 L;
+   UInt8 vvvv;
+   UInt8 mmmmm;
+   UInt8 pp;
+   UInt8 state;
+} VEX_Struct  ;
+#pragma pack()
+
+#pragma pack(1)
+typedef struct {
    UInt8 W_;
    UInt8 R_;
    UInt8 X_;
@@ -144,6 +154,7 @@ typedef struct {
    Int32 ERROR_OPCODE;
    REX_Struct REX;
    Int32 OutOfBlock;
+   VEX_Struct VEX;
 } InternalDatas;
 #pragma pack()
 
