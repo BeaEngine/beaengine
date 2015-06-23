@@ -43,7 +43,21 @@ void __bea_callspec__ PrefREPNE(PDISASM pMyDisasm)
     GV.NB_PREFIX++;
     GV.PrefRepne = 1;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
-    (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    if (GV.VEX.state != InUsePrefix) {
+        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x1) {
+        (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x2) {
+        (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x3) {
+        (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else {
+        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
     GV.PrefRepne = 0;
 }
 
@@ -59,7 +73,21 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
     GV.NB_PREFIX++;
     GV.PrefRepe = 1;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
-    (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    if (GV.VEX.state != InUsePrefix) {
+        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x1) {
+        (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x2) {
+        (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x3) {
+        (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else {
+        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
     GV.PrefRepe = 0;
 }
 
@@ -169,7 +197,21 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
         }
     }
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
-    (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    if (GV.VEX.state != InUsePrefix) {
+        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x1) {
+        (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x2) {
+        (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else if (GV.VEX.mmmmm == 0x3) {
+        (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
+    else {
+        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+    }
     if (GV.Architecture == 16) {
         GV.OperandSize = 16;
     }

@@ -82,6 +82,54 @@ class ARGTYPE(Structure):
               ("Memory", MEMORYTYPE),
               ("SegmentReg", c_uint32)]
 
+class VEX_Struct(Structure):
+   _pack_= 1
+   _fields_= [("L",c_uint8),
+              ("vvvv",c_uint8),
+              ("mmmmm",c_uint8),
+              ("pp",c_uint8),
+              ("state",c_uint8)]
+
+class InternalDatas(Structure):
+    _pack_ = 1
+    _fields_ = [("EIP_", c_void_p),
+                ('EIP_VA', c_uint64),
+                ('EIP_REAL', c_void_p),
+                ('OriginalOperandSize', c_uint32),
+                ('OperandSize', c_uint32),
+                ('MemDecoration', c_uint32),
+                ('AddressSize', c_uint32),
+                ('MOD_', c_uint32),
+                ('RM_', c_uint32),
+                ('INDEX_', c_uint32),
+                ('SCALE_', c_uint32),
+                ('BASE_', c_uint32),
+                ('MMX_', c_uint32),
+                ('SSE_', c_uint32),
+                ('CR_', c_uint32),
+                ('DR_', c_uint32),
+                ('SEG_', c_uint32),
+                ('REGOPCODE', c_uint32),
+                ('DECALAGE_EIP', c_uint32),
+                ('FORMATNUMBER', c_uint32),
+                ('SYNTAX_', c_uint32),
+                ('EndOfBlock', c_uint64),
+                ('RelativeAddress', c_uint32),
+                ('Architecture', c_uint32),
+                ('ImmediatSize', c_uint32),
+                ('NB_PREFIX', c_uint32),
+                ('PrefRepe', c_uint32),
+                ('PrefRepne', c_uint32),
+                ('SEGMENTREGS', c_uint32),
+                ('SEGMENTFS', c_uint32),
+                ('third_arg', c_uint32),
+                ('TAB_', c_uint32),
+                ('ERROR_OPCODE', c_uint32),
+                ('REX', REX_Struct),
+                ('OutOfBlock', c_uint32),
+                ('VEX', VEX_Struct),
+                ]
+
 class DISASM(Structure):
     _pack_= 1
     _fields_= [("EIP", c_void_p),
@@ -95,7 +143,7 @@ class DISASM(Structure):
                ("Argument2", ARGTYPE),
                ("Argument3", ARGTYPE),
                ("Prefix", PREFIXINFO), 
-               ("Reserved_", c_uint32 * 40)]
+               ("Reserved_", InternalDatas)]
 
 # ======================= PREFIXES
 

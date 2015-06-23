@@ -42,6 +42,7 @@ class TestSuite:
         assert_equal(Instruction.Prefix.Number, 15)
         assert_equal(Instruction.CompleteInstr, '')
 
+
     def test_adcx(self):
         Buffer = b'\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         Instruction = DISASM()
@@ -64,9 +65,16 @@ class TestSuite:
         InstrLength = Disasm(addressof(Instruction))
         assert_equal(Instruction.CompleteInstr, 'adox edx, dword ptr [eax-6F6F6F70h]')
 
-        Buffer = b'\xf2\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
-        Instruction = DISASM()
+
+    def test_VEX3Bytes(self):
+        Buffer = b'\xc4\x02\x03\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
         Target = create_string_buffer(Buffer,len(Buffer))
-        Instruction.EIP = addressof(Target)
-        InstrLength = Disasm(addressof(Instruction))
-        assert_equal(Instruction.CompleteInstr, 'mulx @todo')
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Reserved_.VEX.pp, 3)
+        assert_equal(myDisasm.Reserved_.VEX.L, 0)
+        assert_equal(myDisasm.Reserved_.VEX.mmmmm, 2)
+        assert_equal(hex(myDisasm.Instruction.Opcode), '0xf6')
+        assert_equal(myDisasm.CompleteInstr, 'mulx @todo')
