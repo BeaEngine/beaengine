@@ -103,8 +103,9 @@ namespace Bea
         public ArgumentType Argument1;
         public ArgumentType Argument2;
         public ArgumentType Argument3;
+        public ArgumentType Argument4;
         public PrefixInfo Prefix;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40, ArraySubType = UnmanagedType.U4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 42, ArraySubType = UnmanagedType.U4)]
         UInt32[] Reserved_;
     }
 }

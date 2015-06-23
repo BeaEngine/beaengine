@@ -130,13 +130,19 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
     }
     /* ========= 0xf2 */
     else if (GV.PrefRepne == 1) {
-        /* @TODO : VEX */
-        FailDecode(pMyDisasm);
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mulx ");
-        #endif
+        if (GV.VEX.state == InUsePrefix) {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mulx ");
+            #endif
+            GyEy(pMyDisasm);
 
-        FillFlags(pMyDisasm,125);
+            /* @TODO : add operand2 and fill operand 4*/
+
+            FillFlags(pMyDisasm,125);
+        }
+        else {
+            FailDecode(pMyDisasm);
+        }
     }
 
     /* ========== 0x66 */

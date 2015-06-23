@@ -91,8 +91,9 @@ _Disasm STRUCT
     Argument1       ARGTYPE <>
     Argument2       ARGTYPE <>
     Argument3       ARGTYPE <>
+    Argument4       ARGTYPE <>
     Prefix          PREFIXINFO <>
-    Reserved_       DWORD   40 dup(0)
+    Reserved_       DWORD   42 dup(0)
 _Disasm ENDS
 
 Disasm  PROTO :DWORD

@@ -92,8 +92,9 @@ Structure _Disasm
   Argument1.ARGTYPE
   Argument2.ARGTYPE
   Argument3.ARGTYPE
+  Argument4.ARGTYPE
   Prefix.PREFIXINFO
-  Reserved_.l[40]
+  Reserved_.l[42]
 EndStructure
 Global MyDisasm._Disasm
 

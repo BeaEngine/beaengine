@@ -142,6 +142,7 @@ class DISASM(Structure):
                ("Argument1", ARGTYPE),
                ("Argument2", ARGTYPE),
                ("Argument3", ARGTYPE),
+               ("Argument4", ARGTYPE),
                ("Prefix", PREFIXINFO), 
                ("Reserved_", InternalDatas)]
 

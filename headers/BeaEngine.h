@@ -116,8 +116,9 @@ typedef struct _Disasm {
    ARGTYPE Argument1;
    ARGTYPE Argument2;
    ARGTYPE Argument3;
+   ARGTYPE Argument4;
    PREFIXINFO Prefix;
-   UInt32 Reserved_[40];
+   UInt32 Reserved_[42];
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()
 

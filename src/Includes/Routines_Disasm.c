@@ -422,6 +422,25 @@ void __bea_callspec__ GvEv(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+ * Used by AVX instructions
+ * ==================================================================== */
+void __bea_callspec__ GyEy(PDISASM pMyDisasm)
+{
+    if (GV.OperandSize == 64) {
+        GV.MemDecoration = Arg2qword;
+    }
+    else if (GV.OperandSize == 32) {
+        GV.MemDecoration = Arg2dword;
+    }
+    else {
+        GV.MemDecoration = Arg2word;
+    }
+    MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+    Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.EIP_ += GV.DECALAGE_EIP+2;
+}
+
+/* ====================================================================
  *
  * ==================================================================== */
 void __bea_callspec__ GvEb(PDISASM pMyDisasm)

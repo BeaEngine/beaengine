@@ -97,8 +97,9 @@ STRUC _Disasm
     Argument1:       resb   ARGTYPE_size
     Argument2:       resb   ARGTYPE_size
     Argument3:       resb   ARGTYPE_size
+    Argument4:       resb   ARGTYPE_size
     Prefix:          resb   PREFIXINFO_size
-    Reserved_:       resd   40
+    Reserved_:       resd   42
 ENDSTRUC
 
 	LowPosition		equ		0

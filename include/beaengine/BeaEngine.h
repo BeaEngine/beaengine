@@ -171,6 +171,7 @@ typedef struct _Disasm {
    ARGTYPE Argument1;
    ARGTYPE Argument2;
    ARGTYPE Argument3;
+   ARGTYPE Argument4;
    PREFIXINFO Prefix;
    InternalDatas Reserved_;
 } DISASM, *PDISASM, *LPDISASM;
