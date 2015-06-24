@@ -40,6 +40,16 @@
 #define     Arg2fword       107
 #define     Arg2dqword      108
 
+#define     Arg3byte        201
+#define     Arg3word        202
+#define     Arg3dword       203
+#define     Arg3qword       204
+#define     Arg3multibytes  205
+#define     Arg3tbyte       206
+#define     Arg3fword       207
+#define     Arg3dqword      208
+
+
 EFLStruct EFLAGS_TABLE[] = {
     /*OF, SF , ZF , AF , PF , CF , TF , IF , DF , NT , RF , ? */
     {UN_, UN_, UN_, MO_, UN_, MO_, 0  , 0  , 0  , 0  , 0  , 0},  /* 0-AAA */

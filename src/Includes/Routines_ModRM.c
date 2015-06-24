@@ -45,99 +45,112 @@ void __bea_callspec__ MOD_RM(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     }
 
 }
+
 /* =======================================
- *
+ *  used in Reg_Opcode
  * ======================================= */
-void __bea_callspec__ Reg_Opcode(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
+void __bea_callspec__ fillRegister(int index, ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
+
     size_t i = 0;
-    if (!Security(1, pMyDisasm)) return;
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (GV.REX.R_ == 1) {
-        GV.REGOPCODE += 0x8;
+        index += 0x8;
     }
     if (GV.MMX_  == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[GV.REGOPCODE]);
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[index]);
         #endif
-        (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+MMX_REG+REGS[index];
         (*pMyArgument).ArgSize = 64;
     }
     else if (GV.SEG_ == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSEG[GV.REGOPCODE]);
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSEG[index]);
         #endif
-        (*pMyArgument).ArgType = REGISTER_TYPE+SEGMENT_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+SEGMENT_REG+REGS[index];
         (*pMyArgument).ArgSize = 16;
     }
     else if (GV.CR_ == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersCR[GV.REGOPCODE]);
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersCR[index]);
         #endif
-        (*pMyArgument).ArgType = REGISTER_TYPE+CR_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+CR_REG+REGS[index];
         (*pMyArgument).ArgSize = 32;
     }
     else if (GV.DR_ == 1) {
         if (GV.SYNTAX_ == ATSyntax) {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR_AT[GV.REGOPCODE]);
+               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR_AT[index]);
             #endif
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR[GV.REGOPCODE]);
+               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersDR[index]);
             #endif
         }
-        (*pMyArgument).ArgType = REGISTER_TYPE+DR_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+DR_REG+REGS[index];
         (*pMyArgument).ArgSize = 32;
     }
     else if (GV.SSE_ == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[GV.REGOPCODE]);
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[index]);
         #endif
-        (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+SSE_REG+REGS[index];
         (*pMyArgument).ArgSize = 128;
     }
     else if (GV.OperandSize == 8) {
         if (GV.REX.state == 0) {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[GV.REGOPCODE]);
+               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8BitsLegacy[index]);
             #endif
-            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[GV.REGOPCODE];
-			if (GV.REGOPCODE >= 4) {
+            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS8BITS[index];
+			if (index >= 4) {
 				(*pMyArgument).ArgPosition = HighPosition;
 			}
             (*pMyArgument).ArgSize = 8;
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[GV.REGOPCODE]);
+               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers8Bits[index]);
             #endif
-            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
+            (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[index];
             (*pMyArgument).ArgSize = 8;
         }
     }
     else if (GV.OperandSize == 16) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[GV.REGOPCODE]);
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers16Bits[index]);
         #endif
-        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[index];
         (*pMyArgument).ArgSize = 16;
     }
     else if (GV.OperandSize == 32) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[GV.REGOPCODE]);
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers32Bits[index]);
         #endif
-        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[index];
         (*pMyArgument).ArgSize = 32;
     }
     else if (GV.OperandSize == 64) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[GV.REGOPCODE]);
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, Registers64Bits[index]);
         #endif
-        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[GV.REGOPCODE];
+        (*pMyArgument).ArgType = REGISTER_TYPE+GENERAL_REG+REGS[index];
         (*pMyArgument).ArgSize = 64;
     }
+}
+
+
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ Reg_Opcode(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
+{
+
+    if (!Security(1, pMyDisasm)) return;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    fillRegister(GV.REGOPCODE, pMyArgument, pMyDisasm);
+
 }
 /* =======================================
  *          ModRM_0

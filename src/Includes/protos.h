@@ -19,6 +19,7 @@
 
 /* ====================================== Routines_MODRM */
 void __bea_callspec__ MOD_RM(ARGTYPE*, PDISASM);
+void __bea_callspec__ fillRegister(int, ARGTYPE*, PDISASM);
 void __bea_callspec__ Reg_Opcode(ARGTYPE*, PDISASM);
 
 void __bea_callspec__ Addr_EAX(ARGTYPE*, PDISASM);

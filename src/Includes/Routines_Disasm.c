@@ -100,16 +100,20 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
 	(void) memset (&(*pMyDisasm).Argument1, 0, sizeof (ARGTYPE));
 	(void) memset (&(*pMyDisasm).Argument2, 0, sizeof (ARGTYPE));
 	(void) memset (&(*pMyDisasm).Argument3, 0, sizeof (ARGTYPE));
+	(void) memset (&(*pMyDisasm).Argument4, 0, sizeof (ARGTYPE));
     (void) memset (&(*pMyDisasm).Prefix, 0, sizeof (PREFIXINFO));
     (*pMyDisasm).Argument1.AccessMode = WRITE;
 	(*pMyDisasm).Argument1.ArgPosition = LowPosition;
 	(*pMyDisasm).Argument2.ArgPosition = LowPosition;
 	(*pMyDisasm).Argument3.ArgPosition = LowPosition;
+	(*pMyDisasm).Argument4.ArgPosition = LowPosition;
 	(*pMyDisasm).Argument1.ArgType = NO_ARGUMENT;
 	(*pMyDisasm).Argument2.ArgType = NO_ARGUMENT;
 	(*pMyDisasm).Argument3.ArgType = NO_ARGUMENT;
+	(*pMyDisasm).Argument4.ArgType = NO_ARGUMENT;
     (*pMyDisasm).Argument2.AccessMode = READ;
     (*pMyDisasm).Argument3.AccessMode = READ;
+    (*pMyDisasm).Argument4.AccessMode = READ;
     (void) memset (&(*pMyDisasm).Instruction, 0, sizeof (INSTRTYPE));
     GV.TAB_ = (UInt32)(*pMyDisasm).Options & 0xff;
     GV.SYNTAX_ = (UInt32)(*pMyDisasm).Options & 0xff00;
@@ -427,14 +431,15 @@ void __bea_callspec__ GvEv(PDISASM pMyDisasm)
 void __bea_callspec__ GyEy(PDISASM pMyDisasm)
 {
     if (GV.OperandSize == 64) {
-        GV.MemDecoration = Arg2qword;
+        GV.MemDecoration = Arg3qword;
     }
     else if (GV.OperandSize == 32) {
-        GV.MemDecoration = Arg2dword;
+        GV.MemDecoration = Arg3dword;
     }
     else {
-        GV.MemDecoration = Arg2word;
+        GV.MemDecoration = Arg3word;
     }
+    GV.third_arg = 1;
     MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
     Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
@@ -941,11 +946,83 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
 
 
     /* =============== if Arg3.Exists */
-    if (GV.third_arg != 0) {
+/*    if (GV.third_arg != 0) {
         (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, ", ");
         i += 2;
         (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, (char*) &(*pMyDisasm).Argument3.ArgMnemonic);
     }
+*/
+
+    /* =============== if Arg3.Exists and Arg2.Exists , add"," */
+    if (((UInt8)*((UInt8*) &(*pMyDisasm).Argument2.ArgMnemonic) != 0) && ((UInt8)*((UInt8*) &(*pMyDisasm).Argument3.ArgMnemonic) != 0)) {
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, ", ");
+        i += 2;
+    }
+
+    /* =============== if Arg3.IsMemoryType, add decoration-example == "dword ptr ds:[" */
+    if ((GV.MemDecoration >200) && (GV.MemDecoration < 299)) {
+        GV.MemDecoration -= 200;
+        if (GV.SYNTAX_ == NasmSyntax) {
+            (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, NasmPrefixes[GV.MemDecoration-1]);
+            i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+            if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0)){
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "[");
+                i++;
+                if (GV.SEGMENTREGS != 0) {
+                    (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, SegmentRegs[(*pMyDisasm).Argument3.SegmentReg]);
+                }
+                else {
+                    (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, SegmentRegs[3]);
+                }
+                i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+            }
+            else {
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "[");
+                i++;
+            }
+        }
+        else {
+            if (GV.SYNTAX_ == MasmSyntax) {
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[GV.MemDecoration-1]);
+                i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+            }
+            else {
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, GoAsmPrefixes[GV.MemDecoration-1]);
+                i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+            }
+            if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0)){
+                if (GV.SEGMENTREGS != 0) {
+                    (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, SegmentRegs[(*pMyDisasm).Argument3.SegmentReg]);
+                }
+                else {
+                    (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, SegmentRegs[3]);
+                }
+                i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "[");
+                i++;
+            }
+            else {
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "[");
+                i++;
+            }
+        }
+        /* =============== add Arg2.ArgMnemonic */
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, (char*) &(*pMyDisasm).Argument3.ArgMnemonic);
+        i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "]");
+        i++;
+    }
+    /* =============== add Arg3.ArgMnemonic */
+    else {
+        (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, (char*) &(*pMyDisasm).Argument3.ArgMnemonic);
+        i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+    }
+
+
+
+
+
+
 
 
 
