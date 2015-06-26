@@ -93,7 +93,7 @@ _Disasm STRUCT
     Argument3       ARGTYPE <>
     Argument4       ARGTYPE <>
     Prefix          PREFIXINFO <>
-    Reserved_       DWORD   42 dup(0)
+    Reserved_       DWORD   43 dup(0)
 _Disasm ENDS
 
 Disasm  PROTO :DWORD
@@ -149,7 +149,8 @@ Disasm  PROTO :DWORD
     ILLEGAL_INSTRUCTION         equ 20000000h
     AES_INSTRUCTION             equ 40000000h
     CLMUL_INSTRUCTION           equ 80000000h
-    
+    AVX_INSTRUCTION             equ 100000000h
+    AVX2_INSTRUCTION            equ 200000000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
@@ -257,6 +258,7 @@ Disasm  PROTO :DWORD
     SPECIAL_REG                 equ 00400000h
     MEMORY_MANAGEMENT_REG       equ 00800000h       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
     SEGMENT_REG                 equ 01000000h       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
+    AVX_REG                     equ 02000000h
 
     RELATIVE_                   equ 04000000h
     ABSOLUTE_                   equ 08000000h

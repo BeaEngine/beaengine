@@ -88,7 +88,8 @@ class VEX_Struct(Structure):
               ("vvvv",c_uint8),
               ("mmmmm",c_uint8),
               ("pp",c_uint8),
-              ("state",c_uint8)]
+              ("state",c_uint8),
+              ("opcode",c_uint8)]
 
 class InternalDatas(Structure):
     _pack_ = 1
@@ -128,6 +129,7 @@ class InternalDatas(Structure):
                 ('REX', REX_Struct),
                 ('OutOfBlock', c_uint32),
                 ('VEX', VEX_Struct),
+                ('AVX_', c_uint32),
                 ]
 
 class DISASM(Structure):
@@ -180,22 +182,24 @@ UN_ = 0x10
 PR_ = 0x20
 
 
-GENERAL_PURPOSE_INSTRUCTION   =    0x10000
-FPU_INSTRUCTION               =    0x20000
-MMX_INSTRUCTION               =    0x40000
-SSE_INSTRUCTION               =    0x80000
-SSE2_INSTRUCTION              =   0x100000
-SSE3_INSTRUCTION              =   0x200000
-SSSE3_INSTRUCTION             =   0x400000
-SSE41_INSTRUCTION             =   0x800000
-SSE42_INSTRUCTION             =  0x1000000
-SYSTEM_INSTRUCTION            =  0x2000000
-VM_INSTRUCTION                =  0x4000000
-UNDOCUMENTED_INSTRUCTION      =  0x8000000
-AMD_INSTRUCTION               = 0x10000000
-ILLEGAL_INSTRUCTION           = 0x20000000
-AES_INSTRUCTION               = 0x40000000
-CLMUL_INSTRUCTION             = 0x80000000
+GENERAL_PURPOSE_INSTRUCTION   =     0x10000
+FPU_INSTRUCTION               =     0x20000
+MMX_INSTRUCTION               =     0x40000
+SSE_INSTRUCTION               =     0x80000
+SSE2_INSTRUCTION              =    0x100000
+SSE3_INSTRUCTION              =    0x200000
+SSSE3_INSTRUCTION             =    0x400000
+SSE41_INSTRUCTION             =    0x800000
+SSE42_INSTRUCTION             =   0x1000000
+SYSTEM_INSTRUCTION            =   0x2000000
+VM_INSTRUCTION                =   0x4000000
+UNDOCUMENTED_INSTRUCTION      =   0x8000000
+AMD_INSTRUCTION               =  0x10000000
+ILLEGAL_INSTRUCTION           =  0x20000000
+AES_INSTRUCTION               =  0x40000000
+CLMUL_INSTRUCTION             =  0x80000000
+AVX_INSTRUCTION               = 0x100000000
+AVX2_INSTRUCTION              = 0x200000000
 
 DATA_TRANSFER = 0x1
 ARITHMETIC_INSTRUCTION = 2
@@ -278,6 +282,7 @@ DR_REG = 0x200000
 SPECIAL_REG = 0x400000
 MEMORY_MANAGEMENT_REG = 0x800000
 SEGMENT_REG = 0x1000000
+AVX_REG = 0x2000000
 
 RELATIVE_ = 0x4000000
 ABSOLUTE_ = 0x8000000

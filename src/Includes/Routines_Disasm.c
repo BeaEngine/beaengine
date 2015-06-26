@@ -430,15 +430,7 @@ void __bea_callspec__ GvEv(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GyEy(PDISASM pMyDisasm)
 {
-    if (GV.OperandSize == 64) {
-        GV.MemDecoration = Arg3qword;
-    }
-    else if (GV.OperandSize == 32) {
-        GV.MemDecoration = Arg3dword;
-    }
-    else {
-        GV.MemDecoration = Arg3word;
-    }
+
     GV.third_arg = 1;
     MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
     Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);

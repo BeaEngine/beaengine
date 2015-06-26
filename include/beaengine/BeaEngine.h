@@ -28,6 +28,7 @@ typedef struct {
    UInt8 mmmmm;
    UInt8 pp;
    UInt8 state;
+   UInt8 opcode;
 } VEX_Struct  ;
 #pragma pack()
 
@@ -155,6 +156,7 @@ typedef struct {
    REX_Struct REX;
    Int32 OutOfBlock;
    VEX_Struct VEX;
+   Int32 AVX_;
 } InternalDatas;
 #pragma pack()
 
@@ -211,8 +213,8 @@ enum INSTRUCTION_TYPE
   ILLEGAL_INSTRUCTION           = 0x20000000,
   AES_INSTRUCTION               = 0x40000000,
   CLMUL_INSTRUCTION             = (int)0x80000000,
-
-
+  AVX_INSTRUCTION               = (int)0x100000000,
+  AVX2_INSTRUCTION               = (int)0x200000000,
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
     LOGICAL_INSTRUCTION,
@@ -302,15 +304,16 @@ enum ARGUMENTS_TYPE
   MEMORY_TYPE = 0x40000000,
   CONSTANT_TYPE = (int)0x80000000,
 
-  MMX_REG = 0x10000,
-  GENERAL_REG = 0x20000,
-  FPU_REG = 0x40000,
-  SSE_REG = 0x80000,
-  CR_REG = 0x100000,
-  DR_REG = 0x200000,
-  SPECIAL_REG = 0x400000,
-  MEMORY_MANAGEMENT_REG = 0x800000,
-  SEGMENT_REG = 0x1000000,
+  MMX_REG =                 0x10000,
+  GENERAL_REG =             0x20000,
+  FPU_REG =                 0x40000,
+  SSE_REG =                 0x80000,
+  CR_REG =                  0x100000,
+  DR_REG =                  0x200000,
+  SPECIAL_REG =             0x400000,
+  MEMORY_MANAGEMENT_REG =   0x800000,
+  SEGMENT_REG =             0x1000000,
+  AVX_REG =                 0x2000000,
 
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,

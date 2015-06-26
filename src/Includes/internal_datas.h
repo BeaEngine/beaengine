@@ -22,32 +22,6 @@
 
 /* Define constants to identify the position and type of decoration used in case of memory argument */
 
-#define     Arg1byte        1
-#define     Arg1word        2
-#define     Arg1dword       3
-#define     Arg1qword       4
-#define     Arg1multibytes  5
-#define     Arg1tbyte       6
-#define     Arg1fword       7
-#define     Arg1dqword      8
-
-#define     Arg2byte        101
-#define     Arg2word        102
-#define     Arg2dword       103
-#define     Arg2qword       104
-#define     Arg2multibytes  105
-#define     Arg2tbyte       106
-#define     Arg2fword       107
-#define     Arg2dqword      108
-
-#define     Arg3byte        201
-#define     Arg3word        202
-#define     Arg3dword       203
-#define     Arg3qword       204
-#define     Arg3multibytes  205
-#define     Arg3tbyte       206
-#define     Arg3fword       207
-#define     Arg3dqword      208
 
 
 EFLStruct EFLAGS_TABLE[] = {
@@ -224,10 +198,45 @@ char SegmentRegs[7][4] = {
     "cs:",      /* +5 */
     "ss:",      /* +6 */
 };
+
+#define     Arg1byte        1
+#define     Arg1word        2
+#define     Arg1dword       3
+#define     Arg1qword       4
+#define     Arg1multibytes  5
+#define     Arg1tbyte       6
+#define     Arg1fword       7
+#define     Arg1dqword      8
+#define     Arg1_m128_xmm   9
+#define     Arg1_m256_ymm   10
+
+#define     Arg2byte        101
+#define     Arg2word        102
+#define     Arg2dword       103
+#define     Arg2qword       104
+#define     Arg2multibytes  105
+#define     Arg2tbyte       106
+#define     Arg2fword       107
+#define     Arg2dqword      108
+#define     Arg2_m128_xmm   109
+#define     Arg2_m256_ymm   110
+
+#define     Arg3byte        201
+#define     Arg3word        202
+#define     Arg3dword       203
+#define     Arg3qword       204
+#define     Arg3multibytes  205
+#define     Arg3tbyte       206
+#define     Arg3fword       207
+#define     Arg3dqword      208
+#define     Arg3_m128_xmm   209
+#define     Arg3_m256_ymm   210
+
+
 /* =====================================================
  * AT&T Suffixes
  * ===================================================== */
-char ATSuffixes[8][4] = {
+char ATSuffixes[10][4] = {
     "b ",     /* GV.MemDecoration == 1 */
     "w ",     /* GV.MemDecoration == 2 */
     "l ",     /* GV.MemDecoration == 3 */
@@ -236,27 +245,47 @@ char ATSuffixes[8][4] = {
     "t ",     /* GV.MemDecoration == 6 */
     " ",      /* GV.MemDecoration == 7 (fword) */
     " ",      /* GV.MemDecoration == 8 (dqword) */
+    " ",      /* GV.MemDecoration == 9 */
+    " "       /* GV.MemDecoration == 10 */
+};
+
+/* =====================================================
+ * Intrinsic representation of prefixes
+ * ===================================================== */
+char IntrinsicPrefixes[10][8] = {
+    "__m8 ",      /* GV.MemDecoration == 1 */
+    "__m16 ",      /* GV.MemDecoration == 2 */
+    "__m32 ",     /* GV.MemDecoration == 3 */
+    "__m64 ",     /* GV.MemDecoration == 4 */
+    " ",          /* GV.MemDecoration == 5 (multibytes) */
+    "tword ",     /* GV.MemDecoration == 6 */
+    " ",          /* GV.MemDecoration == 7 (fword) */
+    "__m128 ",          /* GV.MemDecoration == 8 (dqword) */
+    "__m128 ",      /* GV.MemDecoration == 9 */
+    "__m256 "       /* GV.MemDecoration == 10 */
 };
 
 /* =====================================================
  * MASM Prefixes for MemoryType
  * ===================================================== */
 
-char MasmPrefixes[8][16] = {
-    "byte ptr ",        /* GV.MemDecoration == 1 */
-    "word ptr ",        /* GV.MemDecoration == 2 */
-    "dword ptr ",       /* GV.MemDecoration == 3 */
-    "qword ptr ",       /* GV.MemDecoration == 4 */
-    " ",                /* GV.MemDecoration == 5 (multibytes) */
-    "tbyte ptr ",       /* GV.MemDecoration == 6 */
-    "fword ptr ",       /* GV.MemDecoration == 7 (fword) */
-    "dqword ptr ",      /* GV.MemDecoration == 8 (dqword) */
+char MasmPrefixes[10][16] = {
+    "byte ptr ",        /* GV.MemDecoration == 1 - 8 bits long */
+    "word ptr ",        /* GV.MemDecoration == 2 - 16 bits long */
+    "dword ptr ",       /* GV.MemDecoration == 3 - 32 bits long */
+    "qword ptr ",       /* GV.MemDecoration == 4 - 64 bits long */
+    " ",                /* GV.MemDecoration == 5 - (multibytes) */
+    "tbyte ptr ",       /* GV.MemDecoration == 6 - 80 bits long */
+    "fword ptr ",       /* GV.MemDecoration == 7 - 48 bits long */
+    "dqword ptr ",      /* GV.MemDecoration == 8 - 128 bits long */
+    "xmmword ptr ",     /* GV.MemDecoration == 9 - 128 bits long XMM registers */
+    "ymmword ptr "      /* GV.MemDecoration == 10 - 256 bits long YMM registers*/
 };
 
 /* =====================================================
  * NASM Prefixes for MemoryType
  * ===================================================== */
-char NasmPrefixes[8][8] = {
+char NasmPrefixes[10][8] = {
     "byte ",      /* GV.MemDecoration == 1 */
     "word ",      /* GV.MemDecoration == 2 */
     " ",     /* GV.MemDecoration == 3 */
@@ -265,6 +294,8 @@ char NasmPrefixes[8][8] = {
     "tword ",     /* GV.MemDecoration == 6 */
     " ",          /* GV.MemDecoration == 7 (fword) */
     " ",          /* GV.MemDecoration == 8 (dqword) */
+    " ",      /* GV.MemDecoration == 9 */
+    " "       /* GV.MemDecoration == 10 */
 };
 
 
@@ -272,7 +303,7 @@ char NasmPrefixes[8][8] = {
 /* =====================================================
  * GOASM Prefixes for MemoryType
  * ===================================================== */
-char GoAsmPrefixes[8][4] = {
+char GoAsmPrefixes[10][4] = {
     "b ",     /* GV.MemDecoration == 1 */
     "w ",     /* GV.MemDecoration == 2 */
     "d ",     /* GV.MemDecoration == 3 */
@@ -281,6 +312,8 @@ char GoAsmPrefixes[8][4] = {
     "t ",     /* GV.MemDecoration == 6 */
     " ",      /* GV.MemDecoration == 7 (fword) */
     " ",      /* GV.MemDecoration == 8 (dqword) */
+    " ",      /* GV.MemDecoration == 9 */
+    " "       /* GV.MemDecoration == 10 */
 };
 
 
@@ -545,6 +578,66 @@ char RegistersSSE[16][8] = {
     "xmm13",    /* SSE3, SSSE3, SSE4 */
     "xmm14",    /* SSE3, SSSE3, SSE4 */
     "xmm15",    /* SSE3, SSSE3, SSE4 */
+};
+
+/* =====================================================
+ * AVX 256 bits Registers
+ * ===================================================== */
+char RegistersAVX[16][8] = {
+    "ymm0",
+    "ymm1",
+    "ymm2",
+    "ymm3",
+    "ymm4",
+    "ymm5",
+    "ymm6",
+    "ymm7",
+    "ymm8",
+    "ymm9",
+    "ymm10",
+    "ymm11",
+    "ymm12",
+    "ymm13",
+    "ymm14",
+    "ymm15",
+};
+
+/* =====================================================
+ * AVX 256 bits Registers
+ * ===================================================== */
+char RegistersAVX512[32][8] = {
+    "zmm0",
+    "zmm1",
+    "zmm2",
+    "zmm3",
+    "zmm4",
+    "zmm5",
+    "zmm6",
+    "zmm7",
+    "zmm8",
+    "zmm9",
+    "zmm10",
+    "zmm11",
+    "zmm12",
+    "zmm13",
+    "zmm14",
+    "zmm15",
+    "zmm16",
+    "zmm17",
+    "zmm18",
+    "zmm19",
+    "zmm20",
+    "zmm21",
+    "zmm22",
+    "zmm23",
+    "zmm24",
+    "zmm25",
+    "zmm26",
+    "zmm27",
+    "zmm28",
+    "zmm29",
+    "zmm30",
+    "zmm31",
 };
 
 Int32 REGS[] = {

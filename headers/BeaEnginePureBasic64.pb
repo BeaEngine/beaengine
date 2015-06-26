@@ -94,7 +94,7 @@ Structure _Disasm
   Argument3.ARGTYPE
   Argument4.ARGTYPE
   Prefix.PREFIXINFO
-  Reserved_.l[42]
+  Reserved_.l[43]
 EndStructure
 Global MyDisasm._Disasm
 
@@ -144,7 +144,9 @@ AMD_INSTRUCTION              = $10000000
 ILLEGAL_INSTRUCTION          = $20000000
 AES_INSTRUCTION              = $40000000
 CLMUL_INSTRUCTION            = $80000000
-   
+AVX_INSTRUCTION              = $100000000
+AVX2_INSTRUCTION             = $200000000
+
 #DATA_TRANSFER               = 1
 #ARITHMETIC_INSTRUCTION      = 2
 #LOGICAL_INSTRUCTION         = 3
@@ -251,6 +253,7 @@ CLMUL_INSTRUCTION            = $80000000
 #SPECIAL_REG                 = $00400000
 #MEMORY_MANAGEMENT_REG       = $00800000       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
 #SEGMENT_REG                 = $01000000       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
+#AVX_REG                     = $02000000
 
 #RELATIVE_                   = $04000000
 #ABSOLUTE_                   = $08000000

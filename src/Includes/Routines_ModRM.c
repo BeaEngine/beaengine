@@ -53,10 +53,15 @@ void __bea_callspec__ fillRegister(int index, ARGTYPE* pMyArgument, PDISASM pMyD
 {
 
     size_t i = 0;
-    if (GV.REX.R_ == 1) {
-        index += 0x8;
+
+    if (GV.AVX_  == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[index]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+AVX_REG+REGS[index];
+        (*pMyArgument).ArgSize = 256;
     }
-    if (GV.MMX_  == 1) {
+    else if (GV.MMX_  == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[index]);
         #endif
@@ -149,6 +154,9 @@ void __bea_callspec__ Reg_Opcode(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 
     if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.REX.R_ == 1) {
+        GV.REGOPCODE += 0x8;
+    }
     fillRegister(GV.REGOPCODE, pMyArgument, pMyDisasm);
 
 }

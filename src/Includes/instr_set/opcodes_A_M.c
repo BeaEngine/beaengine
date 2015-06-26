@@ -139,9 +139,19 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
             if (GV.REX.W_ == 0x1) {
                 GV.OperandSize = 64;
             }
+
+            if (GV.OperandSize == 64) {
+                GV.MemDecoration = Arg3qword;
+            }
+            else if (GV.OperandSize == 32) {
+                GV.MemDecoration = Arg3dword;
+            }
+            else {
+                GV.MemDecoration = Arg3word;
+            }
             GyEy(pMyDisasm);
 
-            fillRegister(~(GV.VEX.vvvv), &(*pMyDisasm).Argument2, pMyDisasm);
+            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
 
             if (GV.REX.W_ == 0x0) {
                 (*pMyDisasm).Argument4.ArgType = REGISTER_TYPE + GENERAL_REG + REGS[2];
@@ -4893,6 +4903,7 @@ void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
 
         GV.REX.state = InUsePrefix;
         GV.VEX.state = InUsePrefix;
+        GV.VEX.opcode = 0xc5;
 
         if (GV.VEX.pp == 0x0) {
             GV.NB_PREFIX++;
@@ -4989,7 +5000,7 @@ void __bea_callspec__ lea_GvM(PDISASM pMyDisasm)
 }
 
 /* =======================================
- *
+ * 0c4h
  * ======================================= */
 void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
 {
@@ -5012,6 +5023,7 @@ void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
 
         GV.REX.state = InUsePrefix;
         GV.VEX.state = InUsePrefix;
+        GV.VEX.opcode = 0xc4;
 
 
         if (GV.VEX.pp == 0x0) {
