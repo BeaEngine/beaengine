@@ -226,7 +226,7 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
         }
         else {
             (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
-            GV.MemDecoration = Arg2dqword;
+            GV.MemDecoration = Arg2_m128_xmm;
             (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION+SIMD_FP_PACKED;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "addsubps ");
@@ -234,6 +234,7 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
             GV.SSE_ = 1;
             GxEx(pMyDisasm);
             GV.SSE_ = 0;
+            (*pMyDisasm).Argument2.ArgSize = 128;
         }
     }
 
