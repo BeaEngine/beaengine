@@ -274,7 +274,7 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2dqword;
+            GV.MemDecoration = Arg2_m128_xmm;
             (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION+SIMD_FP_PACKED;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "addsubpd ");
