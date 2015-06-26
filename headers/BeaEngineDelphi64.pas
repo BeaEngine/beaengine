@@ -116,7 +116,7 @@ uses Windows,SysUtils;
 
      TARGTYPE = packed record
           ArgMnemonic : array[0..63] of AnsiChar;
-          ArgType : longint;
+          ArgType : int64;
           ArgSize : longint;
 		  ArgPosition : longint;
           AccessMode : longint;

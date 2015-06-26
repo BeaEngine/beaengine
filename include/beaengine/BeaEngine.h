@@ -107,7 +107,7 @@ typedef struct  {
 #pragma pack(1)
 typedef struct  {
    char ArgMnemonic[64];
-   Int32 ArgType;
+   UInt64 ArgType;
    Int32 ArgSize;
    Int32 ArgPosition;
    UInt32 AccessMode;
@@ -302,7 +302,7 @@ enum ARGUMENTS_TYPE
   NO_ARGUMENT = 0x10000000,
   REGISTER_TYPE = 0x20000000,
   MEMORY_TYPE = 0x40000000,
-  CONSTANT_TYPE = (int)0x80000000,
+  CONSTANT_TYPE = (UInt32)0x80000000,
 
   MMX_REG =                 0x10000,
   GENERAL_REG =             0x20000,

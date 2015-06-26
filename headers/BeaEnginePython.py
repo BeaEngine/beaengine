@@ -75,7 +75,7 @@ class INSTRTYPE(Structure):
 class ARGTYPE(Structure):
    _pack_= 1
    _fields_= [("ArgMnemonic", c_char * 64),
-              ("ArgType", c_int32),
+              ("ArgType", c_int64),
               ("ArgSize", c_int32),
               ("ArgPosition", c_int32),
               ("AccessMode", c_uint32),

@@ -76,7 +76,7 @@ ENDSTRUC
 
 STRUC ARGTYPE
     ArgMnemonic:     resb   64
-    ArgType:         resd   1
+    ArgType:         resq   1
     ArgSize:         resd   1
 	ArgPosition:	 resd	1
     AccessMode:      resd   1

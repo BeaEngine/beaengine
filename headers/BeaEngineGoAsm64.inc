@@ -72,7 +72,7 @@ INSTRTYPE ENDS
 
 ARGTYPE STRUCT
     ArgMnemonic     db   64 dup 0
-    ArgType         dd   0
+    ArgType         dq   0
     ArgSize         dd   0
 	ArgPosition		dd	 0
     AccessMode      dd   0

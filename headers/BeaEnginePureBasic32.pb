@@ -72,7 +72,7 @@ Global Instrtype.INSTRTYPE
 
 Structure ARGTYPE
   ArgMnemonic.b[64]
-  ArgType.l
+  ArgType.q
   ArgSize.l
   ArgPosition.l
   AccessMode.l

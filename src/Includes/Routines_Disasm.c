@@ -151,7 +151,12 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
     else if (GV.MemDecoration == Arg2dqword) {
         (*pMyDisasm).Argument2.ArgSize = 128;
     }
-
+    else if (GV.MemDecoration == Arg2_m128_xmm) {
+        (*pMyDisasm).Argument2.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg2_m256_ymm) {
+        (*pMyDisasm).Argument2.ArgSize = 256;
+    }
 
     if (GV.MemDecoration == Arg1byte) {
         (*pMyDisasm).Argument1.ArgSize = 8;
@@ -177,7 +182,43 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
     else if (GV.MemDecoration == Arg1dqword) {
         (*pMyDisasm).Argument1.ArgSize = 128;
     }
+    else if (GV.MemDecoration == Arg1_m128_xmm) {
+        (*pMyDisasm).Argument1.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg1_m256_ymm) {
+        (*pMyDisasm).Argument1.ArgSize = 256;
+    }
 
+    if (GV.MemDecoration == Arg3byte) {
+        (*pMyDisasm).Argument3.ArgSize = 8;
+    }
+    else if (GV.MemDecoration == Arg3word) {
+        (*pMyDisasm).Argument3.ArgSize = 16;
+    }
+    else if (GV.MemDecoration == Arg3dword) {
+        (*pMyDisasm).Argument3.ArgSize = 32;
+    }
+    else if (GV.MemDecoration == Arg3qword) {
+        (*pMyDisasm).Argument3.ArgSize = 64;
+    }
+    else if (GV.MemDecoration == Arg3multibytes) {
+        (*pMyDisasm).Argument3.ArgSize = 0;
+    }
+    else if (GV.MemDecoration == Arg3tbyte) {
+        (*pMyDisasm).Argument3.ArgSize = 80;
+    }
+    else if (GV.MemDecoration == Arg3fword) {
+        (*pMyDisasm).Argument3.ArgSize = 48;
+    }
+    else if (GV.MemDecoration == Arg3dqword) {
+        (*pMyDisasm).Argument3.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg3_m128_xmm) {
+        (*pMyDisasm).Argument3.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg3_m256_ymm) {
+        (*pMyDisasm).Argument3.ArgSize = 256;
+    }
 }
 
 /* ====================================================================

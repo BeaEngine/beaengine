@@ -71,7 +71,7 @@ INSTRTYPE ENDS
 
 ARGTYPE STRUCT
     ArgMnemonic     BYTE    64 dup(0)
-    ArgType         DWORD   0
+    ArgType         QWORD   0
     ArgSize         DWORD   0
 	ArgPosition		DWORD	0
     AccessMode      DWORD   0

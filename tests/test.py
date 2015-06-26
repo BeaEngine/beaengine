@@ -51,12 +51,21 @@ class TestSuite:
         InstrLength = Disasm(addressof(Instruction))
         assert_equal(Instruction.CompleteInstr, '??? ')
 
-        Buffer = b'\x66\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
-        Instruction = DISASM()
+        Buffer = b'\x66\x0f\x38\xf6\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
         Target = create_string_buffer(Buffer,len(Buffer))
-        Instruction.EIP = addressof(Target)
-        InstrLength = Disasm(addressof(Instruction))
-        assert_equal(Instruction.CompleteInstr, 'adcx dx, word ptr [eax-6F6F6F70h]')
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 32)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(hex(myDisasm.Instruction.Opcode), '0xf38f6')
+        assert_equal(myDisasm.Instruction.Mnemonic, 'adcx ')
+        assert_equal(myDisasm.Instruction.Category, GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION)
+        assert_equal(myDisasm.CompleteInstr, 'adcx edx, dword ptr [eax+11111111h]')
 
         Buffer = b'\xf3\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         Instruction = DISASM()
@@ -73,6 +82,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG0)
+        assert_equal(myDisasm.Argument1.ArgSize, 32)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'imul eax, dword ptr [rdx], 9090F683h')
 
 
@@ -89,6 +104,15 @@ class TestSuite:
         assert_equal(myDisasm.Reserved_.REX.W_, 1)
         assert_equal(hex(myDisasm.Instruction.Opcode), '0xf6')
         assert_equal(~myDisasm.Reserved_.VEX.vvvv & 0b00001111, 15)
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 64)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + GENERAL_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.Argument2.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'mulx rdx, r15, qword ptr [r8-6F6F6F70h]')
 
 
@@ -100,6 +124,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addpd xmm10, dqword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -108,6 +138,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addpd xmm2, dqword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xc4\x81\x81\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -116,6 +152,15 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + SSE_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 128)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vaddpd xmm2, xmm15, xmmword ptr [r8+11111111h]')
 
         Buffer = b'\xc4\x81\x85\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -124,6 +169,15 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + AVX_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 256)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + AVX_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 256)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 256)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vaddpd ymm2, ymm15, ymmword ptr [r8+11111111h]')
 
     def test_addps(self):
@@ -134,6 +188,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addps xmm10, dqword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -142,6 +202,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addps xmm2, dqword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xc4\x81\x80\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -150,6 +216,15 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + SSE_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 128)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vaddps xmm2, xmm15, xmmword ptr [r8+11111111h]')
 
         Buffer = b'\xc4\x81\x84\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -158,6 +233,15 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + AVX_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 256)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + AVX_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 256)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 256)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vaddps ymm2, ymm15, ymmword ptr [r8+11111111h]')
 
     def test_addsd(self):
@@ -168,6 +252,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addsd xmm10, qword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xF2\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -176,6 +266,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addsd xmm2, qword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xc4\x81\x83\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -184,6 +280,15 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + SSE_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vaddsd xmm2, xmm15, qword ptr [r8+11111111h]')
 
 
@@ -196,6 +301,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addss xmm10, dword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xF3\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -204,6 +315,12 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addss xmm2, dword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xc4\x81\x82\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -212,9 +329,34 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + SSE_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 32)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vaddss xmm2, xmm15, dword ptr [r8+11111111h]')
 
     def test_mov(self):
+
+        Buffer = b'\xB8\x04\x01\x00\x00\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG0)
+        assert_equal(myDisasm.Argument1.ArgSize, 32)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, CONSTANT_TYPE+ABSOLUTE_)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Instruction.Immediat, 0x104)
+        assert_equal(myDisasm.CompleteInstr, 'mov eax, 00000104h')
+
         Buffer = b'\x41\xB8\x04\x01\x00\x00\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = DISASM()
         myDisasm.Archi = 64
@@ -222,4 +364,45 @@ class TestSuite:
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
         assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG8)
+        assert_equal(myDisasm.Argument1.ArgSize, 32)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(hex(myDisasm.Argument2.ArgType), hex(CONSTANT_TYPE+ABSOLUTE_))
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Instruction.Immediat, 0x104)
         assert_equal(myDisasm.CompleteInstr, 'mov r8d, 00000104h')
+
+    def test_addsubpd(self):
+        # using REX.R to access extended xmm registers
+        Buffer = b'\x44\xF3\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(hex(myDisasm.Instruction.Opcode), '0xf38f6')
+        assert_equal(myDisasm.Instruction.Mnemonic, 'adcx ')
+        assert_equal(myDisasm.Instruction.Category, GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION)
+        assert_equal(myDisasm.CompleteInstr, 'addsubpd xmm10, xmmword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xc4\x81\x80\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'vaddsubpd xmm2, xmm15, xmmword ptr [r8+11111111h]')
+
+        Buffer = b'\xc4\x81\x84\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'vaddsubpd ymm2, ymm15, ymmword ptr [r8+11111111h]')

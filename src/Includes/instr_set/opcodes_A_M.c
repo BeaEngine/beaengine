@@ -126,6 +126,7 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adox ");
         #endif
+        if (GV.OperandSize != 64) GV.OperandSize = 32;
         GvEv(pMyDisasm);
         FillFlags(pMyDisasm,124);
     }
@@ -161,7 +162,7 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
                 (*pMyDisasm).Argument4.ArgType = REGISTER_TYPE + GENERAL_REG + REGS[2];
                 (*pMyDisasm).Argument4.ArgSize = 64;
             }
-
+            (*pMyDisasm).Argument2.AccessMode = WRITE;
             FillFlags(pMyDisasm,125);
         }
         else {
@@ -175,6 +176,7 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adcx ");
         #endif
+        if (GV.OperandSize != 64) GV.OperandSize = 32;
         GvEv(pMyDisasm);
         FillFlags(pMyDisasm,123);
     }
@@ -6168,12 +6170,12 @@ void __bea_callspec__ movzx_GvEw(PDISASM pMyDisasm)
 void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
 {
     UInt64 MyAddress;
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION + DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mov ");
     #endif
 
-    (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
+    (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE + ABSOLUTE_;
     if (GV.OperandSize == 64) {
         if (!Security(9, pMyDisasm)) return;
         MyAddress = *((UInt64 *)(UIntPtr) (GV.EIP_+1));
@@ -6209,7 +6211,7 @@ void __bea_callspec__ mov_EAX(PDISASM pMyDisasm)
     }
 
     if (GV.REX.B_ == 0) {
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + GENERAL_REG + REG0;
         if (GV.OperandSize == 64) {
 
             #ifndef BEA_LIGHT_DISASSEMBLY
