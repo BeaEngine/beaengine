@@ -184,14 +184,33 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.CompleteInstr, 'vaddsd xmm2, xmm15, xmmword ptr [r8+11111111h]')
+        assert_equal(myDisasm.CompleteInstr, 'vaddsd xmm2, xmm15, qword ptr [r8+11111111h]')
 
-        Buffer = b'\xc4\x81\x87\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+
+
+    def test_addss(self):
+        # using REX.R to access extended xmm registers
+        Buffer = b'\x44\xF3\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = DISASM()
         myDisasm.Archi = 64
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.CompleteInstr, 'vaddsd ymm2, ymm15, ymmword ptr [r8+11111111h]')
+        assert_equal(myDisasm.CompleteInstr, 'addss xmm10, dword ptr [rax-6F6F6F70h]')
 
-        
+        Buffer = b'\xF3\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'addss xmm2, dword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xc4\x81\x82\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'vaddss xmm2, xmm15, dword ptr [r8+11111111h]')
+

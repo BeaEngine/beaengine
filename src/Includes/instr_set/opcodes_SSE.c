@@ -35,21 +35,11 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
                     GV.OperandSize = 64;
                 }
             }
-            if (GV.VEX.L == 0) {
-                GV.SSE_ = 1;
-                GyEy(pMyDisasm);
-                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m128_xmm;
-                GV.SSE_ = 0;
-            }
-            else {
-                GV.AVX_ = 1;
-                GyEy(pMyDisasm);
-                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m256_ymm;
-                GV.AVX_ = 0;
-
-            }
+            GV.SSE_ = 1;
+            GyEy(pMyDisasm);
+            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+            GV.MemDecoration = Arg3qword;
+            GV.SSE_ = 0;
 
             /* FillFlags(pMyDisasm,125); */
 
@@ -80,21 +70,13 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
                     GV.OperandSize = 64;
                 }
             }
-            if (GV.VEX.L == 0) {
-                GV.SSE_ = 1;
-                GyEy(pMyDisasm);
-                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m128_xmm;
-                GV.SSE_ = 0;
-            }
-            else {
-                GV.AVX_ = 1;
-                GyEy(pMyDisasm);
-                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m256_ymm;
-                GV.AVX_ = 0;
 
-            }
+            GV.SSE_ = 1;
+            GyEy(pMyDisasm);
+            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+            GV.MemDecoration = Arg3dword;
+            GV.SSE_ = 0;
+
 
             /* FillFlags(pMyDisasm,125); */
 
