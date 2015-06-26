@@ -214,3 +214,12 @@ class TestSuite:
         InstrLength = Disasm(addressof(myDisasm))
         assert_equal(myDisasm.CompleteInstr, 'vaddss xmm2, xmm15, dword ptr [r8+11111111h]')
 
+    def test_mov(self):
+        Buffer = b'\x41\xB8\x04\x01\x00\x00\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG8)
+        assert_equal(myDisasm.CompleteInstr, 'mov r8d, 00000104h')
