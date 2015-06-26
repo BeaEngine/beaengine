@@ -4908,23 +4908,23 @@ void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
         if (GV.VEX.pp == 0x0) {
             GV.NB_PREFIX++;
             (*pMyDisasm).Prefix.Number++;
-            GV.EIP_+=3;
+            GV.EIP_+=2;
             (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
             (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
         }
-        if (GV.VEX.pp == 0x1) {
+        else if (GV.VEX.pp == 0x1) {
             /* 66h */
-            GV.EIP_+=2;
+            GV.EIP_+=1;
             PrefOpSize(pMyDisasm);
         }
         else if (GV.VEX.pp == 0x2) {
             /* F3h */
-            GV.EIP_+=2;
+            GV.EIP_+=1;
             PrefREPE(pMyDisasm);
         }
         else if (GV.VEX.pp == 0x3) {
             /* F2h */
-            GV.EIP_+=2;
+            GV.EIP_+=1;
             PrefREPNE(pMyDisasm);
         }
 
@@ -5031,7 +5031,21 @@ void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
             (*pMyDisasm).Prefix.Number++;
             GV.EIP_+=3;
             (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
-            (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+
+            if (GV.VEX.mmmmm == 0x1) {
+                (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x2) {
+                (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x3) {
+                (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+
+
         }
         if (GV.VEX.pp == 0x1) {
             /* 66h */

@@ -125,3 +125,73 @@ class TestSuite:
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
         assert_equal(myDisasm.CompleteInstr, 'vaddpd ymm2, ymm15, ymmword ptr [r8+11111111h]')
+
+    def test_addps(self):
+        # using REX.R to access extended xmm registers
+        Buffer = b'\x44\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'addps xmm10, dqword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'addps xmm2, dqword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xc4\x81\x80\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'vaddps xmm2, xmm15, xmmword ptr [r8+11111111h]')
+
+        Buffer = b'\xc4\x81\x84\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'vaddps ymm2, ymm15, ymmword ptr [r8+11111111h]')
+
+    def test_addsd(self):
+        # using REX.R to access extended xmm registers
+        Buffer = b'\x44\xF2\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'addsd xmm10, qword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xF2\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'addsd xmm2, qword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xc4\x81\x83\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'vaddsd xmm2, xmm15, xmmword ptr [r8+11111111h]')
+
+        Buffer = b'\xc4\x81\x87\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'vaddsd ymm2, ymm15, ymmword ptr [r8+11111111h]')
+
+        
