@@ -31,13 +31,13 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
 
             GV.SSE_ = 1;
             GxEx(pMyDisasm);
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128i_xmm;
             GV.SSE_ = 0;
         }
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128i_xmm;
             (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesimc ");
@@ -70,14 +70,14 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
             GV.SSE_ = 1;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128_xmm;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128i_xmm;
             (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenc ");
@@ -108,14 +108,14 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
             GV.SSE_ = 1;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128_xmm;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128i_xmm;
             (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenclast ");
@@ -146,14 +146,14 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
             GV.SSE_ = 1;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128_xmm;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128i_xmm;
             (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdec ");
@@ -184,14 +184,14 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
             GV.SSE_ = 1;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128_xmm;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128i_xmm;
             (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdeclast ");
@@ -220,9 +220,9 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
             #endif
 
             GV.SSE_ = 1;
-            GyEy(pMyDisasm);
-            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128_xmm;
+            GxEx(pMyDisasm);
+            /*fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);*/
+            GV.MemDecoration = Arg2_m128i_xmm;
             GV.SSE_ = 0;
             GV.ImmediatSize = 8;
             GV.EIP_++;
@@ -238,7 +238,7 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128i_xmm;
             (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygenassist ");

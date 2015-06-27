@@ -111,14 +111,14 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
                 GV.SSE_ = 1;
                 GyEy(pMyDisasm);
                 fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m128_xmm;
+                GV.MemDecoration = Arg3_m128d_xmm;
                 GV.SSE_ = 0;
             }
             else {
                 GV.AVX_ = 1;
                 GyEy(pMyDisasm);
                 fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m256_ymm;
+                GV.MemDecoration = Arg3_m256d_ymm;
                 GV.AVX_ = 0;
 
             }
@@ -129,7 +129,7 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2dqword;
+            GV.MemDecoration = Arg2_m128d_xmm;
             (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "addpd ");
@@ -174,7 +174,7 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
         }
         else {
 
-            GV.MemDecoration = Arg2dqword;
+            GV.MemDecoration = Arg2_m128_xmm;
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "addps ");
@@ -257,14 +257,14 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
                 GV.SSE_ = 1;
                 GyEy(pMyDisasm);
                 fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m128_xmm;
+                GV.MemDecoration = Arg3_m128d_xmm;
                 GV.SSE_ = 0;
             }
             else {
                 GV.AVX_ = 1;
                 GyEy(pMyDisasm);
                 fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m256_ymm;
+                GV.MemDecoration = Arg3_m256d_ymm;
                 GV.AVX_ = 0;
 
             }
@@ -275,7 +275,7 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
         else {
             GV.OperandSize = GV.OriginalOperandSize;
             (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128_xmm;
+            GV.MemDecoration = Arg2_m128d_xmm;
             (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION+SIMD_FP_PACKED;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "addsubpd ");

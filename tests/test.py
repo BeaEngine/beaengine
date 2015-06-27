@@ -130,7 +130,7 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
         assert_equal(myDisasm.Argument2.ArgSize, 128)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
-        assert_equal(myDisasm.CompleteInstr, 'addpd xmm10, dqword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.CompleteInstr, 'addpd xmm10, xmmword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = DISASM()
@@ -144,7 +144,7 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
         assert_equal(myDisasm.Argument2.ArgSize, 128)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
-        assert_equal(myDisasm.CompleteInstr, 'addpd xmm2, dqword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.CompleteInstr, 'addpd xmm2, xmmword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xc4\x81\x81\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = DISASM()
@@ -194,7 +194,7 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
         assert_equal(myDisasm.Argument2.ArgSize, 128)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
-        assert_equal(myDisasm.CompleteInstr, 'addps xmm10, dqword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.CompleteInstr, 'addps xmm10, xmmword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = DISASM()
@@ -208,7 +208,7 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
         assert_equal(myDisasm.Argument2.ArgSize, 128)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
-        assert_equal(myDisasm.CompleteInstr, 'addps xmm2, dqword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.CompleteInstr, 'addps xmm2, xmmword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xc4\x81\x80\x58\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = DISASM()
@@ -644,3 +644,38 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgSize, 128)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vaesimc xmm10, xmmword ptr [r8+11111111h]')
+
+    def test_aeskeygenassist(self):
+
+        Buffer = b'\x66\x0F\x3A\xDF\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, CONSTANT_TYPE + ABSOLUTE_)
+        assert_equal(myDisasm.Argument3.ArgSize, 8)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.Instruction.Immediat, 0x11)
+        assert_equal(hex(myDisasm.Instruction.Opcode), '0xf3adf')
+        assert_equal(myDisasm.CompleteInstr, 'aeskeygenassist xmm2, xmmword ptr [rax+11111111h], 11h')
+
+        Buffer = b'\xc4\x03\x01\xDF\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'vaeskeygenassist xmm10, xmmword ptr [r8+11111111h], 11h')

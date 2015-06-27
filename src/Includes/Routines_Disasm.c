@@ -157,6 +157,15 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
     else if (GV.MemDecoration == Arg2_m256_ymm) {
         (*pMyDisasm).Argument2.ArgSize = 256;
     }
+    else if (GV.MemDecoration == Arg2_m128i_xmm) {
+        (*pMyDisasm).Argument2.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg2_m128d_xmm) {
+        (*pMyDisasm).Argument2.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg2_m256d_ymm) {
+        (*pMyDisasm).Argument2.ArgSize = 256;
+    }
 
     if (GV.MemDecoration == Arg1byte) {
         (*pMyDisasm).Argument1.ArgSize = 8;
@@ -188,6 +197,15 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
     else if (GV.MemDecoration == Arg1_m256_ymm) {
         (*pMyDisasm).Argument1.ArgSize = 256;
     }
+    else if (GV.MemDecoration == Arg1_m128i_xmm) {
+        (*pMyDisasm).Argument1.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg1_m128d_xmm) {
+        (*pMyDisasm).Argument1.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg1_m256d_ymm) {
+        (*pMyDisasm).Argument1.ArgSize = 256;
+    }
 
     if (GV.MemDecoration == Arg3byte) {
         (*pMyDisasm).Argument3.ArgSize = 8;
@@ -217,6 +235,15 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
         (*pMyDisasm).Argument3.ArgSize = 128;
     }
     else if (GV.MemDecoration == Arg3_m256_ymm) {
+        (*pMyDisasm).Argument3.ArgSize = 256;
+    }
+    else if (GV.MemDecoration == Arg3_m128i_xmm) {
+        (*pMyDisasm).Argument3.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg3_m128d_xmm) {
+        (*pMyDisasm).Argument3.ArgSize = 128;
+    }
+    else if (GV.MemDecoration == Arg3_m256d_ymm) {
         (*pMyDisasm).Argument3.ArgSize = 256;
     }
 }

@@ -209,6 +209,9 @@ char SegmentRegs[7][4] = {
 #define     Arg1dqword      8
 #define     Arg1_m128_xmm   9
 #define     Arg1_m256_ymm   10
+#define     Arg1_m128i_xmm  11
+#define     Arg1_m128d_xmm  12
+#define     Arg1_m256d_ymm  13
 
 #define     Arg2byte        101
 #define     Arg2word        102
@@ -220,6 +223,9 @@ char SegmentRegs[7][4] = {
 #define     Arg2dqword      108
 #define     Arg2_m128_xmm   109
 #define     Arg2_m256_ymm   110
+#define     Arg2_m128i_xmm  111
+#define     Arg2_m128d_xmm  112
+#define     Arg2_m256d_ymm  113
 
 #define     Arg3byte        201
 #define     Arg3word        202
@@ -231,28 +237,16 @@ char SegmentRegs[7][4] = {
 #define     Arg3dqword      208
 #define     Arg3_m128_xmm   209
 #define     Arg3_m256_ymm   210
+#define     Arg3_m128i_xmm  211
+#define     Arg3_m128d_xmm  212
+#define     Arg3_m256d_ymm  213
 
-
-/* =====================================================
- * AT&T Suffixes
- * ===================================================== */
-char ATSuffixes[10][4] = {
-    "b ",     /* GV.MemDecoration == 1 */
-    "w ",     /* GV.MemDecoration == 2 */
-    "l ",     /* GV.MemDecoration == 3 */
-    "q ",     /* GV.MemDecoration == 4 */
-    " ",      /* GV.MemDecoration == 5 (multibytes) */
-    "t ",     /* GV.MemDecoration == 6 */
-    " ",      /* GV.MemDecoration == 7 (fword) */
-    " ",      /* GV.MemDecoration == 8 (dqword) */
-    " ",      /* GV.MemDecoration == 9 */
-    " "       /* GV.MemDecoration == 10 */
-};
+#define nbMemoryTypes 13
 
 /* =====================================================
  * Intrinsic representation of prefixes
  * ===================================================== */
-char IntrinsicPrefixes[10][8] = {
+char IntrinsicPrefixes[nbMemoryTypes][8] = {
     "__m8 ",      /* GV.MemDecoration == 1 */
     "__m16 ",      /* GV.MemDecoration == 2 */
     "__m32 ",     /* GV.MemDecoration == 3 */
@@ -262,14 +256,36 @@ char IntrinsicPrefixes[10][8] = {
     " ",          /* GV.MemDecoration == 7 (fword) */
     "__m128 ",          /* GV.MemDecoration == 8 (dqword) */
     "__m128 ",      /* GV.MemDecoration == 9 */
-    "__m256 "       /* GV.MemDecoration == 10 */
+    "__m256 ",       /* GV.MemDecoration == 10 */
+    "__m128i ",       /* GV.MemDecoration == 11 */
+    "__m128d ",       /* GV.MemDecoration == 12 */
+    "__m256d "       /* GV.MemDecoration == 13 */
+};
+
+/* =====================================================
+ * AT&T Suffixes
+ * ===================================================== */
+char ATSuffixes[nbMemoryTypes][4] = {
+    "b ",     /* GV.MemDecoration == 1 */
+    "w ",     /* GV.MemDecoration == 2 */
+    "l ",     /* GV.MemDecoration == 3 */
+    "q ",     /* GV.MemDecoration == 4 */
+    " ",      /* GV.MemDecoration == 5 (multibytes) */
+    "t ",     /* GV.MemDecoration == 6 */
+    " ",      /* GV.MemDecoration == 7 (fword) */
+    " ",      /* GV.MemDecoration == 8 (dqword) */
+    " ",      /* GV.MemDecoration == 9 */
+    " ",       /* GV.MemDecoration == 10 */
+    " ",       /* GV.MemDecoration == 11 */
+    " ",       /* GV.MemDecoration == 12 */
+    " "       /* GV.MemDecoration == 13 */
 };
 
 /* =====================================================
  * MASM Prefixes for MemoryType
  * ===================================================== */
 
-char MasmPrefixes[10][16] = {
+char MasmPrefixes[nbMemoryTypes][16] = {
     "byte ptr ",        /* GV.MemDecoration == 1 - 8 bits long */
     "word ptr ",        /* GV.MemDecoration == 2 - 16 bits long */
     "dword ptr ",       /* GV.MemDecoration == 3 - 32 bits long */
@@ -279,13 +295,16 @@ char MasmPrefixes[10][16] = {
     "fword ptr ",       /* GV.MemDecoration == 7 - 48 bits long */
     "dqword ptr ",      /* GV.MemDecoration == 8 - 128 bits long */
     "xmmword ptr ",     /* GV.MemDecoration == 9 - 128 bits long XMM registers */
-    "ymmword ptr "      /* GV.MemDecoration == 10 - 256 bits long YMM registers*/
+    "ymmword ptr ",      /* GV.MemDecoration == 10 - 256 bits long YMM registers*/
+    "xmmword ptr ",     /* GV.MemDecoration == 11 - 128 bits long XMM registers */
+    "xmmword ptr ",     /* GV.MemDecoration == 12 - 128 bits long XMM registers */
+    "ymmword ptr "     /* GV.MemDecoration == 13 - 256 bits long YMM registers */
 };
 
 /* =====================================================
  * NASM Prefixes for MemoryType
  * ===================================================== */
-char NasmPrefixes[10][8] = {
+char NasmPrefixes[nbMemoryTypes][8] = {
     "byte ",      /* GV.MemDecoration == 1 */
     "word ",      /* GV.MemDecoration == 2 */
     " ",     /* GV.MemDecoration == 3 */
@@ -295,7 +314,10 @@ char NasmPrefixes[10][8] = {
     " ",          /* GV.MemDecoration == 7 (fword) */
     " ",          /* GV.MemDecoration == 8 (dqword) */
     " ",      /* GV.MemDecoration == 9 */
-    " "       /* GV.MemDecoration == 10 */
+    " ",       /* GV.MemDecoration == 10 */
+    " ",       /* GV.MemDecoration == 11 */
+    " ",       /* GV.MemDecoration == 12 */
+    " "       /* GV.MemDecoration == 13 */
 };
 
 
@@ -303,7 +325,7 @@ char NasmPrefixes[10][8] = {
 /* =====================================================
  * GOASM Prefixes for MemoryType
  * ===================================================== */
-char GoAsmPrefixes[10][4] = {
+char GoAsmPrefixes[nbMemoryTypes][4] = {
     "b ",     /* GV.MemDecoration == 1 */
     "w ",     /* GV.MemDecoration == 2 */
     "d ",     /* GV.MemDecoration == 3 */
@@ -313,7 +335,10 @@ char GoAsmPrefixes[10][4] = {
     " ",      /* GV.MemDecoration == 7 (fword) */
     " ",      /* GV.MemDecoration == 8 (dqword) */
     " ",      /* GV.MemDecoration == 9 */
-    " "       /* GV.MemDecoration == 10 */
+    " ",       /* GV.MemDecoration == 10 */
+    " ",       /* GV.MemDecoration == 11 */
+    " ",       /* GV.MemDecoration == 12 */
+    " "       /* GV.MemDecoration == 13 */
 };
 
 
