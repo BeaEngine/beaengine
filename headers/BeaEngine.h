@@ -246,7 +246,7 @@ enum ARGUMENTS_TYPE
   NO_ARGUMENT = 0x10000000,
   REGISTER_TYPE = 0x20000000,
   MEMORY_TYPE = 0x40000000,
-  CONSTANT_TYPE = (UInt8)0x80000000,
+  CONSTANT_TYPE = (UInt32)0x80000000,
 
   MMX_REG =                 0x10000,
   GENERAL_REG =             0x20000,
@@ -296,6 +296,7 @@ enum SPECIAL_INFO
   GoAsmSyntax       = 0x00000100,
   NasmSyntax        = 0x00000200,
   ATSyntax          = 0x00000400,
+  IntrinsicMemSyntax= 0x00000800,
 
   /* === mask = 0xff0000 */
   PrefixedNumeral   = 0x00010000,

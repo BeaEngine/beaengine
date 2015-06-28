@@ -294,6 +294,7 @@ Disasm  PROTO :DWORD
     GoAsmSyntax                 equ 100h
     NasmSyntax                  equ 200h
     ATSyntax                    equ 400h
+    IntrinsicMemSyntax          equ 800h
     PrefixedNumeral             equ 10000h
     SuffixedNumeral             equ 0
     ShowSegmentRegs             equ 01000000h

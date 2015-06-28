@@ -246,7 +246,7 @@ char SegmentRegs[7][4] = {
 /* =====================================================
  * Intrinsic representation of prefixes
  * ===================================================== */
-char IntrinsicPrefixes[nbMemoryTypes][8] = {
+char IntrinsicPrefixes[nbMemoryTypes][16] = {
     "__m8 ",      /* GV.MemDecoration == 1 */
     "__m16 ",      /* GV.MemDecoration == 2 */
     "__m32 ",     /* GV.MemDecoration == 3 */

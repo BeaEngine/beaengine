@@ -319,6 +319,7 @@ uses Windows,SysUtils;
        GoAsmSyntax = $00000100;
        NasmSyntax = $00000200;
        ATSyntax = $00000400;
+       IntrinsicMemSyntax = $00000800;
   { === mask = 0xff0000 }
        PrefixedNumeral = $00010000;
        SuffixedNumeral = $00000000;

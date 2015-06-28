@@ -132,6 +132,16 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'addpd xmm10, xmmword ptr [rax-6F6F6F70h]')
 
+        Buffer = b'\x44\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        myDisasm.Options = IntrinsicMemSyntax
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'addpd xmm10, __m128d [rax-6F6F6F70h]')
+
+
         Buffer = b'\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = DISASM()
         myDisasm.Archi = 64

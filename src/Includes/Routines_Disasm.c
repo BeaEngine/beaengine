@@ -907,6 +907,10 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
                 (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             }
+            else if (GV.SYNTAX_ == IntrinsicMemSyntax) {
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, IntrinsicPrefixes[GV.MemDecoration-1]);
+                i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+            }
             else {
                 (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, GoAsmPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
@@ -970,6 +974,10 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
         else {
             if (GV.SYNTAX_ == MasmSyntax) {
                 (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[GV.MemDecoration-1]);
+                i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+            }
+            else if (GV.SYNTAX_ == IntrinsicMemSyntax) {
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, IntrinsicPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             }
             else {
@@ -1044,6 +1052,10 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
         else {
             if (GV.SYNTAX_ == MasmSyntax) {
                 (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, MasmPrefixes[GV.MemDecoration-1]);
+                i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+            }
+            else if (GV.SYNTAX_ == IntrinsicMemSyntax) {
+                (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, IntrinsicPrefixes[GV.MemDecoration-1]);
                 i = strlen((char*) &(*pMyDisasm).CompleteInstr);
             }
             else {

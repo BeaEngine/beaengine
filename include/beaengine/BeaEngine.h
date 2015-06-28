@@ -353,6 +353,7 @@ enum SPECIAL_INFO
   GoAsmSyntax       = 0x00000100,
   NasmSyntax        = 0x00000200,
   ATSyntax          = 0x00000400,
+  IntrinsicMemSyntax= 0x00000800,
 
   /* === mask = 0xff0000 */
   PrefixedNumeral   = 0x00010000,
