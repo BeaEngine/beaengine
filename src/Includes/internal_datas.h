@@ -166,9 +166,9 @@ EFLStruct EFLAGS_TABLE[] = {
     {UN_, UN_, UN_, UN_, UN_, MO_, 0  , 0  , 0  , 0  , 0  , 0}, /* 123 - adcx */
     {MO_, UN_, UN_, UN_, UN_, UN_, 0  , 0  , 0  , 0  , 0  , 0}, /* 124 - adox */
     {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0},  /* 125 - mulx */
-    {RE_, MO_, MO_, UN_, UN_, RE_, 0  , 0  , 0  , 0  , 0  , 0}   /* 126 - andn */
-
-    /*OF, SF , ZF , AF , PF , CF , TF , IF , DF , NT , RF , ? */
+    {RE_, MO_, MO_, UN_, UN_, RE_, 0  , 0  , 0  , 0  , 0  , 0},   /* 126 - andn */
+    {RE_, UN_, MO_, UN_, UN_, RE_, RE_, RE_, RE_, RE_, RE_, 0}    /* 127 - bextr */
+    /*OF, SF , ZF , AF , PF , CF , TF , IF , DF , NT , RF , Align */
     };
 /* =====================================================
  * To make a tabulation between mnemonic and first argument
