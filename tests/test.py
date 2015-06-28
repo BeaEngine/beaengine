@@ -1324,3 +1324,33 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgSize, 64)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'blmsk r15, qword ptr [r8]')
+
+    def test_blsr(self):
+
+        Buffer = b'\xc4\x02\x00\xf3\x08\x11\x11\x11\x11\x00\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG15)
+        assert_equal(myDisasm.Argument1.ArgSize, 32)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'blsr r15d, dword ptr [r8]')
+
+        Buffer = b'\xc4\x02\x80\xf3\x08\x11\x11\x11\x11\x00\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG15)
+        assert_equal(myDisasm.Argument1.ArgSize, 64)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'blsr r15, qword ptr [r8]')
