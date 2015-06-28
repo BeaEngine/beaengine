@@ -24,7 +24,33 @@
 void __bea_callspec__ G17_(PDISASM pMyDisasm)
 {
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (GV.REGOPCODE == 3) {
+    if (GV.REGOPCODE == 2) {
+        if (GV.VEX.state == InUsePrefix) {
+            (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blmsk ");
+            #endif
+            if (GV.VEX.opcode == 0xc4) {
+                /* using VEX3Bytes */
+                if (GV.REX.W_ == 0x1) {
+                    GV.OperandSize = 64;
+                    GV.MemDecoration = Arg2qword;
+                    fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument1, pMyDisasm);
+                    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+                }
+                else {
+                    GV.MemDecoration = Arg2dword;
+                    fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument1, pMyDisasm);
+                    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+                }
+            }
+
+        }
+        else {
+            FailDecode(pMyDisasm);
+        }
+    }
+    else if (GV.REGOPCODE == 3) {
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
