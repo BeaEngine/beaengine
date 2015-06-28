@@ -502,6 +502,10 @@ void __bea_callspec__ G15_(PDISASM);
 /* ====================================== opcodes_Grp16 */
 void __bea_callspec__ G16_(PDISASM);
 
+/* ====================================== opcodes_Grp17 */
+void __bea_callspec__ G17_(PDISASM);
+
+
 /* ====================================== opcodes_FPU */
 void __bea_callspec__ D8_(PDISASM);
 void __bea_callspec__ D9_(PDISASM);

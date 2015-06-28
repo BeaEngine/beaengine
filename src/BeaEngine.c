@@ -43,6 +43,7 @@
 #include "Includes/instr_set/opcodes_Grp14.c"
 #include "Includes/instr_set/opcodes_Grp15.c"
 #include "Includes/instr_set/opcodes_Grp16.c"
+#include "Includes/instr_set/opcodes_Grp17.c"
 #include "Includes/instr_set/opcodes_FPU.c"
 #include "Includes/instr_set/opcodes_MMX.c"
 #include "Includes/instr_set/opcodes_SSE.c"

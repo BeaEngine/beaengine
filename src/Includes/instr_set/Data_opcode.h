@@ -92,7 +92,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, aesimc    , aesenc    , aesenclast, aesdec    , aesdeclast,
     FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    crc32_GvEb, crc32_GvEv, andn_GyEy , FailDecode, FailDecode, FailDecode, adcx_GyEy , bextr_GyEy, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    crc32_GvEb, crc32_GvEv, andn_GyEy , G17_      , FailDecode, FailDecode, adcx_GyEy , bextr_GyEy, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
  };
 
 /* ===============================================================================  */
