@@ -742,3 +742,205 @@ class TestSuite:
         assert_equal(myDisasm.Argument3.ArgSize, 64)
         assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'andn rdx, r15, qword ptr [r8+11111111h]')
+
+    def test_andps(self):
+        # using REX.R to access extended xmm registers
+        Buffer = b'\x44\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'andps xmm10, xmmword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'andps xmm2, xmmword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xc4\x81\x80\x54\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + SSE_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 128)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'vandps xmm2, xmm15, xmmword ptr [r8+11111111h]')
+
+        Buffer = b'\xc4\x81\x84\x54\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + AVX_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 256)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + AVX_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 256)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 256)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'vandps ymm2, ymm15, ymmword ptr [r8+11111111h]')
+
+    def test_andnps(self):
+        # using REX.R to access extended xmm registers
+        Buffer = b'\x44\x0F\x55\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'andnps xmm10, xmmword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\x0F\x55\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'andnps xmm2, xmmword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xc4\x81\x80\x55\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + SSE_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 128)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'vandnps xmm2, xmm15, xmmword ptr [r8+11111111h]')
+
+        Buffer = b'\xc4\x81\x84\x55\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + AVX_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 256)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + AVX_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 256)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 256)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'vandnps ymm2, ymm15, ymmword ptr [r8+11111111h]')
+
+    def test_andpd(self):
+        # using REX.R to access extended xmm registers
+        Buffer = b'\x44\x66\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'andpd xmm10, xmmword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\x44\x66\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        myDisasm.Options = IntrinsicMemSyntax
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'andpd xmm10, __m128d [rax-6F6F6F70h]')
+
+
+        Buffer = b'\x66\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'andpd xmm2, xmmword ptr [rax-6F6F6F70h]')
+
+        Buffer = b'\xc4\x81\x81\x54\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + SSE_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 128)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'vandpd xmm2, xmm15, xmmword ptr [r8+11111111h]')
+
+        Buffer = b'\xc4\x81\x85\x54\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + AVX_REG + REG2)
+        assert_equal(myDisasm.Argument1.ArgSize, 256)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + AVX_REG + REG15)
+        assert_equal(myDisasm.Argument2.ArgSize, 256)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument3.ArgSize, 256)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'vandpd ymm2, ymm15, ymmword ptr [r8+11111111h]')
