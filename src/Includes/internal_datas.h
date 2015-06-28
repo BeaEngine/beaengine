@@ -242,6 +242,20 @@ char SegmentRegs[7][4] = {
 #define     Arg3_m128d_xmm  212
 #define     Arg3_m256d_ymm  213
 
+#define     Arg4byte        301
+#define     Arg4word        302
+#define     Arg4dword       303
+#define     Arg4qword       304
+#define     Arg4multibytes  305
+#define     Arg4tbyte       306
+#define     Arg4fword       307
+#define     Arg4dqword      308
+#define     Arg4_m128_xmm   309
+#define     Arg4_m256_ymm   310
+#define     Arg4_m128i_xmm  311
+#define     Arg4_m128d_xmm  312
+#define     Arg4_m256d_ymm  313
+
 #define nbMemoryTypes 13
 
 /* =====================================================

@@ -179,6 +179,9 @@ typedef struct _Disasm {
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()
 
+/* #UD exception */
+#define UD_   2
+
 #define ESReg 1
 #define DSReg 2
 #define FSReg 3
