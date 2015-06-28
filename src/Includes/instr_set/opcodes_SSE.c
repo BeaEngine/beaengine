@@ -707,16 +707,59 @@ void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-        GV.OperandSize = GV.OriginalOperandSize;
-        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2dqword;
-        (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+PACKED_BLENDING_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blendvps ");
-        #endif
-        GV.SSE_ = 1;
-        GxEx(pMyDisasm);
-        GV.SSE_ = 0;
+        if (GV.VEX.state == InUsePrefix) {
+            (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+ARITHMETIC_INSTRUCTION;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vblendvps ");
+            #endif
+
+            if (GV.VEX.opcode == 0xc4) {
+                /* using VEX3Bytes */
+                if (GV.REX.W_ == 0x1) {
+                    GV.ERROR_OPCODE = UD_;
+                }
+            }
+            UInt8 Imm8;
+            if (GV.VEX.L == 0) {
+
+                GV.SSE_ = 1;
+                GyEy(pMyDisasm);
+                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+                GV.MemDecoration = Arg3_m128_xmm;
+                GV.EIP_++;
+                if (!Security(0, pMyDisasm)) return;
+                Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+                fillRegister((Imm8 >> 4) & 0xF, &(*pMyDisasm).Argument4, pMyDisasm);
+                GV.SSE_ = 0;
+            }
+            else {
+                GV.AVX_ = 1;
+                GyEy(pMyDisasm);
+                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+                GV.MemDecoration = Arg3_m256_ymm;
+                GV.EIP_++;
+                if (!Security(0, pMyDisasm)) return;
+                Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+                fillRegister((Imm8 >> 4) & 0xF, &(*pMyDisasm).Argument4, pMyDisasm);
+                GV.AVX_ = 0;
+
+            }
+
+        }
+        else {
+            GV.OperandSize = GV.OriginalOperandSize;
+            (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+            GV.MemDecoration = Arg2_m128_xmm;
+            (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+PACKED_BLENDING_INSTRUCTION;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blendvps ");
+            #endif
+            GV.SSE_ = 1;
+            GxEx(pMyDisasm);
+            GV.SSE_ = 0;
+            (*pMyDisasm).Argument3.ArgType = REGISTER_TYPE + SSE_REG + REG0;
+            (*pMyDisasm).Argument3.ArgSize = 128;
+        }
     }
     else {
         FailDecode(pMyDisasm);
