@@ -443,6 +443,38 @@ void __bea_callspec__ and_GvEv(PDISASM pMyDisasm)
 }
 
 /* =======================================
+ *      0fh 38h f2h
+ * ======================================= */
+void __bea_callspec__ andn_GyEy(PDISASM pMyDisasm)
+{
+
+    if (GV.VEX.state == InUsePrefix) {
+        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "andn ");
+        #endif
+
+        GV.MemDecoration = Arg3dword;
+        if (GV.VEX.opcode == 0xc4) {
+            /* using VEX3Bytes */
+            if (GV.REX.W_ == 0x1) {
+                GV.MemDecoration = Arg3qword;
+                GV.OperandSize = 64;
+            }
+        }
+        GyEy(pMyDisasm);
+        fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
+        FillFlags(pMyDisasm,126);
+
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+
+}
+
+/* =======================================
  *      24h
  * ======================================= */
 void __bea_callspec__ and_ALIb(PDISASM pMyDisasm)

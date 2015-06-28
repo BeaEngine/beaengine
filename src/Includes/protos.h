@@ -135,6 +135,7 @@ void __bea_callspec__ and_eAX_Iv(PDISASM);
 void __bea_callspec__ and_EvGv(PDISASM);
 void __bea_callspec__ and_GbEb(PDISASM);
 void __bea_callspec__ and_GvEv(PDISASM);
+void __bea_callspec__ andn_GyEy(PDISASM);
 void __bea_callspec__ arpl_(PDISASM);
 void __bea_callspec__ bound_(PDISASM);
 void __bea_callspec__ bswap_eax(PDISASM);
