@@ -1354,3 +1354,39 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgSize, 64)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'blsr r15, qword ptr [r8]')
+
+    def test_bzhi(self):
+
+        Buffer = b'\xc4\x02\x04\xf5\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 32)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, REGISTER_TYPE + GENERAL_REG + REG15)
+        assert_equal(myDisasm.Argument3.ArgSize, 32)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'bzhi r10d, dword ptr [r8+11111111h], r15d')
+
+        Buffer = b'\xc4\x02\x80\xf5\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG + REG10)
+        assert_equal(myDisasm.Argument1.ArgSize, 64)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+        assert_equal(myDisasm.Argument3.ArgType, REGISTER_TYPE + GENERAL_REG + REG15)
+        assert_equal(myDisasm.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.Argument3.AccessMode, READ)
+        assert_equal(myDisasm.CompleteInstr, 'bzhi r10, qword ptr [r8+11111111h], r15')

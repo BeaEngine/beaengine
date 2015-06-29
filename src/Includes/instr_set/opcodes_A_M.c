@@ -1170,6 +1170,39 @@ void __bea_callspec__ bts_EvGv(PDISASM pMyDisasm)
     FillFlags(pMyDisasm,11);
 }
 
+
+/* =======================================
+ *      0fh 38h f5h
+ * ======================================= */
+void __bea_callspec__ bzhi_GyEy(PDISASM pMyDisasm)
+{
+
+    if (GV.VEX.state == InUsePrefix) {
+        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bzhi ");
+        #endif
+
+        GV.MemDecoration = Arg2dword;
+        if (GV.VEX.opcode == 0xc4) {
+            /* using VEX3Bytes */
+            if (GV.REX.W_ == 0x1) {
+                GV.MemDecoration = Arg2qword;
+                GV.OperandSize = 64;
+            }
+        }
+        GxEx(pMyDisasm);
+        fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+
+        FillFlags(pMyDisasm,128);
+
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+
+}
+
 /* =======================================
  *      e8h
  * ======================================= */

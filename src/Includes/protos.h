@@ -153,6 +153,7 @@ void __bea_callspec__ btc_EvGv(PDISASM);
 void __bea_callspec__ btr_EvGv(PDISASM);
 void __bea_callspec__ bt_EvGv(PDISASM);
 void __bea_callspec__ bts_EvGv(PDISASM);
+void __bea_callspec__ bzhi_GyEy(PDISASM);
 void __bea_callspec__ callf_(PDISASM);
 void __bea_callspec__ call_(PDISASM);
 void __bea_callspec__ cdq_(PDISASM);
