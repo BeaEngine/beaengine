@@ -1390,3 +1390,13 @@ class TestSuite:
         assert_equal(myDisasm.Argument3.ArgSize, 64)
         assert_equal(myDisasm.Argument3.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'bzhi r10, qword ptr [r8+11111111h], r15')
+
+    def test_clac(self):
+
+        Buffer = b'\x0F\x01\xCA\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'clac ')

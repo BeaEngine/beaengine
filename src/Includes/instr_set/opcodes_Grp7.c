@@ -86,6 +86,15 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
                 #endif
                 GV.EIP_+= GV.DECALAGE_EIP+2;
             }
+            else if (GV.RM_ == 0x2) {
+                (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
+                (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG+REG0;
+                #ifndef BEA_LIGHT_DISASSEMBLY
+                   (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "clac ");
+                #endif
+                FillFlags(pMyDisasm,129);
+                GV.EIP_+= GV.DECALAGE_EIP+2;
+            }
             else {
                 FailDecode(pMyDisasm);
             }
