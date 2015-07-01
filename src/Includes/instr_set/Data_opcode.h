@@ -52,7 +52,7 @@ void (__bea_callspec__ * opcode_map1[])(PDISASM) = {
 /* ===============================================================================  */
 void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     G6_       , G7_       , lar_GvEw  , lsl_GvEw  , FailDecode, syscall_  , clts_     , sysret_   , invd_     , wbinvd_   , FailDecode, ud2_      , FailDecode, nop_Ev    , femms_    , FailDecode,
-    movups_VW , movups_WV , movlps_VM , movlps_MV , unpcklps_ , unpckhps_ , movhps_VM , movhps_MV , G16_      , hint_nop  , hint_nop  , hint_nop  , hint_nop  , hint_nop  , hint_nop  , nop_Ev    ,
+    movups_VW , movups_WV , movlps_VM , movlps_MV , unpcklps_ , unpckhps_ , movhps_VM , movhps_MV , G16_      , hint_nop  , bndcl_GvEv, bndcn_GvEv, hint_nop  , hint_nop  , hint_nop  , nop_Ev    ,
     mov_RdCd  , mov_RdDd  , mov_CdRd  , mov_DdRd  , FailDecode, FailDecode, FailDecode, FailDecode, movaps_VW , movaps_WV , cvtpi2ps_ , movntps_  , cvttps2pi_, cvtps2pi_ , ucomiss_VW, comiss_VW ,
     wrmsr_    , rdtsc_    , rdmsr_    , rdpmc_    , sysenter_ , sysexit_  , FailDecode, FailDecode,Esc_tableA4, FailDecode,Esc_tableA5, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     cmovo_    , cmovno_   , cmovb_    , cmovnb_   , cmove_    , cmovne_   , cmovbe_   , cmovnbe_  , cmovs_    , cmovns_   , cmovp_    , cmovnp_   , cmovl_    , cmovnl_   , cmovle_   , cmovnle_  ,

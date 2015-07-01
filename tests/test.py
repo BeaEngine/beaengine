@@ -139,7 +139,7 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.CompleteInstr, 'addpd xmm10, __m128d [rax-6F6F6F70h]')
+        assert_equal(myDisasm.CompleteInstr, 'addpd xmm10, m128d [rax-6F6F6F70h]')
 
 
         Buffer = b'\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -894,7 +894,7 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.CompleteInstr, 'andpd xmm10, __m128d [rax-6F6F6F70h]')
+        assert_equal(myDisasm.CompleteInstr, 'andpd xmm10, m128d [rax-6F6F6F70h]')
 
 
         Buffer = b'\x66\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -968,7 +968,7 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.CompleteInstr, 'blendpd xmm10, __m128 [rax+11111111h], 11h')
+        assert_equal(myDisasm.CompleteInstr, 'blendpd xmm10, m128 [rax+11111111h], 11h')
 
 
         Buffer = b'\x66\x0F\x3A\x0D\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -1044,7 +1044,7 @@ class TestSuite:
         Target = create_string_buffer(Buffer,len(Buffer))
         myDisasm.EIP = addressof(Target)
         InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.CompleteInstr, 'blendps xmm10, __m128 [rax+11111111h], 11h')
+        assert_equal(myDisasm.CompleteInstr, 'blendps xmm10, m128 [rax+11111111h], 11h')
 
 
         Buffer = b'\x66\x0F\x3A\x0C\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -3778,3 +3778,119 @@ class TestSuite:
         assert_equal(myDisasm.Argument4.ArgSize, 8)
         assert_equal(myDisasm.Argument4.AccessMode, READ)
         assert_equal(myDisasm.CompleteInstr, 'vcmptrue_ussd xmm8, xmm15, qword ptr [r8]')
+
+
+    def test_mpx(self):
+
+        Buffer = b'\xf3\x41\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndcl bnd1, dword ptr [r11]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\xf3\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndcl bnd1, dword ptr [rbx]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\xf2\x41\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndcu bnd1, dword ptr [r11]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\xf2\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndcu bnd1, dword ptr [rbx]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\xf2\x41\x0f\x1b\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndcn bnd1, dword ptr [r11]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\xf2\x0f\x1b\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndcn bnd1, dword ptr [rbx]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\xf3\x41\x0f\x1b\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndmk bnd1, dword ptr [r11]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\xf3\x0f\x1b\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndmk bnd1, dword ptr [rbx]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, READ)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 32)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+

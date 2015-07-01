@@ -139,7 +139,7 @@ uses Windows,SysUtils;
           Argument3 : TARGTYPE;
           Argument4 : TARGTYPE;
           Prefix : TPREFIXINFO;
-          Reserved_ : array[0..42] of longint;
+          Reserved_ : array[0..43] of longint;
        end;
      TDISASM = _Disasm;
      PDISASM = ^_Disasm;
@@ -180,6 +180,7 @@ uses Windows,SysUtils;
       CLMUL_INSTRUCTION             = $80000000;
       AVX_INSTRUCTION               =$100000000;
       AVX2_INSTRUCTION              =$200000000;
+      MPX_INSTRUCTION               =$400000000;
 
        DATA_TRANSFER = $1;
        ARITHMETIC_INSTRUCTION = 2;
@@ -282,6 +283,7 @@ uses Windows,SysUtils;
        MEMORY_MANAGEMENT_REG = $800000;
        SEGMENT_REG = $1000000;
        AVX_REG = $2000000;
+       MPX_REG = $4000000;
 
        RELATIVE_ = $4000000;
        ABSOLUTE_ = $8000000;

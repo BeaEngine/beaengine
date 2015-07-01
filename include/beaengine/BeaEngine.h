@@ -157,6 +157,7 @@ typedef struct {
    Int32 OutOfBlock;
    VEX_Struct VEX;
    Int32 AVX_;
+   Int32 MPX_;
 } InternalDatas;
 #pragma pack()
 
@@ -218,6 +219,7 @@ enum INSTRUCTION_TYPE
   CLMUL_INSTRUCTION             = (int)0x80000000,
   AVX_INSTRUCTION               = (int)0x100000000,
   AVX2_INSTRUCTION               = (int)0x200000000,
+  MPX_INSTRUCTION               = (int)0x400000000,
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
     LOGICAL_INSTRUCTION,
@@ -317,7 +319,7 @@ enum ARGUMENTS_TYPE
   MEMORY_MANAGEMENT_REG =   0x800000,
   SEGMENT_REG =             0x1000000,
   AVX_REG =                 0x2000000,
-
+  MPX_REG =                 0x4000000,
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,
 

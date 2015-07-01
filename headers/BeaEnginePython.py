@@ -130,6 +130,7 @@ class InternalDatas(Structure):
                 ('OutOfBlock', c_uint32),
                 ('VEX', VEX_Struct),
                 ('AVX_', c_uint32),
+                ('MPX_', c_uint32),
                 ]
 
 class DISASM(Structure):
@@ -202,6 +203,7 @@ AES_INSTRUCTION               =  0x40000000
 CLMUL_INSTRUCTION             =  0x80000000
 AVX_INSTRUCTION               = 0x100000000
 AVX2_INSTRUCTION              = 0x200000000
+MPX_INSTRUCTION               = 0x400000000
 
 DATA_TRANSFER = 0x1
 ARITHMETIC_INSTRUCTION = 2
@@ -285,6 +287,7 @@ SPECIAL_REG = 0x400000
 MEMORY_MANAGEMENT_REG = 0x800000
 SEGMENT_REG = 0x1000000
 AVX_REG = 0x2000000
+MPX_REG = 0x4000000
 
 RELATIVE_ = 0x4000000
 ABSOLUTE_ = 0x8000000

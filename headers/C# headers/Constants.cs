@@ -42,6 +42,9 @@ namespace Bea
             ILLEGAL_INSTRUCTION = 0x20000000,
             AES_INSTRUCTION = 0x40000000,
             CLMUL_INSTRUCTION = 0x80000000,
+            AVX_INSTRUCTION               = (int)0x100000000,
+            AVX2_INSTRUCTION               = (int)0x200000000,
+            MPX_INSTRUCTION               = (int)0x400000000,
 
             DATA_TRANSFER = 0x1,
             ARITHMETIC_INSTRUCTION,
@@ -140,6 +143,8 @@ namespace Bea
             SPECIAL_REG = 0x400000,
             MEMORY_MANAGEMENT_REG = 0x800000,
             SEGMENT_REG = 0x1000000,
+            AVX_REG = 0x2000000,
+            MPX_REG = 0x4000000,
 
             RELATIVE_ = 0x4000000,
             ABSOLUTE_ = 0x8000000,
@@ -179,6 +184,7 @@ namespace Bea
             GoAsmSyntax = 0x00000100,
             NasmSyntax = 0x00000200,
             ATSyntax = 0x00000400,
+            IntrinsicMemSyntax= 0x00000800,
 
             /* === mask = 0xff0000 */
             PrefixedNumeral = 0x00010000,

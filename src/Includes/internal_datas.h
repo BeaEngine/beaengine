@@ -264,19 +264,19 @@ char SegmentRegs[7][4] = {
  * Intrinsic representation of prefixes
  * ===================================================== */
 char IntrinsicPrefixes[nbMemoryTypes][16] = {
-    "__m8 ",      /* GV.MemDecoration == 1 */
-    "__m16 ",      /* GV.MemDecoration == 2 */
-    "__m32 ",     /* GV.MemDecoration == 3 */
-    "__m64 ",     /* GV.MemDecoration == 4 */
+    "m8 ",      /* GV.MemDecoration == 1 */
+    "m16 ",      /* GV.MemDecoration == 2 */
+    "m32 ",     /* GV.MemDecoration == 3 */
+    "m64 ",     /* GV.MemDecoration == 4 */
     " ",          /* GV.MemDecoration == 5 (multibytes) */
     "tword ",     /* GV.MemDecoration == 6 */
     " ",          /* GV.MemDecoration == 7 (fword) */
-    "__m128 ",          /* GV.MemDecoration == 8 (dqword) */
-    "__m128 ",      /* GV.MemDecoration == 9 */
-    "__m256 ",       /* GV.MemDecoration == 10 */
-    "__m128i ",       /* GV.MemDecoration == 11 */
-    "__m128d ",       /* GV.MemDecoration == 12 */
-    "__m256d "       /* GV.MemDecoration == 13 */
+    "m128 ",          /* GV.MemDecoration == 8 (dqword) */
+    "m128 ",      /* GV.MemDecoration == 9 */
+    "m256 ",       /* GV.MemDecoration == 10 */
+    "m128i ",       /* GV.MemDecoration == 11 */
+    "m128d ",       /* GV.MemDecoration == 12 */
+    "m256d "       /* GV.MemDecoration == 13 */
 };
 
 /* =====================================================
@@ -379,6 +379,30 @@ char RegistersSEG[16][8] = {
     "seg?",
     "seg?",
     "seg?",
+};
+
+
+
+/* =====================================================
+ * MPX Registers
+ * ===================================================== */
+char RegistersMPX[16][8] = {
+    "bnd0",      /* +0 */
+    "bnd1",      /* +1 */
+    "bnd2",      /* +2 */
+    "bnd3",      /* +3 */
+    "bnd4?",      /* wrong register */
+    "bnd5?",      /* wrong register */
+    "bnd6?",      /* wrong register */
+    "bnd7?",      /* wrong register */
+    "bnd8?",      /* wrong register */
+    "bnd9?",      /* wrong register */
+    "bnd10?",      /* wrong register */
+    "bnd11?",      /* wrong register */
+    "bnd12?",      /* wrong register */
+    "bnd13?",      /* wrong register */
+    "bnd14?",      /* wrong register */
+    "bnd15?"      /* wrong register */
 };
 
 /* =====================================================

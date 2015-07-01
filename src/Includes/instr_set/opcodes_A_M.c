@@ -589,6 +589,79 @@ void __bea_callspec__ bound_(PDISASM pMyDisasm)
 }
 
 /* =======================================
+ *      0fh 1ah
+ * ======================================= */
+void __bea_callspec__ bndcl_GvEv(PDISASM pMyDisasm)
+{
+
+    /* ========= 0xf3 */
+    if (GV.PrefRepe == 1) {
+
+        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndcl ");
+        #endif
+        GV.MPX_ = 1;
+        GvEv(pMyDisasm);
+        GV.MPX_ = 0;
+        (*pMyDisasm).Argument1.AccessMode = READ;
+
+    }
+    /* ========= 0xf2 */
+    else if (GV.PrefRepne == 1) {
+        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndcu ");
+        #endif
+        GV.MPX_ = 1;
+        GvEv(pMyDisasm);
+        GV.MPX_ = 0;
+        (*pMyDisasm).Argument1.AccessMode = READ;
+
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+
+}
+
+/* =======================================
+ *      0fh 1ah
+ * ======================================= */
+void __bea_callspec__ bndcn_GvEv(PDISASM pMyDisasm)
+{
+
+    /* ========= 0xf3 */
+    if (GV.PrefRepe == 1) {
+        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndmk ");
+        #endif
+        GV.MPX_ = 1;
+        GvEv(pMyDisasm);
+        GV.MPX_ = 0;
+        (*pMyDisasm).Argument1.AccessMode = READ;
+
+    }
+    /* ========= 0xf2 */
+    else if (GV.PrefRepne == 1) {
+        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndcn ");
+        #endif
+        GV.MPX_ = 1;
+        GvEv(pMyDisasm);
+        GV.MPX_ = 0;
+        (*pMyDisasm).Argument1.AccessMode = READ;
+
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+
+}
+
+/* =======================================
  *      0fc8h
  * ======================================= */
 void __bea_callspec__ bswap_eax(PDISASM pMyDisasm)

@@ -54,7 +54,14 @@ void __bea_callspec__ fillRegister(int index, ARGTYPE* pMyArgument, PDISASM pMyD
 
     size_t i = 0;
 
-    if (GV.AVX_  == 1) {
+    if (GV.MPX_  == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMPX[index]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE + MPX_REG + REGS[index];
+        (*pMyArgument).ArgSize = 128;
+    }
+    else if (GV.AVX_  == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[index]);
         #endif

@@ -118,7 +118,7 @@ typedef struct _Disasm {
    ARGTYPE Argument3;
    ARGTYPE Argument4;
    PREFIXINFO Prefix;
-   UInt32 Reserved_[43];
+   UInt32 Reserved_[44];
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()
 
@@ -158,6 +158,7 @@ enum INSTRUCTION_TYPE
   CLMUL_INSTRUCTION             = (int)0x80000000,
   AVX_INSTRUCTION               = (int)0x100000000,
   AVX2_INSTRUCTION               = (int)0x200000000,
+  MPX_INSTRUCTION               = (int)0x400000000,
 
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
@@ -258,6 +259,7 @@ enum ARGUMENTS_TYPE
   MEMORY_MANAGEMENT_REG =   0x800000,
   SEGMENT_REG =             0x1000000,
   AVX_REG =                 0x2000000,
+  MPX_REG =                 0x4000000,
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,
 
