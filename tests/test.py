@@ -3894,3 +3894,49 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgSize, 32)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
 
+
+
+        Buffer = b'\x66\x0f\x1a\xc0\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 0
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndmov bnd0, bnd0')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG0)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + MPX_REG + REG0)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+
+        Buffer = b'\x66\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndmov bnd1, dqword ptr [rbx]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\x66\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 0
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndmov bnd1, qword ptr [ebx]')
+        assert_equal(myDisasm.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument1.ArgSize, 128)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+

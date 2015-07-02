@@ -619,6 +619,25 @@ void __bea_callspec__ bndcl_GvEv(PDISASM pMyDisasm)
         (*pMyDisasm).Argument1.AccessMode = READ;
 
     }
+    /* ========= 0x66 */
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndmov ");
+        #endif
+        GV.MPX_ = 1;
+        GvEv(pMyDisasm);
+        GV.MPX_ = 0;
+        if (GV.MOD_ != 3) {
+            if (GV.Architecture == 64) {
+                GV.MemDecoration = Arg2dqword;
+            }
+            else {
+                GV.MemDecoration = Arg2qword;
+            }
+        }
+
+    }
     else {
         FailDecode(pMyDisasm);
     }
@@ -626,7 +645,7 @@ void __bea_callspec__ bndcl_GvEv(PDISASM pMyDisasm)
 }
 
 /* =======================================
- *      0fh 1ah
+ *      0fh 1bh
  * ======================================= */
 void __bea_callspec__ bndcn_GvEv(PDISASM pMyDisasm)
 {
@@ -653,6 +672,24 @@ void __bea_callspec__ bndcn_GvEv(PDISASM pMyDisasm)
         GvEv(pMyDisasm);
         GV.MPX_ = 0;
         (*pMyDisasm).Argument1.AccessMode = READ;
+    }
+    /* ========= 0x66 */
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndmov ");
+        #endif
+        GV.MPX_ = 1;
+        EvGv(pMyDisasm);
+        GV.MPX_ = 0;
+        if (GV.MOD_ != 3) {
+            if (GV.Architecture == 64) {
+                GV.MemDecoration = Arg2dqword;
+            }
+            else {
+                GV.MemDecoration = Arg2qword;
+            }
+        }
 
     }
     else {
