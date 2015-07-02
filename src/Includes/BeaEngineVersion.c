@@ -16,8 +16,8 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 const__ char* __bea_callspec__ BeaEngineVersion(void) {
-	return "4.1";
+	return "5.0";
 }
 const__ char* __bea_callspec__ BeaEngineRevision(void) {
-	return "175";
+	return "dev";
 }
