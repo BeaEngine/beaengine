@@ -3939,4 +3939,31 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgSize, 64)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
 
+        Buffer = b'\x66\x0f\x1b\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 0
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndmov qword ptr [ebx], bnd1')
+        assert_equal(myDisasm.Argument1.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument1.ArgSize, 64)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
+
+        Buffer = b'\x0f\x1b\x0c\x10\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer(Buffer,len(Buffer))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'bndstx dword ptr [rax+rdx], bnd1')
+        assert_equal(myDisasm.Argument1.ArgType, MEMORY_TYPE)
+        assert_equal(myDisasm.Argument1.ArgSize, 32)
+        assert_equal(myDisasm.Argument1.AccessMode, WRITE)
+        assert_equal(myDisasm.Argument2.ArgType, REGISTER_TYPE + MPX_REG + REG1)
+        assert_equal(myDisasm.Argument2.ArgSize, 128)
+        assert_equal(myDisasm.Argument2.AccessMode, READ)
 

@@ -684,16 +684,22 @@ void __bea_callspec__ bndcn_GvEv(PDISASM pMyDisasm)
         GV.MPX_ = 0;
         if (GV.MOD_ != 3) {
             if (GV.Architecture == 64) {
-                GV.MemDecoration = Arg2dqword;
+                GV.MemDecoration = Arg1dqword;
             }
             else {
-                GV.MemDecoration = Arg2qword;
+                GV.MemDecoration = Arg1qword;
             }
         }
 
     }
     else {
-        FailDecode(pMyDisasm);
+        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndstx ");
+        #endif
+        GV.MPX_ = 1;
+        EvGv(pMyDisasm);
+        GV.MPX_ = 0;
     }
 
 }
