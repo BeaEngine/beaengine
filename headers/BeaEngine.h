@@ -93,7 +93,7 @@ typedef struct  {
 #pragma pack(1)
 typedef struct  {
    char ArgMnemonic[64];
-   Int32 ArgType;
+   Uint64 ArgType;
    Int32 ArgSize;
    Int32 ArgPosition;
    UInt32 AccessMode;
