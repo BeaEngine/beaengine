@@ -66,7 +66,7 @@ ENDSTRUC
 STRUC INSTRTYPE
     Category:                resd   1
     Opcode:                  resd   1
-    Mnemonic:                resb   64
+    Mnemonic:                resb   24 
     BranchType:              resd   1
     Flags:                   resb   EFLStruct_size
     AddrValue:               resq   1
@@ -75,7 +75,7 @@ STRUC INSTRTYPE
 ENDSTRUC
 
 STRUC ARGTYPE
-    ArgMnemonic:     resb   64
+    ArgMnemonic:     resb   24
     ArgType:         resq   1
     ArgSize:         resd   1
 	ArgPosition:	 resd	1

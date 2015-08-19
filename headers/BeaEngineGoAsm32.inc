@@ -50,7 +50,7 @@ EFLStruct STRUCT
     NT_     db    0 ;(bit 14)
     RF_     db    0 ;(bit 16)
             db    0 ; alignment
-EFLStruct ENDS            
+EFLStruct ENDS             
 
  MEMORYTYPE STRUCT
    BaseRegister    dd   0
@@ -62,7 +62,7 @@ EFLStruct ENDS
 INSTRTYPE STRUCT
     Category                dd   0
     Opcode                  dd   0
-    Mnemonic                db    64 dup 0
+    Mnemonic                db   24 dup 0
     BranchType              dd   0
     Flags                   EFLStruct <>
     AddrValue               dq   0
@@ -71,7 +71,7 @@ INSTRTYPE STRUCT
 INSTRTYPE ENDS
 
 ARGTYPE STRUCT
-    ArgMnemonic     db   64 dup 0
+    ArgMnemonic     db   24 dup 0
     ArgType         dq   0
     ArgSize         dd   0
 	ArgPosition		dd   0

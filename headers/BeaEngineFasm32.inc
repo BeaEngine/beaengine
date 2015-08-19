@@ -59,14 +59,14 @@ struct  MEMORYTYPE
    BaseRegister    dd   0
    IndexRegister   dd   0
    Scale           dd   0
-   Displacement    dq   0
+   Displacement    dq   0 
 ends
 
 
 struct INSTRTYPE
     Category                dd   0
     Opcode                  dd   0
-    Mnemonic                db    64 dup(0)
+    Mnemonic                db   24 dup(0)
     BranchType              dd   0
     Flags                   EFLStruct
     AddrValue               dq   0
@@ -76,7 +76,7 @@ ends
 
 
 struct ARGTYPE
-    ArgMnemonic     db   64 dup(0)
+    ArgMnemonic     db   24 dup(0)
     ArgType         dq   0
     ArgSize         dd   0
 	ArgPosition		dd	 0

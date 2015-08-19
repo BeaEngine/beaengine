@@ -47,7 +47,7 @@ EFLStruct STRUCT
     IF_     BYTE    0 ;(bit 9)
     DF_     BYTE    0 ;(bit 10)
     NT_     BYTE    0 ;(bit 14)
-    RF_     BYTE    0 ;(bit 16)
+    RF_     BYTE    0 ;(bit 16) 
             BYTE    0 ; alignment
 EFLStruct ENDS            
 
@@ -61,7 +61,7 @@ EFLStruct ENDS
 INSTRTYPE STRUCT
     Category                DWORD   0
     Opcode                  DWORD   0
-    Mnemonic                BYTE    64 dup(0)
+    Mnemonic                BYTE    24 dup(0)
     BranchType              SDWORD   0
     Flags                   EFLStruct <>
     AddrValue               QWORD   0
@@ -70,7 +70,7 @@ INSTRTYPE STRUCT
 INSTRTYPE ENDS
 
 ARGTYPE STRUCT
-    ArgMnemonic     BYTE    64 dup(0)
+    ArgMnemonic     BYTE    24 dup(0)
     ArgType         QWORD   0
     ArgSize         DWORD   0
 	ArgPosition		DWORD	0
