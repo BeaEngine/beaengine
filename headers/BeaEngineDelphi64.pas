@@ -104,7 +104,7 @@ uses Windows,SysUtils;
      TINSTRTYPE = packed record
           Category : longint;
           Opcode : longint;
-          Mnemonic : array[0..63] of AnsiChar;
+          Mnemonic : array[0..23] of AnsiChar;
           BranchType : longint;
           Flags : TEFLStruct;
           AddrValue : int64;
@@ -115,7 +115,7 @@ uses Windows,SysUtils;
   type
 
      TARGTYPE = packed record
-          ArgMnemonic : array[0..63] of AnsiChar;
+          ArgMnemonic : array[0..23] of AnsiChar;
           ArgType : int64;
           ArgSize : longint;
 		  ArgPosition : longint;

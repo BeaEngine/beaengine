@@ -81,7 +81,7 @@ typedef struct {
 typedef struct  {
    Int32 Category;
    Int32 Opcode;
-   char Mnemonic[64];
+   char Mnemonic[24];
    Int32 BranchType;
    EFLStruct Flags;
    UInt64 AddrValue;
@@ -92,7 +92,7 @@ typedef struct  {
 
 #pragma pack(1)
 typedef struct  {
-   char ArgMnemonic[64];
+   char ArgMnemonic[24];
    Uint64 ArgType;
    Int32 ArgSize;
    Int32 ArgPosition;
