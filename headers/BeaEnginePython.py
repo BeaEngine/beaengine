@@ -65,7 +65,7 @@ class INSTRTYPE(Structure):
    _pack_= 1
    _fields_= [("Category", c_int32),
               ("Opcode", c_int32),
-              ("Mnemonic", c_char * 24),
+              ("Mnemonic", c_char * 64),
               ("BranchType", c_int32),
               ("Flags", EFLStruct),
               ("AddrValue", c_uint64),
@@ -74,7 +74,7 @@ class INSTRTYPE(Structure):
 
 class ARGTYPE(Structure):
    _pack_= 1
-   _fields_= [("ArgMnemonic", c_char * 24),
+   _fields_= [("ArgMnemonic", c_char * 64),
               ("ArgType", c_int64),
               ("ArgSize", c_int32),
               ("ArgPosition", c_int32),

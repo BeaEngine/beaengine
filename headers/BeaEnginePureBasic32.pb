@@ -61,7 +61,7 @@ Global Memorytype.MEMORYTYPE
 Structure INSTRTYPE
   Category.l
   Opcode.l
-  Mnemonic.b[24]
+  Mnemonic.b[64]
   BranchType.l
   Flags.EFLStruct
   AddrValue.q
@@ -71,7 +71,7 @@ EndStructure
 Global Instrtype.INSTRTYPE
 
 Structure ARGTYPE
-  ArgMnemonic.b[24]
+  ArgMnemonic.b[64]
   ArgType.q
   ArgSize.l
   ArgPosition.l
