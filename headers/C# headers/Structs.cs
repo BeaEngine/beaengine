@@ -67,7 +67,7 @@ namespace Bea
     {
         public Int32 Category;
         public Int32 Opcode;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
         public string Mnemonic;
         public Int32 BranchType;
         public EFLStruct Flags;
@@ -79,7 +79,7 @@ namespace Bea
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class ArgumentType
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
         public string ArgMnemonic;
         public Int32 ArgType;
         public Int32 ArgSize;
