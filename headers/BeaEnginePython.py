@@ -341,3 +341,5 @@ elif os.name == 'posix':
 Disasm = __module.Disasm
 BeaEngineVersion = __module.BeaEngineVersion
 BeaEngineRevision = __module.BeaEngineRevision
+BeaEngineVersion.restype = c_char_p
+BeaEngineRevision.restype = c_char_p
