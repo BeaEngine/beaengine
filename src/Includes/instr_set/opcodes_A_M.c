@@ -2079,6 +2079,10 @@ void __bea_callspec__ das_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ dec_eax(PDISASM pMyDisasm)
 {
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+            (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
+    }
+
     if (GV.Architecture == 64) {
         if (!Security(0, pMyDisasm)) return;
         GV.REX.W_ = 1;
@@ -2096,9 +2100,6 @@ void __bea_callspec__ dec_eax(PDISASM pMyDisasm)
 
     }
     else {
-        if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-            (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-        }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "dec ");
