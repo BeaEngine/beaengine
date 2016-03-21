@@ -3967,3 +3967,34 @@ class TestSuite:
         assert_equal(myDisasm.Argument2.ArgSize, 128)
         assert_equal(myDisasm.Argument2.AccessMode, READ)
 
+    def test_lock(self):
+        '''Minimal regression tests for https://github.com/BeaEngine/beaengine/issues/9'''
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer('f04889ce'.decode('hex'))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'lock mov rsi, rcx')
+        assert_equal(myDisasm.Prefix.LockPrefix, 1)
+
+        myDisasm = DISASM()
+        myDisasm.Archi = 64
+        Target = create_string_buffer('4889ce'.decode('hex'))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'mov rsi, rcx')
+
+        myDisasm = DISASM()
+        myDisasm.Archi = 32
+        Target = create_string_buffer('f048'.decode('hex'))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'lock dec eax')
+        assert_equal(myDisasm.Prefix.LockPrefix, 1)
+
+        myDisasm = DISASM()
+        myDisasm.Archi = 32
+        Target = create_string_buffer('48'.decode('hex'))
+        myDisasm.EIP = addressof(Target)
+        InstrLength = Disasm(addressof(myDisasm))
+        assert_equal(myDisasm.CompleteInstr, 'dec eax')

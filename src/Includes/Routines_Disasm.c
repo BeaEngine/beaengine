@@ -719,7 +719,7 @@ size_t __bea_callspec__ CopyFormattedNumber(PDISASM pMyDisasm, char* pBuffer, co
  * ==================================================================== */
 void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
 {
-    if (((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) && !((*pMyDisasm).Argument1.ArgType & MEMORY_TYPE)) {
+    if (((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) && !((*pMyDisasm).Argument1.ArgType & (MEMORY_TYPE | REGISTER_TYPE))) {
         (*pMyDisasm).Prefix.LockPrefix = InvalidPrefix;
     }
     if ((*pMyDisasm).Instruction.Category == GENERAL_PURPOSE_INSTRUCTION+STRING_INSTRUCTION) {
