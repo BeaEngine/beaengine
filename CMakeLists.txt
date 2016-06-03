@@ -123,11 +123,12 @@ if (BEA_COMPILER STREQUAL msvc)
   endif ()
   if (optHAS_SYMBOLS)
     list (APPEND BEA_FLAGS /ZI)
-	list (APPEND BEA_DEFINITIONS "/D_DEBUG=1")
   endif ()
   if (optHAS_OPTIMIZED)
     list (APPEND BEA_FLAGS /O2)
     list (APPEND BEA_DEFINITIONS "/DNDEBUG")
+  else ()
+    list (APPEND BEA_DEFINITIONS "/D_DEBUG")
   endif ()
 
   # determine code generation model
