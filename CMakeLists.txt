@@ -121,14 +121,21 @@ if (BEA_COMPILER STREQUAL msvc)
 		set (BEA_WARNINGS /W4)
 	endif ()
   endif ()
-  if (optHAS_SYMBOLS)
-    list (APPEND BEA_FLAGS /ZI)
-  endif ()
+
+  list (APPEND BEA_FLAGS /Zi)
+
   if (optHAS_OPTIMIZED)
     list (APPEND BEA_FLAGS /O2)
     list (APPEND BEA_DEFINITIONS "/DNDEBUG")
   else ()
     list (APPEND BEA_DEFINITIONS "/D_DEBUG")
+  endif ()
+
+  #generate PDB for Debug/RelWithDebInfo builds
+  if (optHAS_SYMBOLS)
+    if (optBUILD_DLL)
+      set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /DEBUG /OPT:REF,ICF")
+    endif ()
   endif ()
 
   # determine code generation model
@@ -306,7 +313,6 @@ if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
   set (CMAKE_C_FLAGS_DEBUG   ${myC_FLAGS})
   set (CMAKE_CXX_FLAGS_DEBUG ${myCXX_FLAGS})
 endif ()
-
 
 set (BEA_INCLUDE_PATH ${CMAKE_SOURCE_DIR}/include)
 set (BEA_SRC_ROOT ${CMAKE_SOURCE_DIR}/src)
