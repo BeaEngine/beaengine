@@ -367,6 +367,10 @@ if (NOT optHAS_OPTIMIZED)
   set (BEA_TARGET "${BEA_TARGET}_d")
 endif ()
 
+if (NOT optBUILD_LITE)
+  set (BEA_TARGET "${BEA_TARGET}_l")
+endif ()
+
 if (optBUILD_STDCALL)
   set (BEA_TARGET "${BEA_TARGET}_stdcall")
 endif ()
