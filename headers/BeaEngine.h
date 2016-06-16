@@ -93,7 +93,7 @@ typedef struct  {
 #pragma pack(1)
 typedef struct  {
    char ArgMnemonic[24];
-   Uint64 ArgType;
+   UInt64 ArgType;
    Int32 ArgSize;
    Int32 ArgPosition;
    UInt32 AccessMode;
@@ -310,10 +310,15 @@ enum SPECIAL_INFO
 
 
 #ifdef __cplusplus
-extern "C"
+extern "C" {
 #endif
 
 BEA_API int __bea_callspec__ Disasm (LPDISASM pDisAsm);
 BEA_API const__ char* __bea_callspec__ BeaEngineVersion (void);
 BEA_API const__ char* __bea_callspec__ BeaEngineRevision (void);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif
