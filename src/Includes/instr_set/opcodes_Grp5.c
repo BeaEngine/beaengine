@@ -31,6 +31,9 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
         #endif
         Ev(pMyDisasm);
+        if (((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) && (GV.MOD_ == 0x3)) {
+            GV.ERROR_OPCODE = UD_;
+        }
         FillFlags(pMyDisasm, 40);
     }
     else if (GV.REGOPCODE == 1) {

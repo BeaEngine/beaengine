@@ -2636,6 +2636,9 @@ void __bea_callspec__ inc_eax(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
@@ -2682,6 +2685,9 @@ void __bea_callspec__ inc_ecx(PDISASM pMyDisasm)
     else {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
+        }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2730,6 +2736,9 @@ void __bea_callspec__ inc_edx(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
@@ -2776,6 +2785,9 @@ void __bea_callspec__ inc_ebx(PDISASM pMyDisasm)
     else {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
+        }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2824,6 +2836,9 @@ void __bea_callspec__ inc_esp(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
@@ -2870,6 +2885,9 @@ void __bea_callspec__ inc_ebp(PDISASM pMyDisasm)
     else {
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
+        }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
         }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2918,6 +2936,9 @@ void __bea_callspec__ inc_esi(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
@@ -2965,6 +2986,9 @@ void __bea_callspec__ inc_edi(PDISASM pMyDisasm)
         if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
             (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
         }
+        if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "inc ");
@@ -2986,6 +3010,7 @@ void __bea_callspec__ inc_edi(PDISASM pMyDisasm)
         GV.EIP_++;
         FillFlags(pMyDisasm, 40);
     }
+
 }
 /* =======================================
  *  0xcf
