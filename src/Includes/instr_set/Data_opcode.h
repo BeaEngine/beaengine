@@ -1,4 +1,4 @@
-/* Copyright 2006-2009, BeatriX
+/* Copyright 2006-2019, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.
@@ -16,13 +16,13 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 
-/* ===============================================================================  */
-/*														                            */
-/*														                            */
-/*					            1 BYTE OPCODE MAP							        */
-/*														                            */
-/*														                            */
-/* ===============================================================================  */
+/* ======================================================================= */
+/*                                                                         */
+/*                                                                         */
+/*                          1 BYTE OPCODE MAP                              */
+/*                                                                         */
+/*                                                                         */
+/* ======================================================================= */
 
 void (__bea_callspec__ * opcode_map1[])(PDISASM) = {
     add_EbGb  , add_EvGv  , add_GbEb  , add_GvEv  , add_ALIb  , add_eAX_Iv, push_es   , pop_es    , or_EbGb   , or_EvGv   , or_GbEb   , or_GvEv   , or_ALIb   , or_eAX_Iv , push_cs   , Esc_2byte ,
@@ -43,13 +43,13 @@ void (__bea_callspec__ * opcode_map1[])(PDISASM) = {
     PrefLock  , int1_     , PrefREPNE , PrefREPE  , hlt_      , cmc_      , G3_Eb     , G3_Ev     , clc_      , stc_      , cli_      , sti_      , cld_      , std_      , G4_Eb     , G5_Ev     ,
  };
 
-/* ===============================================================================  */
-/*														                            */
-/*														                            */
-/*					            2 BYTES OPCODE MAP --> 0F xx					        */
-/*														                            */
-/*														                            */
-/* ===============================================================================  */
+/* =======================================================================*/
+/*                                                                        */
+/*                                                                        */
+/*                      2 BYTES OPCODE MAP --> 0F xx                      */
+/*                                                                        */
+/*                                                                        */
+/* =======================================================================*/
 void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     G6_       , G7_       , lar_GvEw  , lsl_GvEw  , FailDecode, syscall_  , clts_     , sysret_   , invd_     , wbinvd_   , FailDecode, ud2_      , FailDecode, nop_Ev    , femms_    , FailDecode,
     movups_VW , movups_WV , movlps_VM , movlps_MV , unpcklps_ , unpckhps_ , movhps_VM , movhps_MV , G16_      , hint_nop  , bndcl_GvEv, bndcn_GvEv, hint_nop  , hint_nop  , hint_nop  , nop_Ev    ,
@@ -69,13 +69,13 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     lddqu_    , psllw_    , pslld_    , psllq_    , pmuludq_  , pmaddwd_  , psadbw_   , maskmovq_ , psubb_    , psubw_    , psubd_    , psubq_    , paddb_    , paddw_    , paddd_    , FailDecode,
  };
 
-/* ===============================================================================  */
-/*														                            */
-/*														                            */
-/*					            3 BYTES OPCODE MAP --> 0F 38 xx				        */
-/*														                            */
-/*														                            */
-/* ===============================================================================  */
+/* ======================================================================  */
+/*                                                                         */
+/*                                                                         */
+/*                      3 BYTES OPCODE MAP --> 0F 38 xx                    */
+/*                                                                         */
+/*                                                                         */
+/* ========================================================================*/
  void (__bea_callspec__ *opcode_map3[])(PDISASM) = {
     pshufb_   , phaddw_   , phaddd_   , phaddsw_  , pmaddubsw_, phsubw_   , phsubd_   , phsubsw_  , psignb_   , psignw_   , psignd_   , pmulhrsw_ , FailDecode, FailDecode, FailDecode, FailDecode,
     pblendvb_ , FailDecode, FailDecode, FailDecode, blendvps_ , blendvpd_ , FailDecode, ptest_    , FailDecode, FailDecode, FailDecode, FailDecode, pabsb_    , pabsw_    , pabsd_    , FailDecode,
@@ -96,11 +96,11 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
  };
 
 /* ===============================================================================  */
-/*														                            */
-/*														                            */
-/*					            3 BYTES OPCODE MAP --> 0F 3A xx				        */
-/*														                            */
-/*														                            */
+/*                                                        */
+/*                                                        */
+/*                      3 BYTES OPCODE MAP --> 0F 3A xx                */
+/*                                                        */
+/*                                                        */
 /* ===============================================================================  */
  void (__bea_callspec__ *opcode_map4[])(PDISASM) = {
     FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, roundps_  , roundpd_  , roundss_  , roundsd_  , blendps_  , blendpd_  , pblendw_  , palignr_  ,

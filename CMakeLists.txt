@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.6)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-#set (CMAKE_VERBOSE_MAKEFILE ON)
+set (CMAKE_VERBOSE_MAKEFILE ON)
 
 option (optHAS_OPTIMIZED "Turn Optimizations ON"    OFF)
 option (optHAS_SYMBOLS   "Build with debug Symbols" ON)
@@ -88,7 +88,7 @@ if (BEA_COMPILER STREQUAL gnu)
   endif ()
   if (optBUILD_LITE)
     list (APPEND BEA_DEFINITIONS "-DBEA_LIGHT_DISASSEMBLY")
-  endif ()  
+  endif ()
 endif ()
 # =========================================
 # SunStudio configuration
@@ -105,13 +105,13 @@ if (BEA_COMPILER STREQUAL msvc)
   set (CMAKE_C_COMPILER   cl)
   set (CMAKE_CXX_COMPILER cl)
   set (BEA_DEFINITIONS "/DBEA_LACKS_SNPRINTF /D_CRT_SECURE_NO_WARNINGS")
-  
+
   if (optBUILD_STDCALL)
     set (BEA_DEFINITIONS "${BEA_DEFINITIONS} /DBEA_USE_STDCALL")
   endif ()
   if (optBUILD_LITE)
     set (BEA_DEFINITIONS "${BEA_DEFINITIONS} /DBEA_LIGHT_DISASSEMBLY")
-  endif ()    
+  endif ()
   if (MSVC60)
 	set (BEA_WARNINGS /W3)
   else ()
@@ -176,7 +176,7 @@ if (BEA_COMPILER STREQUAL intel)
   endif ()
   if (optBUILD_LITE)
     list (APPEND BEA_DEFINITIONS "-DBEA_LIGHT_DISASSEMBLY")
-  endif ()    
+  endif ()
 endif ()
 
 # =========================================
@@ -185,10 +185,10 @@ endif ()
 if (BEA_COMPILER STREQUAL borland)
   set (CMAKE_C_COMPILER   bcc32)
   set (CMAKE_CXX_COMPILER bcc32)
-  
+
   set (BEA_WARNINGS -w -wamb -wdef -wnod -wnak -wcln -wsig -wucp)
   set (BEA_FLAGS    -pc -p- -H- -b -d -Hu-)
-  set (BEA_DEFINITIONS "")  
+  set (BEA_DEFINITIONS "")
   if (optHAS_SYMBOLS)
     list (APPEND BEA_FLAGS -v -y -R)
   endif ()
@@ -199,13 +199,13 @@ if (BEA_COMPILER STREQUAL borland)
 	set (BEA_DEFINITIONS "-D_WIN64")
   else ()
 	set (BEA_DEFINITIONS "-D_WIN32")
-  endif ()	
+  endif ()
   if (optBUILD_STDCALL)
     list (APPEND BEA_DEFINITIONS "-DBEA_USE_STDCALL")
   endif ()
   if (optBUILD_LITE)
     list (APPEND BEA_DEFINITIONS "-DBEA_LIGHT_DISASSEMBLY")
-  endif ()    
+  endif ()
 endif ()
 # =========================================
 # Watcom C configuration
@@ -225,16 +225,16 @@ if (BEA_COMPILER STREQUAL watcom)
   if (optBUILD_64BIT)
 #    list (APPEND BEA_FLAGS -m64)
   endif ()
-  
+
   if (optBUILD_STDCALL)
     set (BEA_DEFINITIONS "${BEA_DEFINITIONS} -DBEA_USE_STDCALL")
   endif ()
   if (optBUILD_LITE)
     set (BEA_DEFINITIONS "${BEA_DEFINITIONS} -DBEA_LIGHT_DISASSEMBLY")
-  endif ()    
+  endif ()
   set (CMAKE_EXE_LINKER_FLAGS "-l=nt")
   set (CMAKE_SHARED_LINKER_FLAGS "-l=nt")
-  
+
 
 endif ()
 
@@ -244,7 +244,7 @@ endif ()
 if (BEA_COMPILER STREQUAL pelles)
   set (CMAKE_C_COMPILER   pocc)
   #set (CMAKE_CXX_COMPILER pocc)
-  
+
   set (BEA_WARNINGS /W2)
   set (BEA_FLAGS    /Gm /Gn)
   set (BEA_DEFINITIONS "")
@@ -262,7 +262,7 @@ if (BEA_COMPILER STREQUAL pelles)
   endif ()
   if (optBUILD_LITE)
     list (APPEND BEA_DEFINITIONS "/DBEA_LIGHT_DISASSEMBLY")
-  endif ()    
+  endif ()
 endif ()
 
 
@@ -343,7 +343,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${myBIN_OUTPUT})
 FIND_PACKAGE (ZLIB)
 
 
-set (build_modules 
+set (build_modules
   src
   #examples
   #unittest
@@ -356,10 +356,10 @@ if (NOT ZLIB_FOUND)
 else ()
   list (APPEND BEA_LIBS_PATH ${ZLIB_LIBRARIES})
 endif ()
-  
+
 
 add_definitions     (${BEA_DEFINITIONS})
-include_directories (${BEA_SRC_ROOT}  ${BEA_INCLUDE_PATH} 
+include_directories (${BEA_SRC_ROOT}  ${BEA_INCLUDE_PATH}
                      ${CMAKE_SOURCE_DIR} ${ZLIB_INCLUDE_DIR})
 link_directories    (${BEA_LIBS_PATH})
 
@@ -386,10 +386,10 @@ if (optBUILD_64BIT)
   set (BEA_TARGET "${BEA_TARGET}_64")
 endif ()
 
- 
+
 
 foreach (mdl ${build_modules})
   set (MDL_SRC "${mdl}")
   set (MDL_OBJ "${myOBJ_OUTPUT}/${myQualification}/${mdl}")
   add_subdirectory (${MDL_SRC} ${MDL_OBJ})
-endforeach () 
+endforeach ()

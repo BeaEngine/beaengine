@@ -23,6 +23,27 @@ namespace BeaEngine {
 
 #pragma pack(1)
 typedef struct {
+   UInt8 P0;
+   UInt8 P1;
+   UInt8 P2;
+   UInt8 mm;
+   UInt8 pp;
+   UInt8 RXB;
+   UInt8 R;
+   UInt8 X;
+   UInt8 vvvv;
+   UInt8 V;
+   UInt8 aaa;
+   UInt8 W;
+   UInt8 z;
+   UInt8 b;
+   UInt8 LL;
+   UInt8 state;
+} EVEX_Struct  ;
+#pragma pack()
+
+#pragma pack(1)
+typedef struct {
    UInt8 L;
    UInt8 vvvv;
    UInt8 mmmmm;
@@ -86,7 +107,7 @@ typedef struct {
    Int32 BaseRegister;
    Int32 IndexRegister;
    Int32 Scale;
-   Int64 Displacement; 
+   Int64 Displacement;
 } MEMORYTYPE ;
 #pragma pack()
 
@@ -107,7 +128,7 @@ typedef struct  {
 #pragma pack(1)
 typedef struct  {
    char ArgMnemonic[24];
-   UInt64 ArgType;
+   Int64 ArgType;
    Int32 ArgSize;
    Int32 ArgPosition;
    UInt32 AccessMode;
@@ -156,6 +177,7 @@ typedef struct {
    REX_Struct REX;
    Int32 OutOfBlock;
    VEX_Struct VEX;
+   EVEX_Struct EVEX;
    Int32 AVX_;
    Int32 MPX_;
 } InternalDatas;

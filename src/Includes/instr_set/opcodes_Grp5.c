@@ -1,4 +1,4 @@
-/* Copyright 2006-2009, BeatriX
+/* Copyright 2006-2019, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.
@@ -42,6 +42,9 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "dec ");
         #endif
         Ev(pMyDisasm);
+        if (((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) && (GV.MOD_ == 0x3)) {
+            GV.ERROR_OPCODE = UD_;
+        }
         FillFlags(pMyDisasm, 30);
     }
     else if (GV.REGOPCODE == 2) {
@@ -150,4 +153,3 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
     }
 }
-

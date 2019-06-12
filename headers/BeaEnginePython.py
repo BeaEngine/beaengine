@@ -50,7 +50,7 @@ class EFLStruct(Structure):
               ("IF_",c_uint8),
               ("DF_",c_uint8),
               ("NT_",c_uint8),
-              ("RF_",c_uint8), 
+              ("RF_",c_uint8),
               ("alignment",c_uint8)]
 
 class MEMORYTYPE(Structure):
@@ -91,6 +91,25 @@ class VEX_Struct(Structure):
               ("state",c_uint8),
               ("opcode",c_uint8)]
 
+class EVEX_Struct(Structure):
+   _pack_= 1
+   _fields_= [("P0",c_uint8),
+              ("P1",c_uint8),
+              ("P2",c_uint8),
+              ("mm",c_uint8),
+              ("pp",c_uint8),
+              ("RXB",c_uint8),
+              ("R",c_uint8),
+              ("X",c_uint8),
+              ("vvvv",c_uint8),
+              ("V",c_uint8),
+              ("aaa",c_uint8),
+              ("W",c_uint8),
+              ("z",c_uint8),
+              ("b",c_uint8),
+              ("LL",c_uint8),
+              ("state",c_uint8)]
+
 class InternalDatas(Structure):
     _pack_ = 1
     _fields_ = [("EIP_", c_void_p),
@@ -129,24 +148,25 @@ class InternalDatas(Structure):
                 ('REX', REX_Struct),
                 ('OutOfBlock', c_uint32),
                 ('VEX', VEX_Struct),
+                ('EVEX', EVEX_Struct),
                 ('AVX_', c_uint32),
                 ('MPX_', c_uint32),
                 ]
 
-class DISASM(Structure):
+class INSTRUCTION(Structure):
     _pack_= 1
-    _fields_= [("EIP", c_void_p),
-               ("VirtualAddr", c_uint64),
+    _fields_= [("offset", c_void_p),                # EIP
+               ("virtualAddr", c_uint64),           # VirtualAddr
                ("SecurityBlock", c_uint32),
-               ("CompleteInstr", c_char * INSTRUCT_LENGTH),
+               ("repr", c_char * INSTRUCT_LENGTH),  # CompleteInstr
                ("Archi", c_uint32),
-               ("Options", c_uint64),
+               ("options", c_uint64),               # Options
                ("Instruction", INSTRTYPE),
                ("Argument1", ARGTYPE),
                ("Argument2", ARGTYPE),
                ("Argument3", ARGTYPE),
                ("Argument4", ARGTYPE),
-               ("Prefix", PREFIXINFO), 
+               ("Prefix", PREFIXINFO),
                ("Reserved_", InternalDatas)]
 
 # ======================= PREFIXES
@@ -235,7 +255,7 @@ SPECIALIZED_128bits = 27
 SIMD_FP_PACKED = 28
 SIMD_FP_HORIZONTAL = 29
 AGENT_SYNCHRONISATION = 30
-PACKED_ALIGN_RIGHT = 31 
+PACKED_ALIGN_RIGHT = 31
 PACKED_SIGN = 32
 PACKED_BLENDING_INSTRUCTION = 33
 PACKED_TEST = 34
@@ -246,7 +266,7 @@ STREAMING_LOAD = 38
 INSERTION_EXTRACTION = 39
 DOT_PRODUCT = 40
 SAD_INSTRUCTION = 41
-ACCELERATOR_INSTRUCTION = 42  
+ACCELERATOR_INSTRUCTION = 42
 ROUND_INSTRUCTION = 43
 
 JO = 1
@@ -316,6 +336,9 @@ REG15 = 0x8000
 UNKNOWN_OPCODE = -1
 OUT_OF_BLOCK = 0
 
+# Exceptions codes
+UD_ = 2
+
 NoTabulation      = 0x00000000
 Tabulation        = 0x00000001
 
@@ -338,8 +361,100 @@ if os.name == 'nt':
 elif os.name == 'posix':
   linuxso = os.path.abspath(os.path.join(os.path.dirname(__file__), 'libBeaEngine.so'))
   __module = CDLL(linuxso)
-Disasm = __module.Disasm
+
 BeaEngineVersion = __module.BeaEngineVersion
 BeaEngineRevision = __module.BeaEngineRevision
 BeaEngineVersion.restype = c_char_p
 BeaEngineRevision.restype = c_char_p
+BeaDisasm = __module.Disasm
+
+#
+# BeaEngine Wrapper
+# to hide ctypes complexity
+#
+class Disasm():
+    def __init__(self, buffer, offset=0, virtualAddr=0):
+        """
+        Init Disasm object
+        Example :
+            # instantiate BeaEngine on buffer
+            buffer = '\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
+            disasm = Disasm(buffer)
+        """
+        self.buffer = buffer
+        self.target = create_string_buffer(buffer,len(buffer))
+        self.instr = INSTRUCTION()
+        #self.instr.options = PrefixedNumeral
+        self.instr.offset = addressof(self.target) + offset
+        self.instr.virtualAddr = virtualAddr
+        self.instr.Archi = 64
+        self.length = 0
+        self.bytes = bytearray()
+
+    def seek(self, offset = -1):
+        """
+        getter/setter for offset
+        Example :
+            disasm.seek(0x400)  # define offset where disasm engine must work
+            print("%08x" % disasm.seek())   # get offset position
+        """
+        if offset == -1:
+            return self.instr.offset - addressof(self.target)
+        else:
+            self.instr.offset = addressof(self.target) + offset
+            return offset
+
+    def getBytes(self):
+        """
+        getter to get bytes sequence of disassembled instruction
+        Example:
+            print(" ".join("%02x" % ord(b) for b in disasm.bytes))
+        """
+        offset = self.instr.offset - addressof(self.target)
+        if self.length == -1:
+            self.bytes = self.buffer[offset : offset + 1]
+        else:
+            self.bytes = self.buffer[offset : offset + self.length]
+
+    def getNextOffset(self):
+        """
+        setter to define next instruction offset
+        """
+        if self.length == -1:
+            self.instr.offset += 1
+            self.instr.virtualAddr += 1
+        else:
+            self.instr.offset = self.instr.offset + self.length
+            self.instr.virtualAddr= self.instr.virtualAddr+ self.length
+        self.length = 0
+
+    def read(self):
+        """
+        Disassembler routine
+        Example:
+            buffer = '\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
+            disasm = Disasm(buffer2)
+            for i in range(4):
+                disasm.read()
+        """
+        self.getNextOffset()
+        self.length = BeaDisasm(c_void_p(addressof(self.instr)))
+        self.getBytes()
+
+        return self.length
+
+    def repr(self):
+        """
+        Complete instruction representation for quick analysis
+        Example:
+            buffer = '\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
+            disasm = Disasm(buffer2)
+            for i in range(4):
+                disasm.read()
+                print(disasm.repr())
+        """
+        return "{} {:<30} {}".format(
+            "0x%08x" %(self.seek()),
+            " ".join("%02x" % ord(b) for b in self.bytes),
+            self.instr.repr
+        )

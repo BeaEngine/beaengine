@@ -16,7 +16,7 @@
  *
  * @author : beaengine@gmail.com
 
-/* ====================================================================
+ * ====================================================================
  *      0x 0f 58
  * ==================================================================== */
 void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
@@ -637,6 +637,7 @@ void __bea_callspec__ blendps_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
 {
+  UInt8 Imm8;
     /* ========== 0x66 */
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         if (GV.VEX.state == InUsePrefix) {
@@ -651,7 +652,7 @@ void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
                     GV.ERROR_OPCODE = UD_;
                 }
             }
-            UInt8 Imm8;
+
             if (GV.VEX.L == 0) {
 
                 GV.SSE_ = 1;
@@ -705,6 +706,7 @@ void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
 {
+    UInt8 Imm8;
     /* ========== 0x66 */
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         if (GV.VEX.state == InUsePrefix) {
@@ -719,7 +721,6 @@ void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
                     GV.ERROR_OPCODE = UD_;
                 }
             }
-            UInt8 Imm8;
             if (GV.VEX.L == 0) {
 
                 GV.SSE_ = 1;
@@ -772,6 +773,147 @@ void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
 {
+    UInt8 Imm8;
+    char pseudoOpcodes_sd[0x20][16] = {
+        "vcmpeqsd ",
+        "vcmpltsd ",
+        "vcmplesd ",
+        "vcmpunordsd ",
+        "vcmpneqsd ",
+        "vcmpnltsd ",
+        "vcmpnlesd ",
+        "vcmpordsd ",
+        "vcmpeq_uqsd ",
+        "vcmpngesd ",
+        "vcmpngtsd ",
+        "vcmpfalsesd ",
+        "vcmpneq_oqsd ",
+        "vcmpgesd ",
+        "vcmpgtsd ",
+        "vcmptruesd ",
+        "vcmpeq_ossd ",
+        "vcmplt_oqsd ",
+        "vcmple_oqsd ",
+        "vcmpunord_ssd ",
+        "vcmpneq_ussd ",
+        "vcmpnlt_uqsd ",
+        "vcmpnle_uqsd ",
+        "vcmpord_ssd ",
+        "vcmpeq_ussd ",
+        "vcmpnge_uqsd ",
+        "vcmpngt_uqsd ",
+        "vcmpfalse_ossd ",
+        "vcmpneq_ossd ",
+        "vcmpge_oqsd ",
+        "vcmpgt_oqsd ",
+        "vcmptrue_ussd "
+    };
+
+    char pseudoOpcodes_ss[0x20][16] = {
+        "vcmpeqss ",
+        "vcmpltss ",
+        "vcmpless ",
+        "vcmpunordss ",
+        "vcmpneqss ",
+        "vcmpnltss ",
+        "vcmpnless ",
+        "vcmpordss ",
+        "vcmpeq_uqss ",
+        "vcmpngess ",
+        "vcmpngtss ",
+        "vcmpfalsess ",
+        "vcmpneq_oqss ",
+        "vcmpgess ",
+        "vcmpgtss ",
+        "vcmptruess ",
+        "vcmpeq_osss ",
+        "vcmplt_oqss ",
+        "vcmple_oqss ",
+        "vcmpunord_sss ",
+        "vcmpneq_usss ",
+        "vcmpnlt_uqss ",
+        "vcmpnle_uqss ",
+        "vcmpord_sss ",
+        "vcmpeq_usss ",
+        "vcmpnge_uqss ",
+        "vcmpngt_uqss ",
+        "vcmpfalse_osss ",
+        "vcmpneq_osss ",
+        "vcmpge_oqss",
+        "vcmpgt_oqss ",
+        "vcmptrue_usss "
+    };
+
+    char pseudoOpcodes_pd[0x20][16] = {
+        "vcmpeqpd ",
+        "vcmpltpd ",
+        "vcmplepd ",
+        "vcmpunordpd ",
+        "vcmpneqpd ",
+        "vcmpnltpd ",
+        "vcmpnlepd ",
+        "vcmpordpd ",
+        "vcmpeq_uqpd ",
+        "vcmpngepd ",
+        "vcmpngtpd ",
+        "vcmpfalsepd ",
+        "vcmpneq_oqpd ",
+        "vcmpgepd ",
+        "vcmpgtpd ",
+        "vcmptruepd ",
+        "vcmpeq_ospd ",
+        "vcmplt_oqpd ",
+        "vcmple_oqpd ",
+        "vcmpunord_spd ",
+        "vcmpneq_uspd ",
+        "vcmpnlt_uqpd ",
+        "vcmpnle_uqpd ",
+        "vcmpord_spd ",
+        "vcmpeq_uspd ",
+        "vcmpnge_uqpd ",
+        "vcmpngt_uqpd ",
+        "vcmpfalse_ospd ",
+        "vcmpneq_ospd ",
+        "vcmpge_oqpd ",
+        "vcmpgt_oqpd ",
+        "vcmptrue_uspd "
+    };
+
+    char pseudoOpcodes_ps[0x20][16] = {
+        "vcmpeqps ",
+        "vcmpltps ",
+        "vcmpleps ",
+        "vcmpunordps ",
+        "vcmpneqps ",
+        "vcmpnltps ",
+        "vcmpnleps ",
+        "vcmpordps ",
+        "vcmpeq_uqps ",
+        "vcmpngeps ",
+        "vcmpngtps ",
+        "vcmpfalseps ",
+        "vcmpneq_oqps ",
+        "vcmpgeps ",
+        "vcmpgtps ",
+        "vcmptrueps ",
+        "vcmpeq_osps ",
+        "vcmplt_oqps ",
+        "vcmple_oqps ",
+        "vcmpunord_sps ",
+        "vcmpneq_usps ",
+        "vcmpnlt_uqps ",
+        "vcmpnle_uqps ",
+        "vcmpord_sps ",
+        "vcmpeq_usps ",
+        "vcmpnge_uqps ",
+        "vcmpngt_uqps ",
+        "vcmpfalse_osps ",
+        "vcmpneq_osps ",
+        "vcmpge_oqps ",
+        "vcmpgt_oqps ",
+        "vcmptrue_usps "
+    };
+
 
     /* ========= 0xf2 */
     GV.ImmediatSize = 8;
@@ -798,46 +940,11 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument4.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument4.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x1F;
 
-            char pseudoOpcodes[0x20][16] = {
-                "vcmpeqsd ",
-                "vcmpltsd ",
-                "vcmplesd ",
-                "vcmpunordsd ",
-                "vcmpneqsd ",
-                "vcmpnltsd ",
-                "vcmpnlesd ",
-                "vcmpordsd ",
-                "vcmpeq_uqsd ",
-                "vcmpngesd ",
-                "vcmpngtsd ",
-                "vcmpfalsesd ",
-                "vcmpneq_oqsd ",
-                "vcmpgesd ",
-                "vcmpgtsd ",
-                "vcmptruesd ",
-                "vcmpeq_ossd ",
-                "vcmplt_oqsd ",
-                "vcmple_oqsd ",
-                "vcmpunord_ssd ",
-                "vcmpneq_ussd ",
-                "vcmpnlt_uqsd ",
-                "vcmpnle_uqsd ",
-                "vcmpord_ssd ",
-                "vcmpeq_ussd ",
-                "vcmpnge_uqsd ",
-                "vcmpngt_uqsd ",
-                "vcmpfalse_ossd ",
-                "vcmpneq_ossd ",
-                "vcmpge_oqsd ",
-                "vcmpgt_oqsd ",
-                "vcmptrue_ussd "
-            };
-
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes[Imm8]);
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes_sd[Imm8]);
             #endif
 
             /* FillFlags(pMyDisasm,125); */
@@ -867,7 +974,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x7;
 
             if (Imm8 == 0x0) {
@@ -938,46 +1045,11 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument4.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument4.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x1F;
 
-            char pseudoOpcodes[0x20][16] = {
-                "vcmpeqss ",
-                "vcmpltss ",
-                "vcmpless ",
-                "vcmpunordss ",
-                "vcmpneqss ",
-                "vcmpnltss ",
-                "vcmpnless ",
-                "vcmpordss ",
-                "vcmpeq_uqss ",
-                "vcmpngess ",
-                "vcmpngtss ",
-                "vcmpfalsess ",
-                "vcmpneq_oqss ",
-                "vcmpgess ",
-                "vcmpgtss ",
-                "vcmptruess ",
-                "vcmpeq_osss ",
-                "vcmplt_oqss ",
-                "vcmple_oqss ",
-                "vcmpunord_sss ",
-                "vcmpneq_usss ",
-                "vcmpnlt_uqss ",
-                "vcmpnle_uqss ",
-                "vcmpord_sss ",
-                "vcmpeq_usss ",
-                "vcmpnge_uqss ",
-                "vcmpngt_uqss ",
-                "vcmpfalse_osss ",
-                "vcmpneq_osss ",
-                "vcmpge_oqss",
-                "vcmpgt_oqss ",
-                "vcmptrue_usss "
-            };
-
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes[Imm8]);
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes_ss[Imm8]);
             #endif
 
             /* FillFlags(pMyDisasm,125); */
@@ -1007,7 +1079,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x7;
 
             if (Imm8 == 0x0) {
@@ -1087,46 +1159,11 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument4.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument4.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x1F;
 
-            char pseudoOpcodes[0x20][16] = {
-                "vcmpeqpd ",
-                "vcmpltpd ",
-                "vcmplepd ",
-                "vcmpunordpd ",
-                "vcmpneqpd ",
-                "vcmpnltpd ",
-                "vcmpnlepd ",
-                "vcmpordpd ",
-                "vcmpeq_uqpd ",
-                "vcmpngepd ",
-                "vcmpngtpd ",
-                "vcmpfalsepd ",
-                "vcmpneq_oqpd ",
-                "vcmpgepd ",
-                "vcmpgtpd ",
-                "vcmptruepd ",
-                "vcmpeq_ospd ",
-                "vcmplt_oqpd ",
-                "vcmple_oqpd ",
-                "vcmpunord_spd ",
-                "vcmpneq_uspd ",
-                "vcmpnlt_uqpd ",
-                "vcmpnle_uqpd ",
-                "vcmpord_spd ",
-                "vcmpeq_uspd ",
-                "vcmpnge_uqpd ",
-                "vcmpngt_uqpd ",
-                "vcmpfalse_ospd ",
-                "vcmpneq_ospd ",
-                "vcmpge_oqpd ",
-                "vcmpgt_oqpd ",
-                "vcmptrue_uspd "
-            };
-
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes[Imm8]);
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes_pd[Imm8]);
             #endif
 
             /* FillFlags(pMyDisasm,125); */
@@ -1156,7 +1193,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x7;
 
             if (Imm8 == 0x0) {
@@ -1234,46 +1271,11 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument4.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument4.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x1F;
 
-            char pseudoOpcodes[0x20][16] = {
-                "vcmpeqps ",
-                "vcmpltps ",
-                "vcmpleps ",
-                "vcmpunordps ",
-                "vcmpneqps ",
-                "vcmpnltps ",
-                "vcmpnleps ",
-                "vcmpordps ",
-                "vcmpeq_uqps ",
-                "vcmpngeps ",
-                "vcmpngtps ",
-                "vcmpfalseps ",
-                "vcmpneq_oqps ",
-                "vcmpgeps ",
-                "vcmpgtps ",
-                "vcmptrueps ",
-                "vcmpeq_osps ",
-                "vcmplt_oqps ",
-                "vcmple_oqps ",
-                "vcmpunord_sps ",
-                "vcmpneq_usps ",
-                "vcmpnlt_uqps ",
-                "vcmpnle_uqps ",
-                "vcmpord_sps ",
-                "vcmpeq_usps ",
-                "vcmpnge_uqps ",
-                "vcmpngt_uqps ",
-                "vcmpfalse_osps ",
-                "vcmpneq_osps ",
-                "vcmpge_oqps ",
-                "vcmpgt_oqps ",
-                "vcmptrue_usps "
-            };
-
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes[Imm8]);
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes_ps[Imm8]);
             #endif
 
             /* FillFlags(pMyDisasm,125); */
@@ -1303,7 +1305,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
             (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
             (*pMyDisasm).Argument3.ArgSize = 8;
-            UInt8 Imm8;
+
             Imm8 = (*pMyDisasm).Instruction.Immediat & 0x7;
 
             if (Imm8 == 0x0) {
@@ -4775,12 +4777,40 @@ void __bea_callspec__ pshufb_(PDISASM pMyDisasm)
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+SHUFFLE_UNPACK;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pshufb ");
-        #endif
-        GV.SSE_ = 1;
-        GxEx(pMyDisasm);
-        GV.SSE_ = 0;
+        if (GV.VEX.state == InUsePrefix) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshufb ");
+          #endif
+
+          if (GV.VEX.L == 0) {
+              GV.SSE_ = 1;
+              GyEy(pMyDisasm);
+              fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+              GV.MemDecoration = Arg3_m128_xmm;
+              GV.SSE_ = 0;
+          }
+          else if (GV.VEX.L == 0x1) {
+              GV.AVX_ = 1;
+              GyEy(pMyDisasm);
+              fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+              GV.MemDecoration = Arg3_m256_ymm;
+              GV.AVX_ = 0;
+          }
+          else if (GV.EVEX.LL == 0x2) {
+              GV.AVX_ = 2;
+              GyEy(pMyDisasm);
+              fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+              GV.MemDecoration = Arg3_m512_zmm;
+              GV.AVX_ = 0;
+          }
+        } else {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pshufb ");
+          #endif
+          GV.SSE_ = 1;
+          GxEx(pMyDisasm);
+          GV.SSE_ = 0;
+        }
     }
     else {
         GV.MemDecoration = Arg2qword;

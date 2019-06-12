@@ -1,4 +1,4 @@
-/* Copyright 2006-2009, BeatriX
+/* Copyright 2006-2019, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.
@@ -67,6 +67,13 @@ void __bea_callspec__ fillRegister(int index, ARGTYPE* pMyArgument, PDISASM pMyD
         #endif
         (*pMyArgument).ArgType = REGISTER_TYPE+AVX_REG+REGS[index];
         (*pMyArgument).ArgSize = 256;
+    }
+    else if (GV.AVX_  == 2) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[index]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+AVX_REG+REGS[index];
+        (*pMyArgument).ArgSize = 512;
     }
     else if (GV.MMX_  == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY

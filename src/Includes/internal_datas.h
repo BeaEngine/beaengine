@@ -215,6 +215,7 @@ char SegmentRegs[7][4] = {
 #define     Arg1_m128i_xmm  11
 #define     Arg1_m128d_xmm  12
 #define     Arg1_m256d_ymm  13
+#define     Arg1_m512_zmm   14
 
 #define     Arg2byte        101
 #define     Arg2word        102
@@ -229,6 +230,7 @@ char SegmentRegs[7][4] = {
 #define     Arg2_m128i_xmm  111
 #define     Arg2_m128d_xmm  112
 #define     Arg2_m256d_ymm  113
+#define     Arg2_m512_zmm   114
 
 #define     Arg3byte        201
 #define     Arg3word        202
@@ -243,6 +245,7 @@ char SegmentRegs[7][4] = {
 #define     Arg3_m128i_xmm  211
 #define     Arg3_m128d_xmm  212
 #define     Arg3_m256d_ymm  213
+#define     Arg3_m512_zmm   214
 
 #define     Arg4byte        301
 #define     Arg4word        302
@@ -257,8 +260,9 @@ char SegmentRegs[7][4] = {
 #define     Arg4_m128i_xmm  311
 #define     Arg4_m128d_xmm  312
 #define     Arg4_m256d_ymm  313
+#define     Arg4_m512_zmm   314
 
-#define nbMemoryTypes 13
+#define nbMemoryTypes 14
 
 /* =====================================================
  * Intrinsic representation of prefixes
@@ -315,7 +319,8 @@ char MasmPrefixes[nbMemoryTypes][16] = {
     "ymmword ptr ",      /* GV.MemDecoration == 10 - 256 bits long YMM registers*/
     "xmmword ptr ",     /* GV.MemDecoration == 11 - 128 bits long XMM registers */
     "xmmword ptr ",     /* GV.MemDecoration == 12 - 128 bits long XMM registers */
-    "ymmword ptr "     /* GV.MemDecoration == 13 - 256 bits long YMM registers */
+    "ymmword ptr ",     /* GV.MemDecoration == 13 - 256 bits long YMM registers */
+    "zmmword ptr "     /* GV.MemDecoration == 14 - 512 bits long ZMM registers */
 };
 
 /* =====================================================
@@ -334,7 +339,8 @@ char NasmPrefixes[nbMemoryTypes][8] = {
     " ",       /* GV.MemDecoration == 10 */
     " ",       /* GV.MemDecoration == 11 */
     " ",       /* GV.MemDecoration == 12 */
-    " "       /* GV.MemDecoration == 13 */
+    " ",       /* GV.MemDecoration == 13 */
+    " "       /* GV.MemDecoration == 14 */
 };
 
 
@@ -355,7 +361,8 @@ char GoAsmPrefixes[nbMemoryTypes][4] = {
     " ",       /* GV.MemDecoration == 10 */
     " ",       /* GV.MemDecoration == 11 */
     " ",       /* GV.MemDecoration == 12 */
-    " "       /* GV.MemDecoration == 13 */
+    " ",       /* GV.MemDecoration == 13 */
+    " "       /* GV.MemDecoration == 14 */
 };
 
 
@@ -669,7 +676,7 @@ char RegistersAVX[16][8] = {
 };
 
 /* =====================================================
- * AVX 256 bits Registers
+ * AVX 512 bits Registers
  * ===================================================== */
 char RegistersAVX512[32][8] = {
     "zmm0",
@@ -729,6 +736,3 @@ char BXSI_[] = "bx+si";
 char BXDI_[] = "bx+di";
 char BPSI_[] = "bp+si";
 char BPDI_[] = "bp+di";
-
-
-

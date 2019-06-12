@@ -23,58 +23,24 @@ import yaml
 
 class TestExample:
 
-    def setUp(self):
-        Buffer = b'\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
-        self.Target = create_string_buffer(Buffer,len(Buffer))
+    #def setUp(self):
 
     def test_SimpleUseCase(self):
-        Instruction = DISASM()
-        Instruction.EIP = addressof(self.Target)
-        Error = False
-        for i in range(20):
-            InstrLength = Disasm(addressof(Instruction))
-            if InstrLength != UNKNOWN_OPCODE:
-                Instruction.EIP = Instruction.EIP + InstrLength
-            else :
-                Error = True
-
-        assert_equal(Error, False)
-
-
-    def test_SecurityBlockUseCase(self):
-        Instruction = DISASM()
-        Instruction.EIP = addressof(self.Target)
-        OutOfBlock = False
-        EndOfSection =  Instruction.EIP + 10
-        while not OutOfBlock:
-            if Instruction.EIP < EndOfSection:
-                Instruction.SecurityBlock = EndOfSection - Instruction.EIP
-                InstrLength = Disasm(addressof(Instruction))
-                if InstrLength != UNKNOWN_OPCODE and InstrLength != OUT_OF_BLOCK:
-                    Instruction.EIP = Instruction.EIP + InstrLength
-            else :
-                OutOfBlock = True
-
-        assert_equal(OutOfBlock, True)
-        assert_equal(Instruction.EIP, EndOfSection)
+        Buffer = '4889ce'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'mov rsi, rcx')
 
     def test_VirtualAddrUseCase(self):
-        myDisasm = DISASM()
-        myDisasm.VirtualAddr = 0x401000
         Buffer = b'\xe9\x00\x00\x00\x00'
-        Target = create_string_buffer(Buffer,len(Buffer))
-        myDisasm.EIP = addressof(Target)
-        InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.Instruction.AddrValue, 0x401005)
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.virtualAddr = 0x401000
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.AddrValue, 0x401005)
 
     def test_OptionsUseCase(self):
-        myDisasm = DISASM()
-        myDisasm.Options = NasmSyntax + PrefixedNumeral + ShowSegmentRegs
-        Buffer = b'\x89\x94\x88\x00\x20\x40\x00 '
-        Target = create_string_buffer(Buffer,len(Buffer))
-        myDisasm.EIP = addressof(Target)
-        InstrLength = Disasm(addressof(myDisasm))
-        assert_equal(myDisasm.CompleteInstr, 'mov  [ds:eax+ecx*4+0x00402000], edx')
-
-
-
+        Buffer = b'\x89\x94\x88\x00\x20\x40\x00'
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.options = NasmSyntax + PrefixedNumeral + ShowSegmentRegs
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'mov  [ds:rax+rcx*4+0x00402000], edx')
