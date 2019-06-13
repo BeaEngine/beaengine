@@ -3640,12 +3640,21 @@ void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phaddw ");
-        #endif
-        GV.SSE_ = 1;
-        GxEx(pMyDisasm);
-        GV.SSE_ = 0;
+
+        if (GV.VEX.state == InUsePrefix) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vphaddw ");
+          #endif
+          ArgsVEX(pMyDisasm);
+        } else {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phaddw ");
+          #endif
+          GV.SSE_ = 1;
+          GxEx(pMyDisasm);
+          GV.SSE_ = 0;
+        }
+
     }
     else {
         GV.MemDecoration = Arg2qword;
@@ -4781,28 +4790,8 @@ void __bea_callspec__ pshufb_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshufb ");
           #endif
+          ArgsVEX(pMyDisasm);
 
-          if (GV.VEX.L == 0) {
-              GV.SSE_ = 1;
-              GyEy(pMyDisasm);
-              fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-              GV.MemDecoration = Arg3_m128_xmm;
-              GV.SSE_ = 0;
-          }
-          else if (GV.VEX.L == 0x1) {
-              GV.AVX_ = 1;
-              GyEy(pMyDisasm);
-              fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-              GV.MemDecoration = Arg3_m256_ymm;
-              GV.AVX_ = 0;
-          }
-          else if (GV.EVEX.LL == 0x2) {
-              GV.AVX_ = 2;
-              GyEy(pMyDisasm);
-              fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-              GV.MemDecoration = Arg3_m512_zmm;
-              GV.AVX_ = 0;
-          }
         } else {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pshufb ");

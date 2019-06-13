@@ -75,6 +75,7 @@ void __bea_callspec__ Eb(PDISASM);
 void __bea_callspec__ Ev(PDISASM);
 void __bea_callspec__ GvEv(PDISASM);
 void __bea_callspec__ GyEy(PDISASM);
+void __bea_callspec__ ArgsVEX(PDISASM);
 void __bea_callspec__ GvEb(PDISASM);
 void __bea_callspec__ GxEx(PDISASM);
 void __bea_callspec__ GvEw(PDISASM);

@@ -506,6 +506,35 @@ void __bea_callspec__ GyEy(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+ * Used by AVX instructions
+ * ==================================================================== */
+void __bea_callspec__ ArgsVEX(PDISASM pMyDisasm)
+{
+  if (GV.VEX.L == 0) {
+      GV.SSE_ = 1;
+      GyEy(pMyDisasm);
+      fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.MemDecoration = Arg3_m128_xmm;
+      GV.SSE_ = 0;
+  }
+  else if (GV.VEX.L == 0x1) {
+      GV.AVX_ = 1;
+      GyEy(pMyDisasm);
+      fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.MemDecoration = Arg3_m256_ymm;
+      GV.AVX_ = 0;
+  }
+  else if (GV.EVEX.LL == 0x2) {
+      GV.AVX_ = 2;
+      GyEy(pMyDisasm);
+      fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.MemDecoration = Arg3_m512_zmm;
+      GV.AVX_ = 0;
+  }
+}
+
+
+/* ====================================================================
  *
  * ==================================================================== */
 void __bea_callspec__ GvEb(PDISASM pMyDisasm)
