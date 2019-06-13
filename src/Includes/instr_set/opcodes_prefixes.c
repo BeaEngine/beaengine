@@ -22,6 +22,9 @@
 void __bea_callspec__ PrefLock(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.LockPrefix = InvalidPrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -37,6 +40,9 @@ void __bea_callspec__ PrefLock(PDISASM pMyDisasm)
 void __bea_callspec__ PrefREPNE(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.RepnePrefix = SuperfluousPrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -68,6 +74,9 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
     (*pMyDisasm).Prefix.RepPrefix = SuperfluousPrefix;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
@@ -97,6 +106,9 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGCS(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.CSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -111,6 +123,9 @@ void __bea_callspec__ PrefSEGCS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGDS(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.DSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -125,6 +140,9 @@ void __bea_callspec__ PrefSEGDS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGES(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.ESPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -139,6 +157,9 @@ void __bea_callspec__ PrefSEGES(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGFS(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.FSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -154,6 +175,9 @@ void __bea_callspec__ PrefSEGFS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGGS(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.GSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -169,6 +193,9 @@ void __bea_callspec__ PrefSEGGS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGSS(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     (*pMyDisasm).Prefix.SSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -184,6 +211,9 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
     (*pMyDisasm).Prefix.OperandSize = InUsePrefix;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
@@ -227,6 +257,9 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
 {
     if (!Security(0, pMyDisasm)) return;
     (*pMyDisasm).Prefix.AddressSize = InUsePrefix;
+    if (GV.VEX.state == InUsePrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }    
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
@@ -235,7 +268,7 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
     }
     else {
         GV.AddressSize = GV.AddressSize >> 1;
-    }    
+    }
 
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
@@ -244,7 +277,7 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
     }
     else {
         GV.AddressSize = GV.AddressSize << 1;
-    } 
+    }
 
 }
 

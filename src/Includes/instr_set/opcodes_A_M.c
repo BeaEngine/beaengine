@@ -5232,6 +5232,21 @@ void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
         /* VEX2Bytes prefix */
 
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.state == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.RepPrefix == SuperfluousPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         GV.REX.R_ = ~((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 7) & 0x1;
         GV.VEX.vvvv = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0xF;
         GV.VEX.L = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 2) & 0x1;
@@ -5252,17 +5267,95 @@ void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
         else if (GV.VEX.pp == 0x1) {
             /* 66h */
             GV.EIP_+=1;
-            PrefOpSize(pMyDisasm);
+
+            (*pMyDisasm).Prefix.OperandSize = InUsePrefix;
+            GV.EIP_++;
+            (*pMyDisasm).Prefix.Number++;
+            GV.NB_PREFIX++;
+            GV.OriginalOperandSize = GV.OperandSize;  /* if GV.OperandSize is used as a mandatory prefix, keep the real operandsize value */
+            if (GV.Architecture == 16) {
+              GV.OperandSize = 32;
+            }
+            else {
+              if (GV.OperandSize != 64) {
+                GV.OperandSize = 16;
+              }
+            }
+            (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+            if (GV.VEX.state != InUsePrefix) {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x1) {
+                (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x2) {
+                (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x3) {
+                (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            if (GV.Architecture == 16) {
+                GV.OperandSize = 16;
+            }
+            else {
+                GV.OperandSize = 32;
+            }
+
         }
         else if (GV.VEX.pp == 0x2) {
             /* F3h */
             GV.EIP_+=1;
-            PrefREPE(pMyDisasm);
+            (*pMyDisasm).Prefix.RepPrefix = SuperfluousPrefix;
+            GV.EIP_++;
+            (*pMyDisasm).Prefix.Number++;
+            GV.NB_PREFIX++;
+            GV.PrefRepe = 1;
+            (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+            if (GV.VEX.state != InUsePrefix) {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x1) {
+                (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x2) {
+                (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x3) {
+                (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            GV.PrefRepe = 0;
         }
         else if (GV.VEX.pp == 0x3) {
             /* F2h */
             GV.EIP_+=1;
-            PrefREPNE(pMyDisasm);
+            (*pMyDisasm).Prefix.RepnePrefix = SuperfluousPrefix;
+            GV.EIP_++;
+            (*pMyDisasm).Prefix.Number++;
+            GV.NB_PREFIX++;
+            GV.PrefRepne = 1;
+            (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+            if (GV.VEX.state != InUsePrefix) {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x1) {
+                (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x2) {
+                (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x3) {
+                (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            GV.PrefRepne = 0;
         }
 
         /* FailDecode(pMyDisasm); */
@@ -5347,6 +5440,21 @@ void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
         /* VEX3Bytes prefix */
 
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.state == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.RepPrefix == SuperfluousPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
+        if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         GV.REX.B_ = ~((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 5) & 0x1;
         GV.REX.X_ = ~((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x1;
         GV.REX.R_ = ~((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 7) & 0x1;
@@ -5361,7 +5469,6 @@ void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
         GV.REX.state = InUsePrefix;
         GV.VEX.state = InUsePrefix;
         GV.VEX.opcode = 0xc4;
-
 
         if (GV.VEX.pp == 0x0) {
             GV.NB_PREFIX++;
@@ -5382,26 +5489,95 @@ void __bea_callspec__ les_GvM(PDISASM pMyDisasm)
                 (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
             }
 
-
         }
         if (GV.VEX.pp == 0x1) {
             /* 66h */
             GV.EIP_+=2;
-            PrefOpSize(pMyDisasm);
+            (*pMyDisasm).Prefix.OperandSize = InUsePrefix;
+            GV.EIP_++;
+            (*pMyDisasm).Prefix.Number++;
+            GV.NB_PREFIX++;
+            GV.OriginalOperandSize = GV.OperandSize;  /* if GV.OperandSize is used as a mandatory prefix, keep the real operandsize value */
+            if (GV.Architecture == 16) {
+                GV.OperandSize = 32;
+            }
+            else {
+                if (GV.OperandSize != 64) {
+                    GV.OperandSize = 16;
+                }
+            }
+            (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+            if (GV.VEX.state != InUsePrefix) {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x1) {
+                (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x2) {
+                (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x3) {
+                (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            GV.OperandSize = (GV.Architecture == 16) ? 16 : 32;
         }
         else if (GV.VEX.pp == 0x2) {
             /* F3h */
             GV.EIP_+=2;
-            PrefREPE(pMyDisasm);
+            (*pMyDisasm).Prefix.RepPrefix = SuperfluousPrefix;
+            GV.EIP_++;
+            (*pMyDisasm).Prefix.Number++;
+            GV.NB_PREFIX++;
+            GV.PrefRepe = 1;
+            (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+            if (GV.VEX.state != InUsePrefix) {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x1) {
+                (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x2) {
+                (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x3) {
+                (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            GV.PrefRepe = 0;
         }
         else if (GV.VEX.pp == 0x3) {
             /* F2h */
             GV.EIP_+=2;
-            PrefREPNE(pMyDisasm);
+            (*pMyDisasm).Prefix.RepnePrefix = SuperfluousPrefix;
+            GV.EIP_++;
+            (*pMyDisasm).Prefix.Number++;
+            GV.NB_PREFIX++;
+            GV.PrefRepne = 1;
+            (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
+            if (GV.VEX.state != InUsePrefix) {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x1) {
+                (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x2) {
+                (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else if (GV.VEX.mmmmm == 0x3) {
+                (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            else {
+                (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+            }
+            GV.PrefRepne = 0;
         }
 
         GV.OperandSize = 32;
-
 
         /* FailDecode(pMyDisasm); */
     }
