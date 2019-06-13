@@ -1302,7 +1302,7 @@ void __bea_callspec__ btc_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btc ");
     #endif
     EvGv(pMyDisasm);
-    (*pMyDisasm).Argument1.AccessMode = READ;
+
     FillFlags(pMyDisasm,11);
 }
 
@@ -1319,7 +1319,7 @@ void __bea_callspec__ bt_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bt ");
     #endif
     EvGv(pMyDisasm);
-    (*pMyDisasm).Argument1.AccessMode = READ;
+
     FillFlags(pMyDisasm,11);
 }
 
@@ -1336,7 +1336,7 @@ void __bea_callspec__ btr_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btr ");
     #endif
     EvGv(pMyDisasm);
-    (*pMyDisasm).Argument1.AccessMode = READ;
+
     FillFlags(pMyDisasm,11);
 }
 
@@ -1353,7 +1353,7 @@ void __bea_callspec__ bts_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bts ");
     #endif
     EvGv(pMyDisasm);
-    (*pMyDisasm).Argument1.AccessMode = READ;
+    
     FillFlags(pMyDisasm,11);
 }
 
