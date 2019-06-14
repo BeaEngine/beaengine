@@ -27,7 +27,7 @@ class TestSuite:
     - vphsubsw Vx, Hx, Wx
     """
     def test(self):
-        # NP 0F 38 01 /r1
+        # NP 0F 38 07 /r1
         # phsubsw mm1, mm2/m64
 
         Buffer = '0f38079011223344'.decode('hex')
@@ -37,7 +37,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'phsubsw ')
         assert_equal(myDisasm.instr.repr, 'phsubsw mm2, qword ptr [rax+44332211h]')
 
-        # 66 0F 38 01 /r
+        # 66 0F 38 07 /r
         # phsubsw xmm1, xmm2/m128
 
         Buffer = '660f38079011223344'.decode('hex')
@@ -47,7 +47,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'phsubsw ')
         assert_equal(myDisasm.instr.repr, 'phsubsw xmm2, dqword ptr [rax+44332211h]')
 
-        # VEX.NDS.128.66.0F38.WIG 01 /r
+        # VEX.NDS.128.66.0F38.WIG 07 /r
         # vphsubsw xmm1, xmm2, xmm3/m128
 
         Buffer = 'c4020107443322'.decode('hex')
@@ -56,7 +56,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphsubsw ')
         assert_equal(myDisasm.instr.repr, 'vphsubsw xmm8, xmm15, xmmword ptr [r11+r14+22h]')
 
-        # VEX.NDS.256.66.0F38.WIG 01 /r
+        # VEX.NDS.256.66.0F38.WIG 07 /r
         # vphsubsw ymm1, ymm2, ymm3/m256
 
         Buffer = 'c4020507443322'.decode('hex')
@@ -66,7 +66,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.repr, 'vphsubsw ymm8, ymm15, ymmword ptr [r11+r14+22h]')
 
 
-        # VEX.NDS.256.66.0F38.WIG 01 /r
+        # VEX.NDS.256.66.0F38.WIG 07 /r
         # vphsubsw ymm1, ymm2, ymm3/m256
         # VEX.L = 1
 
@@ -76,7 +76,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
 
 
-        # EVEX.NDS.128.66.0F38.WIG 00 /r
+        # EVEX.NDS.128.66.0F38.WIG 07 /r
         # vphsubsw xmm1 {k1}{z}, xmm2, xmm3/m128
         Buffer = '6202050707443322'.decode('hex')
         myDisasm = Disasm(Buffer)
