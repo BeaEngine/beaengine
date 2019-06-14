@@ -3321,6 +3321,71 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
 
+        Buffer = b'\x66\xf3\xa5'
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'rep movsw ')
+
+        Buffer = b'\xf3\x66\xa5'
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'rep movsw ')
+
+        Buffer = '67654c6973743a'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'imul r14, qword ptr [ebx+74h], 0000003Ah')
+
+        Buffer = '660f73fa02'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'pslldq xmm2, 02h')
+
+        Buffer = '660f73fa02'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Archi = 16
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, '??? ')
+
+        Buffer = '820000'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Archi = 32
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'add byte ptr [eax], 00h')
+
+        Buffer = '821000'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Archi = 32
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'adc byte ptr [eax], 00h')
+
+        Buffer = '823000'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Archi = 32
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'xor byte ptr [eax], 00h')
+
+        Buffer = '6ab7'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'push FFFFFFB7h')
+
+        Buffer = '\xf0\x22\xbd\x71\x20\x17\x00'
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'lock and bh, byte ptr [rbp+00172071h]')
+
+        Buffer = '\xd3\xb6\x6b\x8f\xac\xa0'
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'sal dword ptr [rsi-5F537095h], cl')
+
+        Buffer = '66F3A7'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Archi = 32
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'rep cmpsw ')
+
     def test_lock(self):
         '''Minimal regression tests for https://github.com/BeaEngine/beaengine/issues/9'''
 
