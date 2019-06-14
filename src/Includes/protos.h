@@ -705,6 +705,7 @@ void __bea_callspec__ ucomiss_VW(PDISASM);
 void __bea_callspec__ unpckhps_(PDISASM);
 void __bea_callspec__ unpcklps_(PDISASM);
 void __bea_callspec__ vpermilps_(PDISASM);
+void __bea_callspec__ vpermilpd_(PDISASM);
 void __bea_callspec__ xorps_VW(PDISASM);
 
 /* ====================================== opcodes_AES */
