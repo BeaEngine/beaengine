@@ -5007,12 +5007,25 @@ void __bea_callspec__ psignb_(PDISASM pMyDisasm)
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         GV.MemDecoration = Arg2dqword;
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+PACKED_SIGN;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psignb ");
-        #endif
-        GV.SSE_ = 1;
-        GxEx(pMyDisasm);
-        GV.SSE_ = 0;
+        if (GV.EVEX.state == InUsePrefix) {
+          FailDecode(pMyDisasm);
+        } else if (GV.VEX.state == InUsePrefix) {
+          if (GV.VEX.L == 0x1) {
+              GV.ERROR_OPCODE = UD_;
+          }
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsignb ");
+          #endif
+          ArgsVEX(pMyDisasm);
+
+        } else {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psignb ");
+          #endif
+          GV.SSE_ = 1;
+          GxEx(pMyDisasm);
+          GV.SSE_ = 0;
+        }
     }
     else {
         GV.MemDecoration = Arg2qword;
