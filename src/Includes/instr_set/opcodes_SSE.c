@@ -4764,6 +4764,35 @@ void __bea_callspec__ pmulhrsw_(PDISASM pMyDisasm)
     }
 }
 
+/* ====================================================================
+ *      0x 0f 38 0c
+ * ==================================================================== */
+void __bea_callspec__ vpermilps_(PDISASM pMyDisasm)
+{
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+        GV.OperandSize = GV.OriginalOperandSize;
+        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+        GV.MemDecoration = Arg2dqword;
+        if (GV.VEX.state == InUsePrefix) {
+          if (GV.REX.W_ == 1) {
+            GV.ERROR_OPCODE = UD_;
+          }
+          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermilps ");
+          #endif
+          ArgsVEX(pMyDisasm);
+
+        } else {
+          FailDecode(pMyDisasm);
+        }
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+}
+
 
 /* ====================================================================
  *      0x 0f e4
