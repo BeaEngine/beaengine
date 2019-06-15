@@ -65,17 +65,6 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpsignb ')
         assert_equal(myDisasm.instr.repr, 'vpsignb ymm8, ymm15, ymmword ptr [r11+r14+22h]')
 
-
-        # VEX.NDS.256.66.0F38.WIG 08 /r
-        # vpsignb ymm1, ymm2, ymm3/m256
-        # VEX.L = 1
-
-        Buffer = 'c4020508443322'.decode('hex')
-        myDisasm = Disasm(Buffer)
-        myDisasm.read()
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
-
-
         # EVEX.NDS.128.66.0F38.WIG 08 /r
         # vpsignb xmm1 {k1}{z}, xmm2, xmm3/m128
         Buffer = '6202050807443322'.decode('hex')

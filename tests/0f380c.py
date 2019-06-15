@@ -111,5 +111,3 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Reserved_.REX.W_, 1)
         assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
-
-    

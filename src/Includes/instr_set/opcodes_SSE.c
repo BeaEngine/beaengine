@@ -3581,9 +3581,6 @@ void __bea_callspec__ phaddd_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+ARITHMETIC_INSTRUCTION;
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vphaddd ");
@@ -3627,9 +3624,6 @@ void __bea_callspec__ phaddsw_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+ARITHMETIC_INSTRUCTION;
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vphaddsw ");
@@ -3672,9 +3666,6 @@ void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vphaddw ");
           #endif
@@ -3741,9 +3732,6 @@ void __bea_callspec__ phsubw_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+ARITHMETIC_INSTRUCTION;
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vphsubw ");
@@ -3786,9 +3774,6 @@ void __bea_callspec__ phsubd_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+ARITHMETIC_INSTRUCTION;
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vphsubd ");
@@ -3831,9 +3816,6 @@ void __bea_callspec__ phsubsw_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vphsubsw ");
           #endif
@@ -5077,9 +5059,6 @@ void __bea_callspec__ psignb_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsignb ");
           #endif
@@ -5121,9 +5100,6 @@ void __bea_callspec__ psignd_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsignd ");
           #endif
@@ -5165,9 +5141,6 @@ void __bea_callspec__ psignw_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if (GV.VEX.L == 0x1) {
-              GV.ERROR_OPCODE = UD_;
-          }
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsignw ");
           #endif
