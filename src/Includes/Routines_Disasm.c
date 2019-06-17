@@ -391,12 +391,12 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
 			#ifndef BEA_LIGHT_DISASSEMBLY
 			MyNumber = *((Int8*)(UIntPtr) (GV.EIP_-1));
 			if (MyNumber > 0) {
-                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+        (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.2X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
 			}
 			else {
-                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64)*((Int8*)(IntPtr) (GV.EIP_-1)));
+        (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Argument2.ArgMnemonic,"%.8X",(Int64)*((Int8*)(IntPtr) (GV.EIP_-1)));
 			}
-            #endif
+      #endif
 		}
 		else {
 			#ifndef BEA_LIGHT_DISASSEMBLY
