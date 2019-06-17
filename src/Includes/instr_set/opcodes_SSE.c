@@ -3801,6 +3801,45 @@ void __bea_callspec__ phsubd_(PDISASM pMyDisasm)
     }
 }
 
+/* ====================================================================
+ *      0x 0f 38 0e
+ * ==================================================================== */
+void __bea_callspec__ vtestps_(PDISASM pMyDisasm)
+{
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+        GV.OperandSize = GV.OriginalOperandSize;
+        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+        if (GV.EVEX.state == InUsePrefix) {
+          FailDecode(pMyDisasm);
+        } else if (GV.VEX.state == InUsePrefix) {
+          if ((GV.REX.W_ == 1) || (GV.VEX.vvvv != 0x15)) {
+            GV.ERROR_OPCODE = UD_;
+          }
+          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vtestps ");
+          #endif
+          if (GV.VEX.L == 0) {
+              GV.SSE_ = 1;
+              GV.MemDecoration = Arg2_m128_xmm;
+              GxEx(pMyDisasm);
+              GV.SSE_ = 0;
+          }
+          else if (GV.VEX.L == 0x1) {
+              GV.AVX_ = 1;
+              GV.MemDecoration = Arg2_m256_ymm;
+              GxEx(pMyDisasm);
+              GV.AVX_ = 0;
+          }
+        } else {
+          FailDecode(pMyDisasm);
+        }
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+}
 
 /* ====================================================================
  *      0x 0f 38 07

@@ -2198,25 +2198,57 @@ void __bea_callspec__ _rEAX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
     int i = 0;
     GV.MemDecoration = 0;
 
-    if (GV.MPX_ == 1) {
-        if (GV.REX.B_ == 1) {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMPX[8]);
-            #endif
-            (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
-            (*pMyArgument).ArgSize = 128;
-        }
-        else {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMPX[0]);
-            #endif
-            (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
-            (*pMyArgument).ArgSize = 128;
-        }
-        return;
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
     }
-
-
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }
+    if (GV.MPX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMPX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 128;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMPX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 128;
+      }
+      return;
+    }
     if (GV.MMX_  == 1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[0]);
@@ -2326,7 +2358,40 @@ void __bea_callspec__ _rECX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
-
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
+    }
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }
     if (GV.MPX_ == 1) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2455,6 +2520,40 @@ void __bea_callspec__ _rEDX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
+    }
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }
     if (GV.MPX_ == 1) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2583,6 +2682,40 @@ void __bea_callspec__ _rEBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
+    }
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }
     if (GV.MPX_ == 1) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2710,6 +2843,40 @@ void __bea_callspec__ _rESP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
+    }
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }
     if (GV.MPX_ == 1) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2838,6 +3005,40 @@ void __bea_callspec__ _rEBP(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
+    }
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }
     if (GV.MPX_ == 1) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2966,6 +3167,40 @@ void __bea_callspec__ _rESI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
+    }
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }
     if (GV.MPX_ == 1) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -3094,6 +3329,40 @@ void __bea_callspec__ _rEDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
     int i = 0;
     GV.MemDecoration = 0;
+    if (GV.AVX_ == 2) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 512;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 512;
+      }
+      return;
+    }
+    if (GV.AVX_ == 1) {
+      if (GV.REX.B_ == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[8]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[8];
+        (*pMyArgument).ArgSize = 256;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[0]);
+        #endif
+        (*pMyArgument).ArgType = REGISTER_TYPE+MPX_REG+REGS[0];
+        (*pMyArgument).ArgSize = 256;
+      }
+      return;
+    }    
     if (GV.MPX_ == 1) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
