@@ -173,6 +173,9 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
     /* ========== 0x66 */
     else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
+        if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adcx ");
         #endif
@@ -1353,7 +1356,7 @@ void __bea_callspec__ bts_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bts ");
     #endif
     EvGv(pMyDisasm);
-    
+
     FillFlags(pMyDisasm,11);
 }
 
