@@ -687,6 +687,9 @@ void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
         (*pMyDisasm).Argument3.AccessMode = READ;
         (*pMyDisasm).Argument3.ArgType = REGISTER_TYPE+SSE_REG+REG0;
         (*pMyDisasm).Argument3.ArgSize = 128;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((char*) (*pMyDisasm).Argument3.ArgMnemonic, RegistersSSE[0]);
+        #endif
         GxEx(pMyDisasm);
         GV.SSE_ = 0;
       }

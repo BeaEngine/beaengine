@@ -948,7 +948,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument3.ArgType, REGISTER_TYPE + SSE_REG + REG0)
         assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'blendvpd xmm10, xmmword ptr [rax+11111111h]')
+        assert_equal(myDisasm.instr.repr, 'blendvpd xmm10, xmmword ptr [rax+11111111h], xmm0')
 
         Buffer = b'\xc4\x02\x85\x15\x90\x11\x11\x11\x11\x00\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
