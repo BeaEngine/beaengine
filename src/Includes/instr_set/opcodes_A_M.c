@@ -123,6 +123,9 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
     /* ========= 0xf3 */
     if (GV.PrefRepe == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
+        if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+          GV.ERROR_OPCODE = UD_;
+        }
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "adox ");
         #endif

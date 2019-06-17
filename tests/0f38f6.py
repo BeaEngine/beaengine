@@ -63,3 +63,30 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'adcx ')
         assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+
+        # F3 0F 38 F6 /r
+        # ADCX r32, r/m32
+
+        Buffer = 'f30f38f627'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'adox esp, dword ptr [rdi]')
+
+        # F3 REX.w 0F 38 F6 /r
+        # ADCX r64, r/m64
+
+        myREX = REX()
+        myREX.W = 1
+
+        Buffer = 'f3{:02x}0f38f627'.format(myREX.byte()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'adox rsp, qword ptr [rdi]')
+
+        # if LOCK, #UD
+
+        Buffer = 'f0f30f38f627'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'adox ')
+        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
