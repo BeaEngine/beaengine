@@ -77,22 +77,22 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
 /*                                                                         */
 /* ========================================================================*/
  void (__bea_callspec__ *opcode_map3[])(PDISASM) = {
-    pshufb_   , phaddw_   , phaddd_   , phaddsw_  , pmaddubsw_, phsubw_   , phsubd_   , phsubsw_  , psignb_   , psignw_   , psignd_   , pmulhrsw_ , vpermilps_, vpermilpd_, vtestps_  , vtestpd_  ,
-    pblendvb_ , FailDecode, FailDecode, FailDecode, blendvps_ , blendvpd_ , FailDecode, ptest_    , FailDecode, FailDecode, FailDecode, FailDecode, pabsb_    , pabsw_    , pabsd_    , FailDecode,
-    pmovsxbw_ , pmovsxbd_ , pmovsxbq_ , pmovsxwd_ , pmovsxwq_ , pmovsxdq_ , FailDecode, FailDecode, pmuldq_   , pcmpeqq_  , movntdqa_ , packusdw_ , FailDecode, FailDecode, FailDecode, FailDecode,
-    pmovzxbw_ , pmovzxbd_ , pmovzxbq_ , pmovzxwd_ , pmovzxwq_ , pmovzxdq_ , FailDecode, pcmpgtq_  , pminsb_   , pminsd_   , pminuw_   , pminud_   , pmaxsb_   , pmaxsd_   , pmaxuw_   , pmaxud_   ,
-    pmulld_   ,phminposuw_, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, aesimc    , aesenc    , aesenclast, aesdec    , aesdeclast,
-    FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    crc32_GvEb, crc32_GvEv, andn_GyEy , G17_      , FailDecode, bzhi_GyEy , adcx_GyEy , bextr_GyEy, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    pshufb_   , phaddw_   , phaddd_   , phaddsw_   , pmaddubsw_, phsubw_   , phsubd_   , phsubsw_  , psignb_   , psignw_   , psignd_   , pmulhrsw_ , vpermilps_, vpermilpd_, vtestps_  , vtestpd_  ,
+    pblendvb_ , FailDecode, FailDecode, FailDecode , blendvps_ , blendvpd_ , FailDecode, ptest_    , FailDecode, FailDecode, FailDecode, FailDecode, pabsb_    , pabsw_    , pabsd_    , FailDecode,
+    pmovsxbw_ , pmovsxbd_ , pmovsxbq_ , pmovsxwd_  , pmovsxwq_ , pmovsxdq_ , FailDecode, FailDecode, pmuldq_   , pcmpeqq_  , movntdqa_ , packusdw_ , FailDecode, FailDecode, FailDecode, FailDecode,
+    pmovzxbw_ , pmovzxbd_ , pmovzxbq_ , pmovzxwd_  , pmovzxwq_ , pmovzxdq_ , FailDecode, pcmpgtq_  , pminsb_   , pminsd_   , pminuw_   , pminud_   , pmaxsb_   , pmaxsd_   , pmaxuw_   , pmaxud_   ,
+    pmulld_   ,phminposuw_, FailDecode, FailDecode , FailDecode, psrlvd_   , psravd_   , psllvd_   , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    vgatherdd_, vgatherqd_, vgatherps_, vgatherqps_, FailDecode, FailDecode, vfmaddsub132ps_, vfmsubadd132ps_, vfmadd132ps_, vfmadd132ss_, vfmsub132ps_, vfmsub132ss_, vfnmadd132ps_, vfnmadd132ss_, vfnmsub132ps_, vfnmsub132ss_,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, vfmaddsub213ps_, vfmsubadd213ps_, vfmadd213ps_, vfmadd213ss_, vfmsub213ps_, vfmsub213ss_, vfnmadd213ps_, vfnmadd213ss_, vfnmsub213ps_, vfnmsub213ss_,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, vfmaddsub231ps_, vfmsubadd231ps_, vfmadd231ps_, vfmadd231ss_, vfmsub231ps_, vfmsub231ss_, vfnmadd231ps_, vfnmadd231ss_, vfnmsub231ps_, vfnmsub231ss_,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, aesimc    , aesenc    , aesenclast, aesdec    , aesdeclast,
+    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    crc32_GvEb, crc32_GvEv, andn_GyEy , G17_       , FailDecode, bzhi_GyEy , adcx_GyEy , bextr_GyEy, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
  };
 
 /* ========================================================================  */

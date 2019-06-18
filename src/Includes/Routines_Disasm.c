@@ -509,24 +509,27 @@ void __bea_callspec__ GyEy(PDISASM pMyDisasm)
 void __bea_callspec__ ArgsVEX(PDISASM pMyDisasm)
 {
   if (GV.VEX.L == 0) {
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
       GV.SSE_ = 1;
+      GV.MemDecoration = Arg3_m128_xmm;
       GyEy(pMyDisasm);
       fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-      GV.MemDecoration = Arg3_m128_xmm;
       GV.SSE_ = 0;
   }
   else if (GV.VEX.L == 0x1) {
+      (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
       GV.AVX_ = 1;
+      GV.MemDecoration = Arg3_m256_ymm;
       GyEy(pMyDisasm);
       fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-      GV.MemDecoration = Arg3_m256_ymm;
       GV.AVX_ = 0;
   }
   else if (GV.EVEX.LL == 0x2) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
       GV.AVX_ = 2;
+      GV.MemDecoration = Arg3_m512_zmm;
       GyEy(pMyDisasm);
       fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-      GV.MemDecoration = Arg3_m512_zmm;
       GV.AVX_ = 0;
   }
 }
