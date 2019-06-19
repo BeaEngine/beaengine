@@ -372,11 +372,10 @@ BeaDisasm = __module.Disasm
 #
 # BeaEngine helpers
 #
-# EVEX.NDS.512.66.0F38.W1
+
 class EVEX:
     def __init__(self, params = ""):
         self.reset()
-        print(params)
         if re.match("(.*)\.512\.(.*)", params):
             self.LL = 0b10
         elif re.match("(.*)\.256\.(.*)", params):
