@@ -105,11 +105,13 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesenclast ");
             #endif
-
+            if (GV.VEX.vvvv != 0x15) {
+              GV.ERROR_OPCODE = UD_;
+            }
             GV.SSE_ = 1;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
