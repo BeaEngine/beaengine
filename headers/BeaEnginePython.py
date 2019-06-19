@@ -369,6 +369,43 @@ BeaEngineRevision.restype = c_char_p
 BeaDisasm = __module.Disasm
 
 #
+# BeaEngine helpers
+#
+class VEX:
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.L = 0
+        self.pp = 0
+        self.mmmm = 0
+        self.W = 0
+        self.vvvv = 0
+        self.R = 0
+        self.X = 0
+        self.B = 0
+
+    def byte1(self):
+        return self.mmmm + (self.B << 5) + (self.X << 6) + (self.R << 7)
+
+    def byte2(self):
+        return self.pp + (self.L << 2) + (self.vvvv << 3) + (self.W << 7)
+
+class REX:
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.W = 0
+        self.R = 0
+        self.X = 0
+        self.B = 0
+
+    def byte(self):
+        return self.B + (self.X << 1) + (self.R << 2) + (self.W << 3) + 0b01000000
+
+
+#
 # BeaEngine Wrapper
 # to hide ctypes complexity
 #

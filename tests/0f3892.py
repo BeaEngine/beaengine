@@ -20,27 +20,6 @@ from headers.BeaEnginePython import *
 from nose.tools import *
 
 
-class VEX:
-    def __init__(self):
-        self.reset()
-
-    def reset(self):
-        self.L = 0
-        self.pp = 0
-        self.mmmm = 0
-        self.W = 0
-        self.vvvv = 0
-        self.R = 0
-        self.X = 0
-        self.B = 0
-
-    def byte1(self):
-        return self.mmmm + (self.B << 5) + (self.X << 6) + (self.R << 7)
-
-    def byte2(self):
-        return self.pp + (self.L << 2) + (self.vvvv << 3) + (self.W << 7)
-
-
 class TestSuite:
     def test(self):
 
@@ -118,6 +97,3 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherpd ')
         assert_equal(myDisasm.instr.repr, 'vgatherpd xmm8, xmm15, xmmword ptr [r11+r14+22h]')
-
-
-

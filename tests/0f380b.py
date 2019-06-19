@@ -17,8 +17,7 @@
 
 from headers.BeaEnginePython import *
 from nose.tools import *
-import struct
-import yaml
+
 
 class TestSuite:
     """

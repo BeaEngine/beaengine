@@ -19,20 +19,6 @@ from headers.BeaEnginePython import *
 from nose.tools import *
 
 
-class REX:
-    def __init__(self):
-        self.reset()
-
-    def reset(self):
-        self.W = 0
-        self.R = 0
-        self.X = 0
-        self.B = 0
-
-    def byte(self):
-        return self.B + (self.X << 1) + (self.R << 2) + (self.W << 3) + 0b01000000
-
-
 class TestSuite:
 
     def test(self):
