@@ -2985,6 +2985,13 @@ void __bea_callspec__ xadd_EbGb(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xadd ");
     #endif
     EbGb(pMyDisasm);
+    if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+      if ((*pMyDisasm).Argument1.ArgType != MEMORY_TYPE) {
+        GV.ERROR_OPCODE = UD_;
+      }
+    }
+    (*pMyDisasm).Argument1.AccessMode = WRITE;
+    (*pMyDisasm).Argument2.AccessMode = WRITE;
     FillFlags(pMyDisasm,110);
 }
 
@@ -3001,6 +3008,13 @@ void __bea_callspec__ xadd_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xadd ");
     #endif
     EvGv(pMyDisasm);
+    if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+      if ((*pMyDisasm).Argument1.ArgType != MEMORY_TYPE) {
+        GV.ERROR_OPCODE = UD_;
+      }
+    }
+    (*pMyDisasm).Argument1.AccessMode = WRITE;
+    (*pMyDisasm).Argument2.AccessMode = WRITE;
     FillFlags(pMyDisasm,110);
 }
 

@@ -44,7 +44,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf3808')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'psignb ')
-        assert_equal(myDisasm.instr.repr, 'psignb xmm2, dqword ptr [rax+44332211h]')
+        assert_equal(myDisasm.instr.repr, 'psignb xmm2, xmmword ptr [rax+44332211h]')
 
         # VEX.NDS.128.66.0F38.WIG 08 /r
         # vpsignb xmm1, xmm2, xmm3/m128

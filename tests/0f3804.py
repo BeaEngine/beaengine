@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf3804')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'pmaddubsw ')
-        assert_equal(myDisasm.instr.repr, 'pmaddubsw xmm2, dqword ptr [rax+44332211h]')
+        assert_equal(myDisasm.instr.repr, 'pmaddubsw xmm2, xmmword ptr [rax+44332211h]')
 
         # NP 0F 38 04 /r 1
         # pmaddubsw mm1, mm2/m64
