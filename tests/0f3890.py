@@ -69,31 +69,25 @@ class TestSuite:
 
         # EVEX.NDS.512.66.0F38.W0 90 /r
         # vgatherdd zmm1 {k1}{z}, zmm2, zmm3/m512
-        Buffer = '6202054090443322'.decode('hex')
+        myEVEX = EVEX('EVEX.NDS.512.66.0F38.W1')
+        Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Reserved_.EVEX.P0, 0x2)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P1, 0x5)
+        assert_equal(myDisasm.instr.Reserved_.EVEX.P1, 0x85)
         assert_equal(myDisasm.instr.Reserved_.EVEX.P2, 0x40)
         assert_equal(myDisasm.instr.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.instr.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdd ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdd zmm0, zmm15, zmmword ptr [rbx+rsi+22h]')
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdq ')
+        assert_equal(myDisasm.instr.repr, 'vgatherdq zmm0, zmm15, zmmword ptr [rbx+rsi+22h]')
 
 
         # VEX.NDS.128.66.0F38.W1 90 /r
-        # vgatherdd xmm1, xmm2, xmm3/m128
-
-        myVEX = VEX()
-        myVEX.L = 0
-        myVEX.W = 1
-        myVEX.pp = 0b1
-        myVEX.mmmm = 0b10
-        myVEX.vvvv = 0b0
-
-        Buffer = 'c4{:02x}{:02x}90443322'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
+        # vgatherdq xmm1, xmm2, xmm3/m128
+        myVEX = VEX('VEX.NDS.128.66.0F38.W1')
+        Buffer = '{}90443322'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdd ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdd xmm8, xmm15, xmmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdq ')
+        assert_equal(myDisasm.instr.repr, 'vgatherdq xmm8, xmm15, xmmword ptr [r11+r14+22h]')

@@ -425,8 +425,27 @@ class EVEX:
         return self.aaa + (self.V << 3) + (self.b << 4) + (self.LL << 5) + (self.z << 7)
 
 class VEX:
-    def __init__(self):
+    def __init__(self, params = ""):
         self.reset()
+        if re.match("(.*)\.256\.(.*)", params):
+            self.L = 0b1
+
+        if re.match("(.*)\.66\.(.*)", params):
+            self.pp = 0b1
+        elif re.match("(.*)\.F3\.(.*)", params):
+            self.pp = 0b10
+        elif re.match("(.*)\.F2\.(.*)", params):
+            self.pp = 0b11
+
+        if re.match("(.*)\.0F\.(.*)", params):
+            self.mmmm = 0b1
+        elif re.match("(.*)\.0F38\.(.*)", params):
+            self.mmmm = 0b10
+        elif re.match("(.*)\.0F3A\.(.*)", params):
+            self.mmmm = 0b11
+
+        if re.match("(.*)\.W1(.*)", params):
+            self.W = 0b1
 
     def reset(self):
         self.L = 0
@@ -437,6 +456,9 @@ class VEX:
         self.R = 0
         self.X = 0
         self.B = 0
+
+    def c4(self):
+        return 'c4{:02x}{:02x}'.format(self.byte1(), self.byte2())
 
     def byte1(self):
         return self.mmmm + (self.B << 5) + (self.X << 6) + (self.R << 7)

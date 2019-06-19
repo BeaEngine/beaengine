@@ -6296,9 +6296,9 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         if (GV.VEX.state == InUsePrefix) {
-          if (GV.REX.W_ == 0x0) {
+          if ((GV.REX.W_ == 0x1) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 1))) {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherdd ");
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherdq ");
             #endif
           } else {
             #ifndef BEA_LIGHT_DISASSEMBLY
