@@ -145,11 +145,13 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesdec ");
             #endif
-
+            if (GV.VEX.vvvv != 0x15) {
+              GV.ERROR_OPCODE = UD_;
+            }
             GV.SSE_ = 1;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
@@ -183,11 +185,13 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesdeclast ");
             #endif
-
+            if (GV.VEX.vvvv != 0x15) {
+              GV.ERROR_OPCODE = UD_;
+            }
             GV.SSE_ = 1;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
@@ -223,9 +227,9 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
             #endif
 
             GV.SSE_ = 1;
+            GV.MemDecoration = Arg2_m128i_xmm;
             GxEx(pMyDisasm);
             /*fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);*/
-            GV.MemDecoration = Arg2_m128i_xmm;
             GV.SSE_ = 0;
             GV.ImmediatSize = 8;
             GV.EIP_++;
