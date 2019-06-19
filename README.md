@@ -34,3 +34,7 @@ cmake -DoptBUILD_DLL=ON beaengine
 make
 
 ```
+
+## documentation
+
+Actual documentation can be read here : http://beatrix2004.free.fr/BeaEngine/index1.php
