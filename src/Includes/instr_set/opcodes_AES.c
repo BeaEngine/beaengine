@@ -28,10 +28,13 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesimc ");
             #endif
+            if (GV.VEX.vvvv != 0x15) {
+              GV.ERROR_OPCODE = UD_;
+            }
 
             GV.SSE_ = 1;
-            GxEx(pMyDisasm);
             GV.MemDecoration = Arg2_m128i_xmm;
+            GxEx(pMyDisasm);
             GV.SSE_ = 0;
         }
         else {
