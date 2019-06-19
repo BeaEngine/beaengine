@@ -60,17 +60,18 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
 {
     /* ========== 0x66 */
     if (GV.OperandSize == 16) {
-
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesenc ");
             #endif
-
+            if (GV.VEX.vvvv != 0x15) {
+              GV.ERROR_OPCODE = UD_;
+            }
             GV.SSE_ = 1;
+            GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3_m128i_xmm;
             GV.SSE_ = 0;
 
         }
