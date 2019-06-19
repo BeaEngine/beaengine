@@ -6,6 +6,7 @@
 # =====================================
 
 from ctypes import *
+import re
 
 INSTRUCT_LENGTH = 64
 
@@ -371,6 +372,59 @@ BeaDisasm = __module.Disasm
 #
 # BeaEngine helpers
 #
+# EVEX.NDS.512.66.0F38.W1
+class EVEX:
+    def __init__(self, params = ""):
+        self.reset()
+        print(params)
+        if re.match("(.*)\.512\.(.*)", params):
+            self.LL = 0b10
+        elif re.match("(.*)\.256\.(.*)", params):
+            self.LL = 0b1
+
+        if re.match("(.*)\.66\.(.*)", params):
+            self.pp = 0b1
+        elif re.match("(.*)\.F3\.(.*)", params):
+            self.pp = 0b10
+        elif re.match("(.*)\.F2\.(.*)", params):
+            self.pp = 0b11
+
+        if re.match("(.*)\.0F\.(.*)", params):
+            self.mm = 0b1
+        elif re.match("(.*)\.0F38\.(.*)", params):
+            self.mm = 0b10
+        elif re.match("(.*)\.0F3A\.(.*)", params):
+            self.mm = 0b11
+
+        if re.match("(.*)\.W1(.*)", params):
+            self.W = 0b1
+
+    def reset(self):
+        self.mm = 0
+        self.pp = 0
+        self.RXB = 0
+        self.R = 0
+        self.X = 0
+        self.vvvv = 0
+        self.V = 0
+        self.aaa = 0
+        self.W = 0
+        self.z = 0
+        self.b = 0
+        self.LL = 0
+
+    def prefix(self):
+        return '62{:02x}{:02x}{:02x}'.format(self.p0(),self.p1(),self.p2())
+
+    def p0(self):
+        return self.mm + (self.R << 4) + (self.RXB << 5)
+
+    def p1(self):
+        return self.pp + 0b100 + (self.vvvv << 3) + (self.W << 7)
+
+    def p2(self):
+        return self.aaa + (self.V << 3) + (self.b << 4) + (self.LL << 5) + (self.z << 7)
+
 class VEX:
     def __init__(self):
         self.reset()

@@ -5645,9 +5645,15 @@ void __bea_callspec__ pmulld_(PDISASM pMyDisasm)
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         if (GV.VEX.state == InUsePrefix) {
-          #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmulld ");
-          #endif
+          if ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 1)) {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmullq ");
+            #endif
+          } else {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmulld ");
+            #endif
+          }
           ArgsVEX(pMyDisasm);
         } else {
           (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION;
