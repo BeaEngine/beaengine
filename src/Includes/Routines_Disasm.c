@@ -88,6 +88,9 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     GV.OriginalOperandSize = 32;
     GV.AddressSize = 32;
     GV.Architecture = (*pMyDisasm).Archi;
+    if (GV.Architecture == 0) {
+      GV.Architecture = 64;
+    }
     (*pMyDisasm).Prefix.Number = 0;
     if (GV.Architecture == 64) {
         GV.AddressSize = 64;

@@ -3288,7 +3288,7 @@ class TestSuite:
 
         Buffer = b'\x66\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Archi = 0
+        myDisasm.instr.Archi = 32
         myDisasm.read()
         assert_equal(myDisasm.instr.repr, 'bndmov bnd1, qword ptr [ebx]')
         assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE + MPX_REG + REG1)
@@ -3300,7 +3300,7 @@ class TestSuite:
 
         Buffer = b'\x66\x0f\x1b\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Archi = 0
+        myDisasm.instr.Archi = 32
         myDisasm.read()
         assert_equal(myDisasm.instr.repr, 'bndmov qword ptr [ebx], bnd1')
         assert_equal(myDisasm.instr.Argument1.ArgType, MEMORY_TYPE)
