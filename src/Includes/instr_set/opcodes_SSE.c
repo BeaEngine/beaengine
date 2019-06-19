@@ -5420,9 +5420,15 @@ void __bea_callspec__ psravd_(PDISASM pMyDisasm)
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         if (GV.VEX.state == InUsePrefix) {
-          #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsravd ");
-          #endif
+          if ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 1)) {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsravq ");
+            #endif
+          } else {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsravd ");
+            #endif
+          }
           ArgsVEX(pMyDisasm);
         } else {
           (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION;
@@ -5690,9 +5696,15 @@ void __bea_callspec__ psllvd_(PDISASM pMyDisasm)
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
         if (GV.VEX.state == InUsePrefix) {
-          #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsllvd ");
-          #endif
+          if ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 1)) {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsllvq ");
+            #endif
+          } else {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsllvd ");
+            #endif
+          }
           ArgsVEX(pMyDisasm);
         } else {
           (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION;
