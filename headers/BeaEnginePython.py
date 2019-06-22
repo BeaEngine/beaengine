@@ -376,6 +376,10 @@ BeaDisasm = __module.Disasm
 class EVEX:
     def __init__(self, params = ""):
         self.reset()
+
+        if re.match("(.*)\.(NDS|NDD|DDS)\.(.*)", params):
+            self.vvvv = 0b0
+            
         if re.match("(.*)\.512\.(.*)", params):
             self.LL = 0b10
         elif re.match("(.*)\.256\.(.*)", params):
@@ -404,7 +408,7 @@ class EVEX:
         self.RXB = 0
         self.R = 0
         self.X = 0
-        self.vvvv = 0
+        self.vvvv = 0b1111
         self.V = 0
         self.aaa = 0
         self.W = 0
@@ -427,6 +431,10 @@ class EVEX:
 class VEX:
     def __init__(self, params = ""):
         self.reset()
+
+        if re.match("(.*)\.(NDS|NDD|DDS)\.(.*)", params):
+            self.vvvv = 0b0
+
         if re.match("(.*)\.256\.(.*)", params):
             self.L = 0b1
 
@@ -452,7 +460,7 @@ class VEX:
         self.pp = 0
         self.mmmm = 0
         self.W = 0
-        self.vvvv = 0
+        self.vvvv = 0b1111
         self.R = 0
         self.X = 0
         self.B = 0
