@@ -2626,7 +2626,7 @@ class TestSuite:
         Buffer = b'\xc4\x01\x83\xc2\x00\x00\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'vcmpeqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpeqsd xmm8, xmm15, xmmword ptr [r8]')
         assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG8)
         assert_equal(myDisasm.instr.Argument1.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument1.AccessMode, READ)
@@ -2634,7 +2634,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
@@ -2644,7 +2644,7 @@ class TestSuite:
         Buffer = b'\xc4\x01\x83\xc2\x00\x01\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'vcmpltsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpltsd xmm8, xmm15, xmmword ptr [r8]')
         assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE + SSE_REG + REG8)
         assert_equal(myDisasm.instr.Argument1.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument1.AccessMode, READ)
@@ -2652,7 +2652,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
@@ -2669,12 +2669,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmplesd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmplesd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x03\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2686,12 +2686,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpunordsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpunordsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x04\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2703,12 +2703,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpneqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpneqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x05\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2720,12 +2720,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpnltsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpnltsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x06\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2737,12 +2737,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpnlesd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpnlesd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x07\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2754,12 +2754,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpordsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpordsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x08\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2771,12 +2771,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpeq_uqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpeq_uqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x09\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2788,12 +2788,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpngesd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpngesd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x0a\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2805,12 +2805,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpngtsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpngtsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2822,12 +2822,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpfalsesd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpfalsesd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x0c\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2839,12 +2839,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpneq_oqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpneq_oqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x0d\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2856,12 +2856,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpgesd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpgesd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x0e\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2873,12 +2873,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpgtsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpgtsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x0f\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2890,12 +2890,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmptruesd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmptruesd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x10\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2907,12 +2907,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpeq_ossd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpeq_ossd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2924,12 +2924,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmplt_oqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmplt_oqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x12\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2941,12 +2941,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmple_oqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmple_oqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x13\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2958,12 +2958,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpunord_ssd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpunord_ssd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x14\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2975,12 +2975,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpneq_ussd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpneq_ussd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x15\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2992,12 +2992,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpnlt_uqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpnlt_uqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x16\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3009,12 +3009,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpnle_uqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpnle_uqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x17\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3026,12 +3026,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpord_ssd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpord_ssd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x18\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3043,12 +3043,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpeq_ussd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpeq_ussd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x19\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3060,12 +3060,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpnge_uqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpnge_uqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x1a\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3077,12 +3077,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpngt_uqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpngt_uqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x1b\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3094,12 +3094,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpfalse_ossd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpfalse_ossd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x1c\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3111,12 +3111,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpneq_ossd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpneq_ossd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x1d\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3128,12 +3128,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpge_oqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpge_oqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x1e\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3145,12 +3145,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmpgt_oqsd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmpgt_oqsd xmm8, xmm15, xmmword ptr [r8]')
 
         Buffer = b'\xc4\x01\x83\xc2\x00\x1f\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -3162,12 +3162,12 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType,  + MEMORY_TYPE)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 128)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument4.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument4.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument4.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'vcmptrue_ussd xmm8, xmm15, qword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vcmptrue_ussd xmm8, xmm15, xmmword ptr [r8]')
 
 
     def test_mpx(self):

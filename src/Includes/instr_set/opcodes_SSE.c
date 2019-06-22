@@ -918,8 +918,6 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
     /* ========= 0xf2 */
     GV.ImmediatSize = 8;
     if (GV.PrefRepne == 1) {
-
-
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + COMPARISON_INSTRUCTION;
             /* use pseudo-opcode instead */
@@ -927,12 +925,8 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcmpsd ");
             #endif*/
 
-            GV.SSE_ = 1;
-            GyEy(pMyDisasm);
-            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3qword;
-            GV.SSE_ = 0;
-
+            ArgsVEX(pMyDisasm);
+            
             (*pMyDisasm).Argument1.AccessMode = READ;
             GV.EIP_++;
             if (!Security(0, pMyDisasm)) return;
@@ -961,7 +955,6 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             /*#ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpsd ");
             #endif*/
-
 
             GV.SSE_ = 1;
             GxEx(pMyDisasm);
@@ -1023,8 +1016,6 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
     }
     /* ========== 0xf3 */
     else if (GV.PrefRepe == 1) {
-
-
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + COMPARISON_INSTRUCTION;
             /* use pseudo-opcode instead */
@@ -1032,11 +1023,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcmpss ");
             #endif*/
 
-            GV.SSE_ = 1;
-            GyEy(pMyDisasm);
-            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.MemDecoration = Arg3dword;
-            GV.SSE_ = 0;
+            ArgsVEX(pMyDisasm);
 
             (*pMyDisasm).Argument1.AccessMode = READ;
             GV.EIP_++;
@@ -1136,21 +1123,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcmppd ");
             #endif*/
 
-            if (GV.VEX.L == 0) {
-                GV.SSE_ = 1;
-                GyEy(pMyDisasm);
-                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m128_xmm;
-                GV.SSE_ = 0;
-            }
-            else {
-                GV.AVX_ = 1;
-                GyEy(pMyDisasm);
-                fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-                GV.MemDecoration = Arg3_m256_ymm;
-                GV.AVX_ = 0;
-
-            }
+            ArgsVEX(pMyDisasm);
 
             (*pMyDisasm).Argument1.AccessMode = READ;
             GV.EIP_++;
