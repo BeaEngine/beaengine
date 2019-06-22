@@ -926,7 +926,7 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
             #endif*/
 
             ArgsVEX(pMyDisasm);
-            
+
             (*pMyDisasm).Argument1.AccessMode = READ;
             GV.EIP_++;
             if (!Security(0, pMyDisasm)) return;
@@ -7283,13 +7283,30 @@ void __bea_callspec__ pand_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pand ");
           #endif
-          GV.MemDecoration = Arg2_m128_xmm;
-          GV.SSE_ = 1;
-          GxEx(pMyDisasm);
-          GV.SSE_ = 0;
+          if (GV.VEX.L == 0) {
+              (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+              GV.SSE_ = 1;
+              GV.MemDecoration = Arg2_m128_xmm;
+              GxEx(pMyDisasm);
+              GV.SSE_ = 0;
+          }
+          else if (GV.VEX.L == 0x1) {
+              (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+              GV.AVX_ = 1;
+              GV.MemDecoration = Arg2_m256_ymm;
+              GxEx(pMyDisasm);
+              GV.AVX_ = 0;
+          }
+          else if (GV.EVEX.LL == 0x2) {
+              (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+              GV.AVX_ = 2;
+              GV.MemDecoration = Arg2_m512_zmm;
+              GxEx(pMyDisasm);
+              GV.AVX_ = 0;
+          }
         }
     }
-    else {
+    else if (GV.VEX.state != InUsePrefix) {
         GV.MemDecoration = Arg2qword;
         (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -7298,6 +7315,9 @@ void __bea_callspec__ pand_(PDISASM pMyDisasm)
         GV.MMX_ = 1;
         GxEx(pMyDisasm);
         GV.MMX_ = 0;
+    }
+    else {
+      FailDecode(pMyDisasm);
     }
 }
 
