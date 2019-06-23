@@ -379,7 +379,7 @@ class EVEX:
 
         if re.match("(.*)\.(NDS|NDD|DDS)\.(.*)", params):
             self.vvvv = 0b0
-            
+
         if re.match("(.*)\.512\.(.*)", params):
             self.LL = 0b10
         elif re.match("(.*)\.256\.(.*)", params):
@@ -575,6 +575,6 @@ class Disasm():
         """
         return "{} {:<30} {}".format(
             "0x%08x" %(self.seek()),
-            " ".join("%02x" % ord(b) for b in self.bytes),
+            " ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes),
             self.instr.repr
         )
