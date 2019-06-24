@@ -25,7 +25,7 @@ unit BeaEngineDelphi32;
 //    it under the terms of the GNU Lesser General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
+//
 //    BeaEngine is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -140,24 +140,24 @@ uses Windows,SysUtils;
           Argument3 : TARGTYPE;
           Argument4 : TARGTYPE;
           Prefix : TPREFIXINFO;
-          Reserved_ : array[0..43] of longint;
+          Reserved_ : array[0..48] of longint;
        end;
      TDISASM = _Disasm;
      PDISASM = ^_Disasm;
      LPDISASM = ^_Disasm;
 
   const
-     ESReg = 1;     
-     DSReg = 2;     
-     FSReg = 3;     
-     GSReg = 4;     
-     CSReg = 5;     
-     SSReg = 6;     
-     InvalidPrefix = 4;     
-     SuperfluousPrefix = 2;     
-     NotUsedPrefix = 0;     
-     MandatoryPrefix = 8;     
-     InUsePrefix = 1;     
+     ESReg = 1;
+     DSReg = 2;
+     FSReg = 3;
+     GSReg = 4;
+     CSReg = 5;
+     SSReg = 6;
+     InvalidPrefix = 4;
+     SuperfluousPrefix = 2;
+     NotUsedPrefix = 0;
+     MandatoryPrefix = 8;
+     InUsePrefix = 1;
 
 
   type
@@ -182,6 +182,7 @@ uses Windows,SysUtils;
       AVX_INSTRUCTION               =$100000000;
       AVX2_INSTRUCTION              =$200000000;
       MPX_INSTRUCTION               =$400000000;
+      AVX512_INSTRUCTION            =$800000000;
        DATA_TRANSFER = $1;
        ARITHMETIC_INSTRUCTION = 2;
        LOGICAL_INSTRUCTION = 3;
@@ -334,7 +335,7 @@ uses Windows,SysUtils;
   function Disasm(var aDisAsm:TDISASM):longint;stdcall;
   function BeaEngineVersion:longint;stdcall;
   function BeaEngineRevision:longint;stdcall;
-  
+
 implementation
 {$IFNDEF USEDLL}
 {$L BeaEngineLib.obj}

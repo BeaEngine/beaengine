@@ -80,7 +80,7 @@ typedef struct {
 #pragma pack(1)
 typedef struct  {
    Int32 Category;
-   Int32 Opcode; 
+   Int32 Opcode;
    char Mnemonic[24];
    Int32 BranchType;
    EFLStruct Flags;
@@ -118,7 +118,7 @@ typedef struct _Disasm {
    ARGTYPE Argument3;
    ARGTYPE Argument4;
    PREFIXINFO Prefix;
-   UInt32 Reserved_[44];
+   UInt32 Reserved_[48];
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()
 
@@ -159,7 +159,7 @@ enum INSTRUCTION_TYPE
   AVX_INSTRUCTION               = (int)0x100000000,
   AVX2_INSTRUCTION               = (int)0x200000000,
   MPX_INSTRUCTION               = (int)0x400000000,
-
+  AVX512_INSTRUCTION            = (int)0x800000000,
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
     LOGICAL_INSTRUCTION,

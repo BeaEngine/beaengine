@@ -46,10 +46,10 @@ EFLStruct STRUCT
     TF_     BYTE    0 ;(bit 8)
     IF_     BYTE    0 ;(bit 9)
     DF_     BYTE    0 ;(bit 10)
-    NT_     BYTE    0 ;(bit 14) 
+    NT_     BYTE    0 ;(bit 14)
     RF_     BYTE    0 ;(bit 16)
             BYTE    0 ; alignment
-EFLStruct ENDS            
+EFLStruct ENDS
 
  MEMORYTYPE STRUCT
    BaseRegister    DWORD   0
@@ -93,7 +93,7 @@ _Disasm STRUCT
     Argument3       ARGTYPE <>
     Argument4       ARGTYPE <>
     Prefix          PREFIXINFO <>
-    Reserved_       DWORD   44 dup(0)
+    Reserved_       DWORD   48 dup(0)
 _Disasm ENDS
 
 Disasm  PROTO :DWORD
@@ -120,7 +120,7 @@ Disasm  PROTO :DWORD
     MandatoryPrefix             equ 8
 
  ; ********** EFLAGS states
- 
+
     TE_      equ 1   ; test
     MO_      equ 2   ; modify
     RE_      equ 4   ; reset
@@ -152,7 +152,7 @@ Disasm  PROTO :DWORD
     AVX_INSTRUCTION             equ 100000000h
     AVX2_INSTRUCTION            equ 200000000h
     MPX_INSTRUCTION             equ 400000000h
-
+    AVX512_INSTRUCTION          equ 800000000h
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
     LOGICAL_INSTRUCTION         equ 3
@@ -170,7 +170,7 @@ Disasm  PROTO :DWORD
     LOGARITHMIC_INSTRUCTION     equ 14
     TRIGONOMETRIC_INSTRUCTION   equ 15
     UNSUPPORTED_INSTRUCTION     equ 16
-    
+
     LOAD_CONSTANTS              equ 17
     FPUCONTROL                  equ 18
     STATE_MANAGEMENT            equ 19
@@ -182,21 +182,21 @@ Disasm  PROTO :DWORD
     SIMD128bits                 equ 23
     SIMD64bits                  equ 24
     CACHEABILITY_CONTROL        equ 25
-    
-    FP_INTEGER_CONVERSION       equ 26 
+
+    FP_INTEGER_CONVERSION       equ 26
     SPECIALIZED_128bits         equ 27
     SIMD_FP_PACKED              equ 28
-    SIMD_FP_HORIZONTAL          equ 29 
+    SIMD_FP_HORIZONTAL          equ 29
     AGENT_SYNCHRONISATION       equ 30
 
-    PACKED_ALIGN_RIGHT          equ 31  
+    PACKED_ALIGN_RIGHT          equ 31
     PACKED_SIGN                 equ 32
 
     ; ****************************************** SSE4
-    
+
     PACKED_BLENDING_INSTRUCTION equ 33
     PACKED_TEST                 equ 34
-    
+
     ; CONVERSION_INSTRUCTION -> Packed Integer Format Conversions et Dword Packing With Unsigned Saturation
     ; COMPARISON -> Packed Comparison SIMD Integer Instruction
     ; ARITHMETIC_INSTRUCTION -> Dword Multiply Instruction
@@ -300,5 +300,3 @@ Disasm  PROTO :DWORD
     PrefixedNumeral             equ 10000h
     SuffixedNumeral             equ 0
     ShowSegmentRegs             equ 01000000h
-             
-

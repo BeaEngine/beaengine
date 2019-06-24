@@ -76,7 +76,7 @@ Structure ARGTYPE
   ArgSize.l
   ArgPosition.l
   AccessMode.l
-  Memory.MEMORYTYPE 
+  Memory.MEMORYTYPE
   SegmentReg.l
 EndStructure
 Global Argtype.ARGTYPE
@@ -94,7 +94,7 @@ Structure _Disasm
   Argument3.ARGTYPE
   Argument4.ARGTYPE
   Prefix.PREFIXINFO
-  Reserved_.l[44]
+  Reserved_.l[48]
 EndStructure
 Global MyDisasm._Disasm
 
@@ -139,14 +139,15 @@ Global MyDisasm._Disasm
 #SSE42_INSTRUCTION           = $01000000
 #SYSTEM_INSTRUCTION          = $02000000
 #VM_INSTRUCTION              = $04000000
-UNDOCUMENTED_INSTRUCTION     = $08000000
-AMD_INSTRUCTION              = $10000000
-ILLEGAL_INSTRUCTION          = $20000000
-AES_INSTRUCTION              = $40000000
-CLMUL_INSTRUCTION            = $80000000
-AVX_INSTRUCTION              = $100000000
-AVX2_INSTRUCTION             = $200000000
-MPX_INSTRUCTION              = $400000000
+#UNDOCUMENTED_INSTRUCTION    = $08000000
+#AMD_INSTRUCTION             = $10000000
+#ILLEGAL_INSTRUCTION         = $20000000
+#AES_INSTRUCTION             = $40000000
+#CLMUL_INSTRUCTION           = $80000000
+#AVX_INSTRUCTION             = $100000000
+#AVX2_INSTRUCTION            = $200000000
+#MPX_INSTRUCTION             = $400000000
+#AVX512_INSTRUCTION          = $800000000
 
 #DATA_TRANSFER               = 1
 #ARITHMETIC_INSTRUCTION      = 2
@@ -165,7 +166,7 @@ MPX_INSTRUCTION              = $400000000
 #LOGARITHMIC_INSTRUCTION     = 14
 #TRIGONOMETRIC_INSTRUCTION   = 15
 #UNSUPPORTED_INSTRUCTION     = 16
-   
+
 #LOAD_CONSTANTS              = 17
 #FPUCONTROL                  = 18
 #STATE_MANAGEMENT            = 19
@@ -177,21 +178,21 @@ MPX_INSTRUCTION              = $400000000
 #SIMD128bits                 = 23
 #SIMD64bits                  = 24
 #CACHEABILITY_CONTROL        = 25
-   
+
 #FP_INTEGER_CONVERSION       = 26
 #SPECIALIZED_128bits         = 27
 #SIMD_FP_PACKED              = 28
 #SIMD_FP_HORIZONTAL          = 29
 #AGENT_SYNCHRONISATION       = 30
 
-#PACKED_ALIGN_RIGHT          = 31 
+#PACKED_ALIGN_RIGHT          = 31
 #PACKED_SIGN                 = 32
 
 ; ****************************************** SSE4
-   
+
 #PACKED_BLENDING_INSTRUCTION = 33
 #PACKED_TEST                 = 34
-   
+
 ; CONVERSION_INSTRUCTION -> Packed Integer Format Conversions et Dword Packing With Unsigned Saturation
 ; COMPARISON -> Packed Comparison SIMD Integer Instruction
 ; ARITHMETIC_INSTRUCTION -> Dword Multiply Instruction

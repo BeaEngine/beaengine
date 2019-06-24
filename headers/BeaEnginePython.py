@@ -498,7 +498,7 @@ class Disasm():
         Init Disasm object
         Example :
             # instantiate BeaEngine on buffer
-            buffer = '\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
+            buffer = b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
             disasm = Disasm(buffer)
         """
         self.buffer = buffer
@@ -528,7 +528,7 @@ class Disasm():
         """
         getter to get bytes sequence of disassembled instruction
         Example:
-            print(" ".join("%02x" % ord(b) for b in disasm.bytes))
+            print(" ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes))
         """
         offset = self.instr.offset - addressof(self.target)
         if self.length == -1:
@@ -552,7 +552,7 @@ class Disasm():
         """
         Disassembler routine
         Example:
-            buffer = '\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
+            buffer = b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
             disasm = Disasm(buffer2)
             for i in range(4):
                 disasm.read()
@@ -567,7 +567,7 @@ class Disasm():
         """
         Complete instruction representation for quick analysis
         Example:
-            buffer = '\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
+            buffer = b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
             disasm = Disasm(buffer2)
             for i in range(4):
                 disasm.read()
@@ -576,5 +576,5 @@ class Disasm():
         return "{} {:<30} {}".format(
             "0x%08x" %(self.seek()),
             " ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes),
-            self.instr.repr
+            self.instr.repr.decode("utf-8")
         )
