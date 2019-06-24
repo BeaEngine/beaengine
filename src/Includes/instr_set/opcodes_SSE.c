@@ -5226,6 +5226,23 @@ void __bea_callspec__ ucomiss_VW(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ unpckhps_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 0x1) {
+      (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vunpckhpd ");
+      #endif
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vunpckhps ");
+      #endif
+      ArgsVEX(pMyDisasm);
+    }
+  }
+  else {
     /* ========== 0x66 */
     if (GV.OperandSize == 16) {
         GV.OperandSize = GV.OriginalOperandSize;
@@ -5249,6 +5266,7 @@ void __bea_callspec__ unpckhps_(PDISASM pMyDisasm)
         GxEx(pMyDisasm);
         GV.SSE_ = 0;
     }
+  }
 }
 
 /* ====================================================================
@@ -5257,6 +5275,7 @@ void __bea_callspec__ unpckhps_(PDISASM pMyDisasm)
 void __bea_callspec__ unpcklps_(PDISASM pMyDisasm)
 {
     if (GV.VEX.state == InUsePrefix) {
+      (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION;
       if (GV.VEX.pp == 0x1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vunpcklpd ");
@@ -5264,6 +5283,7 @@ void __bea_callspec__ unpcklps_(PDISASM pMyDisasm)
         ArgsVEX(pMyDisasm);
       }
       else {
+        (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vunpcklps ");
         #endif
