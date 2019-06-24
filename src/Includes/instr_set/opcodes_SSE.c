@@ -5256,28 +5256,44 @@ void __bea_callspec__ unpckhps_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ unpcklps_(PDISASM pMyDisasm)
 {
-    /* ========== 0x66 */
-    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-        GV.OperandSize = GV.OriginalOperandSize;
-        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
-        (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+SHUFFLE_UNPACK;
+    if (GV.VEX.state == InUsePrefix) {
+      if (GV.VEX.pp == 0x1) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "unpcklpd ");
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vunpcklpd ");
         #endif
-        GV.SSE_ = 1;
-        GxEx(pMyDisasm);
-        GV.SSE_ = 0;
+        ArgsVEX(pMyDisasm);
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vunpcklps ");
+        #endif
+        ArgsVEX(pMyDisasm);
+      }
     }
     else {
-        GV.MemDecoration = Arg2_m128_xmm;
-        (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+SHUFFLE_UNPACK;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "unpcklps ");
-        #endif
-        GV.SSE_ = 1;
-        GxEx(pMyDisasm);
-        GV.SSE_ = 0;
+      /* ========== 0x66 */
+      if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+          GV.OperandSize = GV.OriginalOperandSize;
+          (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+          GV.MemDecoration = Arg2_m128_xmm;
+          (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+SHUFFLE_UNPACK;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "unpcklpd ");
+          #endif
+          GV.SSE_ = 1;
+          GxEx(pMyDisasm);
+          GV.SSE_ = 0;
+      }
+      else {
+          GV.MemDecoration = Arg2_m128_xmm;
+          (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+SHUFFLE_UNPACK;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "unpcklps ");
+          #endif
+          GV.SSE_ = 1;
+          GxEx(pMyDisasm);
+          GV.SSE_ = 0;
+      }
     }
 }
 
