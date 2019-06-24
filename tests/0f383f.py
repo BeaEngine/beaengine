@@ -22,7 +22,7 @@ from nose.tools import *
 class TestSuite:
     def test(self):
         # 66 0F 38 3f /r
-        # pmaxud mm1, mm2/m64
+        # pmaxud xmm1, xmm2/m128
         Buffer = '660f383f9011223344'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
