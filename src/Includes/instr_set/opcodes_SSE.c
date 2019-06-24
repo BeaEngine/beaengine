@@ -2588,7 +2588,41 @@ void __bea_callspec__ movlps_VM(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ movlps_MV(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 0x1) {
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_== 0x3) {
+          FailDecode(pMyDisasm);
+      }
+      else {
+        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+        GV.SSE_ = 1;
+        ExGx(pMyDisasm);
+        GV.SSE_ = 0;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovlpd ");
+        #endif
+        GV.MemDecoration = Arg1qword;
+      }
+    }
+    else {
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_== 0x3) {
+          FailDecode(pMyDisasm);
+      }
+      else {
+        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+        GV.SSE_ = 1;
+        ExGx(pMyDisasm);
+        GV.SSE_ = 0;
 
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovlps ");
+        #endif
+        GV.MemDecoration = Arg1qword;
+      }
+    }
+  } else {
     /* ========== 0x66 */
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
@@ -2612,6 +2646,7 @@ void __bea_callspec__ movlps_MV(PDISASM pMyDisasm)
         ExGx(pMyDisasm);
         GV.SSE_ = 0;
     }
+  }
 }
 
 
