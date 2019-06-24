@@ -176,7 +176,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
-        assert_equal(myDisasm.instr.repr, 'vmovupd xmm10, xmm0, xmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovupd xmm10, xmmword ptr [r8+00000000h]')
 
         # VEX.256.66.0F.WIG 10 /r
         myVEX = VEX('VEX.256.66.0F.WIG')
@@ -185,7 +185,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
-        assert_equal(myDisasm.instr.repr, 'vmovupd ymm10, ymm0, ymmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovupd ymm10, ymmword ptr [r8+00000000h]')
 
         # EVEX.128.66.0F.W1 10 /r
         # VMOVUPD xmm1 {k1}{z}, xmm2/m128
@@ -196,7 +196,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
-        assert_equal(myDisasm.instr.repr, 'vmovupd xmm2, xmm0, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovupd xmm2, xmmword ptr [rax+00000000h]')
 
         # EVEX.256.66.0F.W1 10 /r
         # VMOVUPD ymm1 {k1}{z}, ymm2/m256
@@ -207,7 +207,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
-        assert_equal(myDisasm.instr.repr, 'vmovupd ymm2, ymm0, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovupd ymm2, ymmword ptr [rax+00000000h]')
 
         # EVEX.512.66.0F.W1 10 /r
         # VMOVUPD zmm1 {k1}{z}, zmm2/m512
@@ -218,7 +218,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
-        assert_equal(myDisasm.instr.repr, 'vmovupd zmm2, zmm0, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovupd zmm2, zmmword ptr [rax+00000000h]')
 
 
         # 0F 10 /r
@@ -240,7 +240,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovups ')
-        assert_equal(myDisasm.instr.repr, 'vmovups xmm10, xmm0, xmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovups xmm10, xmmword ptr [r8+00000000h]')
 
         # VEX.256.0F.WIG 10 /r
         myVEX = VEX('VEX.256.0F.WIG')
@@ -249,7 +249,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovups ')
-        assert_equal(myDisasm.instr.repr, 'vmovups ymm10, ymm0, ymmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovups ymm10, ymmword ptr [r8+00000000h]')
 
         # EVEX.128.0F.W1 10 /r
         # VMOVUPD xmm1 {k1}{z}, xmm2/m128
@@ -260,7 +260,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovups ')
-        assert_equal(myDisasm.instr.repr, 'vmovups xmm2, xmm0, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovups xmm2, xmmword ptr [rax+00000000h]')
 
         # EVEX.256.0F.W1 10 /r
         # VMOVUPD ymm1 {k1}{z}, ymm2/m256
@@ -271,7 +271,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovups ')
-        assert_equal(myDisasm.instr.repr, 'vmovups ymm2, ymm0, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovups ymm2, ymmword ptr [rax+00000000h]')
 
         # EVEX.512.0F.W1 10 /r
         # VMOVUPD zmm1 {k1}{z}, zmm2/m512
@@ -282,4 +282,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovups ')
-        assert_equal(myDisasm.instr.repr, 'vmovups zmm2, zmm0, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovups zmm2, zmmword ptr [rax+00000000h]')
