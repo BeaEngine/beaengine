@@ -5848,15 +5848,30 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
 }
 
 /* =======================================
- *
+ *    0f 03
  * ======================================= */
 void __bea_callspec__ lsl_GvEw(PDISASM pMyDisasm)
 {
+    Int32 i;
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lsl ");
     #endif
-    GvEw(pMyDisasm);
+
+    GV.MemDecoration = Arg2word;
+    i = GV.OperandSize;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if ((GV.MOD_ == 0x3) && (GV.OperandSize == 64)){
+      GV.OperandSize = 32;
+    }
+    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    GV.OperandSize = i;
+    Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    GV.EIP_ += GV.DECALAGE_EIP+2;
+
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     FillFlags(pMyDisasm, 62);
 }
 
