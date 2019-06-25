@@ -445,12 +445,12 @@ class VEX:
         elif re.match("(.*)\.F2\.(.*)", params):
             self.pp = 0b11
 
-        if re.match("(.*)\.0F\.(.*)", params):
-            self.mmmm = 0b1
-        elif re.match("(.*)\.0F38\.(.*)", params):
+        if re.match("(.*)\.0F38\.(.*)", params):
             self.mmmm = 0b10
         elif re.match("(.*)\.0F3A\.(.*)", params):
             self.mmmm = 0b11
+        elif re.match("(.*)\.(0F\.(.*)|0F)", params):
+            self.mmmm = 0b1
 
         if re.match("(.*)\.W1(.*)", params):
             self.W = 0b1
