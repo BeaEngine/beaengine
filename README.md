@@ -1,6 +1,6 @@
 # BeaEngine 5
 
-BeaEngine is a library coded in C respecting ISO C99 norm. It has been designed to decode instructions from 16 bits, 32 bits and 64 bits intel architectures. Actually, the main function available is called Disasm. It includes standard instruction set and instruction set from FPU, MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX, CLMUL, AES, MPX technologies. For those who like analyzing malicious codes and more generally obfuscated codes, BeaEngine even decodes undocumented instructions called "alias" on the web site sandpile. In all scenarios, it sends back a complex structure that describes precisely the analyzed instructions.
+BeaEngine is a library coded in C respecting ISO C99 norm. It has been designed to decode instructions from 16 bits, 32 bits and 64 bits intel architectures. Actually, the main function available is called Disasm. It includes standard instruction set and instruction set from FPU, MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX, CLMUL, AES, MPX, AVX, AVX2, AVX512 (VEX & EVEX prefixes) technologies. For those who like analyzing malicious codes and more generally obfuscated codes, BeaEngine even decodes undocumented instructions called "alias" on the web site sandpile. In all scenarios, it sends back a complex structure that describes precisely the analyzed instructions.
 
 You can use it in C/C++ (usable and compilable with Visual Studio, GCC, MinGW, DigitalMars, BorlandC, WatcomC, SunForte, Pelles C, LCC), in assembler (usable with masm32 and masm64, nasm, fasm, GoAsm) in C#, in Python, in Delphi, in PureBasic and in WinDev. You can use it in user mode and kernel mode. It has been thought to do a lot of tasks.
 
@@ -19,7 +19,25 @@ See the COPYING and COPYING.LESSER files for more details.
 
 ## quick start
 
-to compile :
+### 1. How to use it with Python :
+```
+from BeaEnginePython import *
+buffer = '6202054000443322'.decode('hex')
+target = Disasm(buffer)
+target.read()
+print(target.instr.repr)
+```
+Output is :
+
+```
+vpshufb zmm0, zmm15, zmmword ptr [rbx+rsi+22h]
+```
+
+### 2. Releases
+
+https://github.com/BeaEngine/beaengine/releases
+
+### 3. How to Compile :
 
 ```
 apt-get install cmake
@@ -28,13 +46,13 @@ cmake beaengine
 make
 ```
 
-to compile shared library :
+### 4. Compile shared library :
 ```
 cmake -DoptBUILD_DLL=ON beaengine
 make
 
 ```
 
-## documentation
+### 5. Documentation
 
 Actual documentation can be read here : http://beatrix2004.free.fr/BeaEngine/index1.php
