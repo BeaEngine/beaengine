@@ -5222,7 +5222,14 @@ void __bea_callspec__ lar_GvEw(PDISASM pMyDisasm)
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lar ");
     #endif
-    GvEw(pMyDisasm);
+    GvEv(pMyDisasm);
+    if (GV.MOD_ != 0x3) {
+      GV.MemDecoration = Arg2word;
+    }
+
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
     FillFlags(pMyDisasm, 53);
 }
 
