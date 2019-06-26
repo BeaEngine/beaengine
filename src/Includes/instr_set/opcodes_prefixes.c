@@ -240,7 +240,7 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
         (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
     }
     else {
-        (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+        FailDecode(pMyDisasm);
     }
     if (GV.Architecture == 16) {
         GV.OperandSize = 16;
@@ -259,7 +259,7 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.AddressSize = InUsePrefix;
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
-    }    
+    }
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;

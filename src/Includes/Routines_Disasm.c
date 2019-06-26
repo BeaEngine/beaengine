@@ -60,6 +60,9 @@ void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm) {
     if (((*pMyDisasm).Instruction.BranchType == JmpType) || ((*pMyDisasm).Instruction.BranchType == CallType)) {
         (*pMyDisasm).Argument1.AccessMode = READ;
     }
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+      GV.ERROR_OPCODE = UD_;
+    }
 }
 
 /* ====================================================================

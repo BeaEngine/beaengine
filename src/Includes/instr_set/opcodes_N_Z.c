@@ -3023,9 +3023,6 @@ void __bea_callspec__ xadd_EvGv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xchg_ecx(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xchg ");
@@ -3097,9 +3094,6 @@ void __bea_callspec__ xchg_ecx(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xchg_edx(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xchg ");
@@ -3171,9 +3165,6 @@ void __bea_callspec__ xchg_edx(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xchg_ebx(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xchg ");
@@ -3245,9 +3236,6 @@ void __bea_callspec__ xchg_ebx(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xchg_esp(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xchg ");
@@ -3319,9 +3307,6 @@ void __bea_callspec__ xchg_esp(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xchg_ebp(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xchg ");
@@ -3393,9 +3378,7 @@ void __bea_callspec__ xchg_ebp(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xchg_esi(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-    }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xchg ");
@@ -3467,9 +3450,6 @@ void __bea_callspec__ xchg_esi(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xchg_edi(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xchg ");

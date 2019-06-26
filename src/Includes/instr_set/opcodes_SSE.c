@@ -3521,7 +3521,7 @@ void __bea_callspec__ phaddd_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
 
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -3537,6 +3537,7 @@ void __bea_callspec__ phaddd_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phaddd ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -3564,7 +3565,7 @@ void __bea_callspec__ phaddsw_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -3579,6 +3580,7 @@ void __bea_callspec__ phaddsw_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phaddsw ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -3606,7 +3608,7 @@ void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -3620,6 +3622,7 @@ void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phaddw ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -3672,7 +3675,7 @@ void __bea_callspec__ phsubw_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -3687,6 +3690,7 @@ void __bea_callspec__ phsubw_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phsubw ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -3714,7 +3718,7 @@ void __bea_callspec__ phsubd_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -3729,6 +3733,7 @@ void __bea_callspec__ phsubd_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phsubd ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -3834,7 +3839,7 @@ void __bea_callspec__ phsubsw_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -3848,6 +3853,7 @@ void __bea_callspec__ phsubsw_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "phsubsw ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -4339,7 +4345,7 @@ void __bea_callspec__ psignb_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+PACKED_SIGN;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -4353,6 +4359,7 @@ void __bea_callspec__ psignb_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psignb ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -4380,7 +4387,7 @@ void __bea_callspec__ psignd_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+PACKED_SIGN;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -4394,6 +4401,7 @@ void __bea_callspec__ psignd_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psignd ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
@@ -4421,7 +4429,7 @@ void __bea_callspec__ psignw_(PDISASM pMyDisasm)
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
         (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
+
         (*pMyDisasm).Instruction.Category = SSSE3_INSTRUCTION+PACKED_SIGN;
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
@@ -4435,6 +4443,7 @@ void __bea_callspec__ psignw_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psignw ");
           #endif
+          GV.MemDecoration = Arg2_m128_xmm;
           GV.SSE_ = 1;
           GxEx(pMyDisasm);
           GV.SSE_ = 0;
