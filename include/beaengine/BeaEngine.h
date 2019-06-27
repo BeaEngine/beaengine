@@ -181,6 +181,7 @@ typedef struct {
    Int32 AVX_;
    Int32 MPX_;
    Int32 VSIB_;
+   Int32 Register_;
 } InternalDatas;
 #pragma pack()
 
@@ -333,18 +334,20 @@ enum ARGUMENTS_TYPE
   MEMORY_TYPE = 0x40000000,
   CONSTANT_TYPE = (UInt32)0x80000000,
 
-  MMX_REG =                 0x10000,
-  GENERAL_REG =             0x20000,
-  FPU_REG =                 0x40000,
-  SSE_REG =                 0x80000,
-  CR_REG =                  0x100000,
-  DR_REG =                  0x200000,
-  SPECIAL_REG =             0x400000,
-  MEMORY_MANAGEMENT_REG =   0x800000,
+  MMX_REG =                   0x10000,
+  GENERAL_REG =               0x20000,
+  FPU_REG =                   0x40000,
+  SSE_REG =                   0x80000,
+  CR_REG =                   0x100000,
+  DR_REG =                   0x200000,
+  SPECIAL_REG =              0x400000,
+  MEMORY_MANAGEMENT_REG =    0x800000,
   SEGMENT_REG =             0x1000000,
   AVX_REG =                 0x2000000,
   MPX_REG =                 0x4000000,
   AVX512_REG =              0x8000000,
+  OPMASK_REG =             0x10000000,
+
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,
 

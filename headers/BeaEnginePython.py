@@ -456,6 +456,9 @@ class VEX:
         if re.match("(.*)\.W1(.*)", params):
             self.W = 0b1
 
+        if re.match("(.*)\.L1(.*)", params):
+            self.L = 0b1
+
     def reset(self):
         self.L = 0
         self.pp = 0
