@@ -7639,7 +7639,7 @@ void __bea_callspec__ cmovno_(PDISASM pMyDisasm)
           fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
           MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;          
+          GV.EIP_ += GV.DECALAGE_EIP+2;
         }
         else {
           FailDecode(pMyDisasm);

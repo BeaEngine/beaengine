@@ -2197,7 +2197,7 @@ void __bea_callspec__ fillModrm3Register(ARGTYPE* pMyArgument, PDISASM pMyDisasm
 {
   size_t i = 0;
   GV.MemDecoration = 0;
-  
+
   if (GV.Register_ == OPMASK_REG) {
     #ifndef BEA_LIGHT_DISASSEMBLY
       (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersOpmask[index]);

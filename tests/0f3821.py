@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #    This program is free software: you can redistribute it and/or modify
@@ -119,4 +118,3 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x21)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovsdb ')
         assert_equal(myDisasm.instr.repr, 'vpmovsdb ymmword ptr [rax+00000000h], zmm2')
-

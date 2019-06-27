@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #    This program is free software: you can redistribute it and/or modify
@@ -215,4 +214,3 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmaxss ')
         assert_equal(myDisasm.instr.repr, 'vmaxss xmm2, xmm15, dword ptr [rax+00000000h]')
-

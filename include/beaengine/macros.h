@@ -1,6 +1,6 @@
 #ifndef __BEAENGINE_MACROS_H__
 #define __BEAENGINE_MACROS_H__
-/* 
+/*
 ============================================================================
  Compiler Silencing macros
 
@@ -18,7 +18,7 @@
  conditional statement.  Note, that may only be true if -O is enabled,
  such as with GreenHills (ghs) 1.8.8.
  */
- 
+
 # define BEA_UNUSED_ARG(a) do {/* null */} while (&a == 0)
 #elif defined (__DMC__)
 	#if defined(__cplusplus)
@@ -26,7 +26,7 @@
 		template <class T>
 		inline void BEA_UNUSED_ARG(const T& BEA_UNUSED_ID(t)) { }
 	#else
-		#define BEA_UNUSED_ARG(a) 
+		#define BEA_UNUSED_ARG(a)
 	#endif
 #else /* ghs || __GNUC__ || ..... */
 # define BEA_UNUSED_ARG(a) (a)
@@ -36,6 +36,6 @@
 # define BEA_NOTREACHED(a)
 #else  /* __sgi || ghs || ..... */
 # define BEA_NOTREACHED(a) a
-#endif /* __sgi || ghs || ..... */ 
+#endif /* __sgi || ghs || ..... */
 
 #endif /* __BEAENGINE_MACROS_H__ */

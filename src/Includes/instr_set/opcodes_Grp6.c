@@ -114,4 +114,3 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         GV.OperandSize = OperandSizeOld;
     }
 }
-
