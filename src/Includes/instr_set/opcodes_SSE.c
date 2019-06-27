@@ -6173,35 +6173,116 @@ void __bea_callspec__ vfmsub132ps_(PDISASM pMyDisasm)
 }
 
 
-
 /* ====================================================================
  *      0x 0f 38 90
  * ==================================================================== */
 
 void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
 {
-    /* ========== 0x66 */
-    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-        GV.OperandSize = GV.OriginalOperandSize;
-        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        if (GV.VEX.state == InUsePrefix) {
-          if ((GV.REX.W_ == 0x1) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 1))) {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherdq ");
-            #endif
-          } else {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherdd ");
-            #endif
+  /* ========== 0x66 */
+  if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    GV.OperandSize = GV.OriginalOperandSize;
+    (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+    if (GV.VEX.state == InUsePrefix) {
+      if (
+          ((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))
+        ) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpgatherdd ");
+        #endif
+
+        if (GV.VEX.L == 0) {
+          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+          GV.VSIB_ = SSE_REG;
+          GV.SSE_ = 1;
+          if (GV.EVEX.state != InUsePrefix) {
+            GV.MemDecoration = Arg2dword;
+            GxEx(pMyDisasm);
+            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
           }
-          ArgsVEX(pMyDisasm);
-        } else {
-          FailDecode(pMyDisasm);
+          else {
+            GV.MemDecoration = Arg2dword;
+            GxEx(pMyDisasm);
+          }
+          GV.SSE_ = 0;
         }
+        else if (GV.VEX.L == 0x1) {
+          (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+          GV.VSIB_ = AVX_REG;
+
+          if (GV.EVEX.state != InUsePrefix) {
+            GV.AVX_ = 1;
+            GV.MemDecoration = Arg2dword;
+            GxEx(pMyDisasm);
+            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+            GV.AVX_ = 0;
+          }
+          else {
+            GV.AVX_ = 1;
+            GV.MemDecoration = Arg2dword;
+            GxEx(pMyDisasm);
+            GV.AVX_ = 0;
+          }
+        }
+        else if (GV.EVEX.LL == 0x2) {
+          (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+          GV.VSIB_ = AVX512_REG;
+          GV.AVX_ = 2;
+          GV.MemDecoration = Arg2dword;
+          GxEx(pMyDisasm);
+          GV.AVX_ = 0;
+        }
+
+      } else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpgatherdq ");
+        #endif
+        GV.MemDecoration = Arg2dword;
+        if (GV.VEX.L == 0) {
+          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+          GV.VSIB_ = SSE_REG;
+          GV.SSE_ = 1;
+          if (GV.EVEX.state != InUsePrefix) {
+            GxEx(pMyDisasm);
+            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+          }
+          else {
+            GxEx(pMyDisasm);
+          }
+          GV.SSE_ = 0;
+        }
+        else if (GV.VEX.L == 0x1) {
+          (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+          GV.VSIB_ = AVX_REG;
+          GV.AVX_ = 1;
+          if (GV.EVEX.state != InUsePrefix) {
+            GV.MemDecoration = Arg2dword;
+            GxEx(pMyDisasm);
+            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+          }
+          else {
+            GV.MemDecoration = Arg2dword;
+            GxEx(pMyDisasm);
+          }
+          GV.AVX_ = 0;
+        }
+        else if (GV.EVEX.LL == 0x2) {
+          (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+          GV.VSIB_ = AVX512_REG;
+          GV.AVX_ = 2;
+          GV.MemDecoration = Arg2dword;
+          GxEx(pMyDisasm);
+          GV.AVX_ = 0;
+        }
+      }
+    } else {
+      FailDecode(pMyDisasm);
     }
-    else {
-        FailDecode(pMyDisasm);
-    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 

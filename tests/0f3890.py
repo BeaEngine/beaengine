@@ -23,71 +23,83 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
-        # VEX.NDS.128.66.0F38.W0 90 /r
-        # vgatherdd xmm1, xmm2, xmm3/m128
-        Buffer = 'c4020190443322'.decode('hex')
-        myDisasm = Disasm(Buffer)
-        myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdd ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdd xmm8, xmm15, xmmword ptr [r11+r14+22h]')
 
-        # VEX.NDS.256.66.0F38.W0 90 /r
-        # vgatherdd ymm1, ymm2, ymm3/m256
-        Buffer = 'c4020590443322'.decode('hex')
-        myDisasm = Disasm(Buffer)
-        myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdd ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdd ymm8, ymm15, ymmword ptr [r11+r14+22h]')
+        # EVEX.128.66.0F38.W0 90 /vsib
+        # VPGATHERDD xmm1 {k1}, vm32x
 
-        # EVEX.NDS.128.66.0F38.W0 90 /r
-        # vgatherdd xmm1 {k1}{z}, xmm2, xmm3/m128
-        Buffer = '6202050690443322'.decode('hex')
-        myDisasm = Disasm(Buffer)
-        myDisasm.read()
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P0, 0x2)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P1, 0x5)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P2, 0x6)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.pp, 0x1)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.mm, 0x2)
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdd ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdd xmm0, xmm15, xmmword ptr [rbx+rsi+22h]')
-
-        # EVEX.NDS.256.66.0F38.W0 90 /r
-        # vgatherdd ymm1 {k1}{z}, ymm2, ymm3/m256
-        Buffer = '6202052090443322'.decode('hex')
-        myDisasm = Disasm(Buffer)
-        myDisasm.read()
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P0, 0x2)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P1, 0x5)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P2, 0x20)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.pp, 0x1)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.mm, 0x2)
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdd ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdd ymm0, ymm15, ymmword ptr [rbx+rsi+22h]')
-
-        # EVEX.NDS.512.66.0F38.W0 90 /r
-        # vgatherdd zmm1 {k1}{z}, zmm2, zmm3/m512
-        myEVEX = EVEX('EVEX.NDS.512.66.0F38.W1')
+        myEVEX = EVEX('EVEX.128.66.0F38.W0')
         Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P0, 0x2)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P1, 0x85)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.P2, 0x40)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.pp, 0x1)
-        assert_equal(myDisasm.instr.Reserved_.EVEX.mm, 0x2)
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdq ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdq zmm0, zmm15, zmmword ptr [rbx+rsi+22h]')
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdd ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdd xmm0, dword ptr [rbx+xmm14+22h]')
 
+        # EVEX.256.66.0F38.W0 90 /vsib
+        # VPGATHERDD ymm1 {k1}, vm32y
 
-        # VEX.NDS.128.66.0F38.W1 90 /r
-        # vgatherdq xmm1, xmm2, xmm3/m128
-        myVEX = VEX('VEX.NDS.128.66.0F38.W1')
+        myEVEX = EVEX('EVEX.256.66.0F38.W0')
+        Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdd ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdd ymm0, dword ptr [rbx+ymm14+22h]')
+
+        # EVEX.512.66.0F38.W0 90 /vsib
+        # VPGATHERDD zmm1 {k1}, vm32z
+
+        myEVEX = EVEX('EVEX.512.66.0F38.W0')
+        Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdd ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdd zmm0, dword ptr [rbx+zmm14+22h]')
+
+        # EVEX.128.66.0F38.W1 90 /vsib
+        # VPGATHERDQ xmm1 {k1}, vm32x
+
+        myEVEX = EVEX('EVEX.128.66.0F38.W1')
+        Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdq ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdq xmm0, dword ptr [rbx+xmm14+22h]')
+
+        # EVEX.256.66.0F38.W1 90 /vsib
+        # VPGATHERDQ ymm1 {k1}, vm32x
+
+        myEVEX = EVEX('EVEX.256.66.0F38.W1')
+        Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdq ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdq ymm0, dword ptr [rbx+ymm14+22h]')
+
+        # EVEX.512.66.0F38.W1 90 /vsib
+        # VPGATHERDQ zmm1 {k1}, vm32y
+
+        myEVEX = EVEX('EVEX.512.66.0F38.W1')
+        Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdq ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdq zmm0, dword ptr [rbx+zmm14+22h]')
+
+        # VEX.DDS.128.66.0F38.W0 90 /r
+        # VPGATHERDD xmm1, vm32x, xmm2
+
+        myVEX = VEX('VEX.DDS.128.66.0F38.W0')
         Buffer = '{}90443322'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgatherdq ')
-        assert_equal(myDisasm.instr.repr, 'vgatherdq xmm8, xmm15, xmmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdd ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdd xmm8, dword ptr [r11+xmm14+22h], xmm15')
+
+        # VEX.DDS.256.66.0F38.W0 90 /r
+        # VPGATHERDD ymm1, vm32y, ymm2
+
+        myVEX = VEX('VEX.DDS.256.66.0F38.W0')
+        Buffer = '{}90443322'.format(myVEX.c4()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdd ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdd ymm8, dword ptr [r11+ymm14+22h], ymm15')
