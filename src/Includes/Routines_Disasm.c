@@ -36,7 +36,7 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
                     BuildCompleteInstruction(pMyDisasm);
                 }
             #endif
-            if (GV.ERROR_OPCODE) {
+            if (GV.ERROR_OPCODE != 0) {
                 return -1;
             }
             else {

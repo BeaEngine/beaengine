@@ -405,8 +405,9 @@ class EVEX:
     def reset(self):
         self.mm = 0
         self.pp = 0
-        self.RXB = 0
         self.R = 0
+        self.B = 0
+        self.R2 = 0
         self.X = 0
         self.vvvv = 0b1111
         self.V = 0
@@ -420,7 +421,7 @@ class EVEX:
         return '62{:02x}{:02x}{:02x}'.format(self.p0(),self.p1(),self.p2())
 
     def p0(self):
-        return self.mm + (self.R << 4) + (self.RXB << 5)
+        return self.mm + (self.R2 << 4) + (self.B << 5) + (self.X << 6)+ (self.R << 7)
 
     def p1(self):
         return self.pp + 0b100 + (self.vvvv << 3) + (self.W << 7)
@@ -468,11 +469,17 @@ class VEX:
     def c4(self):
         return 'c4{:02x}{:02x}'.format(self.byte1(), self.byte2())
 
+    def c5(self):
+        return 'c5{:02x}'.format(self.byte3())
+
     def byte1(self):
         return self.mmmm + (self.B << 5) + (self.X << 6) + (self.R << 7)
 
     def byte2(self):
         return self.pp + (self.L << 2) + (self.vvvv << 3) + (self.W << 7)
+
+    def byte3(self):
+        return self.pp + (self.L << 2) + (self.vvvv << 3) + (self.R << 7)
 
 class REX:
     def __init__(self):

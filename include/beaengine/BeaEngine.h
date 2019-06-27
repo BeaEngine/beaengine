@@ -180,6 +180,7 @@ typedef struct {
    EVEX_Struct EVEX;
    Int32 AVX_;
    Int32 MPX_;
+   Int32 VSIB_;
 } InternalDatas;
 #pragma pack()
 
@@ -343,6 +344,7 @@ enum ARGUMENTS_TYPE
   SEGMENT_REG =             0x1000000,
   AVX_REG =                 0x2000000,
   MPX_REG =                 0x4000000,
+  AVX512_REG =              0x8000000,
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,
 

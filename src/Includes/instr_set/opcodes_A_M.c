@@ -53,7 +53,7 @@ void __bea_callspec__ aad_(PDISASM pMyDisasm)
         (*pMyDisasm).Argument1.ArgSize = 16;
         if (!Security(1, pMyDisasm)) return;
         GV.ImmediatSize = 8;
-	if (*((UInt8*)(UIntPtr) (GV.EIP_+1)) != 0x0A) {
+	      if (*((UInt8*)(UIntPtr) (GV.EIP_+1)) != 0x0A) {
             (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_+1));
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_+1)));
@@ -119,7 +119,6 @@ void __bea_callspec__ aas_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
 {
-
     /* ========= 0xf3 */
     if (GV.PrefRepe == 1) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -540,12 +539,14 @@ void __bea_callspec__ arpl_(PDISASM pMyDisasm)
 }
 
 /* =======================================
- *      0fh 38h f7h
+ *      0f 38 f7
  * ======================================= */
 void __bea_callspec__ bextr_GyEy(PDISASM pMyDisasm)
 {
-
-    if (GV.VEX.state == InUsePrefix) {
+    if (GV.EVEX.state == InUsePrefix) {
+      FailDecode(pMyDisasm);
+    }
+    else if (GV.VEX.state == InUsePrefix) {
         (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bextr ");
@@ -561,14 +562,11 @@ void __bea_callspec__ bextr_GyEy(PDISASM pMyDisasm)
         }
         GxEx(pMyDisasm);
         fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
-
         FillFlags(pMyDisasm,127);
-
     }
     else {
         FailDecode(pMyDisasm);
     }
-
 }
 
 
@@ -616,6 +614,7 @@ void __bea_callspec__ bound_(PDISASM pMyDisasm)
       GV.VEX.pp = GV.EVEX.pp;
       GV.VEX.vvvv = GV.EVEX.vvvv;
       GV.VEX.L = GV.EVEX.LL;  /* Thus, VEX.L can have 0x2 value */
+      GV.REX.X_ = GV.EVEX.X;
 
       if (GV.EVEX.pp == 0x0) {
           GV.NB_PREFIX++;
@@ -735,54 +734,52 @@ void __bea_callspec__ bound_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ bndcl_GvEv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.PrefRepe == 1) {
+    (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndcl ");
+    #endif
+    GV.MPX_ = 1;
+    GvEv(pMyDisasm);
+    GV.MPX_ = 0;
+    (*pMyDisasm).Argument1.AccessMode = READ;
+  }
+  /* ========= 0xf2 */
+  else if (GV.PrefRepne == 1) {
+      (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndcu ");
+      #endif
+      GV.MPX_ = 1;
+      GvEv(pMyDisasm);
+      GV.MPX_ = 0;
+      (*pMyDisasm).Argument1.AccessMode = READ;
+  }
+  /* ========= 0x66 */
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+      (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndmov ");
+      #endif
+      GV.MPX_ = 1;
+      GvEv(pMyDisasm);
+      GV.MPX_ = 0;
+      if (GV.MOD_ != 3) {
+          if (GV.Architecture == 64) {
+              GV.MemDecoration = Arg2dqword;
+          }
+          else {
+              GV.MemDecoration = Arg2qword;
+          }
+      }
 
-    /* ========= 0xf3 */
-    if (GV.PrefRepe == 1) {
-
-        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndcl ");
-        #endif
-        GV.MPX_ = 1;
-        GvEv(pMyDisasm);
-        GV.MPX_ = 0;
-        (*pMyDisasm).Argument1.AccessMode = READ;
-
-    }
-    /* ========= 0xf2 */
-    else if (GV.PrefRepne == 1) {
-        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndcu ");
-        #endif
-        GV.MPX_ = 1;
-        GvEv(pMyDisasm);
-        GV.MPX_ = 0;
-        (*pMyDisasm).Argument1.AccessMode = READ;
-
-    }
-    /* ========= 0x66 */
-    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-        (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndmov ");
-        #endif
-        GV.MPX_ = 1;
-        GvEv(pMyDisasm);
-        GV.MPX_ = 0;
-        if (GV.MOD_ != 3) {
-            if (GV.Architecture == 64) {
-                GV.MemDecoration = Arg2dqword;
-            }
-            else {
-                GV.MemDecoration = Arg2qword;
-            }
-        }
-
-    }
-    else {
-        FailDecode(pMyDisasm);
-    }
+  }
+  else {
+      FailDecode(pMyDisasm);
+  }
 
 }
 
@@ -791,9 +788,10 @@ void __bea_callspec__ bndcl_GvEv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ bndcn_GvEv(PDISASM pMyDisasm)
 {
-
-    /* ========= 0xf3 */
-    if (GV.PrefRepe == 1) {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.PrefRepe == 1) {
         (*pMyDisasm).Instruction.Category = MPX_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bndmk ");
@@ -1338,12 +1336,17 @@ void __bea_callspec__ bswap_edi(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ bsf_GvEv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bsf ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm,9);
+  }
 }
 
 /* =======================================
@@ -1351,12 +1354,17 @@ void __bea_callspec__ bsf_GvEv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ bsr_GvEv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bsr ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm,9);
+  }
 }
 
 /* =======================================
@@ -1364,17 +1372,20 @@ void __bea_callspec__ bsr_GvEv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ btc_EvGv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
-
     }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btc ");
     #endif
     EvGv(pMyDisasm);
-
     FillFlags(pMyDisasm,11);
+  }
 }
 
 /* =======================================
@@ -1382,6 +1393,10 @@ void __bea_callspec__ btc_EvGv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ bt_EvGv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
     }
@@ -1390,8 +1405,8 @@ void __bea_callspec__ bt_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bt ");
     #endif
     EvGv(pMyDisasm);
-
     FillFlags(pMyDisasm,11);
+  }
 }
 
 /* =======================================
@@ -1399,6 +1414,10 @@ void __bea_callspec__ bt_EvGv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ btr_EvGv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
     }
@@ -1407,8 +1426,8 @@ void __bea_callspec__ btr_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "btr ");
     #endif
     EvGv(pMyDisasm);
-
     FillFlags(pMyDisasm,11);
+  }
 }
 
 /* =======================================
@@ -1416,6 +1435,10 @@ void __bea_callspec__ btr_EvGv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ bts_EvGv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
     }
@@ -1424,8 +1447,8 @@ void __bea_callspec__ bts_EvGv(PDISASM pMyDisasm)
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "bts ");
     #endif
     EvGv(pMyDisasm);
-
     FillFlags(pMyDisasm,11);
+  }
 }
 
 
@@ -2163,6 +2186,10 @@ void __bea_callspec__ cli_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cpuid_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
     (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG1+REG2+REG3;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2170,6 +2197,7 @@ void __bea_callspec__ cpuid_(PDISASM pMyDisasm)
     #endif
     (*pMyDisasm).Argument1.ArgSize = 32;
     GV.EIP_++;
+  }
 }
 
 /* =======================================
@@ -3311,12 +3339,17 @@ void __bea_callspec__ int_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ int1_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "int1 ");
     #endif
     GV.EIP_++;
     FillFlags(pMyDisasm, 42);
+  }
 }
 
 /* =======================================
@@ -3437,13 +3470,17 @@ void __bea_callspec__ imul_GvEvIb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ imul_GvEv(PDISASM pMyDisasm)
 {
-
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "imul ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm,38);
+  }
 }
 
 /* =======================================
@@ -4124,8 +4161,13 @@ void __bea_callspec__ jnle_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jo_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+    if (GV.VEX.state == InUsePrefix) {
+      FailDecode(pMyDisasm);
+      return;
+    }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4183,8 +4225,13 @@ void __bea_callspec__ jo_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jno_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4241,8 +4288,13 @@ void __bea_callspec__ jno_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jc_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4298,8 +4350,13 @@ void __bea_callspec__ jc_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnc_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4355,8 +4412,13 @@ void __bea_callspec__ jnc_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ je_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4412,8 +4474,13 @@ void __bea_callspec__ je_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jne_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4468,8 +4535,13 @@ void __bea_callspec__ jne_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jbe_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4526,8 +4598,13 @@ void __bea_callspec__ jbe_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ ja_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4583,8 +4660,13 @@ void __bea_callspec__ ja_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ js_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4640,8 +4722,13 @@ void __bea_callspec__ js_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jns_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4697,8 +4784,13 @@ void __bea_callspec__ jns_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jp_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4754,8 +4846,13 @@ void __bea_callspec__ jp_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnp_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4811,8 +4908,13 @@ void __bea_callspec__ jnp_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jl_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4868,8 +4970,13 @@ void __bea_callspec__ jl_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnl_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    long MyNumber;
+  UInt64 MyAddress;
+  long MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4925,8 +5032,13 @@ void __bea_callspec__ jnl_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jle_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    Int32 MyNumber;
+  UInt64 MyAddress;
+  Int32 MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -4982,8 +5094,13 @@ void __bea_callspec__ jle_near(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ jnle_near(PDISASM pMyDisasm)
 {
-    UInt64 MyAddress;
-    Int64 MyNumber;
+  UInt64 MyAddress;
+  Int64 MyNumber;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.CSPrefix == InUsePrefix) {
         (*pMyDisasm).Prefix.CSPrefix = NotUsedPrefix;
         (*pMyDisasm).Prefix.BranchNotTaken = InUsePrefix;
@@ -5857,6 +5974,11 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
 void __bea_callspec__ lsl_GvEw(PDISASM pMyDisasm)
 {
     Int32 i;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lsl ");
@@ -6651,6 +6773,10 @@ void __bea_callspec__ movsw_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ movzx_GvEb(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movzx ");
@@ -6664,6 +6790,10 @@ void __bea_callspec__ movzx_GvEb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ movsx_GvEb(PDISASM pMyDisasm)
 {
+    if (GV.VEX.state == InUsePrefix) {
+      FailDecode(pMyDisasm);
+      return;
+    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movsx ");
@@ -6676,6 +6806,10 @@ void __bea_callspec__ movsx_GvEb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ movsx_GvEw(PDISASM pMyDisasm)
 {
+    if (GV.VEX.state == InUsePrefix) {
+      FailDecode(pMyDisasm);
+      return;
+    }
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movsx ");
@@ -6688,6 +6822,11 @@ void __bea_callspec__ movsx_GvEw(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ movzx_GvEw(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movzx ");
