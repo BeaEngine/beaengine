@@ -1708,19 +1708,6 @@ void __bea_callspec__ cmovo_(PDISASM pMyDisasm)
 /* =======================================
  *
  * ======================================= */
-void __bea_callspec__ cmovb_(PDISASM pMyDisasm)
-{
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovb ");
-    #endif
-    GvEv(pMyDisasm);
-    FillFlags(pMyDisasm, 19);
-}
-
-/* =======================================
- *
- * ======================================= */
 void __bea_callspec__ cmovnb_(PDISASM pMyDisasm)
 {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
@@ -1744,57 +1731,6 @@ void __bea_callspec__ cmove_(PDISASM pMyDisasm)
     FillFlags(pMyDisasm, 19);
 }
 
-/* =======================================
- *
- * ======================================= */
-void __bea_callspec__ cmovne_(PDISASM pMyDisasm)
-{
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovne ");
-    #endif
-    GvEv(pMyDisasm);
-    FillFlags(pMyDisasm, 19);
-}
-
-/* =======================================
- *
- * ======================================= */
-void __bea_callspec__ cmovbe_(PDISASM pMyDisasm)
-{
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovbe ");
-    #endif
-    GvEv(pMyDisasm);
-    FillFlags(pMyDisasm, 19);
-}
-
-/* =======================================
- *
- * ======================================= */
-void __bea_callspec__ cmovnbe_(PDISASM pMyDisasm)
-{
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnbe ");
-    #endif
-    GvEv(pMyDisasm);
-    FillFlags(pMyDisasm, 19);
-}
-
-/* =======================================
- *
- * ======================================= */
-void __bea_callspec__ cmovs_(PDISASM pMyDisasm)
-{
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovs ");
-    #endif
-    GvEv(pMyDisasm);
-    FillFlags(pMyDisasm, 19);
-}
 
 /* =======================================
  *
@@ -7661,4 +7597,375 @@ void __bea_callspec__ cmovno_(PDISASM pMyDisasm)
   else {
     FailDecode(pMyDisasm);
   }
+}
+
+
+
+
+/* =======================================
+ *  0f 42
+ * ======================================= */
+void __bea_callspec__ cmovb_(PDISASM pMyDisasm)
+{
+
+  if (
+      (GV.VEX.state == InUsePrefix) &&
+      (GV.VEX.L == 1) &&
+      (((GV.VEX.vvvv >> 3) & 0x1) == 1)
+    ) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ == 0x3) {
+      if (GV.REX.W_ == 0) {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnb ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnw ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+      else {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnd ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnq ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state != InUsePrefix){
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovb ");
+    #endif
+    GvEv(pMyDisasm);
+    FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
+}
+
+
+/* =======================================
+ *  0f 45
+ * ======================================= */
+void __bea_callspec__ cmovne_(PDISASM pMyDisasm)
+{
+
+  if (
+      (GV.VEX.state == InUsePrefix) &&
+      (GV.VEX.L == 1) &&
+      (((GV.VEX.vvvv >> 3) & 0x1) == 1)
+    ) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ == 0x3) {
+      if (GV.REX.W_ == 0) {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "korb ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "korw ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+      else {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kord ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "korq ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state != InUsePrefix){
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovne ");
+    #endif
+    GvEv(pMyDisasm);
+    FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+
+/* =======================================
+ *  0f 46
+ * ======================================= */
+void __bea_callspec__ cmovbe_(PDISASM pMyDisasm)
+{
+
+  if (
+      (GV.VEX.state == InUsePrefix) &&
+      (GV.VEX.L == 1) &&
+      (((GV.VEX.vvvv >> 3) & 0x1) == 1)
+    ) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ == 0x3) {
+      if (GV.REX.W_ == 0) {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnorb ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnorw ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+      else {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnord ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnorq ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state != InUsePrefix){
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovbe ");
+    #endif
+    GvEv(pMyDisasm);
+    FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* =======================================
+ *  0f 47
+ * ======================================= */
+void __bea_callspec__ cmovnbe_(PDISASM pMyDisasm)
+{
+
+  if (
+      (GV.VEX.state == InUsePrefix) &&
+      (GV.VEX.L == 1) &&
+      (((GV.VEX.vvvv >> 3) & 0x1) == 1)
+    ) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ == 0x3) {
+      if (GV.REX.W_ == 0) {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxorb ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxorw ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+      else {
+        if (GV.VEX.pp == 1) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxord ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else if (GV.VEX.pp == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxorq ");
+          #endif
+          GV.Register_ = OPMASK_REG;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state != InUsePrefix){
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnbe ");
+    #endif
+    GvEv(pMyDisasm);
+    FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
+
+
+
+}
+
+/* =======================================
+ *  0f 48
+ * ======================================= */
+void __bea_callspec__ cmovs_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state != InUsePrefix){
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovs ");
+    #endif
+    GvEv(pMyDisasm);
+    FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
 }
