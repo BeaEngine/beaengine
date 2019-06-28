@@ -1695,12 +1695,17 @@ void __bea_callspec__ cmc_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cmovo_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state != InUsePrefix) {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovo ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 
@@ -1710,12 +1715,17 @@ void __bea_callspec__ cmovo_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cmovnb_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state != InUsePrefix) {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnb ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 
@@ -1724,12 +1734,17 @@ void __bea_callspec__ cmovnb_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cmovns_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state != InUsePrefix) {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovns ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 
@@ -1738,12 +1753,17 @@ void __bea_callspec__ cmovns_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cmovl_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state != InUsePrefix) {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovl ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 /* =======================================
@@ -1751,12 +1771,17 @@ void __bea_callspec__ cmovl_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cmovnl_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state != InUsePrefix) {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnl ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 /* =======================================
@@ -1764,12 +1789,17 @@ void __bea_callspec__ cmovnl_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cmovle_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state != InUsePrefix) {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovle ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 /* =======================================
@@ -1777,12 +1807,17 @@ void __bea_callspec__ cmovle_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ cmovnle_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state != InUsePrefix) {
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmovnle ");
     #endif
     GvEv(pMyDisasm);
     FillFlags(pMyDisasm, 19);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 /* =======================================
