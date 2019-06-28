@@ -28,9 +28,9 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         (*pMyDisasm).Instruction.Category = CLMUL_INSTRUCTION;
 
         GV.ImmediatSize = 8;
-        GV.SSE_ = 1;
+        GV.Register_ = SSE_REG;
         GxEx(pMyDisasm);
-        GV.SSE_ = 0;
+        GV.Register_ = 0;
         GV.EIP_++;
         if (!Security(0, pMyDisasm)) return;
 

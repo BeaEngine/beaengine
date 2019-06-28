@@ -29,9 +29,9 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
             GV.MemDecoration = Arg1dqword;
             GV.ImmediatSize = 8;
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
             if (GV.MOD_== 0x3) {
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlw ");
@@ -55,9 +55,9 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+SHIFT_ROTATE;
             GV.MemDecoration = Arg1qword;
             GV.ImmediatSize = 8;
-            GV.MMX_ = 1;
+            GV.Register_ = MMX_REG;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.MMX_ = 0;
+            GV.Register_ = 0;
             if (GV.MOD_== 0x3) {
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psrlw ");
@@ -83,9 +83,9 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
             GV.MemDecoration = Arg1dqword;
             GV.ImmediatSize = 8;
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
             if (GV.MOD_== 0x3) {
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psraw ");
@@ -109,9 +109,9 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+SHIFT_ROTATE;
             GV.MemDecoration = Arg1qword;
             GV.ImmediatSize = 8;
-            GV.MMX_ = 1;
+            GV.Register_ = MMX_REG;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.MMX_ = 0;
+            GV.Register_ = 0;
             if (GV.MOD_== 0x3) {
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psraw ");
@@ -138,9 +138,9 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;
             GV.MemDecoration = Arg1dqword;
             GV.ImmediatSize = 8;
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
             if (GV.MOD_== 0x3) {
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllw ");
@@ -164,9 +164,9 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
             (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+SHIFT_ROTATE;
             GV.MemDecoration = Arg1qword;
             GV.ImmediatSize = 8;
-            GV.MMX_ = 1;
+            GV.Register_ = MMX_REG;
             MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.MMX_ = 0;
+            GV.Register_ = 0;
             if (GV.MOD_== 0x3) {
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "psllw ");

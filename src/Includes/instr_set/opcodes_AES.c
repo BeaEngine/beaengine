@@ -32,10 +32,10 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
               GV.ERROR_OPCODE = UD_;
             }
 
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GV.MemDecoration = Arg2_m128i_xmm;
             GxEx(pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
         }
         else {
             GV.OperandSize = GV.OriginalOperandSize;
@@ -45,9 +45,9 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesimc ");
             #endif
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GxEx(pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
             (*pMyDisasm).Argument2.ArgSize = 128;
         }
     }
@@ -71,11 +71,11 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
             if (GV.VEX.vvvv != 0x15) {
               GV.ERROR_OPCODE = UD_;
             }
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
 
         }
         else {
@@ -86,9 +86,9 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenc ");
             #endif
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GxEx(pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
         }
     }
     else {
@@ -111,11 +111,11 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
             if (GV.VEX.vvvv != 0x15) {
               GV.ERROR_OPCODE = UD_;
             }
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
 
         }
         else {
@@ -126,9 +126,9 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenclast ");
             #endif
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GxEx(pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
         }
     }
     else {
@@ -151,11 +151,11 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
             if (GV.VEX.vvvv != 0x15) {
               GV.ERROR_OPCODE = UD_;
             }
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
 
         }
         else {
@@ -166,9 +166,9 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdec ");
             #endif
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GxEx(pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
         }
     }
     else {
@@ -191,11 +191,11 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
             if (GV.VEX.vvvv != 0x15) {
               GV.ERROR_OPCODE = UD_;
             }
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GV.MemDecoration = Arg3_m128i_xmm;
             GyEy(pMyDisasm);
             fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
 
         }
         else {
@@ -206,9 +206,9 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdeclast ");
             #endif
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GxEx(pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
         }
     }
     else {
@@ -229,11 +229,11 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaeskeygenassist ");
             #endif
 
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GV.MemDecoration = Arg2_m128i_xmm;
             GxEx(pMyDisasm);
             /*fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);*/
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
             GV.ImmediatSize = 8;
             GV.EIP_++;
             if (!Security(0, pMyDisasm)) return;
@@ -254,9 +254,9 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygenassist ");
             #endif
             GV.ImmediatSize = 8;
-            GV.SSE_ = 1;
+            GV.Register_ = SSE_REG;
             GxEx(pMyDisasm);
-            GV.SSE_ = 0;
+            GV.Register_ = 0;
             GV.EIP_++;
             if (!Security(0, pMyDisasm)) return;
             GV.third_arg = 1;

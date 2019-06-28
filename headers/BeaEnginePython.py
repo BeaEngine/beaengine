@@ -125,11 +125,6 @@ class InternalDatas(Structure):
                 ('INDEX_', c_uint32),
                 ('SCALE_', c_uint32),
                 ('BASE_', c_uint32),
-                ('MMX_', c_uint32),
-                ('SSE_', c_uint32),
-                ('CR_', c_uint32),
-                ('DR_', c_uint32),
-                ('SEG_', c_uint32),
                 ('REGOPCODE', c_uint32),
                 ('DECALAGE_EIP', c_uint32),
                 ('FORMATNUMBER', c_uint32),
@@ -150,8 +145,8 @@ class InternalDatas(Structure):
                 ('OutOfBlock', c_uint32),
                 ('VEX', VEX_Struct),
                 ('EVEX', EVEX_Struct),
-                ('AVX_', c_uint32),
-                ('MPX_', c_uint32),
+                ('VSIB_', c_uint32),
+                ('Register_', c_uint32),
                 ]
 
 class INSTRUCTION(Structure):

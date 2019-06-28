@@ -153,11 +153,6 @@ typedef struct {
    Int32 INDEX_;
    Int32 SCALE_;
    Int32 BASE_;
-   Int32 MMX_;
-   Int32 SSE_;
-   Int32 CR_;
-   Int32 DR_;
-   Int32 SEG_;
    Int32 REGOPCODE;
    UInt32 DECALAGE_EIP;
    Int32 FORMATNUMBER;
@@ -178,8 +173,6 @@ typedef struct {
    Int32 OutOfBlock;
    VEX_Struct VEX;
    EVEX_Struct EVEX;
-   Int32 AVX_;
-   Int32 MPX_;
    Int32 VSIB_;
    Int32 Register_;
 } InternalDatas;
