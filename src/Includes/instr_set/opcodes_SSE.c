@@ -4526,34 +4526,6 @@ void __bea_callspec__ ptest_(PDISASM pMyDisasm)
 
 }
 
-/* ====================================================================
- *      0x 0f 53
- * ==================================================================== */
-void __bea_callspec__ rcpps_(PDISASM pMyDisasm)
-{
-    /* ========== 0xf3 */
-    if (GV.PrefRepe == 1) {
-        (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-        GV.MemDecoration = Arg2dword;
-        (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcpss ");
-        #endif
-        GV.Register_ = SSE_REG;
-        GxEx(pMyDisasm);
-        GV.Register_ = 0;
-    }
-    else {
-        GV.MemDecoration = Arg2_m128_xmm;
-        (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcpps ");
-        #endif
-        GV.Register_ = SSE_REG;
-        GxEx(pMyDisasm);
-        GV.Register_ = 0;
-    }
-}
 
 
 /* ====================================================================
@@ -9840,4 +9812,56 @@ void __bea_callspec__ rsqrtps_(PDISASM pMyDisasm)
     }
   }
 
+}
+
+
+/* ====================================================================
+ *      0x 0f 53
+ * ==================================================================== */
+void __bea_callspec__ rcpps_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcpps ");
+      #endif
+      ArgsVEX_GxEx(pMyDisasm);
+    }
+    else if (GV.VEX.pp == 2) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcpss ");
+      #endif
+      ArgsVEX_GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    /* ========== 0xf3 */
+    if (GV.PrefRepe == 1) {
+        (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
+        GV.MemDecoration = Arg2dword;
+        (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcpss ");
+        #endif
+        GV.Register_ = SSE_REG;
+        GxEx(pMyDisasm);
+        GV.Register_ = 0;
+    }
+    else {
+        GV.MemDecoration = Arg2_m128_xmm;
+        (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rcpps ");
+        #endif
+        GV.Register_ = SSE_REG;
+        GxEx(pMyDisasm);
+        GV.Register_ = 0;
+    }
+  }
 }
