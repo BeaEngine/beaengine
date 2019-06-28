@@ -385,6 +385,7 @@ void __bea_callspec__ ret_(PDISASM);
 void __bea_callspec__ retf_(PDISASM);
 void __bea_callspec__ retf_Iw(PDISASM);
 void __bea_callspec__ rdtsc_(PDISASM);
+void __bea_callspec__ getsec_(PDISASM);
 void __bea_callspec__ rdmsr_(PDISASM);
 void __bea_callspec__ rdpmc_(PDISASM);
 void __bea_callspec__ rsm_(PDISASM);

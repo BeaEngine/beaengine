@@ -1709,6 +1709,31 @@ void __bea_callspec__ cmovo_(PDISASM pMyDisasm)
 }
 
 
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ getsec_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state != InUsePrefix) {
+    if (
+      ((*pMyDisasm).Prefix.RepnePrefix == SuperfluousPrefix) ||
+      ((*pMyDisasm).Prefix.RepPrefix == SuperfluousPrefix) ||
+      ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) ||
+      ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix)
+    ) {
+      GV.ERROR_OPCODE = UD_;
+    }
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "getsec ");
+    #endif
+    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
+    (*pMyDisasm).Argument1.ArgSize = 64;
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* =======================================
  *
