@@ -2589,11 +2589,15 @@ void __bea_callspec__ movntdqa_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ movnti_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movnti ");
-    #endif
-    EvGv(pMyDisasm);
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movnti ");
+  #endif
+  EvGv(pMyDisasm);
 
 }
 
@@ -4232,12 +4236,16 @@ void __bea_callspec__ vpermilpd_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ popcnt_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION+DATA_TRANSFER;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "popcnt ");
-    #endif
-    GvEv(pMyDisasm);
-    FillFlags(pMyDisasm,114);
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION+DATA_TRANSFER;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "popcnt ");
+  #endif
+  GvEv(pMyDisasm);
+  FillFlags(pMyDisasm,114);
 }
 
 /* ====================================================================

@@ -119,21 +119,25 @@ void __bea_callspec__ nop_Ev(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ hint_nop(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "hint_nop ");
-    #endif
-    if (GV.OperandSize == 64) {
-        GV.MemDecoration = Arg2qword;
-    }
-    else if (GV.OperandSize == 32) {
-        GV.MemDecoration = Arg2dword;
-    }
-    else {
-        GV.MemDecoration = Arg2word;
-    }
-    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-    GV.EIP_ += GV.DECALAGE_EIP+2;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "hint_nop ");
+  #endif
+  if (GV.OperandSize == 64) {
+      GV.MemDecoration = Arg2qword;
+  }
+  else if (GV.OperandSize == 32) {
+      GV.MemDecoration = Arg2dword;
+  }
+  else {
+      GV.MemDecoration = Arg2word;
+  }
+  MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+  GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
 /* =======================================
@@ -1893,13 +1897,17 @@ void __bea_callspec__ retf_Iw(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ rdtsc_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdtsc ");
-    #endif
-    GV.EIP_++;
-    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
-    (*pMyDisasm).Argument1.ArgSize = 32;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdtsc ");
+  #endif
+  GV.EIP_++;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
+  (*pMyDisasm).Argument1.ArgSize = 32;
 }
 
 /* =======================================
@@ -1907,15 +1915,19 @@ void __bea_callspec__ rdtsc_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ rdmsr_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdmsr ");
-    #endif
-    GV.EIP_++;
-    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
-    (*pMyDisasm).Argument1.ArgSize = 32;
-    (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
-    (*pMyDisasm).Argument2.ArgSize = 32;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdmsr ");
+  #endif
+  GV.EIP_++;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
+  (*pMyDisasm).Argument1.ArgSize = 32;
+  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
+  (*pMyDisasm).Argument2.ArgSize = 32;
 }
 
 /* =======================================
@@ -1923,15 +1935,19 @@ void __bea_callspec__ rdmsr_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ rdpmc_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdpmc ");
-    #endif
-    GV.EIP_++;
-    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
-    (*pMyDisasm).Argument1.ArgSize = 32;
-    (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
-    (*pMyDisasm).Argument2.ArgSize = 32;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdpmc ");
+  #endif
+  GV.EIP_++;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
+  (*pMyDisasm).Argument1.ArgSize = 32;
+  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1;
+  (*pMyDisasm).Argument2.ArgSize = 32;
 }
 
 /* =======================================
@@ -1939,12 +1955,16 @@ void __bea_callspec__ rdpmc_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ rsm_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rsm ");
-    #endif
-    GV.EIP_++;
-    FillFlags(pMyDisasm, 89);
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rsm ");
+  #endif
+  GV.EIP_++;
+  FillFlags(pMyDisasm, 89);
 }
 
 /* =======================================
@@ -1952,11 +1972,15 @@ void __bea_callspec__ rsm_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ sysenter_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sysenter ");
-    #endif
-    GV.EIP_++;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sysenter ");
+  #endif
+  GV.EIP_++;
 }
 
 /* =======================================
@@ -1964,11 +1988,15 @@ void __bea_callspec__ sysenter_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ sysexit_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sysexit ");
-    #endif
-    GV.EIP_++;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sysexit ");
+  #endif
+  GV.EIP_++;
 }
 
 /* =======================================
@@ -1976,15 +2004,19 @@ void __bea_callspec__ sysexit_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ sahf_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sahf ");
-    #endif
-    GV.EIP_++;
-    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG+REG0;
-    (*pMyDisasm).Argument1.ArgSize = 32;
-    (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
-    (*pMyDisasm).Argument2.ArgSize = 8;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sahf ");
+  #endif
+  GV.EIP_++;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG+REG0;
+  (*pMyDisasm).Argument1.ArgSize = 32;
+  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG0;
+  (*pMyDisasm).Argument2.ArgSize = 8;
 }
 
 /* =======================================
@@ -2196,6 +2228,10 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ syscall_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
     if (GV.Architecture == 64) {
         (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION+CONTROL_TRANSFER;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -2215,18 +2251,22 @@ void __bea_callspec__ syscall_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ sysret_(PDISASM pMyDisasm)
 {
-    if (GV.Architecture == 64) {
-        (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sysret ");
-        #endif
-        GV.EIP_++;
-        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1+REG11;
-        (*pMyDisasm).Argument2.ArgSize = 64;
-    }
-    else {
-        FailDecode(pMyDisasm);
-    }
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  if (GV.Architecture == 64) {
+      (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sysret ");
+      #endif
+      GV.EIP_++;
+      (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG+REG1+REG11;
+      (*pMyDisasm).Argument2.ArgSize = 64;
+  }
+  else {
+      FailDecode(pMyDisasm);
+  }
 }
 
 
@@ -2332,6 +2372,11 @@ void __bea_callspec__ sbb_eAX_Iv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ seto_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "seto ");
@@ -2349,6 +2394,11 @@ void __bea_callspec__ seto_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setno_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setno ");
@@ -2366,6 +2416,11 @@ void __bea_callspec__ setno_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setb_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setb ");
@@ -2383,6 +2438,11 @@ void __bea_callspec__ setb_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setnb_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnb ");
@@ -2400,6 +2460,11 @@ void __bea_callspec__ setnb_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ sete_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sete ");
@@ -2417,6 +2482,11 @@ void __bea_callspec__ sete_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setne_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setne ");
@@ -2434,6 +2504,11 @@ void __bea_callspec__ setne_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setbe_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setbe ");
@@ -2451,6 +2526,11 @@ void __bea_callspec__ setbe_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setnbe_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnbe ");
@@ -2468,6 +2548,11 @@ void __bea_callspec__ setnbe_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ sets_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sets ");
@@ -2485,6 +2570,11 @@ void __bea_callspec__ sets_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setns_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setns ");
@@ -2502,6 +2592,11 @@ void __bea_callspec__ setns_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setp_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setp ");
@@ -2519,6 +2614,11 @@ void __bea_callspec__ setp_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setnp_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnp ");
@@ -2536,6 +2636,11 @@ void __bea_callspec__ setnp_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setge_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnl ");
@@ -2553,6 +2658,11 @@ void __bea_callspec__ setge_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setnge_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setl ");
@@ -2570,6 +2680,11 @@ void __bea_callspec__ setnge_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setle_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setle ");
@@ -2587,6 +2702,11 @@ void __bea_callspec__ setle_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setnle_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setnle ");
@@ -2605,6 +2725,11 @@ void __bea_callspec__ setnle_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ shld_EvGvIb(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shld ");
@@ -2630,6 +2755,11 @@ void __bea_callspec__ shld_EvGvIb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ shld_EvGvCL(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shld ");
@@ -2649,6 +2779,11 @@ void __bea_callspec__ shld_EvGvCL(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ shrd_EvGvIb(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shrd ");
@@ -2674,6 +2809,11 @@ void __bea_callspec__ shrd_EvGvIb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ shrd_EvGvCL(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "shrd ");
@@ -2694,6 +2834,11 @@ void __bea_callspec__ shrd_EvGvCL(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ std_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "std ");
@@ -2890,11 +3035,15 @@ void __bea_callspec__ test_eAX_Iv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ ud2_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ud2 ");
-    #endif
-    GV.EIP_++;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ud2 ");
+  #endif
+  GV.EIP_++;
 }
 
 /* =======================================
@@ -2902,17 +3051,21 @@ void __bea_callspec__ ud2_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ vmread_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmread ");
-    #endif
-    if (GV.Architecture == 64) {
-        GV.OperandSize = 64;
-    }
-    EvGv(pMyDisasm);
-    if (GV.Architecture == 64) {
-        GV.OperandSize = 32;
-    }
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmread ");
+  #endif
+  if (GV.Architecture == 64) {
+      GV.OperandSize = 64;
+  }
+  EvGv(pMyDisasm);
+  if (GV.Architecture == 64) {
+      GV.OperandSize = 32;
+  }
 }
 
 /* =======================================
@@ -2920,17 +3073,21 @@ void __bea_callspec__ vmread_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ vmwrite_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmwrite ");
-    #endif
-    if (GV.Architecture == 64) {
-        GV.OperandSize = 64;
-    }
-    GvEv(pMyDisasm);
-    if (GV.Architecture == 64) {
-        GV.OperandSize = 32;
-    }
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmwrite ");
+  #endif
+  if (GV.Architecture == 64) {
+      GV.OperandSize = 64;
+  }
+  GvEv(pMyDisasm);
+  if (GV.Architecture == 64) {
+      GV.OperandSize = 32;
+  }
 }
 
 /* =======================================
@@ -2938,11 +3095,15 @@ void __bea_callspec__ vmwrite_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ wbinvd_(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "wbinvd ");
-    #endif
-    GV.EIP_++;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "wbinvd ");
+  #endif
+  GV.EIP_++;
 }
 
 /* =======================================
@@ -2962,6 +3123,11 @@ void __bea_callspec__ wait_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ wrmsr_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "wrmsr ");
@@ -2977,22 +3143,26 @@ void __bea_callspec__ wrmsr_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xadd_EbGb(PDISASM pMyDisasm)
 {
-    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
-        (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+      (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
+  }
+  (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xadd ");
+  #endif
+  EbGb(pMyDisasm);
+  if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+    if ((*pMyDisasm).Argument1.ArgType != MEMORY_TYPE) {
+      GV.ERROR_OPCODE = UD_;
     }
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xadd ");
-    #endif
-    EbGb(pMyDisasm);
-    if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
-      if ((*pMyDisasm).Argument1.ArgType != MEMORY_TYPE) {
-        GV.ERROR_OPCODE = UD_;
-      }
-    }
-    (*pMyDisasm).Argument1.AccessMode = WRITE;
-    (*pMyDisasm).Argument2.AccessMode = WRITE;
-    FillFlags(pMyDisasm,110);
+  }
+  (*pMyDisasm).Argument1.AccessMode = WRITE;
+  (*pMyDisasm).Argument2.AccessMode = WRITE;
+  FillFlags(pMyDisasm,110);
 }
 
 /* =======================================
@@ -3000,6 +3170,11 @@ void __bea_callspec__ xadd_EbGb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ xadd_EvGv(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+
     if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
         (*pMyDisasm).Prefix.LockPrefix = InUsePrefix;
     }
