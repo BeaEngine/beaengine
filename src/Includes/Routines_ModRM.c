@@ -2207,7 +2207,10 @@ void __bea_callspec__ fillModrm3Register(ARGTYPE* pMyArgument, PDISASM pMyDisasm
     return;
   }
 
-  if (GV.AVX_ == 2) {
+  if (
+      (GV.AVX_ == 2) ||
+      (GV.Register_ == AVX512_REG)
+    ) {
     if (GV.REX.B_ == 1) {
       #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX512[index+8]);
@@ -2224,7 +2227,10 @@ void __bea_callspec__ fillModrm3Register(ARGTYPE* pMyArgument, PDISASM pMyDisasm
     }
     return;
   }
-  if (GV.AVX_ == 1) {
+  if (
+      (GV.AVX_ == 1) ||
+      (GV.Register_ == AVX_REG)
+    ) {
     if (GV.REX.B_ == 1) {
       #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersAVX[index+8]);
@@ -2241,7 +2247,10 @@ void __bea_callspec__ fillModrm3Register(ARGTYPE* pMyArgument, PDISASM pMyDisasm
     }
     return;
   }
-  if (GV.MPX_ == 1) {
+  if (
+      (GV.MPX_ == 1) ||
+      (GV.Register_ == MPX_REG)
+    ) {
     if (GV.REX.B_ == 1) {
       #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMPX[index+8]);
@@ -2258,7 +2267,10 @@ void __bea_callspec__ fillModrm3Register(ARGTYPE* pMyArgument, PDISASM pMyDisasm
     }
     return;
   }
-  if (GV.MMX_  == 1) {
+  if (
+      (GV.MMX_ == 1) ||
+      (GV.Register_ == MMX_REG)
+    ) {
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersMMX[index+0]);
       #endif
@@ -2267,7 +2279,10 @@ void __bea_callspec__ fillModrm3Register(ARGTYPE* pMyArgument, PDISASM pMyDisasm
       return;
   }
 
-  if (GV.SSE_ == 1) {
+  if (
+      (GV.SSE_ == 1) ||
+      (GV.Register_ == SSE_REG)
+    ) {
       if (GV.REX.B_ == 1) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((char*) (*pMyArgument).ArgMnemonic+i, RegistersSSE[index+8]);
