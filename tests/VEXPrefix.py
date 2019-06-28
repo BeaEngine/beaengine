@@ -71,3 +71,5 @@ class TestSuite:
         # VEX.L for specific instructions
 
         # VEX.W for specific instructions
+
+        # The VEX prefix will #UD on any instruction containing MMX register sources or destinations.
