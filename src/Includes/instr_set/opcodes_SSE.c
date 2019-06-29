@@ -2194,7 +2194,7 @@ void __bea_callspec__ movaps_WV(PDISASM pMyDisasm)
       GV.Register_ = 0;
     }
     else {
-      GV.MemDecoration = Arg2_m128_xmm;
+      GV.MemDecoration = Arg1_m128_xmm;
       (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+DATA_TRANSFER;
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movaps ");

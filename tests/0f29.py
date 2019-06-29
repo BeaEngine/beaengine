@@ -24,12 +24,12 @@ class TestSuite:
         # NP 0F 29 /r
         # MOVAPS xmm2/m128, xmm1
 
-        Buffer = '0f29e0'.decode('hex')
+        Buffer = '0f2920'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0xf29)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'movaps ')
-        assert_equal(myDisasm.instr.repr, 'movaps xmm0, xmm4')
+        assert_equal(myDisasm.instr.repr, 'movaps xmmword ptr [rax], xmm4')
 
         # VEX.128.0F.WIG 29 /r
         # VMOVAPS xmm2/m128, xmm1
