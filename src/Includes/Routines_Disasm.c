@@ -287,6 +287,12 @@ void __bea_callspec__ EbGb(PDISASM pMyDisasm)
     Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
     GV.OperandSize = 32;
     GV.EIP_ += GV.DECALAGE_EIP+2;
+    if (
+        (GV.MOD_ == 3) &&
+        ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix)
+      ) {
+      GV.ERROR_OPCODE = UD_;
+    }
 }
 
 /* ====================================================================
@@ -307,17 +313,23 @@ void __bea_callspec__ GbEb(PDISASM pMyDisasm)
 void __bea_callspec__ EvGv(PDISASM pMyDisasm)
 {
     if (GV.OperandSize == 64) {
-        GV.MemDecoration = Arg1qword;
+      GV.MemDecoration = Arg1qword;
     }
     else if (GV.OperandSize == 32) {
-        GV.MemDecoration = Arg1dword;
+      GV.MemDecoration = Arg1dword;
     }
     else {
-        GV.MemDecoration = Arg1word;
+      GV.MemDecoration = Arg1word;
     }
     MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
     Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
+    if (
+        (GV.MOD_ == 3) &&
+        ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix)
+      ) {
+      GV.ERROR_OPCODE = UD_;
+    }
 }
 
 /* ====================================================================
@@ -710,6 +722,11 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Argument2.ArgSize = 8;
     GV.EIP_ += 2;
+    if (
+        ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix)
+      ) {
+      GV.ERROR_OPCODE = UD_;
+    }
 }
 
 /* ====================================================================
@@ -786,7 +803,11 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
         }
         GV.EIP_+= 3;
     }
-
+    if (
+        ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix)
+      ) {
+      GV.ERROR_OPCODE = UD_;
+    }
 }
 
 /* ====================================================================
