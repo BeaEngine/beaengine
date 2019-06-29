@@ -21,32 +21,6 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
-        # NP 0F 29 /r
-        # MOVAPS xmm2/m128, xmm1
-        # VEX.128.0F.WIG 29 /r
-        # VMOVAPS xmm2/m128, xmm1
-        # VEX.256.0F.WIG 29 /r
-        # VMOVAPS ymm2/m256, ymm1
-        # EVEX.128.0F.W0 29 /r
-        # VMOVAPS xmm2/m128 {k1}{z}, xmm1
-        # EVEX.256.0F.W0 29 /r
-        # VMOVAPS ymm2/m256 {k1}{z}, ymm1
-        # EVEX.512.0F.W0 29 /r
-        # VMOVAPS zmm2/m512 {k1}{z}, zmm1
-        # 66 0F 29 /r
-        # MOVAPD xmm2/m128, xmm1
-        # VEX.128.66.0F.WIG 29 /r
-        # VMOVAPD xmm2/m128, xmm1
-        # EVEX.128.66.0F.W1 29 /r
-        # VMOVAPD xmm2/m128 {k1}{z}, xmm1
-        # EVEX.256.66.0F.W1 29 /r
-        # VMOVAPD ymm2/m256 {k1}{z}, ymm1
-        # EVEX.512.66.0F.W1 29 /r
-        # VMOVAPD zmm2/m512 {k1}{z}, zmm1
-        # VEX.256.66.0F.WIG 29 /r
-        # VMOVAPD ymm2/m256, ymm1
-
-
         # NP 0F 28 /r
         # MOVAPS xmm1, xmm2/m128
 
