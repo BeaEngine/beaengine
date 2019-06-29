@@ -2725,6 +2725,37 @@ void __bea_callspec__ movnti_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ movntps_(PDISASM pMyDisasm)
 {
+
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 0) {
+      if (
+        (GV.EVEX.state == InUsePrefix) &&
+        (GV.EVEX.W == 1)) {
+        FailDecode(pMyDisasm);
+        return;
+      }
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovntps ");
+      #endif
+      ArgsVEX_ExGx(pMyDisasm);
+    }
+    else if (GV.VEX.pp == 1) {
+      if (
+        (GV.EVEX.state == InUsePrefix) &&
+        (GV.EVEX.W == 0)) {
+        FailDecode(pMyDisasm);
+        return;
+      }
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovntpd ");
+      #endif
+      ArgsVEX_ExGx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_== 0x3) {
         FailDecode(pMyDisasm);
@@ -2756,8 +2787,8 @@ void __bea_callspec__ movntps_(PDISASM pMyDisasm)
         GV.Register_ = 0;
         MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-
     }
+  }
 }
 
 
