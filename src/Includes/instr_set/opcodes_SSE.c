@@ -1452,6 +1452,54 @@ void __bea_callspec__ cvtdq2ps_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ cvtpi2ps_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 0) {
+      FailDecode(pMyDisasm);
+    }
+    else if (GV.VEX.pp == 1) {
+      FailDecode(pMyDisasm);
+    }
+    else if (GV.VEX.pp == 2) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtsi2ss ");
+      #endif
+
+      if (
+        ((GV.EVEX.state != InUsePrefix) && (GV.REX.W_ == 0)) ||
+        ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))
+      ){
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        GV.MemDecoration = Arg3qword;
+      }
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+      GV.Register_ = SSE_REG;
+      GyEy(pMyDisasm);
+      fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = 0;
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtsi2sd ");
+      #endif
+      if (
+        ((GV.EVEX.state != InUsePrefix) && (GV.REX.W_ == 0)) ||
+        ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))
+      ){
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        GV.MemDecoration = Arg3qword;
+      }
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+      GV.Register_ = SSE_REG;
+      GyEy(pMyDisasm);
+      fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = 0;
+    }
+  }
+  else {
     /* ========= 0xf2 */
     if (GV.PrefRepne == 1) {
         (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
@@ -1531,6 +1579,7 @@ void __bea_callspec__ cvtpi2ps_(PDISASM pMyDisasm)
         GV.Register_ = 0;
         GV.EIP_+= GV.DECALAGE_EIP+2;
     }
+  }
 }
 
 
