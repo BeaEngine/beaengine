@@ -1,4 +1,4 @@
-/* Copyright 2006-2009, BeatriX
+/* Copyright 2006-2019, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.
@@ -22,6 +22,11 @@
 void __bea_callspec__ G6_(PDISASM pMyDisasm)
 {
     Int32 OperandSizeOld = 0;
+
+    if (GV.VEX.state == InUsePrefix) {
+      FailDecode(pMyDisasm);
+      return;
+    }
 
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     OperandSizeOld = GV.OperandSize;
