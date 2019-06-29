@@ -96,7 +96,7 @@ void __bea_callspec__ aam_(PDISASM pMyDisasm)
   if (*((UInt8*)(UIntPtr) (GV.EIP_+1)) != 0x0A) {
     (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_+1));
     if ((*pMyDisasm).Instruction.Immediat == 0) {
-      GV.ERROR_OPCODE = DE_;
+      GV.ERROR_OPCODE = DE__;
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument2.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_+1)));

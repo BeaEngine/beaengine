@@ -199,6 +199,7 @@ typedef struct _Disasm {
 
 /* #UD exception */
 #define UD_   2
+#define DE__  3
 
 #define ESReg 1
 #define DSReg 2
