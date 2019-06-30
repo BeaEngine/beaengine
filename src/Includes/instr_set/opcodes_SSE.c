@@ -1588,6 +1588,82 @@ void __bea_callspec__ cvtpi2ps_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ cvtps2pi_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 0) {
+      FailDecode(pMyDisasm);
+    }
+    else if (GV.VEX.pp == 1) {
+      FailDecode(pMyDisasm);
+    }
+    else if (GV.VEX.pp == 2) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtss2si ");
+      #endif
+      if (
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+        ) {
+        GV.ERROR_OPCODE = UD_;
+      }
+      if (
+          ((GV.EVEX.state != InUsePrefix) && (GV.REX.W_ == 0)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))
+        ) {
+          GV.MemDecoration = Arg2dword;
+          GV.Register_ = SSE_REG;
+          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+          GV.Register_ = 0;
+          GV.OperandSize = 32;
+          Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+          GV.EIP_+= GV.DECALAGE_EIP+2;
+      }
+      else {
+        GV.MemDecoration = Arg2dword;
+        GV.Register_ = SSE_REG;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.Register_ = 0;
+        GV.OperandSize = 64;
+        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_+= GV.DECALAGE_EIP+2;
+
+      }
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtsd2si ");
+      #endif
+      if (
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+        ) {
+        GV.ERROR_OPCODE = UD_;
+      }
+      if (
+          ((GV.EVEX.state != InUsePrefix) && (GV.REX.W_ == 0)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))
+        ) {
+          GV.MemDecoration = Arg2qword;
+          GV.Register_ = SSE_REG;
+          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+          GV.Register_ = 0;
+          GV.OperandSize = 32;
+          Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+          GV.EIP_+= GV.DECALAGE_EIP+2;
+      }
+      else {
+        GV.MemDecoration = Arg2qword;
+        GV.Register_ = SSE_REG;
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.Register_ = 0;
+        GV.OperandSize = 64;
+        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.EIP_+= GV.DECALAGE_EIP+2;
+
+      }
+    }
+  }
+  else {
+
     /* ========= 0xf2 */
     if (GV.PrefRepne == 1) {
         (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
@@ -1667,6 +1743,7 @@ void __bea_callspec__ cvtps2pi_(PDISASM pMyDisasm)
         GV.Register_ = 0;
         GV.EIP_+= GV.DECALAGE_EIP+2;
     }
+  }
 }
 
 
