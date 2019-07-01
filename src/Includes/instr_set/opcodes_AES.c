@@ -28,7 +28,7 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesimc ");
             #endif
-            if (GV.VEX.vvvv != 0x15) {
+            if (GV.VEX.vvvv != 15) {
               GV.ERROR_OPCODE = UD_;
             }
 
@@ -68,7 +68,7 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesenc ");
             #endif
-            if (GV.VEX.vvvv != 0x15) {
+            if (GV.VEX.vvvv != 15) {
               GV.ERROR_OPCODE = UD_;
             }
             GV.Register_ = SSE_REG;
@@ -108,7 +108,7 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesenclast ");
             #endif
-            if (GV.VEX.vvvv != 0x15) {
+            if (GV.VEX.vvvv != 15) {
               GV.ERROR_OPCODE = UD_;
             }
             GV.Register_ = SSE_REG;
@@ -148,7 +148,7 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesdec ");
             #endif
-            if (GV.VEX.vvvv != 0x15) {
+            if (GV.VEX.vvvv != 15) {
               GV.ERROR_OPCODE = UD_;
             }
             GV.Register_ = SSE_REG;
@@ -188,7 +188,7 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaesdeclast ");
             #endif
-            if (GV.VEX.vvvv != 0x15) {
+            if (GV.VEX.vvvv != 15) {
               GV.ERROR_OPCODE = UD_;
             }
             GV.Register_ = SSE_REG;

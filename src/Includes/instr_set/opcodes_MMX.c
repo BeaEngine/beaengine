@@ -26,8 +26,8 @@ void __bea_callspec__ emms_(PDISASM pMyDisasm)
     if (GV.VEX.pp == 0) {
       (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }

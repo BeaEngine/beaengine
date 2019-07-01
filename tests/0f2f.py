@@ -37,12 +37,16 @@ class TestSuite:
         # VUCOMISS xmm1, xmm2/m32
 
         myVEX = VEX('VEX.LIG.0F.WIG')
+        myVEX.vvvv = 0b1111
         Buffer = '{}2e10'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x2e)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vucomiss ')
         assert_equal(myDisasm.instr.repr, 'vucomiss xmm10, dword ptr [r8]')
+        assert_equal(myDisasm.instr.Reserved_.VEX.vvvv, 15)
+        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, 0)
+
 
         # EVEX.LIG.0F.W0 2E /r
         # VUCOMISS xmm1, xmm2/m32{sae}
@@ -69,12 +73,14 @@ class TestSuite:
         # VUCOMISD xmm1, xmm2/m64
 
         myVEX = VEX('VEX.LIG.66.0F.WIG')
+        myVEX.vvvv = 0b1111
         Buffer = '{}2e10'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x2e)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vucomisd ')
         assert_equal(myDisasm.instr.repr, 'vucomisd xmm10, qword ptr [r8]')
+        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, 0)
 
         # EVEX.LIG.66.0F.W1 2E /r
         # VUCOMISD xmm1, xmm2/m64{sae}

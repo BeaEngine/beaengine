@@ -59,7 +59,7 @@ class TestSuite:
         myVEX.L = 0
         myVEX.pp = 0b1
         myVEX.mmmm = 0b10
-        myVEX.vvvv = 0b1111
+        myVEX.vvvv = 0b1110
         myVEX.R = 1
         myVEX.B = 1
 

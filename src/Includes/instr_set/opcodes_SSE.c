@@ -1341,8 +1341,8 @@ void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
       GV.Register_ = SSE_REG;
       GxEx(pMyDisasm);
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
@@ -1362,8 +1362,8 @@ void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
       GV.Register_ = SSE_REG;
       GxEx(pMyDisasm);
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
@@ -1650,8 +1650,8 @@ void __bea_callspec__ cvtps2pi_(PDISASM pMyDisasm)
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtss2si ");
       #endif
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
@@ -1683,8 +1683,8 @@ void __bea_callspec__ cvtps2pi_(PDISASM pMyDisasm)
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtsd2si ");
       #endif
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
@@ -1815,8 +1815,8 @@ void __bea_callspec__ cvttps2pi_(PDISASM pMyDisasm)
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvttss2si ");
       #endif
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
@@ -1848,8 +1848,8 @@ void __bea_callspec__ cvttps2pi_(PDISASM pMyDisasm)
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvttsd2si ");
       #endif
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
@@ -2817,7 +2817,7 @@ void __bea_callspec__ movmskps_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
       }
       else if (GV.VEX.state == InUsePrefix) {
-        if (GV.VEX.vvvv != 0x15) {
+        if (GV.VEX.vvvv != 15) {
           GV.ERROR_OPCODE = UD_;
         }
         if (GV.VEX.pp == 1) {
@@ -4161,7 +4161,7 @@ void __bea_callspec__ vtestps_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if ((GV.REX.W_ == 1) || (GV.VEX.vvvv != 0x15)) {
+          if ((GV.REX.W_ == 1) || (GV.VEX.vvvv != 15)) {
             GV.ERROR_OPCODE = UD_;
           }
           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
@@ -4201,7 +4201,7 @@ void __bea_callspec__ vtestpd_(PDISASM pMyDisasm)
         if (GV.EVEX.state == InUsePrefix) {
           FailDecode(pMyDisasm);
         } else if (GV.VEX.state == InUsePrefix) {
-          if ((GV.REX.W_ == 1) || (GV.VEX.vvvv != 0x15)) {
+          if ((GV.REX.W_ == 1) || (GV.VEX.vvvv != 15)) {
             GV.ERROR_OPCODE = UD_;
           }
           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
@@ -5098,11 +5098,12 @@ void __bea_callspec__ ucomiss_VW(PDISASM pMyDisasm)
       GV.Register_ = SSE_REG;
       GxEx(pMyDisasm);
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15))
+          || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
+
     }
     else if (GV.VEX.pp == 1) {
       if (
@@ -5119,8 +5120,8 @@ void __bea_callspec__ ucomiss_VW(PDISASM pMyDisasm)
       GV.Register_ = SSE_REG;
       GxEx(pMyDisasm);
       if (
-          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
-          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
         ) {
         GV.ERROR_OPCODE = UD_;
       }
