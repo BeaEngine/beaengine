@@ -3815,55 +3815,107 @@ void __bea_callspec__ pextrd_(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ pextrw_(PDISASM pMyDisasm)
 {
-    /* ========== 0x66 */
-    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-        GV.OperandSize = GV.OriginalOperandSize;
-        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrw ");
-        #endif
-        GV.MemDecoration = Arg2_m128_xmm;
-        GV.ImmediatSize = 8;
-        GV.Register_ = SSE_REG;
-        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        GV.Register_ = 0;
-        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
-        GV.EIP_ += GV.DECALAGE_EIP+3;
-        if (!Security(0, pMyDisasm)) return;
-        GV.third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
-        #endif
-        (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
-        (*pMyDisasm).Argument3.ArgSize = 8;
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (
+        (GV.EVEX.state != InUsePrefix) &&
+        (GV.REX.W_ == 1)
+      ) {
+        FailDecode(pMyDisasm);
+        return;
+      }
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_!= 0x3) {
+        FailDecode(pMyDisasm);
+        return;
+      }
 
+      if (
+        ((GV.EVEX.state != InUsePrefix) && ((GV.VEX.L == 1)||(GV.VEX.vvvv != 15))) ||
+        ((GV.EVEX.state == InUsePrefix) && ((GV.EVEX.LL > 0)||(GV.EVEX.vvvv != 15)))
+      ) {
+        GV.ERROR_OPCODE = UD_;
+      }
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpextrw ");
+      #endif
+      GV.ImmediatSize = 8;
+      GV.OperandSize = 16;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+
+      GV.EIP_ += GV.DECALAGE_EIP+3;
+      if (!Security(0, pMyDisasm)) return;
+      (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+      #endif
+      (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
+      (*pMyDisasm).Argument3.ArgSize = 8;
 
     }
     else {
-        (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrw ");
-        #endif
-        GV.MemDecoration = Arg2dqword;
-        GV.ImmediatSize = 8;
-        GV.Register_ = MMX_REG;
-        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-        GV.Register_ = 0;
-        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
-        GV.EIP_ += GV.DECALAGE_EIP+3;
-        if (!Security(0, pMyDisasm)) return;
-        GV.third_arg = 1;
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
-        #endif
-        (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
-        (*pMyDisasm).Argument3.ArgSize = 8;
-
+      FailDecode(pMyDisasm);
     }
-
+  }
+  else {
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_!= 0x3) {
+        FailDecode(pMyDisasm);
+        return;
+      }
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrw ");
+      #endif
+      GV.MemDecoration = Arg2_m128_xmm;
+      GV.ImmediatSize = 8;
+      GV.Register_ = SSE_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = 0;
+      GV.OperandSize = 16;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+3;
+      if (!Security(0, pMyDisasm)) return;
+      (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+      #endif
+      (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
+      (*pMyDisasm).Argument3.ArgSize = 8;
+    }
+    else {
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_!= 0x3) {
+        FailDecode(pMyDisasm);
+        return;
+      }
+      (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrw ");
+      #endif
+      GV.MemDecoration = Arg2dqword;
+      GV.ImmediatSize = 8;
+      GV.Register_ = MMX_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = 0;
+      GV.OperandSize = 16;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+3;
+      if (!Security(0, pMyDisasm)) return;
+      (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+      #endif
+      (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
+      (*pMyDisasm).Argument3.ArgSize = 8;
+    }
+  }
 }
 
 /* ====================================================================

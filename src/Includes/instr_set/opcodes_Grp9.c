@@ -24,8 +24,9 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
 {
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MemDecoration = Arg2qword;
-    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+
     if (GV.REGOPCODE == 1) {
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         if (GV.REX.W_ == 1) {
             GV.MemDecoration = Arg2dqword;
             (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
@@ -51,6 +52,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
         }
     }
     else if (GV.REGOPCODE == 6) {
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
         if (GV.OperandSize == 16) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -71,6 +73,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
 
     }
     else if (GV.REGOPCODE == 7) {
+        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmptrst ");
