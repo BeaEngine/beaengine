@@ -66,7 +66,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     xadd_EbGb , xadd_EvGv , cmpps_VW  , movnti_   , pinsrw_   , pextrw_   , shufps_   , G9_       , bswap_eax , bswap_ecx , bswap_edx , bswap_ebx , bswap_esp , bswap_ebp , bswap_esi , bswap_edi ,
     addsubpd_ , psrlw_    , psrld_    , psrlq_    , paddq_    , pmullw_   , movq_WV   , pmovmskb_ , psubusb_  , psubusw_  , pminub_   , pand_     , paddusb_  , paddusw_  , pmaxub_   , pandn_    ,
     pavgb_    , psraw_    , psrad_    , pavgw_    , pmulhuw_  , pmulhw_   , cvtpd2dq_ , movntq_   , psubsb_   , psubsw_   , pminsw_   , por_      , paddsb_   , paddsw_   , pmaxsw_   , pxor_     ,
-    lddqu_    , psllw_    , pslld_    , psllq_    , pmuludq_  , pmaddwd_  , psadbw_   , maskmovq_ , psubb_    , psubw_    , psubd_    , psubq_    , paddb_    , paddw_    , paddd_    , FailDecode,
+    lddqu_    , psllw_    , pslld_    , psllq_    , pmuludq_  , pmaddwd_  , psadbw_   , maskmovq_ , psubb_    , psubw_    , psubd_    , psubq_    , paddb_    , paddw_    , paddd_    , ud0_      ,
  };
 
 /* ======================================================================  */

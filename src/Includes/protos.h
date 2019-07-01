@@ -434,6 +434,7 @@ void __bea_callspec__ sub_EbGb(PDISASM);
 void __bea_callspec__ sub_EvGv(PDISASM);
 void __bea_callspec__ sub_GbEb(PDISASM);
 void __bea_callspec__ sub_GvEv(PDISASM);
+void __bea_callspec__ ud0_(PDISASM);
 void __bea_callspec__ test_ALIb(PDISASM);
 void __bea_callspec__ test_eAX_Iv(PDISASM);
 void __bea_callspec__ test_EbGb(PDISASM);

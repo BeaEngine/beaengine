@@ -39,6 +39,23 @@ void __bea_callspec__ aaa_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+ *  0f ff
+ * ==================================================================== */
+void __bea_callspec__ ud0_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ud0 ");
+  #endif
+  GvEv(pMyDisasm);
+  GV.ERROR_OPCODE = UD_;
+}
+
+/* ====================================================================
  *
  * ==================================================================== */
 void __bea_callspec__ aad_(PDISASM pMyDisasm)

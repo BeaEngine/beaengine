@@ -77,7 +77,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0xc5)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpextrw ')
-        assert_equal(myDisasm.instr.repr, 'vpextrw r8w, xmm8, F0h')
+        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
 
         myEVEX = EVEX('EVEX.128.66.0F.WIG')
         myEVEX.LL = 1
@@ -97,7 +97,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0xc5)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpextrw ')
-        assert_equal(myDisasm.instr.repr, 'vpextrw r8w, xmm8, F0h')
+        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
 
         myEVEX = EVEX('EVEX.128.66.0F.WIG')
         myEVEX.vvvv = 0b1110
