@@ -19,14 +19,47 @@
 void __bea_callspec__ emms_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) {
-    FailDecode(pMyDisasm);
-    return;
-  }  
-	(*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+STATE_MANAGEMENT;
+    if (GV.EVEX.state == InUsePrefix) {
+      FailDecode(pMyDisasm);
+      return;
+    }
+    if (GV.VEX.pp == 0) {
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+      if (
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+        ) {
+        GV.ERROR_OPCODE = UD_;
+      }
+      if (GV.VEX.L == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vzeroupper ");
+        #endif
+        GV.EIP_++;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vzeroall ");
+        #endif
+        GV.EIP_++;
+      }
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs = AVX_REG + REG0 + REG1
+       + REG2 + REG3 + REG4 + REG5 + REG6 + REG7 + REG8 + REG9 + REG10 + REG11
+        + REG12 + REG13 + REG14 + REG15;
+
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+  	(*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+STATE_MANAGEMENT;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "emms ");
     #endif
-	GV.EIP_++;
+    /* x87 FPU Tag is zeroed */
+  	GV.EIP_++;
+  }
 }
 
 /* ====================================================================
