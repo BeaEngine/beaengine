@@ -1324,6 +1324,55 @@ void __bea_callspec__ crc32_GvEv(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 0) {
+      if (
+        (GV.EVEX.state == InUsePrefix) &&
+        (GV.EVEX.W == 1)
+      ) {
+        FailDecode(pMyDisasm);
+        return;
+      }
+
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcomiss ");
+      #endif
+      GV.MemDecoration = Arg2dword;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      if (
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+        ) {
+        GV.ERROR_OPCODE = UD_;
+      }
+    }
+    else if (GV.VEX.pp == 1) {
+      if (
+        (GV.EVEX.state == InUsePrefix) &&
+        (GV.EVEX.W == 0)
+      ) {
+        FailDecode(pMyDisasm);
+        return;
+      }
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcomisd ");
+      #endif
+      GV.MemDecoration = Arg2qword;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      if (
+          ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 0x15)) ||
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
+        ) {
+        GV.ERROR_OPCODE = UD_;
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
     /* ========== 0x66 */
     if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
         GV.OperandSize = GV.OriginalOperandSize;
@@ -1338,7 +1387,7 @@ void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
         GV.Register_ = 0;
     }
     else {
-        GV.MemDecoration = Arg2_m128_xmm;
+        GV.MemDecoration = Arg2dword;
         (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+COMPARISON_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "comiss ");
@@ -1347,6 +1396,7 @@ void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
         GxEx(pMyDisasm);
         GV.Register_ = 0;
     }
+  }
 }
 
 /* ====================================================================
@@ -5073,7 +5123,7 @@ void __bea_callspec__ ucomiss_VW(PDISASM pMyDisasm)
           ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 0x15))
         ) {
         GV.ERROR_OPCODE = UD_;
-      }      
+      }
     }
     else {
       FailDecode(pMyDisasm);
