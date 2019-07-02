@@ -22092,13 +22092,19 @@ void __bea_callspec__ sqrtps_VW(PDISASM pMyDisasm)
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vsqrtss ");
      #endif
-     ArgsVEX_GxEx(pMyDisasm);
+     (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+     GV.Register_ = SSE_REG;
+     GV.MemDecoration = Arg2dword;
+     GxEx(pMyDisasm);
    }
    else if (GV.VEX.pp == 3) {
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vsqrtsd ");
      #endif
-     ArgsVEX_GxEx(pMyDisasm);
+     (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+     GV.Register_ = SSE_REG;
+     GV.MemDecoration = Arg2qword;
+     GxEx(pMyDisasm);
    }
    else {
      FailDecode(pMyDisasm);

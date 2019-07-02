@@ -176,7 +176,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x51')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vsqrtss ')
-        assert_equal(myDisasm.instr.repr, 'vsqrtss xmm2, xmmword ptr [rbx]')
+        assert_equal(myDisasm.instr.repr, 'vsqrtss xmm2, dword ptr [rbx]')
 
         # EVEX.NDS.LIG.F3.0F.W0 51 /r
         # VSQRTSS xmm1 {k1}{z}, xmm2, xmm3/m32{er}
@@ -187,7 +187,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x51')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vsqrtss ')
-        assert_equal(myDisasm.instr.repr, 'vsqrtss xmm2, xmmword ptr [rbx]')
+        assert_equal(myDisasm.instr.repr, 'vsqrtss xmm2, dword ptr [rbx]')
 
         # F2 0F 51/r
         # SQRTSD xmm1,xmm2/m64
@@ -208,7 +208,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x51')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vsqrtsd ')
-        assert_equal(myDisasm.instr.repr, 'vsqrtsd xmm10, xmmword ptr [r11]')
+        assert_equal(myDisasm.instr.repr, 'vsqrtsd xmm10, qword ptr [r11]')
 
         # EVEX.NDS.LIG.F2.0F.W1 51/r
         # VSQRTSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}
@@ -219,4 +219,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x51')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vsqrtsd ')
-        assert_equal(myDisasm.instr.repr, 'vsqrtsd xmm2, xmmword ptr [rbx]')
+        assert_equal(myDisasm.instr.repr, 'vsqrtsd xmm2, qword ptr [rbx]')
