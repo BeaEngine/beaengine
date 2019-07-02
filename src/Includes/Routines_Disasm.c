@@ -649,6 +649,34 @@ void __bea_callspec__ ArgsVEX_GxEx(PDISASM pMyDisasm)
       GV.Register_ = 0;
   }
 }
+/* ====================================================================
+ *
+ * ==================================================================== */
+void __bea_callspec__ getImmediat8(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
+{
+  GV.EIP_++;
+  GV.ImmediatSize = 8;
+  if (!Security(0, pMyDisasm)) return;
+  (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+  #endif
+  (*pMyArgument).ArgType = CONSTANT_TYPE+ABSOLUTE_;
+  (*pMyArgument).ArgSize = 8;
+
+}
+/* ====================================================================
+ *
+ * ==================================================================== */
+void __bea_callspec__ verifyVEXvvvv(PDISASM pMyDisasm)
+{
+  if (
+      ((GV.EVEX.state != InUsePrefix) && (GV.VEX.vvvv != 15))
+      || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.vvvv != 15))
+    ) {
+    GV.ERROR_OPCODE = UD_;
+  }
+}
 
 /* ====================================================================
  *

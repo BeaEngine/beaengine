@@ -102,7 +102,8 @@ void __bea_callspec__ FillFlags(PDISASM, int);
 void __bea_callspec__ FillSegmentsRegisters (PDISASM);
 void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM);
 void __bea_callspec__ FixREXPrefixes (PDISASM);
-
+void __bea_callspec__ getImmediat8(ARGTYPE*,PDISASM);
+void __bea_callspec__ verifyVEXvvvv(PDISASM);
 /* ====================================== opcodes_prefix */
 void __bea_callspec__ PrefLock(PDISASM);
 void __bea_callspec__ PrefREPNE(PDISASM);
