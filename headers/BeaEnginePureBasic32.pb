@@ -128,26 +128,27 @@ Global MyDisasm._Disasm
 ;                                       INSTRUCTION_TYPE
 ; __________________________________________________________________________________________________________
 
-#GENERAL_PURPOSE_INSTRUCTION = $00010000
-#FPU_INSTRUCTION             = $00020000
-#MMX_INSTRUCTION             = $00040000
-#SSE_INSTRUCTION             = $00080000
-#SSE2_INSTRUCTION            = $00100000
-#SSE3_INSTRUCTION            = $00200000
-#SSSE3_INSTRUCTION           = $00400000
-#SSE41_INSTRUCTION           = $00800000
-#SSE42_INSTRUCTION           = $01000000
-#SYSTEM_INSTRUCTION          = $02000000
-#VM_INSTRUCTION              = $04000000
-#UNDOCUMENTED_INSTRUCTION    = $08000000
-#AMD_INSTRUCTION             = $10000000
-#ILLEGAL_INSTRUCTION         = $20000000
-#AES_INSTRUCTION             = $40000000
-#CLMUL_INSTRUCTION           = $80000000
-#AVX_INSTRUCTION             = $100000000
-#AVX2_INSTRUCTION            = $200000000
-#MPX_INSTRUCTION             = $400000000
-#AVX512_INSTRUCTION          = $800000000
+#GENERAL_PURPOSE_INSTRUCTION   =           $10000
+#FPU_INSTRUCTION               =           $20000
+#MMX_INSTRUCTION               =           $30000
+#SSE_INSTRUCTION               =           $40000
+#SSE2_INSTRUCTION              =           $50000
+#SSE3_INSTRUCTION              =           $60000
+#SSSE3_INSTRUCTION             =           $70000
+#SSE41_INSTRUCTION             =           $80000
+#SSE42_INSTRUCTION             =           $90000
+#SYSTEM_INSTRUCTION            =           $a0000
+#VM_INSTRUCTION                =           $b0000
+#UNDOCUMENTED_INSTRUCTION      =           $c0000
+#AMD_INSTRUCTION               =           $d0000
+#ILLEGAL_INSTRUCTION           =           $e0000
+#AES_INSTRUCTION               =           $f0000
+#CLMUL_INSTRUCTION             =          $100000
+#AVX_INSTRUCTION               =          $110000
+#AVX2_INSTRUCTION              =          $120000
+#MPX_INSTRUCTION               =          $130000
+#AVX512_INSTRUCTION            =          $140000
+#SHA_INSTRUCTION               =          $150000
 
 #DATA_TRANSFER               = 1
 #ARITHMETIC_INSTRUCTION      = 2

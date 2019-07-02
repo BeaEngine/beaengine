@@ -134,26 +134,27 @@ _Disasm ENDS
 ;                                       INSTRUCTION_TYPE
 ; __________________________________________________________________________________________________________
 
-    GENERAL_PURPOSE_INSTRUCTION equ 00010000h
-    FPU_INSTRUCTION             equ 00020000h
-    MMX_INSTRUCTION             equ 00040000h
-    SSE_INSTRUCTION             equ 00080000h
-    SSE2_INSTRUCTION            equ 00100000h
-    SSE3_INSTRUCTION            equ 00200000h
-    SSSE3_INSTRUCTION           equ 00400000h
-    SSE41_INSTRUCTION           equ 00800000h
-    SSE42_INSTRUCTION           equ 01000000h
-    SYSTEM_INSTRUCTION          equ 02000000h
-    VM_INSTRUCTION              equ 04000000h
-    UNDOCUMENTED_INSTRUCTION    equ 08000000h
-    AMD_INSTRUCTION             equ 10000000h
-    ILLEGAL_INSTRUCTION         equ 20000000h
-    AES_INSTRUCTION             equ 40000000h
-    CLMUL_INSTRUCTION           equ 80000000h
-    AVX_INSTRUCTION             equ 100000000h
-    AVX2_INSTRUCTION            equ 200000000h
-    MPX_INSTRUCTION             equ 400000000h
-    AVX512_INSTRUCTION          equ 800000000h
+    GENERAL_PURPOSE_INSTRUCTION   equ           10000h
+    FPU_INSTRUCTION               equ           20000h
+    MMX_INSTRUCTION               equ           30000h
+    SSE_INSTRUCTION               equ           40000h
+    SSE2_INSTRUCTION              equ           50000h
+    SSE3_INSTRUCTION              equ           60000h
+    SSSE3_INSTRUCTION             equ           70000h
+    SSE41_INSTRUCTION             equ           80000h
+    SSE42_INSTRUCTION             equ           90000h
+    SYSTEM_INSTRUCTION            equ           a0000h
+    VM_INSTRUCTION                equ           b0000h
+    UNDOCUMENTED_INSTRUCTION      equ           c0000h
+    AMD_INSTRUCTION               equ           d0000h
+    ILLEGAL_INSTRUCTION           equ           e0000h
+    AES_INSTRUCTION               equ           f0000h
+    CLMUL_INSTRUCTION             equ          100000h
+    AVX_INSTRUCTION               equ          110000h
+    AVX2_INSTRUCTION              equ          120000h
+    MPX_INSTRUCTION               equ          130000h
+    AVX512_INSTRUCTION            equ          140000h
+    SHA_INSTRUCTION               equ          150000h
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
     LOGICAL_INSTRUCTION         equ 3
