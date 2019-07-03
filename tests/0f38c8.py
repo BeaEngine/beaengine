@@ -41,6 +41,14 @@ class TestSuite:
         # EVEX.512.66.0F38.W0 C8 /r
         # VEXP2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}
 
+        myEVEX = EVEX('EVEX.512.66.0F38.W0')
+        Buffer = '{}c800'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xc8)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vexp2ps ')
+        assert_equal(myDisasm.instr.repr, 'vexp2ps zmm0, zmmword ptr [rax]')
+
         # NP 0F 38 C8 /r
         # SHA1NEXTE xmm1, xmm2/m128
 
