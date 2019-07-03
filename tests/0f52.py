@@ -67,9 +67,9 @@ class TestSuite:
         # VRSQRTSS xmm1, xmm2, xmm3/m32
 
         myVEX = VEX('VEX.NDS.LIG.F3.0F.WIG')
-        Buffer = '{}52e0'.format(myVEX.c4()).decode('hex')
+        Buffer = '{}5230'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x52)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrsqrtss ')
-        assert_equal(myDisasm.instr.repr, 'vrsqrtss xmm12, xmm8')
+        assert_equal(myDisasm.instr.repr, 'vrsqrtss xmm6, xmm15, dword ptr [r8]')

@@ -22183,7 +22183,14 @@ void __bea_callspec__ rsqrtps_(PDISASM pMyDisasm)
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrsqrtss ");
      #endif
-     ArgsVEX_GxEx(pMyDisasm);
+     GV.MemDecoration = Arg3dword;
+     GV.Register_ = SSE_REG;
+     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+     fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
+     fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+     MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+     GV.EIP_ += GV.DECALAGE_EIP+2;
+
    }
    else {
      FailDecode(pMyDisasm);
