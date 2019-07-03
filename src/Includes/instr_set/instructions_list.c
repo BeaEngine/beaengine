@@ -187,7 +187,7 @@ void __bea_callspec__ adcx_GyEy(PDISASM pMyDisasm)
             }
             GyEy(pMyDisasm);
 
-            fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
 
             if (GV.REX.W_ == 0x0) {
                 (*pMyDisasm).Argument4.ArgType = REGISTER_TYPE + GENERAL_REG + REGS[2];
@@ -502,7 +502,7 @@ void __bea_callspec__ andn_GyEy(PDISASM pMyDisasm)
             }
         }
         GyEy(pMyDisasm);
-        fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
         FillFlags(pMyDisasm,126);
     }
     else {
@@ -592,8 +592,8 @@ void __bea_callspec__ bextr_GyEy(PDISASM pMyDisasm)
                 GV.OperandSize = 64;
             }
         }
-        GxEx(pMyDisasm);
-        fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+        GxExVEX(pMyDisasm);
+
         FillFlags(pMyDisasm,127);
     }
     else {
@@ -629,9 +629,10 @@ void __bea_callspec__ bound_(PDISASM pMyDisasm)
       GV.EVEX.state = InUsePrefix;
       GV.EVEX.mm = GV.EVEX.P0 & 0x3;           /* P[1:0] */
       GV.EVEX.pp = GV.EVEX.P1 & 0x3;           /* P[9:8] */
-      GV.EVEX.RXB = (GV.EVEX.P0 >> 5) & 0x3;   /* P[7:5] */
-      GV.EVEX.R = (GV.EVEX.P0 >> 4) & 0x1;      /* P[4] */
+      GV.EVEX.R1 = (GV.EVEX.P0 >> 4) & 0x1;      /* P[4] */
       GV.EVEX.X = (GV.EVEX.P0 >> 6) & 0x1;      /* P[6] */
+      GV.EVEX.B = (GV.EVEX.P0 >> 5) & 0x1;      /* P[5] */
+      GV.EVEX.R = (GV.EVEX.P0 >> 7) & 0x1;      /* P[5] */
       GV.EVEX.vvvv = (GV.EVEX.P1 >> 3) & 0xF; /* P[14:11] */
       GV.EVEX.V = (GV.EVEX.P2 >> 3) & 0x1;      /* P[19] */
       GV.EVEX.aaa = (GV.EVEX.P2) & 0x7;       /* P[18:16] */
@@ -647,6 +648,8 @@ void __bea_callspec__ bound_(PDISASM pMyDisasm)
       GV.VEX.vvvv = GV.EVEX.vvvv;
       GV.VEX.L = GV.EVEX.LL;  /* Thus, VEX.L can have 0x2 value */
       GV.REX.X_ = GV.EVEX.X;
+      GV.REX.R_ = GV.EVEX.R;
+      GV.REX.B_ = GV.EVEX.B;
 
       if (GV.EVEX.pp == 0x0) {
           GV.NB_PREFIX++;
@@ -1536,8 +1539,8 @@ void __bea_callspec__ bzhi_GyEy(PDISASM pMyDisasm)
                 GV.OperandSize = 64;
             }
         }
-        GxEx(pMyDisasm);
-        fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+        GxExVEX(pMyDisasm);
+
 
         FillFlags(pMyDisasm,128);
 
@@ -7672,22 +7675,14 @@ void __bea_callspec__ cmovno_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandb ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -7699,22 +7694,14 @@ void __bea_callspec__ cmovno_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandd ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -7761,22 +7748,14 @@ void __bea_callspec__ cmovb_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnb ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -7788,22 +7767,14 @@ void __bea_callspec__ cmovb_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnd ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kandnq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -7849,22 +7820,14 @@ void __bea_callspec__ cmovne_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "korb ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "korw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -7876,22 +7839,14 @@ void __bea_callspec__ cmovne_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kord ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "korq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -7937,22 +7892,14 @@ void __bea_callspec__ cmovbe_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnorb ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnorw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -7964,22 +7911,14 @@ void __bea_callspec__ cmovbe_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnord ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxnorq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8024,22 +7963,14 @@ void __bea_callspec__ cmovnbe_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxorb ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxorw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8051,22 +7982,14 @@ void __bea_callspec__ cmovnbe_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxord ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kxorq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8130,22 +8053,14 @@ void __bea_callspec__ cmovp_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kaddb ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kaddw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8157,22 +8072,14 @@ void __bea_callspec__ cmovp_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kaddd ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kaddq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8218,22 +8125,14 @@ void __bea_callspec__ cmovnp_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kunpckbw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kunpckwd ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8245,11 +8144,7 @@ void __bea_callspec__ cmovnp_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kunpckdq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GyEy(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8296,20 +8191,14 @@ void __bea_callspec__ cmove_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "knotb ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GxEx(pMyDisasm);
         }
         else if (GV.VEX.pp == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "knotw ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GxEx(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -8321,20 +8210,14 @@ void __bea_callspec__ cmove_(PDISASM pMyDisasm)
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "knotq ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GxEx(pMyDisasm);
         }
         else if (GV.VEX.pp == 1) {
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "knotd ");
           #endif
           GV.Register_ = OPMASK_REG;
-          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-          fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-          GV.EIP_ += GV.DECALAGE_EIP+2;
+          GxEx(pMyDisasm);
         }
         else {
           FailDecode(pMyDisasm);
@@ -12230,7 +12113,7 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
            }
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3qword;
 
 
@@ -12266,7 +12149,7 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
 
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3dword;
 
 
@@ -12374,14 +12257,14 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
            if (GV.VEX.L == 0) {
                GV.Register_ = SSE_REG;
                GyEy(pMyDisasm);
-               fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
                GV.MemDecoration = Arg3_m128_xmm;
 
            }
            else {
                GV.Register_ = AVX_REG;
                GyEy(pMyDisasm);
-               fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
                GV.MemDecoration = Arg3_m256_ymm;
 
 
@@ -12421,14 +12304,14 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
            if (GV.VEX.L == 0) {
                GV.Register_ = SSE_REG;
                GyEy(pMyDisasm);
-               fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
                GV.MemDecoration = Arg3_m128d_xmm;
 
            }
            else {
                GV.Register_ = AVX_REG;
                GyEy(pMyDisasm);
-               fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
                GV.MemDecoration = Arg3_m256d_ymm;
 
 
@@ -12720,7 +12603,7 @@ void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
          GV.Register_ = SSE_REG;
          GV.MemDecoration = Arg3_m128_xmm;
          GyEy(pMyDisasm);
-         fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
          GV.EIP_++;
          if (!Security(0, pMyDisasm)) return;
          Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
@@ -12731,7 +12614,7 @@ void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
          GV.Register_ = AVX_REG;
          GV.MemDecoration = Arg3_m256_ymm;
          GyEy(pMyDisasm);
-         fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
          GV.EIP_++;
          if (!Security(0, pMyDisasm)) return;
          Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
@@ -12788,7 +12671,7 @@ void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
            GV.Register_ = SSE_REG;
            GV.MemDecoration = Arg3_m128_xmm;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.EIP_++;
            if (!Security(0, pMyDisasm)) return;
            Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
@@ -12799,7 +12682,7 @@ void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
            GV.Register_ = AVX_REG;
            GV.MemDecoration = Arg3_m256_ymm;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.EIP_++;
            if (!Security(0, pMyDisasm)) return;
            Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
@@ -13288,14 +13171,14 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
            if (GV.VEX.L == 0) {
                GV.Register_ = SSE_REG;
                GyEy(pMyDisasm);
-               fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
                GV.MemDecoration = Arg3_m128_xmm;
 
            }
            else {
                GV.Register_ = AVX_REG;
                GyEy(pMyDisasm);
-               fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
                GV.MemDecoration = Arg3_m256_ymm;
 
 
@@ -13683,7 +13566,7 @@ void __bea_callspec__ cvtpi2ps_(PDISASM pMyDisasm)
      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
      GV.Register_ = SSE_REG;
      GyEy(pMyDisasm);
-     fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
 
    }
    else {
@@ -13702,7 +13585,7 @@ void __bea_callspec__ cvtpi2ps_(PDISASM pMyDisasm)
      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
      GV.Register_ = SSE_REG;
      GyEy(pMyDisasm);
-     fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
 
    }
  }
@@ -15151,8 +15034,6 @@ void __bea_callspec__ movups_VW(PDISASM pMyDisasm)
      if (GV.VEX.pp == 0x3) {
        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
        if (GV.VEX.vvvv == 0xF) {
-         /* VEX.LIG.F2.0F.WIG 10 /r */
-         /* VMOVSD xmm1, m64 */
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovsd ");
          #endif
@@ -15165,17 +15046,12 @@ void __bea_callspec__ movups_VW(PDISASM pMyDisasm)
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovsd ");
          #endif
-
-         /* VEX.NDS.LIG.F2.0F.WIG 10 /r */
-         /* VMOVSD xmm1, xmm2, xmm3 */
          ArgsVEX(pMyDisasm);
        }
      }
      else if (GV.VEX.pp == 0x2) {
        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
        if (GV.VEX.vvvv == 0xF) {
-         /* VEX.LIG.F3.0F.WIG 10 /r */
-         /* VMOVSS xmm1, m64 */
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovss ");
          #endif
@@ -15188,9 +15064,6 @@ void __bea_callspec__ movups_VW(PDISASM pMyDisasm)
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovss ");
          #endif
-
-         /* VEX.NDS.LIG.F3.0F.WIG 10 /r */
-         /* VMOVSS xmm1, xmm2, xmm3 */
          ArgsVEX(pMyDisasm);
        }
      }
@@ -15268,8 +15141,6 @@ void __bea_callspec__ movups_WV(PDISASM pMyDisasm)
      if (GV.VEX.pp == 0x3) {
        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
        if (GV.VEX.vvvv == 0xF) {
-         /* VEX.LIG.F2.0F.WIG 10 /r */
-         /* VMOVSD xmm1, m64 */
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovsd ");
          #endif
@@ -15282,9 +15153,6 @@ void __bea_callspec__ movups_WV(PDISASM pMyDisasm)
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovsd ");
          #endif
-
-         /* VEX.NDS.LIG.F2.0F.WIG 10 /r */
-         /* VMOVSD xmm1, xmm2, xmm3 */
          ArgsVEX_EyGy(pMyDisasm);
        }
      }
@@ -15305,9 +15173,6 @@ void __bea_callspec__ movups_WV(PDISASM pMyDisasm)
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovss ");
          #endif
-
-         /* VEX.NDS.LIG.F3.0F.WIG 10 /r */
-         /* VMOVSS xmm1, xmm2, xmm3 */
          ArgsVEX_EyGy(pMyDisasm);
        }
      }
@@ -15572,7 +15437,7 @@ void __bea_callspec__ pblendvb_(PDISASM pMyDisasm)
        GV.Register_ = SSE_REG;
        GV.MemDecoration = Arg3_m128_xmm;
        GyEy(pMyDisasm);
-       fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
 
        GV.EIP_++;
        if (!Security(0, pMyDisasm)) return;
@@ -15584,7 +15449,7 @@ void __bea_callspec__ pblendvb_(PDISASM pMyDisasm)
        GV.Register_ = AVX_REG;
        GV.MemDecoration = Arg3_m256_ymm;
        GyEy(pMyDisasm);
-       fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
        GV.EIP_++;
        if (!Security(0, pMyDisasm)) return;
        Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
@@ -16389,13 +16254,7 @@ void __bea_callspec__ pinsrw_(PDISASM pMyDisasm)
      }
      GV.Register_ = SSE_REG;
      GV.MemDecoration = Arg3word;
-     GV.ImmediatSize = 8;
-
-     Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
-     fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-     GV.Register_ = 0;
-     MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-     GV.EIP_ += GV.DECALAGE_EIP+2;
+     GyEy(pMyDisasm);
      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
    }
    else {
@@ -17981,8 +17840,8 @@ void __bea_callspec__ vgatherps_(PDISASM pMyDisasm)
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2dword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2dword;
@@ -17997,8 +17856,8 @@ void __bea_callspec__ vgatherps_(PDISASM pMyDisasm)
          if (GV.EVEX.state != InUsePrefix) {
            GV.Register_ = SSE_REG;
            GV.MemDecoration = Arg2dword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
 
          }
          else {
@@ -18027,8 +17886,8 @@ void __bea_callspec__ vgatherps_(PDISASM pMyDisasm)
          GV.VSIB_ = SSE_REG;
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GxEx(pMyDisasm);
@@ -18041,8 +17900,8 @@ void __bea_callspec__ vgatherps_(PDISASM pMyDisasm)
          GV.Register_ = AVX_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2dword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2dword;
@@ -18391,8 +18250,8 @@ void __bea_callspec__ vgatherqd_(PDISASM pMyDisasm)
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2qword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2qword;
@@ -18407,8 +18266,8 @@ void __bea_callspec__ vgatherqd_(PDISASM pMyDisasm)
          if (GV.EVEX.state != InUsePrefix) {
            GV.Register_ = AVX_REG;
            GV.MemDecoration = Arg2qword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
 
          }
          else {
@@ -18437,8 +18296,8 @@ void __bea_callspec__ vgatherqd_(PDISASM pMyDisasm)
          GV.VSIB_ = SSE_REG;
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GxEx(pMyDisasm);
@@ -18451,8 +18310,8 @@ void __bea_callspec__ vgatherqd_(PDISASM pMyDisasm)
          GV.Register_ = AVX_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2qword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2qword;
@@ -18603,8 +18462,8 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2dword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2dword;
@@ -18619,8 +18478,8 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
          if (GV.EVEX.state != InUsePrefix) {
            GV.Register_ = AVX_REG;
            GV.MemDecoration = Arg2dword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
 
          }
          else {
@@ -18649,8 +18508,8 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
          GV.VSIB_ = SSE_REG;
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GxEx(pMyDisasm);
@@ -18663,8 +18522,8 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
          GV.Register_ = AVX_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2dword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2dword;
@@ -19114,8 +18973,8 @@ void __bea_callspec__ vgatherqps_(PDISASM pMyDisasm)
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2qword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2qword;
@@ -19130,8 +18989,8 @@ void __bea_callspec__ vgatherqps_(PDISASM pMyDisasm)
          if (GV.EVEX.state != InUsePrefix) {
            GV.Register_ = SSE_REG;
            GV.MemDecoration = Arg2qword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
 
          }
          else {
@@ -19160,8 +19019,8 @@ void __bea_callspec__ vgatherqps_(PDISASM pMyDisasm)
          GV.VSIB_ = SSE_REG;
          GV.Register_ = SSE_REG;
          if (GV.EVEX.state != InUsePrefix) {
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GxEx(pMyDisasm);
@@ -19174,8 +19033,8 @@ void __bea_callspec__ vgatherqps_(PDISASM pMyDisasm)
          GV.Register_ = AVX_REG;
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2dword;
-           GxEx(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument3, pMyDisasm);
+           GxExVEX(pMyDisasm);
+
          }
          else {
            GV.MemDecoration = Arg2qword;
@@ -20241,7 +20100,7 @@ void __bea_callspec__ subps_VW(PDISASM pMyDisasm)
            }
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3qword;
 
        }
@@ -20274,7 +20133,7 @@ void __bea_callspec__ subps_VW(PDISASM pMyDisasm)
 
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3dword;
 
 
@@ -20373,7 +20232,7 @@ void __bea_callspec__ maxps_VW(PDISASM pMyDisasm)
            }
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3qword;
 
        }
@@ -20406,7 +20265,7 @@ void __bea_callspec__ maxps_VW(PDISASM pMyDisasm)
 
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3dword;
 
 
@@ -20505,7 +20364,7 @@ void __bea_callspec__ minps_VW(PDISASM pMyDisasm)
            }
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3qword;
 
        }
@@ -20538,7 +20397,7 @@ void __bea_callspec__ minps_VW(PDISASM pMyDisasm)
 
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3dword;
 
 
@@ -20637,7 +20496,7 @@ void __bea_callspec__ mulps_VW(PDISASM pMyDisasm)
            }
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3qword;
 
        }
@@ -20670,7 +20529,7 @@ void __bea_callspec__ mulps_VW(PDISASM pMyDisasm)
 
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3dword;
 
 
@@ -20769,7 +20628,7 @@ void __bea_callspec__ divps_VW(PDISASM pMyDisasm)
            }
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3qword;
 
        }
@@ -20802,7 +20661,7 @@ void __bea_callspec__ divps_VW(PDISASM pMyDisasm)
 
            GV.Register_ = SSE_REG;
            GyEy(pMyDisasm);
-           fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
+
            GV.MemDecoration = Arg3dword;
 
 
@@ -22185,11 +22044,7 @@ void __bea_callspec__ rsqrtps_(PDISASM pMyDisasm)
      #endif
      GV.MemDecoration = Arg3dword;
      GV.Register_ = SSE_REG;
-     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-     fillRegister(GV.REGOPCODE, &(*pMyDisasm).Argument1, pMyDisasm);
-     fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument2, pMyDisasm);
-     MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-     GV.EIP_ += GV.DECALAGE_EIP+2;
+     GyEy(pMyDisasm);
 
    }
    else {

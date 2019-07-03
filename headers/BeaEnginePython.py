@@ -99,9 +99,10 @@ class EVEX_Struct(Structure):
               ("P2",c_uint8),
               ("mm",c_uint8),
               ("pp",c_uint8),
-              ("RXB",c_uint8),
               ("R",c_uint8),
               ("X",c_uint8),
+              ("B",c_uint8),
+              ("R1",c_uint8),
               ("vvvv",c_uint8),
               ("V",c_uint8),
               ("aaa",c_uint8),
@@ -152,7 +153,7 @@ class InternalDatas(Structure):
 class INSTRUCTION(Structure):
     _pack_= 1
     _fields_= [("offset", c_void_p),                # EIP
-               ("virtualAddr", c_uint64),           # VirtualAddr
+               ("VirtualAddr", c_uint64),
                ("SecurityBlock", c_uint32),
                ("repr", c_char * INSTRUCT_LENGTH),  # CompleteInstr
                ("Archi", c_uint32),
@@ -404,7 +405,7 @@ class EVEX:
         self.pp = 0
         self.R = 0
         self.B = 0
-        self.R2 = 0
+        self.R1 = 0
         self.X = 0
         self.vvvv = 0b1111
         self.V = 0
@@ -418,7 +419,7 @@ class EVEX:
         return '62{:02x}{:02x}{:02x}'.format(self.p0(),self.p1(),self.p2())
 
     def p0(self):
-        return self.mm + (self.R2 << 4) + (self.B << 5) + (self.X << 6)+ (self.R << 7)
+        return self.mm + (self.R1 << 4) + (self.B << 5) + (self.X << 6)+ (self.R << 7)
 
     def p1(self):
         return self.pp + 0b100 + (self.vvvv << 3) + (self.W << 7)

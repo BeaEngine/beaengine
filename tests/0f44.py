@@ -26,6 +26,7 @@ class TestSuite:
 
         myVEX = VEX('VEX.L0.0F.W0')
         myVEX.vvvv = 0b1101
+        myVEX.R = 1
         Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
@@ -41,6 +42,7 @@ class TestSuite:
 
         myVEX = VEX('VEX.L0.66.0F.W0')
         myVEX.vvvv = 0b1101
+        myVEX.R = 1
         Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
@@ -56,6 +58,7 @@ class TestSuite:
 
         myVEX = VEX('VEX.L0.0F.W1')
         myVEX.vvvv = 0b1101
+        myVEX.R = 1
         Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
@@ -71,6 +74,7 @@ class TestSuite:
 
         myVEX = VEX('VEX.L0.66.0F.W1')
         myVEX.vvvv = 0b1101
+        myVEX.R = 1
         Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()

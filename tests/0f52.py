@@ -72,4 +72,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x52)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrsqrtss ')
-        assert_equal(myDisasm.instr.repr, 'vrsqrtss xmm6, xmm15, dword ptr [r8]')
+        assert_equal(myDisasm.instr.repr, 'vrsqrtss xmm14, xmm15, dword ptr [r8]')

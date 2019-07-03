@@ -4,6 +4,7 @@
 namespace BeaEngine {
 #endif
 
+
 #include <beaengine/macros.h>
 #include <beaengine/export.h>
 #include <beaengine/basic_types.h>
@@ -28,9 +29,10 @@ typedef struct {
    UInt8 P2;
    UInt8 mm;
    UInt8 pp;
-   UInt8 RXB;
    UInt8 R;
    UInt8 X;
+   UInt8 B;
+   UInt8 R1;
    UInt8 vvvv;
    UInt8 V;
    UInt8 aaa;

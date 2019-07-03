@@ -51,7 +51,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
           GV.Register_ = AVX512_REG;
           GV.MemDecoration = Arg2_m512_zmm;
         }
-        fillRegister(~GV.VEX.vvvv & 0xF, &(*pMyDisasm).Argument1, pMyDisasm);
+        fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument1, pMyDisasm);
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.EIP_+=2;
         getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);

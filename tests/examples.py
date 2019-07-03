@@ -34,7 +34,7 @@ class TestExample:
     def test_VirtualAddrUseCase(self):
         Buffer = b'\xe9\x00\x00\x00\x00'
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.virtualAddr = 0x401000
+        myDisasm.instr.VirtualAddr = 0x401000
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.AddrValue, 0x401005)
 

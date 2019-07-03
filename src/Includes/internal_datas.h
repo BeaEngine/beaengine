@@ -634,7 +634,7 @@ char RegistersMMX[8][4] = {
 /* =====================================================
  * SSE Registers
  * ===================================================== */
-char RegistersSSE[16][8] = {
+char RegistersSSE[32][8] = {
     "xmm0",
     "xmm1",
     "xmm2",
@@ -651,12 +651,28 @@ char RegistersSSE[16][8] = {
     "xmm13",    /* SSE3, SSSE3, SSE4 */
     "xmm14",    /* SSE3, SSSE3, SSE4 */
     "xmm15",    /* SSE3, SSSE3, SSE4 */
+    "xmm16",
+    "xmm17",
+    "xmm18",
+    "xmm19",
+    "xmm20",
+    "xmm21",
+    "xmm22",
+    "xmm23",
+    "xmm24",
+    "xmm25",
+    "xmm26",
+    "xmm27",
+    "xmm28",
+    "xmm29",
+    "xmm30",
+    "xmm31",
 };
 
 /* =====================================================
  * AVX 256 bits Registers
  * ===================================================== */
-char RegistersAVX[16][8] = {
+char RegistersAVX[32][8] = {
     "ymm0",
     "ymm1",
     "ymm2",
@@ -673,6 +689,22 @@ char RegistersAVX[16][8] = {
     "ymm13",
     "ymm14",
     "ymm15",
+    "ymm16",
+    "ymm17",
+    "ymm18",
+    "ymm19",
+    "ymm20",
+    "ymm21",
+    "ymm22",
+    "ymm23",
+    "ymm24",
+    "ymm25",
+    "ymm26",
+    "ymm27",
+    "ymm28",
+    "ymm29",
+    "ymm30",
+    "ymm31",
 };
 
 /* =====================================================
@@ -750,3 +782,14 @@ char BXSI_[] = "bx+si";
 char BXDI_[] = "bx+di";
 char BPSI_[] = "bp+si";
 char BPDI_[] = "bp+di";
+
+char RegistersSIB[8][8] = {
+    "bx+si",
+    "bx+di",
+    "bp+si",
+    "bp+di",
+    "si",
+    "di",
+    "bp",
+    "bx"
+};

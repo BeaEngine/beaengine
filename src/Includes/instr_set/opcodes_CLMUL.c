@@ -30,7 +30,6 @@ void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
         GV.ImmediatSize = 8;
         GV.Register_ = SSE_REG;
         GxEx(pMyDisasm);
-        GV.Register_ = 0;
         GV.EIP_++;
         if (!Security(0, pMyDisasm)) return;
 
