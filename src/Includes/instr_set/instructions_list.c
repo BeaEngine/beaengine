@@ -22677,7 +22677,31 @@ void __bea_callspec__ sha256msg1_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ sha256msg2_(PDISASM pMyDisasm)
 {
-  if (GV.VEX.state == InUsePrefix) {
+  if (GV.EVEX.state == InUsePrefix) {
+    if (
+      (GV.EVEX.pp == 1)
+    ) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrsqrt28ss ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrsqrt28sd ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+      }
+      GV.Register_ = SSE_REG;
+      GyEy(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
     FailDecode(pMyDisasm);
   }
   else {
