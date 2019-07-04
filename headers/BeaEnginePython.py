@@ -81,6 +81,7 @@ class ARGTYPE(Structure):
               ("ArgPosition", c_int32),
               ("AccessMode", c_uint32),
               ("Memory", MEMORYTYPE),
+              ("Registers", c_int64),
               ("SegmentReg", c_uint32)]
 
 class VEX_Struct(Structure):
@@ -157,7 +158,7 @@ class INSTRUCTION(Structure):
                ("SecurityBlock", c_uint32),
                ("repr", c_char * INSTRUCT_LENGTH),  # CompleteInstr
                ("Archi", c_uint32),
-               ("options", c_uint64),               # Options
+               ("Options", c_uint64),
                ("Instruction", INSTRTYPE),
                ("Argument1", ARGTYPE),
                ("Argument2", ARGTYPE),
@@ -291,22 +292,24 @@ JNL = -7
 JNG = -8
 JNB = -2
 
-NO_ARGUMENT = 0x10000000
-REGISTER_TYPE = 0x20000000
-MEMORY_TYPE = 0x40000000
-CONSTANT_TYPE = 0x80000000
+NO_ARGUMENT = 0x10000
+REGISTER_TYPE = 0x20000
+MEMORY_TYPE = 0x30000
+CONSTANT_TYPE = 0x40000
 
-MMX_REG = 0x10000
-GENERAL_REG = 0x20000
-FPU_REG = 0x40000
-SSE_REG = 0x80000
-CR_REG = 0x100000
-DR_REG = 0x200000
-SPECIAL_REG = 0x400000
-MEMORY_MANAGEMENT_REG = 0x800000
-SEGMENT_REG = 0x1000000
-AVX_REG = 0x2000000
-MPX_REG = 0x4000000
+MMX_REG = 0x100
+GENERAL_REG = 0x200
+FPU_REG = 0x300
+SSE_REG = 0x400
+CR_REG = 0x500
+DR_REG = 0x600
+SPECIAL_REG = 0x700
+MEMORY_MANAGEMENT_REG = 0x800
+SEGMENT_REG = 0x900
+AVX_REG = 0xa00
+MPX_REG = 0xb00
+AVX512_REG = 0xc00
+OPMASK_REG = 0xd00
 
 RELATIVE_ = 0x4000000
 ABSOLUTE_ = 0x8000000
@@ -330,7 +333,22 @@ REG12 = 0x1000
 REG13 = 0x2000
 REG14 = 0x4000
 REG15 = 0x8000
-
+REG16 = 0x10000
+REG17 = 0x20000
+REG18 = 0x40000
+REG19 = 0x80000
+REG20 = 0x100000
+REG21 = 0x200000
+REG22 = 0x400000
+REG23 = 0x800000
+REG24 = 0x1000000
+REG25 = 0x2000000
+REG26 = 0x4000000
+REG27 = 0x8000000
+REG28 = 0x10000000
+REG29 = 0x20000000
+REG30 = 0x40000000
+REG31 = 0x80000000
 
 UNKNOWN_OPCODE = -1
 OUT_OF_BLOCK = 0
@@ -512,7 +530,7 @@ class Disasm():
         self.buffer = buffer
         self.target = create_string_buffer(buffer,len(buffer))
         self.instr = INSTRUCTION()
-        #self.instr.options = PrefixedNumeral
+        #self.instr.Options = PrefixedNumeral
         self.instr.offset = addressof(self.target) + offset
         self.instr.virtualAddr = virtualAddr
         self.instr.Archi = 64
@@ -581,8 +599,10 @@ class Disasm():
                 disasm.read()
                 print(disasm.repr())
         """
-        return "{} {:<30} {}".format(
-            "0x%08x" %(self.seek()),
-            " ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes),
-            self.instr.repr.decode("utf-8")
-        )
+        return "{}".format(self.instr.repr.decode("utf-8"))
+
+        # return "{} {:<30} {}".format(
+        #    "0x%08x" %(self.seek()),
+        #    " ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes),
+        #    self.instr.repr.decode("utf-8")
+        # )

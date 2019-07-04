@@ -73,9 +73,10 @@ ARGTYPE STRUCT
     ArgMnemonic     BYTE    24 dup(0)
     ArgType         QWORD   0
     ArgSize         DWORD   0
-	ArgPosition		DWORD	0
+    ArgPosition     DWORD	0
     AccessMode      DWORD   0
     Memory          MEMORYTYPE <0>
+    Registers       QWORD   0
     SegmentReg      DWORD   0
 ARGTYPE ENDS
 
@@ -246,22 +247,24 @@ Disasm  PROTO :DWORD
 ;                                       ARGUMENTS_TYPE
 ; __________________________________________________________________________________________________________
 
-    NO_ARGUMENT                 equ 10000000h
-    REGISTER_TYPE               equ 20000000h
-    MEMORY_TYPE                 equ 40000000h
-    CONSTANT_TYPE               equ 80000000h
+    NO_ARGUMENT                 equ 10000h
+    REGISTER_TYPE               equ 20000h
+    MEMORY_TYPE                 equ 30000h
+    CONSTANT_TYPE               equ 40000h
 
-    MMX_REG                     equ 00010000h
-    GENERAL_REG                 equ 00020000h
-    FPU_REG                     equ 00040000h
-    SSE_REG                     equ 00080000h
-    CR_REG                      equ 00100000h
-    DR_REG                      equ 00200000h
-    SPECIAL_REG                 equ 00400000h
-    MEMORY_MANAGEMENT_REG       equ 00800000h       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
-    SEGMENT_REG                 equ 01000000h       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
-    AVX_REG                     equ 02000000h
-    MPX_REG                     equ 04000000h
+    MMX_REG                     equ 000100h
+    GENERAL_REG                 equ 000200h
+    FPU_REG                     equ 000300h
+    SSE_REG                     equ 000400h
+    CR_REG                      equ 000500h
+    DR_REG                      equ 000600h
+    SPECIAL_REG                 equ 000700h
+    MEMORY_MANAGEMENT_REG       equ 000800h       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
+    SEGMENT_REG                 equ 000900h       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
+    AVX_REG                     equ 000a00h
+    MPX_REG                     equ 000b00h
+    AVX512_REG                  equ 000c00h
+    OPMASK_REG                  equ 000d00h
 
     RELATIVE_                   equ 04000000h
     ABSOLUTE_                   equ 08000000h
@@ -286,6 +289,22 @@ Disasm  PROTO :DWORD
     REG13                       equ 2000h   ; 3Dh
     REG14                       equ 4000h   ; 3Eh
     REG15                       equ 8000h   ; 3Fh
+    REG16                       equ 10000h
+    REG17                       equ 20000h
+    REG18                       equ 40000h
+    REG19                       equ 80000h
+    REG20                       equ 100000h
+    REG21                       equ 200000h
+    REG22                       equ 400000h
+    REG23                       equ 800000h
+    REG24                       equ 1000000h
+    REG25                       equ 2000000h
+    REG26                       equ 4000000h
+    REG27                       equ 8000000h
+    REG28                       equ 10000000h
+    REG29                       equ 20000000h
+    REG30                       equ 40000000h
+    REG31                       equ 80000000h
 
     ; ************ SPECIAL_INFO
 

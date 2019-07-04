@@ -98,6 +98,7 @@ typedef struct  {
    Int32 ArgPosition;
    UInt32 AccessMode;
    MEMORYTYPE Memory;
+   Int64 Registers;
    UInt32 SegmentReg;
 } ARGTYPE;
 #pragma pack()
@@ -246,44 +247,64 @@ enum BRANCH_TYPE
 
 enum ARGUMENTS_TYPE
 {
-  NO_ARGUMENT = 0x10000000,
-  REGISTER_TYPE = 0x20000000,
-  MEMORY_TYPE = 0x40000000,
-  CONSTANT_TYPE = (UInt32)0x80000000,
+  NO_ARGUMENT =          0x10000,
+  REGISTER_TYPE =        0x20000,
+  MEMORY_TYPE =          0x30000,
+  CONSTANT_TYPE =        0x40000,
 
-  MMX_REG =                 0x10000,
-  GENERAL_REG =             0x20000,
-  FPU_REG =                 0x40000,
-  SSE_REG =                 0x80000,
-  CR_REG =                  0x100000,
-  DR_REG =                  0x200000,
-  SPECIAL_REG =             0x400000,
-  MEMORY_MANAGEMENT_REG =   0x800000,
-  SEGMENT_REG =             0x1000000,
-  AVX_REG =                 0x2000000,
-  MPX_REG =                 0x4000000,
+  MMX_REG =                   0x100,
+  GENERAL_REG =               0x200,
+  FPU_REG =                   0x300,
+  SSE_REG =                   0x400,
+  CR_REG =                    0x500,
+  DR_REG =                    0x600,
+  SPECIAL_REG =               0x700,
+  MEMORY_MANAGEMENT_REG =     0x800,
+  SEGMENT_REG =               0x900,
+  AVX_REG =                   0xa00,
+  MPX_REG =                   0xb00,
+  AVX512_REG =                0xc00,
+  OPMASK_REG =                0xd00,
+
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,
 
   READ = 0x1,
   WRITE = 0x2,
 
-  REG0 = 0x1,
-  REG1 = 0x2,
-  REG2 = 0x4,
-  REG3 = 0x8,
-  REG4 = 0x10,
-  REG5 = 0x20,
-  REG6 = 0x40,
-  REG7 = 0x80,
-  REG8 = 0x100,
-  REG9 = 0x200,
+  REG0 =  0x1,
+  REG1 =  0x2,
+  REG2 =  0x4,
+  REG3 =  0x8,
+  REG4 =  0x10,
+  REG5 =  0x20,
+  REG6 =  0x40,
+  REG7 =  0x80,
+  REG8 =  0x100,
+  REG9 =  0x200,
   REG10 = 0x400,
   REG11 = 0x800,
   REG12 = 0x1000,
   REG13 = 0x2000,
   REG14 = 0x4000,
-  REG15 = 0x8000
+  REG15 = 0x8000,
+  REG16 = 0x10000,
+  REG17 = 0x20000,
+  REG18 = 0x40000,
+  REG19 = 0x80000,
+  REG20 = 0x100000,
+  REG21 = 0x200000,
+  REG22 = 0x400000,
+  REG23 = 0x800000,
+  REG24 = 0x1000000,
+  REG25 = 0x2000000,
+  REG26 = 0x4000000,
+  REG27 = 0x8000000,
+  REG28 = 0x10000000,
+  REG29 = 0x20000000,
+  REG30 = 0x40000000,
+  REG31 = 0x80000000
+
 };
 
 enum SPECIAL_INFO

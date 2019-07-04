@@ -33,7 +33,8 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpxchg16b ");
             #endif
-            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
+            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
+            (*pMyDisasm).Argument1.Registers = REG0+REG2;
             (*pMyDisasm).Argument1.ArgSize = 128;
 
             FillFlags(pMyDisasm, 23);
@@ -44,7 +45,8 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpxchg8b ");
             #endif
-            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG+REG0+REG2;
+            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
+            (*pMyDisasm).Argument1.Registers = REG0+REG2;
             (*pMyDisasm).Argument1.ArgSize = 64;
 
             FillFlags(pMyDisasm, 23);

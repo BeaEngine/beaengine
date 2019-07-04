@@ -21,22 +21,22 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
-        YMM0 = AVX_REG + REG0
-        YMM1 = AVX_REG + REG1
-        YMM2 = AVX_REG + REG2
-        YMM3 = AVX_REG + REG3
-        YMM4 = AVX_REG + REG4
-        YMM5 = AVX_REG + REG5
-        YMM6 = AVX_REG + REG6
-        YMM7 = AVX_REG + REG7
-        YMM8 = AVX_REG + REG8
-        YMM9 = AVX_REG + REG9
-        YMM10 = AVX_REG + REG10
-        YMM11 = AVX_REG + REG11
-        YMM12 = AVX_REG + REG12
-        YMM13 = AVX_REG + REG13
-        YMM14 = AVX_REG + REG14
-        YMM15 = AVX_REG + REG15
+        YMM0 = REG0
+        YMM1 = REG1
+        YMM2 = REG2
+        YMM3 = REG3
+        YMM4 = REG4
+        YMM5 = REG5
+        YMM6 = REG6
+        YMM7 = REG7
+        YMM8 = REG8
+        YMM9 = REG9
+        YMM10 = REG10
+        YMM11 = REG11
+        YMM12 = REG12
+        YMM13 = REG13
+        YMM14 = REG14
+        YMM15 = REG15
 
         # NP 0F 77
         # EMMS

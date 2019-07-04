@@ -77,6 +77,7 @@ Structure ARGTYPE
   ArgPosition.l
   AccessMode.l
   Memory.MEMORYTYPE
+  Registers.q
   SegmentReg.l
 EndStructure
 Global Argtype.ARGTYPE
@@ -242,22 +243,24 @@ Global MyDisasm._Disasm
 ;                                       ARGUMENTS_TYPE
 ; __________________________________________________________________________________________________________
 
-#NO_ARGUMENT                 = $10000000
-#REGISTER_TYPE               = $20000000
-#MEMORY_TYPE                 = $40000000
-#CONSTANT_TYPE               = $80000000
+#NO_ARGUMENT                 = $10000
+#REGISTER_TYPE               = $20000
+#MEMORY_TYPE                 = $30000
+#CONSTANT_TYPE               = $40000
 
-#MMX_REG                     = $00010000
-#GENERAL_REG                 = $00020000
-#FPU_REG                     = $00040000
-#SSE_REG                     = $00080000
-#CR_REG                      = $00100000
-#DR_REG                      = $00200000
-#SPECIAL_REG                 = $00400000
-#MEMORY_MANAGEMENT_REG       = $00800000       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
-#SEGMENT_REG                 = $01000000       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
-#AVX_REG                     = $02000000
-#MPX_REG                     = $04000000
+#MMX_REG                     = $000100
+#GENERAL_REG                 = $000200
+#FPU_REG                     = $000300
+#SSE_REG                     = $000400
+#CR_REG                      = $000500
+#DR_REG                      = $000600
+#SPECIAL_REG                 = $000700
+#MEMORY_MANAGEMENT_REG       = $000800       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
+#SEGMENT_REG                 = $000900       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
+#AVX_REG                     = $000a00
+#MPX_REG                     = $000b00
+#AVX512_REG                  = $000c00
+#OPMASK_REG                  = $000d00
 
 #RELATIVE_                   = $04000000
 #ABSOLUTE_                   = $08000000
@@ -281,6 +284,22 @@ Global MyDisasm._Disasm
 #REG13                       = $2000   ; 3Dh
 #REG14                       = $4000   ; 3Eh
 #REG15                       = $8000   ; 3Fh
+#REG16 = $10000
+#REG17 = $20000
+#REG18 = $40000
+#REG19 = $80000
+#REG20 = $100000
+#REG21 = $200000
+#REG22 = $400000
+#REG23 = $800000
+#REG24 = $1000000
+#REG25 = $2000000
+#REG26 = $4000000
+#REG27 = $8000000
+#REG28 = $10000000
+#REG29 = $20000000
+#REG30 = $40000000
+#REG31 = $80000000
 
 ; ************ SPECIAL_REG
 #UNKNOWN_OPCODE              = -1

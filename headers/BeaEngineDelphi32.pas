@@ -122,6 +122,7 @@ uses Windows,SysUtils;
 		  ArgPosition : longint;
           AccessMode : longint;
           Memory : TMEMORYTYPE;
+          Registers : int64;
           SegmentReg : longint;
        end;
 
@@ -270,22 +271,24 @@ uses Windows,SysUtils;
   type
      ARGUMENTS_TYPE =  Longint;
      Const
-       NO_ARGUMENT = $10000000;
-       REGISTER_TYPE = $20000000;
-       MEMORY_TYPE = $40000000;
-       CONSTANT_TYPE = $80000000;
+       NO_ARGUMENT = $10000;
+       REGISTER_TYPE = $20000;
+       MEMORY_TYPE = $30000;
+       CONSTANT_TYPE = $40000;
 
-       MMX_REG = $10000;
-       GENERAL_REG = $20000;
-       FPU_REG = $40000;
-       SSE_REG = $80000;
-       CR_REG = $100000;
-       DR_REG = $200000;
-       SPECIAL_REG = $400000;
-       MEMORY_MANAGEMENT_REG = $800000;
-       SEGMENT_REG = $1000000;
-       AVX_REG = $2000000;
-       MPX_REG = $2000000;
+       MMX_REG = $100;
+       GENERAL_REG = $200;
+       FPU_REG = $300;
+       SSE_REG = $400;
+       CR_REG = $500;
+       DR_REG = $600;
+       SPECIAL_REG = $700;
+       MEMORY_MANAGEMENT_REG = $800;
+       SEGMENT_REG = $900;
+       AVX_REG = $a00;
+       MPX_REG = $b00;
+       AVX512_REG = $c00;
+       OPMASK_REG = $d00;
 
        RELATIVE_ = $4000000;
        ABSOLUTE_ = $8000000;
@@ -309,7 +312,22 @@ uses Windows,SysUtils;
        REG13 = $2000;
        REG14 = $4000;
        REG15 = $8000;
-
+       REG16 = $10000;
+       REG17 = $20000;
+       REG18 = $40000;
+       REG19 = $80000;
+       REG20 = $100000;
+       REG21 = $200000;
+       REG22 = $400000;
+       REG23 = $800000;
+       REG24 = $1000000;
+       REG25 = $2000000;
+       REG26 = $4000000;
+       REG27 = $8000000;
+       REG28 = $10000000;
+       REG29 = $20000000;
+       REG30 = $40000000;
+       REG31 = $80000000;
   type
      SPECIAL_INFO =  Longint;
      Const

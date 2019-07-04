@@ -68,7 +68,8 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ldmxcsr ");
             #endif
-            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG+REG1;
+            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG;
+            (*pMyDisasm).Argument1.Registers = REG1;
             (*pMyDisasm).Argument1.ArgSize = 32;
         }
         else {
@@ -84,7 +85,8 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "stmxcsr ");
             #endif
-            (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+SPECIAL_REG+REG1;
+            (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+SPECIAL_REG;
+            (*pMyDisasm).Argument1.Registers = REG1;
             (*pMyDisasm).Argument2.ArgSize = 32;
         }
         else {

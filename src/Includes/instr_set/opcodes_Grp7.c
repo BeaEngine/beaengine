@@ -69,7 +69,8 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sgdt ");
           #endif
-          (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG0;
+          (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
+          (*pMyDisasm).Argument2.Registers = REG0;
           (*pMyDisasm).Argument2.ArgSize = 48;
           GV.EIP_+= GV.DECALAGE_EIP+2;
       }
@@ -92,7 +93,8 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
           }
           else if (GV.RM_ == 0x2) {
               (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
-              (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG+REG0;
+              (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+SPECIAL_REG;
+              (*pMyDisasm).Argument1.Registers = REG0;
               #ifndef BEA_LIGHT_DISASSEMBLY
                  (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "clac ");
               #endif
@@ -110,7 +112,8 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sidt ");
           #endif
-          (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG2;
+          (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
+          (*pMyDisasm).Argument2.Registers = REG2;
           (*pMyDisasm).Argument2.ArgSize = 48;
           GV.EIP_+= GV.DECALAGE_EIP+2;
       }
@@ -142,7 +145,8 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lgdt ");
           #endif
-          (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG0;
+          (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
+          (*pMyDisasm).Argument1.Registers = REG0;
           (*pMyDisasm).Argument1.ArgSize = 48;
           GV.EIP_+= GV.DECALAGE_EIP+2;
       }
@@ -216,7 +220,8 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lidt ");
           #endif
-          (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG+REG2;
+          (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
+          (*pMyDisasm).Argument1.Registers = REG2;
           (*pMyDisasm).Argument1.ArgSize = 48;
           GV.EIP_+= GV.DECALAGE_EIP+2;
       }
@@ -229,7 +234,8 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "smsw ");
       #endif
-      (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+CR_REG+REG0;
+      (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+CR_REG;
+      (*pMyDisasm).Argument1.Registers = REG0;
       (*pMyDisasm).Argument1.ArgSize = 16;
       GV.EIP_+= GV.DECALAGE_EIP+2;
   }
@@ -241,7 +247,8 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lmsw ");
       #endif
-      (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+CR_REG+REG0;
+      (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+CR_REG;
+      (*pMyDisasm).Argument2.Registers = REG0;
       (*pMyDisasm).Argument2.ArgSize = 16;
       GV.EIP_+= GV.DECALAGE_EIP+2;
   }
