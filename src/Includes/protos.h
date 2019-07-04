@@ -430,6 +430,7 @@ void __bea_callspec__ sha1msg1_(PDISASM);
 void __bea_callspec__ sha1msg2_(PDISASM);
 void __bea_callspec__ sha256msg1_(PDISASM);
 void __bea_callspec__ sha256msg2_(PDISASM);
+void __bea_callspec__ sha256rnd_(PDISASM);
 void __bea_callspec__ shld_EvGvIb(PDISASM);
 void __bea_callspec__ shld_EvGvCL(PDISASM);
 void __bea_callspec__ shrd_EvGvIb(PDISASM);

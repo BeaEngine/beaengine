@@ -22714,3 +22714,52 @@ void __bea_callspec__ sha256msg2_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
 }
+
+/* ====================================================================
+*      0x 0f 38 cb
+* ==================================================================== */
+void __bea_callspec__ sha256rnd_(PDISASM pMyDisasm)
+{
+
+  if (GV.EVEX.state == InUsePrefix) {
+    if (
+      (GV.EVEX.pp == 1)
+    ) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcp28ss ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcp28sd ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+      }
+      GV.Register_ = SSE_REG;
+      GyEy(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
+    (*pMyDisasm).Instruction.Category = SHA_INSTRUCTION;
+    GV.MemDecoration = Arg2_m128_xmm;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sha256rnds2 ");
+    #endif
+    GV.Register_ = SSE_REG;
+    GxEx(pMyDisasm);
+    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE + SSE_REG;
+    (*pMyDisasm).Argument1.Registers = REG0;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((char*) (*pMyDisasm).Argument3.ArgMnemonic, RegistersSSE[0]);
+    #endif
+  }
+}
