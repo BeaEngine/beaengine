@@ -56,8 +56,8 @@ ENDSTRUC
 
 
 STRUC  MEMORYTYPE
-   BaseRegister:    resd   1
-   IndexRegister:   resd   1
+   BaseRegister:    resq   1
+   IndexRegister:   resq   1
    Scale:           resd   1
    Displacement:    resq   1
 ENDSTRUC

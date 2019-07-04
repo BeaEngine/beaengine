@@ -56,8 +56,8 @@ class EFLStruct(Structure):
 
 class MEMORYTYPE(Structure):
    _pack_= 4
-   _fields_= [("BaseRegister", c_int32),
-              ("IndexRegister",c_int32),
+   _fields_= [("BaseRegister", c_int64),
+              ("IndexRegister",c_int64),
               ("Scale",c_int32),
               ("Displacement",c_int64)]
 

@@ -52,8 +52,8 @@ EFLStruct STRUCT
 EFLStruct ENDS
 
  MEMORYTYPE STRUCT
-   BaseRegister    DWORD   0
-   IndexRegister   DWORD   0
+   BaseRegister    QWORD   0
+   IndexRegister   QWORD   0
    Scale           DWORD   0
    Displacement    QWORD   0
  MEMORYTYPE ENDS

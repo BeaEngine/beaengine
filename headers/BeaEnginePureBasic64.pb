@@ -51,8 +51,8 @@ EndStructure
 Global Eflstruct.EFLStruct
 
 Structure MEMORYTYPE
-  BaseRegister.l
-  IndexRegister.l
+  BaseRegister.q
+  IndexRegister.q
   Scale.l
   Displacement.q
 EndStructure
@@ -209,7 +209,7 @@ Global MyDisasm._Disasm
 #ACCELERATOR_INSTRUCTION     = 42
 #ROUND_INSTRUCTION           = 43
 
-; __________________________________________________________________________________________________________
+; ______________D____________________________________________________________________________________________
 ;
 ;                                       BranchTYPE
 ; __________________________________________________________________________________________________________

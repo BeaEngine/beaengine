@@ -94,8 +94,8 @@ uses Windows,SysUtils;
   type
 
      TMEMORYTYPE = packed record
-          BaseRegister : longint;
-          IndexRegister : longint;
+          BaseRegister : int64;
+          IndexRegister : int64;
           Scale : longint;
           Displacement : int64;
        end;

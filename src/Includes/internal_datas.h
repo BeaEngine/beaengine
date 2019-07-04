@@ -748,7 +748,7 @@ char RegistersAVX512[32][8] = {
 /* =====================================================
  * opmask registers
  * ===================================================== */
-char RegistersOpmask[8][4] = {
+char RegistersOpmask[16][4] = {
     "k0",
     "k1",
     "k2",
@@ -757,9 +757,17 @@ char RegistersOpmask[8][4] = {
     "k5",
     "k6",
     "k7",
+    "k?",
+    "k?",
+    "k?",
+    "k?",
+    "k?",
+    "k?",
+    "k?",
+    "k?"
 };
 
-Int32 REGS[] = {
+Int64 REGS[] = {
     REG0,        /* REG0 */
     REG1,        /* REG1 */
     REG2,        /* REG2 */
@@ -776,6 +784,22 @@ Int32 REGS[] = {
     REG13,     /* REG13 */
     REG14,     /* REG14 */
     REG15,     /* REG15 */
+    REG16,
+    REG17,
+    REG18,
+    REG19,
+    REG20,
+    REG21,
+    REG22,
+    REG23,
+    REG24,
+    REG25,
+    REG26,
+    REG27,
+    REG28,
+    REG29,
+    REG30,
+    REG31
 };
 
 char BXSI_[] = "bx+si";

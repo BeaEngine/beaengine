@@ -93,8 +93,8 @@ uses Windows,SysUtils;
   type
 
      TMEMORYTYPE = packed record
-          BaseRegister : longint;
-          IndexRegister : longint;
+          BaseRegister : int64;
+          IndexRegister : int64;
           Scale : longint;
           Displacement : int64;
        end;
@@ -326,7 +326,7 @@ uses Windows,SysUtils;
        REG28 = $10000000;
        REG29 = $20000000;
        REG30 = $40000000;
-       REG31 = $80000000;       
+       REG31 = $80000000;
 
   type
      SPECIAL_INFO =  Longint;

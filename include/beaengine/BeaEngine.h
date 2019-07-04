@@ -106,8 +106,8 @@ typedef struct {
 
 #pragma pack(4)
 typedef struct {
-   Int32 BaseRegister;
-   Int32 IndexRegister;
+   Int64 BaseRegister;
+   Int64 IndexRegister;
    Int32 Scale;
    Int64 Displacement;
 } MEMORYTYPE ;
