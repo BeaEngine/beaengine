@@ -10605,14 +10605,59 @@ void __bea_callspec__ sbb_eAX_Iv(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ seto_(PDISASM pMyDisasm)
 {
-  if (GV.VEX.state == InUsePrefix) {
-    FailDecode(pMyDisasm);
-    return;
+  if (
+      (GV.EVEX.state != InUsePrefix) &&
+      (GV.VEX.state == InUsePrefix) &&
+      (GV.VEX.L == 0) &&
+      (((GV.VEX.vvvv >> 3) & 0x1) == 1)
+    ) {
+    if (GV.REX.W_ == 0) {
+      if (GV.VEX.pp == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kmovb ");
+        #endif
+        GV.MemDecoration = Arg2byte;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else if (GV.VEX.pp == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kmovw ");
+        #endif
+        GV.MemDecoration = Arg2word;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      if (GV.VEX.pp == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kmovd ");
+        #endif
+        GV.MemDecoration = Arg2dword;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else if (GV.VEX.pp == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kmovq ");
+        #endif
+        GV.MemDecoration = Arg2qword;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
   }
-
+  else if (GV.VEX.state != InUsePrefix){
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "seto ");
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "seto ");
     #endif
     GV.MemDecoration = Arg1byte;
     GV.OperandSize = 8;
@@ -10620,6 +10665,10 @@ void __bea_callspec__ seto_(PDISASM pMyDisasm)
     GV.OperandSize = 32;
     GV.EIP_+= GV.DECALAGE_EIP+2;
     FillFlags(pMyDisasm,95);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 /* =======================================
