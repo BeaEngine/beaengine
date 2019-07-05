@@ -90,6 +90,7 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
     GV.OperandSize = 32;
     GV.OriginalOperandSize = 32;
     GV.AddressSize = 32;
+    GV.Register_ = 0;
     GV.Architecture = (*pMyDisasm).Archi;
     if (GV.Architecture == 0) {
       GV.Architecture = 64;
@@ -1065,7 +1066,10 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
             (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "rep ");
             i = strlen((char*) &(*pMyDisasm).CompleteInstr);
     }
-    if ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) {
+    if (
+      ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) ||
+      ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix)
+      ) {
             (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "lock ");
             i = strlen((char*) &(*pMyDisasm).CompleteInstr);
     }

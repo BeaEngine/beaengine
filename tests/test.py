@@ -3392,8 +3392,9 @@ class TestSuite:
         Buffer = 'f04889ce'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
+        assert_equal(myDisasm.instr.Prefix.LockPrefix, InvalidPrefix)
         assert_equal(myDisasm.instr.repr, 'lock mov rsi, rcx')
-        assert_equal(myDisasm.instr.Prefix.LockPrefix, 1)
+
 
         Buffer = '4889ce'.decode('hex')
         myDisasm = Disasm(Buffer)

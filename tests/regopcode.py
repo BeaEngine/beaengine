@@ -31,6 +31,7 @@ class TestSuite:
                 myDisasm.instr.Archi = archi
                 myDisasm.read()
                 #print(myDisasm.repr())
+                #print(myDisasm.instr.Reserved_.Register_)
                 assert_equal(myDisasm.instr.Argument2.ArgMnemonic, registers[REGOPCODE])
 
     def verifyRegopcodeArg1ForMod(self, MOD, registers, instr, archi):

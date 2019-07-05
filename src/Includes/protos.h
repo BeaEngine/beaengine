@@ -67,6 +67,8 @@ size_t __bea_callspec__ SIB_0(ARGTYPE*, size_t, PDISASM);
 size_t __bea_callspec__ SIB_1(ARGTYPE*, size_t, PDISASM);
 size_t __bea_callspec__ SIB_2(ARGTYPE*, size_t, PDISASM);
 size_t __bea_callspec__ SIB_3(ARGTYPE*, size_t, PDISASM);
+void __bea_callspec__ OperandSize8Reg(ARGTYPE*, PDISASM, size_t, int);
+void __bea_callspec__ OperandSize8RM(ARGTYPE*, PDISASM, size_t, int);
 
 /* ====================================== Routines_Disasm */
 void __bea_callspec__ CompleteInstructionFields (PDISASM);

@@ -532,7 +532,7 @@ class Disasm():
         self.instr = INSTRUCTION()
         #self.instr.Options = PrefixedNumeral
         self.instr.offset = addressof(self.target) + offset
-        self.instr.virtualAddr = virtualAddr
+        self.instr.VirtualAddr = virtualAddr
         self.instr.Archi = 64
         self.length = 0
         self.bytes = bytearray()
@@ -568,10 +568,10 @@ class Disasm():
         """
         if self.length == -1:
             self.instr.offset += 1
-            self.instr.virtualAddr += 1
+            self.instr.VirtualAddr += 1
         else:
             self.instr.offset = self.instr.offset + self.length
-            self.instr.virtualAddr= self.instr.virtualAddr+ self.length
+            self.instr.VirtualAddr= self.instr.VirtualAddr+ self.length
         self.length = 0
 
     def read(self):
