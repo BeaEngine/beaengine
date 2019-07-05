@@ -1171,7 +1171,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument3.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument3.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'cmpeqpd xmm0, xmmword ptr [rax]')
+        assert_equal(myDisasm.instr.repr, 'cmpeqpd xmm0, xmmword ptr [rax], 00h')
 
         Buffer = b'\x66\x0F\xC2\x00\x01\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -1847,7 +1847,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument3.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument3.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'cmpeqps xmm0, xmmword ptr [rax]')
+        assert_equal(myDisasm.instr.repr, 'cmpeqps xmm0, xmmword ptr [rax], 00h')
 
         Buffer = b'\x0F\xC2\x00\x01\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -2523,7 +2523,7 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument3.ArgType,  + CONSTANT_TYPE+ABSOLUTE_)
         assert_equal(myDisasm.instr.Argument3.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'cmpeqsd xmm0, qword ptr [rax]')
+        assert_equal(myDisasm.instr.repr, 'cmpeqsd xmm0, qword ptr [rax], 00h')
 
         Buffer = b'\xF2\x0F\xC2\x00\x01\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)

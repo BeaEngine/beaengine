@@ -36,7 +36,7 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
                     BuildCompleteInstruction(pMyDisasm);
                 }
             #endif
-            if (GV.ERROR_OPCODE != 0) {
+            if (GV.ERROR_OPCODE == UNKNOWN_OPCODE) {
                 return -1;
             }
             else {
@@ -72,8 +72,8 @@ void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
 {
 	#ifndef BEA_LIGHT_DISASSEMBLY
    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "??? ");
-    #endif
-	GV.ERROR_OPCODE = 1;
+  #endif
+	GV.ERROR_OPCODE = UNKNOWN_OPCODE;
 }
 
 /* ====================================================================
@@ -558,6 +558,31 @@ void __bea_callspec__ ArgsVEX(PDISASM pMyDisasm)
       GV.Register_ = 0;
   }
 }
+
+void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm)
+{
+  GV.Register_ = OPMASK_REG;
+  Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+  if (GV.VEX.L == 0) {
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+      GV.Register_ = SSE_REG;
+      GV.MemDecoration = Arg3_m128_xmm;
+  }
+  else if (GV.VEX.L == 0x1) {
+      (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+      GV.Register_ = AVX_REG;
+      GV.MemDecoration = Arg3_m256_ymm;
+  }
+  else if (GV.EVEX.LL == 0x2) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.Register_ = AVX512_REG;
+      GV.MemDecoration = Arg3_m512_zmm;
+  }
+  fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+  MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+  GV.EIP_ += GV.DECALAGE_EIP+2;
+}
+
 
 /* ====================================================================
  * Used by AVX instructions
