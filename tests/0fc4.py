@@ -33,6 +33,14 @@ class TestSuite:
         assert_equal(myDisasm.instr.repr, 'pinsrw mm4, word ptr [rax], 22h')
         assert_equal(myDisasm.instr.Instruction.Immediat, 0x22)
 
+        Buffer = '0fc4c022'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfc4)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'pinsrw ')
+        assert_equal(myDisasm.instr.repr, 'pinsrw mm0, eax, 22h')
+        assert_equal(myDisasm.instr.Instruction.Immediat, 0x22)
+
         # 66 0F C4 /r ib
         # PINSRW xmm, r32/m16, imm8
 
@@ -55,6 +63,15 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Opcode, 0xc4)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpinsrw ')
         assert_equal(myDisasm.instr.repr, 'vpinsrw xmm10, xmm15, word ptr [r8], F0h')
+
+
+        myVEX = VEX('VEX.NDS.128.66.0F.W0')
+        Buffer = '{}c4c0f0'.format(myVEX.c4()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xc4)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpinsrw ')
+        assert_equal(myDisasm.instr.repr, 'vpinsrw xmm8, xmm15, r8d, F0h')
 
         # EVEX.NDS.128.66.0F.WIG C4 /r ib
         # VPINSRW xmm1, xmm2, r32/m16, imm8

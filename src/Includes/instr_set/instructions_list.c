@@ -15889,7 +15889,12 @@ void __bea_callspec__ pinsrw_(PDISASM pMyDisasm)
      }
      GV.Register_ = SSE_REG;
      GV.MemDecoration = Arg3word;
-     GyEy(pMyDisasm);
+     Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+     fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+     GV.Register_ = 0;
+     GV.OperandSize = 32;
+     MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+     GV.EIP_ += GV.DECALAGE_EIP+2;
      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
    }
    else {
