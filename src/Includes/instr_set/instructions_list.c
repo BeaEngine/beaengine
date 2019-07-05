@@ -22036,50 +22036,83 @@ void __bea_callspec__ movq_QP(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ movq_WV(PDISASM pMyDisasm)
 {
-   (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+DATA_TRANSFER;
-   /* ========= 0xf2 */
-   if (GV.PrefRepne == 1) {
-       (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
-       GV.MemDecoration = Arg2dqword;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdq2q ");
-       #endif
-       GV.Register_ = MMX_REG;
-       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+  if (GV.VEX.state == InUsePrefix) {
+    if (
+      ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0)) ||
+      (GV.VEX.L != 0)
+    ) {
+      FailDecode(pMyDisasm);
+      return;
+    }
+    if (GV.VEX.pp == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovq ");
+      #endif
+      GV.MemDecoration = Arg1dword;
+      GV.Register_ = SSE_REG;
+      ExGx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    (*pMyDisasm).Instruction.Category = MMX_INSTRUCTION+DATA_TRANSFER;
+    /* ========= 0xf2 */
+    if (GV.PrefRepne == 1) {
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3){
+        FailDecode(pMyDisasm);
+        return;
+      }
+      (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
+      GV.MemDecoration = Arg2dqword;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdq2q ");
+      #endif
+      GV.Register_ = MMX_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
 
-       GV.Register_ = SSE_REG;
-       MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-       GV.EIP_+= GV.DECALAGE_EIP+2;
+      GV.Register_ = SSE_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.EIP_+= GV.DECALAGE_EIP+2;
 
-   }
-   /* ========= 0xf3 */
-   else if (GV.PrefRepe == 1) {
-       (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-       GV.MemDecoration = Arg2qword;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq2dq ");
-       #endif
-       GV.Register_ = SSE_REG;
-       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    }
+    /* ========= 0xf3 */
+    else if (GV.PrefRepe == 1) {
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3){
+        FailDecode(pMyDisasm);
+        return;
+      }
+      (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
+      GV.MemDecoration = Arg2qword;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq2dq ");
+      #endif
+      GV.Register_ = SSE_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
 
-       GV.Register_ = MMX_REG;
-       MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-       GV.EIP_+= GV.DECALAGE_EIP+2;
-   }
-   /* ========== 0x66 */
-   else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-       GV.OperandSize = GV.OriginalOperandSize;
-       (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       GV.MemDecoration = Arg1qword;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
-       #endif
-       GV.Register_ = SSE_REG;
-       ExGx(pMyDisasm);
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
+      GV.Register_ = MMX_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.EIP_+= GV.DECALAGE_EIP+2;
+    }
+    /* ========== 0x66 */
+    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg1qword;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
+      #endif
+      GV.Register_ = SSE_REG;
+      ExGx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+
 }
 
 
