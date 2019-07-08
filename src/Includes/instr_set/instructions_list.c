@@ -15977,6 +15977,77 @@ void __bea_callspec__ pmaddubsw_(PDISASM pMyDisasm)
 
 
 /* ====================================================================
+*      0x 0f 38 80
+* ==================================================================== */
+void __bea_callspec__ invept_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+  GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+  if (GV.MOD_ == 0x3){ FailDecode(pMyDisasm); return; }
+  if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    GV.OperandSize = GV.OriginalOperandSize;
+    (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+    GV.MemDecoration = Arg2dqword;
+    if (GV.Architecture == 64) GV.OperandSize = 64;
+    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "invept ");
+    #endif
+    GxEx(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 81
+* ==================================================================== */
+void __bea_callspec__ invvpid_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+  GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+  if (GV.MOD_ == 0x3){ FailDecode(pMyDisasm); return; }
+  if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    GV.OperandSize = GV.OriginalOperandSize;
+    (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+    GV.MemDecoration = Arg2dqword;
+    if (GV.Architecture == 64) GV.OperandSize = 64;
+    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "invvpid ");
+    #endif
+    GxEx(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 82
+* ==================================================================== */
+void __bea_callspec__ invpcid_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+  GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+  if (GV.MOD_ == 0x3){ FailDecode(pMyDisasm); return; }
+  if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    GV.OperandSize = GV.OriginalOperandSize;
+    (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+    GV.MemDecoration = Arg2dqword;
+    if (GV.Architecture == 64) GV.OperandSize = 64;
+    (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "invpcid ");
+    #endif
+    GxEx(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+/* ====================================================================
 *      0x 0f d7
 * ==================================================================== */
 void __bea_callspec__ pmovmskb_(PDISASM pMyDisasm)
