@@ -264,6 +264,8 @@ char SegmentRegs[7][4] = {
 
 #define nbMemoryTypes 14
 
+int ArgsSize[nbMemoryTypes] = { 8, 16, 32, 64, 0, 80, 48, 128, 128, 256, 128, 128, 256, 512 };
+
 /* =====================================================
  * Intrinsic representation of prefixes
  * ===================================================== */
@@ -280,7 +282,8 @@ char IntrinsicPrefixes[nbMemoryTypes][16] = {
     "m256 ",       /* GV.MemDecoration == 10 */
     "m128i ",       /* GV.MemDecoration == 11 */
     "m128d ",       /* GV.MemDecoration == 12 */
-    "m256d "       /* GV.MemDecoration == 13 */
+    "m256d ",       /* GV.MemDecoration == 13 */
+    "m512 "
 };
 
 /* =====================================================
@@ -294,12 +297,13 @@ char ATSuffixes[nbMemoryTypes][4] = {
     " ",      /* GV.MemDecoration == 5 (multibytes) */
     "t ",     /* GV.MemDecoration == 6 */
     " ",      /* GV.MemDecoration == 7 (fword) */
-    " ",      /* GV.MemDecoration == 8 (dqword) */
-    " ",      /* GV.MemDecoration == 9 */
+    "o ",      /* GV.MemDecoration == 8 (dqword) */
+    "o ",      /* GV.MemDecoration == 9 */
     " ",       /* GV.MemDecoration == 10 */
     " ",       /* GV.MemDecoration == 11 */
     " ",       /* GV.MemDecoration == 12 */
-    " "       /* GV.MemDecoration == 13 */
+    " ",       /* GV.MemDecoration == 13 */
+    " "
 };
 
 /* =====================================================

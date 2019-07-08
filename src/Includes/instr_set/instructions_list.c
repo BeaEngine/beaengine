@@ -22048,6 +22048,12 @@ void __bea_callspec__ movq_WV(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovq ");
       #endif
+      if (GV.EVEX.state == InUsePrefix) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION+DATA_TRANSFER;
+      }
+      else {
+        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+DATA_TRANSFER;
+      }
       GV.MemDecoration = Arg1dword;
       GV.Register_ = SSE_REG;
       ExGx(pMyDisasm);
