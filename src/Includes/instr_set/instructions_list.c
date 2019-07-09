@@ -22035,6 +22035,47 @@ void __bea_callspec__ movq_PQ(PDISASM pMyDisasm)
       }
       ArgsVEX_GxEx(pMyDisasm);
     }
+    else if (GV.VEX.pp == 2) {
+      if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.state == InUsePrefix) {
+        if (GV.EVEX.W == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovdqu32 ");
+          #endif
+        }
+        else {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovdqu64 ");
+          #endif
+        }
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovdqu ");
+        #endif
+      }
+      ArgsVEX_GxEx(pMyDisasm);
+    }
+    else if (GV.VEX.pp == 3) {
+      if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.state == InUsePrefix) {
+        if (GV.EVEX.W == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovdqu8 ");
+          #endif
+        }
+        else {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmovdqu16 ");
+          #endif
+        }
+        ArgsVEX_GxEx(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+
+    }
     else {
       FailDecode(pMyDisasm);
     }
@@ -22044,7 +22085,7 @@ void __bea_callspec__ movq_PQ(PDISASM pMyDisasm)
     /* ========= 0xf3 */
     if (GV.PrefRepe == 1) {
       (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
-      GV.MemDecoration = Arg2dqword;
+      GV.MemDecoration = Arg2_m128_xmm;
       #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movdqu ");
       #endif
