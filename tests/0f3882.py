@@ -22,8 +22,8 @@ class TestSuite:
     def test(self):
 
 
-        # 66 0F 38 80
-        # INVEPT r64, m128
+        # 66 0F 38 82
+        # INVPCID r64, m128
 
         Buffer = '660f388220'.decode('hex')
         myDisasm = Disasm(Buffer)

@@ -13903,29 +13903,51 @@ void __bea_callspec__ lddqu_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ maskmovq_(PDISASM pMyDisasm)
 {
-   /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-       GV.OperandSize = GV.OriginalOperandSize;
-       (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       GV.MemDecoration = Arg2_m128_xmm;
-       (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "maskmovdqu ");
-       #endif
-       GV.Register_ = SSE_REG;
-       GxEx(pMyDisasm);
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
 
-   }
-   else {
-       GV.MemDecoration = Arg2qword;
-       (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "maskmovq ");
-       #endif
-       GV.Register_ = MMX_REG;
-       GxEx(pMyDisasm);
+    if (GV.VEX.pp == 1) {
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+CACHEABILITY_CONTROL;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmaskmovdqu ");
+      #endif
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
 
-   }
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "maskmovdqu ");
+      #endif
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+    }
+     else {
+      GV.MemDecoration = Arg2qword;
+      (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "maskmovq ");
+      #endif
+      GV.Register_ = MMX_REG;
+      GxEx(pMyDisasm);
+    }
+  }
 }
 
 
