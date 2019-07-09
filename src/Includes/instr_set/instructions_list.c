@@ -13877,24 +13877,42 @@ void __bea_callspec__ insertps_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ lddqu_(PDISASM pMyDisasm)
 {
-   /* ========= 0xf2 */
-   if (GV.PrefRepne == 1) {
-       (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
-       GV.MemDecoration = Arg2dqword;
-       (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION+SPECIALIZED_128bits;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lddqu ");
-       #endif
-       MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-       GV.Register_ = SSE_REG;
-       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 3) {
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ == 0x3) { FailDecode(pMyDisasm); return; }
 
-       GV.EIP_+= GV.DECALAGE_EIP+2;
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
-
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+SPECIALIZED_128bits;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vlddqu ");
+      #endif
+      ArgsVEX_GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    /* ========= 0xf2 */
+    if (GV.PrefRepne == 1) {
+      (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
+      (*pMyDisasm).Instruction.Category = SSE3_INSTRUCTION+SPECIALIZED_128bits;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lddqu ");
+      #endif
+      GV.MemDecoration = Arg2_m128_xmm;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.EIP_+= GV.DECALAGE_EIP+2;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
 }
 
 
