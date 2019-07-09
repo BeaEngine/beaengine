@@ -19,8 +19,8 @@
 /* ====================================================================
  *
  * ==================================================================== */
-int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
-
+int __bea_callspec__ Disasm (PDISASM pMyDisasm)
+{
   if (InitVariables(pMyDisasm)) {
     (void) AnalyzeOpcode(pMyDisasm);
     if (!GV.OutOfBlock) {
@@ -50,9 +50,11 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm) {
 /* ====================================================================
  *
  * ==================================================================== */
-void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm) {
-
-  if (((*pMyDisasm).Instruction.BranchType == JmpType) || ((*pMyDisasm).Instruction.BranchType == CallType)) {
+void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm)
+{
+  if (
+    ((*pMyDisasm).Instruction.BranchType == JmpType) ||
+    ((*pMyDisasm).Instruction.BranchType == CallType)) {
     (*pMyDisasm).Argument1.AccessMode = READ;
   }
   if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
@@ -74,7 +76,8 @@ void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
 /* ====================================================================
  *
  * ==================================================================== */
-int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
+int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
+{
   (void) memset (&GV, 0, sizeof (InternalDatas));
   GV.EIP_ = (*pMyDisasm).EIP;
   GV.EIP_REAL = GV.EIP_;
@@ -86,13 +89,9 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
   GV.AddressSize = 32;
   GV.Register_ = 0;
   GV.Architecture = (*pMyDisasm).Archi;
-  if (GV.Architecture == 0) {
-    GV.Architecture = 64;
-  }
+  if (GV.Architecture == 0) GV.Architecture = 64;
   (*pMyDisasm).Prefix.Number = 0;
-  if (GV.Architecture == 64) {
-    GV.AddressSize = 64;
-  }
+  if (GV.Architecture == 64) GV.AddressSize = 64;
   if (GV.Architecture == 16) {
     GV.OperandSize = 16;
     GV.OriginalOperandSize = 16;
@@ -126,8 +125,8 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm) {
 /* ====================================================================
  *
  * ==================================================================== */
-void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
-
+void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm)
+{
   if ((GV.MemDecoration > 0) && (GV.MemDecoration < 99))
   {
     (*pMyDisasm).Argument1.ArgSize = ArgsSize[GV.MemDecoration - 1];
@@ -149,8 +148,8 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm) {
 /* ====================================================================
  *
  * ==================================================================== */
-void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm) {
-
+void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm)
+{
   (*pMyDisasm).Prefix.REX.W_ = GV.REX.W_;
   (*pMyDisasm).Prefix.REX.R_ = GV.REX.R_;
   (*pMyDisasm).Prefix.REX.X_ = GV.REX.X_;
@@ -161,8 +160,8 @@ void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm) {
 /* ====================================================================
  *
  * ==================================================================== */
-int __bea_callspec__ AnalyzeOpcode (PDISASM pMyDisasm) {
-
+int __bea_callspec__ AnalyzeOpcode (PDISASM pMyDisasm)
+{
   (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)(GV.EIP_));
   (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
   return 1;
@@ -462,7 +461,6 @@ void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ EyGy(PDISASM pMyDisasm)
 {
-  GV.third_arg = 1;
   MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
   fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
   Reg_Opcode(&(*pMyDisasm).Argument3, pMyDisasm);
@@ -504,21 +502,18 @@ void __bea_callspec__ ArgsVEX_ExGx(PDISASM pMyDisasm)
     GV.Register_ = SSE_REG;
     GV.MemDecoration = Arg1_m128_xmm;
     ExGx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.VEX.L == 0x1) {
     (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = Arg1_m256_ymm;
     ExGx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.EVEX.LL == 0x2) {
     (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
     GV.Register_ = AVX512_REG;
     GV.MemDecoration = Arg1_m512_zmm;
     ExGx(pMyDisasm);
-    GV.Register_ = 0;
   }
 }
 
@@ -532,21 +527,18 @@ void __bea_callspec__ ArgsVEX_GxE(PDISASM pMyDisasm, int reg1, int reg2, int reg
     GV.Register_ = reg1;
     GV.MemDecoration = Arg2_m128_xmm;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.VEX.L == 0x1) {
     (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
     GV.Register_ = reg2;
     GV.MemDecoration = Arg2_m256_ymm;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.EVEX.LL == 0x2) {
     (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
     GV.Register_ = reg3;
     GV.MemDecoration = Arg2_m512_zmm;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
 }
 
@@ -560,21 +552,18 @@ void __bea_callspec__ ArgsVEX_GEx(PDISASM pMyDisasm, int mem1, int mem2, int mem
     GV.Register_ = SSE_REG;
     GV.MemDecoration = mem1;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.VEX.L == 0x1) {
     (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = mem2;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.EVEX.LL == 0x2) {
     (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
     GV.Register_ = AVX512_REG;
     GV.MemDecoration = mem3;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
 }
 
@@ -588,21 +577,18 @@ void __bea_callspec__ ArgsVEX_GxEx(PDISASM pMyDisasm)
     GV.Register_ = SSE_REG;
     GV.MemDecoration = Arg2_m128_xmm;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.VEX.L == 0x1) {
     (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = Arg2_m256_ymm;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
   else if (GV.EVEX.LL == 0x2) {
     (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
     GV.Register_ = AVX512_REG;
     GV.MemDecoration = Arg2_m512_zmm;
     GxEx(pMyDisasm);
-    GV.Register_ = 0;
   }
 }
 
@@ -852,15 +838,15 @@ size_t __bea_callspec__ CopyFormattedNumber(PDISASM pMyDisasm, char* pBuffer, co
   if (!strcmp(pFormat,"%.4X")) MyNumber = MyNumber & 0xFFFF;
   if (!strcmp(pFormat,"%.8X")) MyNumber = MyNumber & 0xFFFFFFFF;
   if (GV.FORMATNUMBER == PrefixedNumeral) {
-      (void) strcpy(pBuffer, "0x");
-      (void) sprintf (pBuffer+2, pFormat, MyNumber);
-      i += strlen(pBuffer);
+    (void) strcpy(pBuffer, "0x");
+    (void) sprintf (pBuffer+2, pFormat, MyNumber);
+    i += strlen(pBuffer);
   }
   else {
-      (void) sprintf (pBuffer+i, pFormat, MyNumber);
-      i += strlen(pBuffer);
-      (void) strcpy(pBuffer+i, "h");
-      i++;
+    (void) sprintf (pBuffer+i, pFormat, MyNumber);
+    i += strlen(pBuffer);
+    (void) strcpy(pBuffer+i, "h");
+    i++;
   }
   return i;
 }
@@ -1143,8 +1129,8 @@ size_t __bea_callspec__ printArg1(PDISASM pMyDisasm, size_t i)
 size_t __bea_callspec__ printArg2(PDISASM pMyDisasm, size_t i)
 {
   if ((GV.MemDecoration >100) && (GV.MemDecoration < 199)) {
-      GV.MemDecoration -= 100;
-      i = printDecoratedArg(&(*pMyDisasm).Argument2, pMyDisasm, i);
+    GV.MemDecoration -= 100;
+    i = printDecoratedArg(&(*pMyDisasm).Argument2, pMyDisasm, i);
   }
   else {
     i = printArg(&(*pMyDisasm).Argument2, pMyDisasm, i);
