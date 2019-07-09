@@ -12868,43 +12868,51 @@ void __bea_callspec__ cmpps_VW(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ crc32_GvEb(PDISASM pMyDisasm)
 {
-   /* ========= 0xf2 */
-   if (GV.PrefRepne == 1) {
-       (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
-       (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION+ACCELERATOR_INSTRUCTION;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "crc32 ");
-       #endif
-       if (GV.OperandSize == 64) {
-           GV.MemDecoration = Arg2byte;
-           GV.OperandSize = 8;
-           MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-           GV.OperandSize = 64;
-       }
-       else if (GV.OperandSize == 32) {
-           GV.MemDecoration = Arg2byte;
-           GV.OperandSize = 8;
-           MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-           GV.OperandSize = 32;
-       }
-       else {
-           GV.MemDecoration = Arg2byte;
-           MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
-       }
+  if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+  if (GV.PrefRepne == 1) {
+    /* ========= 0xf2 */
+    (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
+    (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION+ACCELERATOR_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "crc32 ");
+    #endif
+    if (GV.OperandSize == 64) {
+      GV.MemDecoration = Arg2byte;
+      GV.OperandSize = 8;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.OperandSize = 64;
+    }
+    else if (GV.OperandSize == 32) {
+      GV.MemDecoration = Arg2byte;
+      GV.OperandSize = 8;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.OperandSize = 32;
+    }
+    else {
+      GV.MemDecoration = Arg2byte;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    }
 
-       if (GV.OperandSize == 16) {
-           GV.OperandSize = 32;
-           Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
-           GV.OperandSize = 16;
-       }
-       else {
-           Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
-       }
-       GV.EIP_ += GV.DECALAGE_EIP+2;
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
+    if (GV.OperandSize == 16) {
+      GV.OperandSize = 32;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.OperandSize = 16;
+    }
+    else {
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+    }
+    GV.EIP_ += GV.DECALAGE_EIP+2;
+    }
+  else {
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_== 0x3) { FailDecode(pMyDisasm); return; }
+    if (GV.PrefRepe == 1) GV.ERROR_OPCODE = UD_;
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movbe ");
+    #endif
+    GvEv(pMyDisasm);
+  }
 }
 
 /* ====================================================================
