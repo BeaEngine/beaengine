@@ -25,7 +25,7 @@ from BeaEnginePython import *
 buffer = '6202054000443322'.decode('hex')
 target = Disasm(buffer)
 target.read()
-print(target.instr.repr)
+print(target.repr())
 ```
 Output is :
 
