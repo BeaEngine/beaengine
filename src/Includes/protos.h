@@ -85,6 +85,8 @@ void __bea_callspec__ GyEy(PDISASM);
 void __bea_callspec__ EyGy(PDISASM);
 void __bea_callspec__ ArgsVEX(PDISASM);
 void __bea_callspec__ ArgsVEX_GxEx(PDISASM);
+void __bea_callspec__ ArgsVEX_GxE(PDISASM, int, int, int);
+void __bea_callspec__ ArgsVEX_GEx(PDISASM, int, int, int);
 void __bea_callspec__ ArgsVEX_ExGx(PDISASM);
 void __bea_callspec__ ArgsVEX_EyGy(PDISASM);
 void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm);

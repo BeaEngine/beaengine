@@ -525,6 +525,62 @@ void __bea_callspec__ ArgsVEX_ExGx(PDISASM pMyDisasm)
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
+void __bea_callspec__ ArgsVEX_GxE(PDISASM pMyDisasm, int reg1, int reg2, int reg3)
+{
+  if (GV.VEX.L == 0) {
+    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    GV.Register_ = reg1;
+    GV.MemDecoration = Arg2_m128_xmm;
+    GxEx(pMyDisasm);
+    GV.Register_ = 0;
+  }
+  else if (GV.VEX.L == 0x1) {
+    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    GV.Register_ = reg2;
+    GV.MemDecoration = Arg2_m256_ymm;
+    GxEx(pMyDisasm);
+    GV.Register_ = 0;
+  }
+  else if (GV.EVEX.LL == 0x2) {
+    (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+    GV.Register_ = reg3;
+    GV.MemDecoration = Arg2_m512_zmm;
+    GxEx(pMyDisasm);
+    GV.Register_ = 0;
+  }
+}
+
+/* ====================================================================
+ * Used by AVX instructions
+ * ==================================================================== */
+void __bea_callspec__ ArgsVEX_GEx(PDISASM pMyDisasm, int mem1, int mem2, int mem3)
+{
+  if (GV.VEX.L == 0) {
+    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    GV.Register_ = SSE_REG;
+    GV.MemDecoration = mem1;
+    GxEx(pMyDisasm);
+    GV.Register_ = 0;
+  }
+  else if (GV.VEX.L == 0x1) {
+    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    GV.Register_ = AVX_REG;
+    GV.MemDecoration = mem2;
+    GxEx(pMyDisasm);
+    GV.Register_ = 0;
+  }
+  else if (GV.EVEX.LL == 0x2) {
+    (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+    GV.Register_ = AVX512_REG;
+    GV.MemDecoration = mem3;
+    GxEx(pMyDisasm);
+    GV.Register_ = 0;
+  }
+}
+
+/* ====================================================================
+ * Used by AVX instructions
+ * ==================================================================== */
 void __bea_callspec__ ArgsVEX_GxEx(PDISASM pMyDisasm)
 {
   if (GV.VEX.L == 0) {
