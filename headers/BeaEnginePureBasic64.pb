@@ -150,6 +150,9 @@ Global MyDisasm._Disasm
 #MPX_INSTRUCTION               =          $130000
 #AVX512_INSTRUCTION            =          $140000
 #SHA_INSTRUCTION               =          $150000
+#BMI2_INSTRUCTION              =          $160000
+#CET_INSTRUCTION               =          $170000
+
 #DATA_TRANSFER               = 1
 #ARITHMETIC_INSTRUCTION      = 2
 #LOGICAL_INSTRUCTION         = 3

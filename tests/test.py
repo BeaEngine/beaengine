@@ -1132,9 +1132,9 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 32)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType, REGISTER_TYPE + GENERAL_REG) # REG15)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 32)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'bzhi r10d, dword ptr [r8+11111111h], r15d')
+        assert_equal(myDisasm.instr.repr, 'bzhi r10d, dword ptr [r8+11111111h], r15L')
 
         Buffer = b'\xc4\x02\x80\xf5\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -1146,9 +1146,9 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 64)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType, REGISTER_TYPE + GENERAL_REG) # REG15)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'bzhi r10, qword ptr [r8+11111111h], r15')
+        assert_equal(myDisasm.instr.repr, 'bzhi r10, qword ptr [r8+11111111h], r15L')
 
     def test_clac(self):
 

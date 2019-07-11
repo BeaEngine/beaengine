@@ -162,7 +162,9 @@ enum INSTRUCTION_TYPE
   MPX_INSTRUCTION               =          0x130000,
   AVX512_INSTRUCTION            =          0x140000,
   SHA_INSTRUCTION               =          0x150000,
-
+  BMI2_INSTRUCTION              =          0x160000,
+  CET_INSTRUCTION               =          0x170000,
+  
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
     LOGICAL_INSTRUCTION,

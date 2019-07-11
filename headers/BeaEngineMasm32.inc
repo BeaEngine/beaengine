@@ -155,6 +155,9 @@ Disasm  PROTO :DWORD
     MPX_INSTRUCTION               equ          130000h
     AVX512_INSTRUCTION            equ          140000h
     SHA_INSTRUCTION               equ          150000h
+    BMI2_INSTRUCTION              equ          160000h
+    CET_INSTRUCTION               equ          170000h
+        
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
     LOGICAL_INSTRUCTION         equ 3
