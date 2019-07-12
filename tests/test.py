@@ -916,9 +916,9 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 32)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType, REGISTER_TYPE + GENERAL_REG) # REG15)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 32)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'bextr r10d, dword ptr [r8+11111111h], r15d')
+        assert_equal(myDisasm.instr.repr, 'bextr r10d, dword ptr [r8+11111111h], r15L')
 
         Buffer = b'\xc4\x02\x80\xf7\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -930,9 +930,9 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgSize, 64)
         assert_equal(myDisasm.instr.Argument2.AccessMode, READ)
         assert_equal(myDisasm.instr.Argument3.ArgType, REGISTER_TYPE + GENERAL_REG) # REG15)
-        assert_equal(myDisasm.instr.Argument3.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument3.ArgSize, 8)
         assert_equal(myDisasm.instr.Argument3.AccessMode, READ)
-        assert_equal(myDisasm.instr.repr, 'bextr r10, qword ptr [r8+11111111h], r15')
+        assert_equal(myDisasm.instr.repr, 'bextr r10, qword ptr [r8+11111111h], r15L')
 
     def test_blendvpd(self):
 
@@ -1139,6 +1139,7 @@ class TestSuite:
         Buffer = b'\xc4\x02\x80\xf5\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
+        assert_equal(myDisasm.instr.Reserved_.REX.W_, 1)
         assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE + GENERAL_REG) # REG10)
         assert_equal(myDisasm.instr.Argument1.ArgSize, 64)
         assert_equal(myDisasm.instr.Argument1.AccessMode, WRITE)

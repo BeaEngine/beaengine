@@ -186,7 +186,8 @@ uses Windows,SysUtils;
        SHA_INSTRUCTION               =          $150000;
        BMI2_INSTRUCTION              =          $160000;
        CET_INSTRUCTION               =          $170000;
-              
+       BMI1_INSTRUCTION              =          $180000;
+
        DATA_TRANSFER = $1;
        ARITHMETIC_INSTRUCTION = 2;
        LOGICAL_INSTRUCTION = 3;

@@ -3,7 +3,7 @@
 ## requirements (debian/ubuntu)
 
 ```
-apt-get install python-nose cmake python-yaml
+apt install python-nose cmake python-yaml
 ```
 
 ## howto (debian/ubuntu)

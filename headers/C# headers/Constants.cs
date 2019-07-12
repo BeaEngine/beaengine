@@ -49,6 +49,7 @@ namespace Bea
       SHA_INSTRUCTION               =          0x150000,
       BMI2_INSTRUCTION              =          0x160000,
       CET_INSTRUCTION               =          0x170000,
+      BMI1_INSTRUCTION              =          0x180000,
 
       DATA_TRANSFER = 0x1,
       ARITHMETIC_INSTRUCTION,

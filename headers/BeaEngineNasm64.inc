@@ -159,7 +159,8 @@ ENDSTRUC
     SHA_INSTRUCTION               equ          150000h
     BMI2_INSTRUCTION              equ          160000h
     CET_INSTRUCTION               equ          170000h
-        
+    BMI1_INSTRUCTION              equ          180000h
+
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
     LOGICAL_INSTRUCTION         equ 3
