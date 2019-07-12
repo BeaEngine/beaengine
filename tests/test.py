@@ -45,7 +45,7 @@ class TestSuite:
         Buffer = b'\x0f\x38\xf6\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, '??? ')
+        assert_equal(myDisasm.instr.repr, 'wrssd dword ptr [rax-6F6F6F70h], edx')
 
         Buffer = b'\x66\x0f\x38\xf6\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
