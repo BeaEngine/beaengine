@@ -160,6 +160,7 @@ _Disasm ENDS
     BMI2_INSTRUCTION              equ          160000h
     CET_INSTRUCTION               equ          170000h
     BMI1_INSTRUCTION              equ          180000h
+    XSAVEOPT_INSTRUCTION          equ          190000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2

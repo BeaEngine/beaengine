@@ -129,19 +129,28 @@ void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM pMyDisasm)
 {
   if ((GV.MemDecoration > 0) && (GV.MemDecoration < 99))
   {
-    (*pMyDisasm).Argument1.ArgSize = ArgsSize[GV.MemDecoration - 1];
+    if (ArgsSize[GV.MemDecoration - 1] != 0) {
+      (*pMyDisasm).Argument1.ArgSize = ArgsSize[GV.MemDecoration - 1];
+    }
+
   }
   else if ((GV.MemDecoration > 100) && (GV.MemDecoration < 199))
   {
-    (*pMyDisasm).Argument2.ArgSize = ArgsSize[GV.MemDecoration - 101];
+    if (ArgsSize[GV.MemDecoration - 101] != 0) {
+      (*pMyDisasm).Argument2.ArgSize = ArgsSize[GV.MemDecoration - 101];
+    }
   }
   else if ((GV.MemDecoration > 200) && (GV.MemDecoration < 299))
   {
-    (*pMyDisasm).Argument3.ArgSize = ArgsSize[GV.MemDecoration - 201];
+    if (ArgsSize[GV.MemDecoration - 201] != 0) {
+      (*pMyDisasm).Argument3.ArgSize = ArgsSize[GV.MemDecoration - 201];
+    }
   }
   else if ((GV.MemDecoration > 300) && (GV.MemDecoration < 399))
   {
-    (*pMyDisasm).Argument4.ArgSize = ArgsSize[GV.MemDecoration - 301];
+    if (ArgsSize[GV.MemDecoration - 301] != 0) {
+      (*pMyDisasm).Argument4.ArgSize = ArgsSize[GV.MemDecoration - 301];
+    }
   }
 }
 

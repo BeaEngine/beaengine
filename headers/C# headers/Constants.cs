@@ -50,7 +50,8 @@ namespace Bea
       BMI2_INSTRUCTION              =          0x160000,
       CET_INSTRUCTION               =          0x170000,
       BMI1_INSTRUCTION              =          0x180000,
-
+      XSAVEOPT_INSTRUCTION          =          0x190000,
+      
       DATA_TRANSFER = 0x1,
       ARITHMETIC_INSTRUCTION,
       LOGICAL_INSTRUCTION,

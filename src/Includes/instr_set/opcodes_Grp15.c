@@ -142,7 +142,22 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
             #endif
         }
         else {
-            FailDecode(pMyDisasm);
+          (*pMyDisasm).Instruction.Category = XSAVEOPT_INSTRUCTION;
+          if (GV.REX.W_ == 1) {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xsaveopt64 ");
+            #endif
+          }
+          else {
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "xsaveopt ");
+            #endif
+          }
+          GV.MemDecoration = Arg1multibytes;
+          MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+          (*pMyDisasm).Argument1.ArgSize = 512 * 8;
+          (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE + GENERAL_REG;
+          (*pMyDisasm).Argument2.Registers = REG0 + REG2;
         }
     }
     else if (GV.REGOPCODE == 7) {

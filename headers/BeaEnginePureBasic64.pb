@@ -153,6 +153,7 @@ Global MyDisasm._Disasm
 #BMI2_INSTRUCTION              =          $160000
 #CET_INSTRUCTION               =          $170000
 #BMI1_INSTRUCTION              =          $180000
+#XSAVEOPT_INSTRUCTION          =          $190000
 
 #DATA_TRANSFER               = 1
 #ARITHMETIC_INSTRUCTION      = 2
