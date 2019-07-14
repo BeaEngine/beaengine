@@ -62,6 +62,22 @@ STRUC  MEMORYTYPE
    Displacement:    resq   1
 ENDSTRUC
 
+STRUC REGISTERTYPE
+   type: resq 1
+   gpr: resq 1
+   mmx: resq 1
+   xmm: resq 1
+   ymm: resq 1
+   zmm: resq 1
+   special: resq 1
+   cr: resq 1
+   dr: resq 1
+   mem_management: resq 1
+   mpx: resq 1
+   opmask: resq 1
+   segment: resq 1
+   fpu: resq 1
+ENDSTRUC
 
 STRUC INSTRTYPE
     Category:                resd   1
@@ -81,7 +97,7 @@ STRUC ARGTYPE
     ArgPosition:     resd   1
     AccessMode:      resd   1
     Memory:          resb   MEMORYTYPE_size
-    Registers:       resq   1
+    Registers:       resb   REGISTERTYPE_size
     SegmentReg:      resd   1
 ENDSTRUC
 
@@ -259,19 +275,19 @@ ENDSTRUC
     MEMORY_TYPE                 equ 30000h
     CONSTANT_TYPE               equ 40000h
 
-    MMX_REG                     equ 000100h
-    GENERAL_REG                 equ 000200h
-    FPU_REG                     equ 000300h
-    SSE_REG                     equ 000400h
-    CR_REG                      equ 000500h
-    DR_REG                      equ 000600h
-    SPECIAL_REG                 equ 000700h
-    MEMORY_MANAGEMENT_REG       equ 000800h       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
-    SEGMENT_REG                 equ 000900h       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
-    AVX_REG                     equ 000a00h
-    MPX_REG                     equ 000b00h
-    AVX512_REG                  equ 000c00h
-    OPMASK_REG                  equ 000d00h
+    GENERAL_REG                 equ 1h
+    MMX_REG                     equ 2h
+    SSE_REG                     equ 4h
+    AVX_REG                     equ 8h
+    AVX512_REG                  equ 10h
+    SPECIAL_REG                 equ 20h       ; MXCSR (REG1)
+    CR_REG                      equ 40h
+    DR_REG                      equ 80h
+    MEMORY_MANAGEMENT_REG       equ 100h      ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
+    MPX_REG                     equ 200h
+    OPMASK_REG                  equ 400h
+    SEGMENT_REG                 equ 800h      ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
+    FPU_REG                     equ 1000h
 
     RELATIVE_                   equ 04000000h
     ABSOLUTE_                   equ 08000000h

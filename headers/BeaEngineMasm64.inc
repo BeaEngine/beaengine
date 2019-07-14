@@ -58,6 +58,23 @@ EFLStruct ENDS
    Displacement    QWORD   0
  MEMORYTYPE ENDS
 
+ REGISTERTYPE STRUCT
+    type    QWORD   0
+    gpr    QWORD   0
+    mmx    QWORD   0
+    xmm    QWORD   0
+    ymm    QWORD   0
+    zmm    QWORD   0
+    special    QWORD   0
+    cr    QWORD   0
+    dr    QWORD   0
+    mem_management    QWORD   0
+    mpx    QWORD   0
+    opmask    QWORD   0
+    segment    QWORD   0
+    fpu    QWORD   0
+ REGISTERTYPE ENDS
+
 INSTRTYPE STRUCT
     Category                DWORD   0
     Opcode                  DWORD   0
@@ -76,7 +93,7 @@ ARGTYPE STRUCT
     ArgPosition     DWORD	0
     AccessMode      DWORD   0
     Memory          MEMORYTYPE <0>
-    Registers       QWORD   0
+    Registers       REGISTERTYPE <0>
     SegmentReg      DWORD   0
 ARGTYPE ENDS
 
@@ -257,19 +274,19 @@ Disasm  PROTO :DWORD
     MEMORY_TYPE                 equ 30000h
     CONSTANT_TYPE               equ 40000h
 
-    MMX_REG                     equ 000100h
-    GENERAL_REG                 equ 000200h
-    FPU_REG                     equ 000300h
-    SSE_REG                     equ 000400h
-    CR_REG                      equ 000500h
-    DR_REG                      equ 000600h
-    SPECIAL_REG                 equ 000700h
-    MEMORY_MANAGEMENT_REG       equ 000800h       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
-    SEGMENT_REG                 equ 000900h       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
-    AVX_REG                     equ 000a00h
-    MPX_REG                     equ 000b00h
-    AVX512_REG                  equ 000c00h
-    OPMASK_REG                  equ 000d00h
+    GENERAL_REG                 equ 1h
+    MMX_REG                     equ 2h
+    SSE_REG                     equ 4h
+    AVX_REG                     equ 8h
+    AVX512_REG                  equ 10h
+    SPECIAL_REG                 equ 20h       ; MXCSR (REG1)
+    CR_REG                      equ 40h
+    DR_REG                      equ 80h
+    MEMORY_MANAGEMENT_REG       equ 100h      ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
+    MPX_REG                     equ 200h
+    OPMASK_REG                  equ 400h
+    SEGMENT_REG                 equ 800h      ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
+    FPU_REG                     equ 1000h
 
     RELATIVE_                   equ 04000000h
     ABSOLUTE_                   equ 08000000h

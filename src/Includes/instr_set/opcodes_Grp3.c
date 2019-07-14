@@ -69,8 +69,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0+REG2;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0;
         FillFlags(pMyDisasm, 70);
@@ -85,8 +85,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0+REG2;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 38);
     }
@@ -100,8 +100,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0+REG2;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         FillFlags(pMyDisasm, 31);
     }
@@ -115,8 +115,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0+REG2;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
         (*pMyDisasm).Argument1.ArgSize = 8;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0;
         FillFlags(pMyDisasm, 37);
@@ -185,8 +185,8 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0+REG2;
         FillFlags(pMyDisasm, 70);
     }
@@ -209,8 +209,8 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0+REG2;
         FillFlags(pMyDisasm, 38);
     }
@@ -233,8 +233,8 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0+REG2;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0+REG2;
         FillFlags(pMyDisasm, 31);
     }
@@ -257,8 +257,8 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         }
         MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-        (*pMyDisasm).Argument1.Registers = REG0+REG2;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
         (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0+REG2;
         FillFlags(pMyDisasm, 37);
     }

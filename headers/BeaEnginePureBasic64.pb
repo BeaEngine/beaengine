@@ -58,6 +58,24 @@ Structure MEMORYTYPE
 EndStructure
 Global Memorytype.MEMORYTYPE
 
+Structure REGISTERTYPE
+   type.q
+   gpr.q
+   mmx.q
+   xmm.q
+   ymm.q
+   zmm.q
+   special.q
+   cr.q
+   dr.q
+   mem_management.q
+   mpx.q
+   opmask.q
+   segment.q
+   fpu.q
+EndStructure
+Global Registertype.REGISTERTYPE
+
 Structure INSTRTYPE
   Category.l
   Opcode.l
@@ -77,7 +95,7 @@ Structure ARGTYPE
   ArgPosition.l
   AccessMode.l
   Memory.MEMORYTYPE
-  Registers.q
+  Registers.REGISTERTYPE
   SegmentReg.l
 EndStructure
 Global Argtype.ARGTYPE
@@ -252,19 +270,19 @@ Global MyDisasm._Disasm
 #MEMORY_TYPE                 = $30000
 #CONSTANT_TYPE               = $40000
 
-#MMX_REG                     = $000100
-#GENERAL_REG                 = $000200
-#FPU_REG                     = $000300
-#SSE_REG                     = $000400
-#CR_REG                      = $000500
-#DR_REG                      = $000600
-#SPECIAL_REG                 = $000700
-#MEMORY_MANAGEMENT_REG       = $000800       ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
-#SEGMENT_REG                 = $000900       ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
-#AVX_REG                     = $000a00
-#MPX_REG                     = $000b00
-#AVX512_REG                  = $000c00
-#OPMASK_REG                  = $000d00
+#GENERAL_REG                 = $1
+#MMX_REG                     = $2
+#SSE_REG                     = $4
+#AVX_REG                     = $8
+#AVX512_REG                  = $10
+#SPECIAL_REG                 = $20       ; MXCSR (REG1)
+#CR_REG                      = $40
+#DR_REG                      = $80
+#MEMORY_MANAGEMENT_REG       = $100      ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)
+#MPX_REG                     = $200
+#OPMASK_REG                  = $400
+#SEGMENT_REG                 = $800      ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
+#FPU_REG                     = $1000
 
 #RELATIVE_                   = $04000000
 #ABSOLUTE_                   = $08000000

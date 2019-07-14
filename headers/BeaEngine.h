@@ -76,6 +76,24 @@ typedef struct {
 } MEMORYTYPE ;
 #pragma pack()
 
+#pragma pack(4)
+typedef struct {
+   Int64 type;
+   Int64 gpr;
+   Int64 mmx;
+   Int64 xmm;
+   Int64 ymm;
+   Int64 zmm;
+   Int64 special;
+   Int64 cr;
+   Int64 dr;
+   Int64 mem_management;
+   Int64 mpx;
+   Int64 opmask;
+   Int64 segment;
+   Int64 fpu;
+} REGISTERTYPE ;
+#pragma pack()
 
 #pragma pack(1)
 typedef struct  {
@@ -98,7 +116,7 @@ typedef struct  {
    Int32 ArgPosition;
    UInt32 AccessMode;
    MEMORYTYPE Memory;
-   Int64 Registers;
+   REGISTERTYPE Registers;
    UInt32 SegmentReg;
 } ARGTYPE;
 #pragma pack()
@@ -257,19 +275,19 @@ enum ARGUMENTS_TYPE
   MEMORY_TYPE =          0x30000,
   CONSTANT_TYPE =        0x40000,
 
-  MMX_REG =                   0x100,
-  GENERAL_REG =               0x200,
-  FPU_REG =                   0x300,
-  SSE_REG =                   0x400,
-  CR_REG =                    0x500,
-  DR_REG =                    0x600,
-  SPECIAL_REG =               0x700,
-  MEMORY_MANAGEMENT_REG =     0x800,
-  SEGMENT_REG =               0x900,
-  AVX_REG =                   0xa00,
-  MPX_REG =                   0xb00,
-  AVX512_REG =                0xc00,
-  OPMASK_REG =                0xd00,
+  GENERAL_REG =               0x1,
+  MMX_REG =                   0x2,
+  SSE_REG =                   0x4,
+  AVX_REG =                   0x8,
+  AVX512_REG =                0x10,
+  SPECIAL_REG =               0x20,
+  CR_REG =                    0x40,
+  DR_REG =                    0x80,
+  MEMORY_MANAGEMENT_REG =     0x100,
+  MPX_REG =                   0x200,
+  OPMASK_REG =                0x400,
+  SEGMENT_REG =               0x800,
+  FPU_REG =                   0x1000,
 
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,

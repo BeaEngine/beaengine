@@ -54,6 +54,23 @@ class EFLStruct(Structure):
               ("RF_",c_uint8),
               ("alignment",c_uint8)]
 
+class REGISTERTYPE(Structure):
+   _pack_= 4
+   _fields_= [("type", c_int64),
+              ("gpr",c_int64),
+              ("mmx",c_int64),
+              ("xmm",c_int64),
+              ("ymm",c_int64),
+              ("zmm",c_int64),
+              ("special",c_int64),
+              ("cr",c_int64),
+              ("dr",c_int64),
+              ("mem_management",c_int64),
+              ("mpx",c_int64),
+              ("opmask",c_int64),
+              ("segment",c_int64),
+              ("fpu",c_int64)]
+
 class MEMORYTYPE(Structure):
    _pack_= 4
    _fields_= [("BaseRegister", c_int64),
@@ -81,7 +98,7 @@ class ARGTYPE(Structure):
               ("ArgPosition", c_int32),
               ("AccessMode", c_uint32),
               ("Memory", MEMORYTYPE),
-              ("Registers", c_int64),
+              ("Registers", REGISTERTYPE),
               ("SegmentReg", c_uint32)]
 
 class VEX_Struct(Structure):
@@ -301,19 +318,20 @@ REGISTER_TYPE = 0x20000
 MEMORY_TYPE = 0x30000
 CONSTANT_TYPE = 0x40000
 
-MMX_REG = 0x100
-GENERAL_REG = 0x200
-FPU_REG = 0x300
-SSE_REG = 0x400
-CR_REG = 0x500
-DR_REG = 0x600
-SPECIAL_REG = 0x700
-MEMORY_MANAGEMENT_REG = 0x800
-SEGMENT_REG = 0x900
-AVX_REG = 0xa00
-MPX_REG = 0xb00
-AVX512_REG = 0xc00
-OPMASK_REG = 0xd00
+GENERAL_REG = 0x1
+MMX_REG = 0x2
+SSE_REG = 0x4
+AVX_REG = 0x8
+AVX512_REG = 0x10
+SPECIAL_REG = 0x20
+CR_REG = 0x40
+DR_REG = 0x80
+MEMORY_MANAGEMENT_REG = 0x100
+MPX_REG = 0x200
+OPMASK_REG = 0x400
+SEGMENT_REG = 0x800
+FPU_REG = 0x1000
+
 
 RELATIVE_ = 0x4000000
 ABSOLUTE_ = 0x8000000

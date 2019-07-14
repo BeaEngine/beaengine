@@ -101,6 +101,27 @@ uses Windows,SysUtils;
 
   type
 
+     TREGISTERTYPE = packed record
+          type : int64;
+          gpr : int64;
+          mmx : int64;
+          xmm : int64;
+          ymm : int64;
+          zmm : int64;
+          special : int64;
+          cr : int64;
+          dr : int64;
+          mem_management : int64;
+          mpx : int64;
+          opmask : int64;
+          segment : int64;
+          fpu : int64;
+
+       end;
+
+
+  type
+
      TINSTRTYPE = packed record
           Category : longint;
           Opcode : longint;
@@ -121,7 +142,7 @@ uses Windows,SysUtils;
 		  ArgPosition : longint;
           AccessMode : longint;
           Memory : TMEMORYTYPE;
-          Registers : int64;
+          Registers : TREGISTERTYPE;
           SegmentReg : longint;
        end;
 
@@ -280,19 +301,19 @@ uses Windows,SysUtils;
        MEMORY_TYPE = $30000;
        CONSTANT_TYPE = $40000;
 
-       MMX_REG = $100;
-       GENERAL_REG = $200;
-       FPU_REG = $300;
-       SSE_REG = $400;
-       CR_REG = $500;
-       DR_REG = $600;
-       SPECIAL_REG = $700;
-       MEMORY_MANAGEMENT_REG = $800;
-       SEGMENT_REG = $900;
-       AVX_REG = $a00;
-       MPX_REG = $b00;
-       AVX512_REG = $c00;
-       OPMASK_REG = $d00;
+       GENERAL_REG =               $1;
+       MMX_REG =                   $2;
+       SSE_REG =                   $4;
+       AVX_REG =                   $8;
+       AVX512_REG =                $10;
+       SPECIAL_REG =               $20;
+       CR_REG =                    $40;
+       DR_REG =                    $80;
+       MEMORY_MANAGEMENT_REG =     $100;
+       MPX_REG =                   $200;
+       OPMASK_REG =                $400;
+       SEGMENT_REG =               $800;
+       FPU_REG =                   $1000;
 
        RELATIVE_ = $4000000;
        ABSOLUTE_ = $8000000;

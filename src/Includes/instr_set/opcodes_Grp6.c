@@ -45,8 +45,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sldt ");
         #endif
-        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
-        (*pMyDisasm).Argument2.Registers = REG1;
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Argument2.Registers.mem_management = REG1;
         (*pMyDisasm).Argument2.ArgSize = 32;
         GV.OperandSize = OperandSizeOld;
         GV.EIP_+= GV.DECALAGE_EIP+2;
@@ -62,8 +62,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "str ");
         #endif
-        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
-        (*pMyDisasm).Argument2.Registers = REG3;
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Argument2.Registers.mem_management = REG3;
         (*pMyDisasm).Argument2.ArgSize = 16;
         GV.OperandSize = OperandSizeOld;
         GV.EIP_+= GV.DECALAGE_EIP+2;
@@ -74,8 +74,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lldt ");
         #endif
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
-        (*pMyDisasm).Argument1.Registers = REG1;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Argument1.Registers.mem_management = REG1;
         (*pMyDisasm).Argument1.ArgSize = 16;
         GV.OperandSize = OperandSizeOld;
         GV.EIP_+= GV.DECALAGE_EIP+2;
@@ -86,8 +86,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ltr ");
         #endif
-        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+MEMORY_MANAGEMENT_REG;
-        (*pMyDisasm).Argument1.Registers = REG3;
+        (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Argument1.Registers.mem_management = REG3;
         (*pMyDisasm).Argument1.ArgSize = 16;
         GV.OperandSize = OperandSizeOld;
         GV.EIP_+= GV.DECALAGE_EIP+2;
@@ -98,8 +98,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verr ");
         #endif
-        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+SPECIAL_REG;
-        (*pMyDisasm).Argument2.Registers = REG0;
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = SPECIAL_REG;
+        (*pMyDisasm).Argument2.Registers.special = REG0;
         (*pMyDisasm).Argument2.ArgSize = 16;
         GV.OperandSize = OperandSizeOld;
         GV.EIP_+= GV.DECALAGE_EIP+2;
@@ -110,8 +110,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verw ");
         #endif
-        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+SPECIAL_REG;
-        (*pMyDisasm).Argument2.Registers = REG0;
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = SPECIAL_REG;
+        (*pMyDisasm).Argument2.Registers.special = REG0;
         (*pMyDisasm).Argument2.ArgSize = 16;
         GV.OperandSize = OperandSizeOld;
         GV.EIP_+= GV.DECALAGE_EIP+2;

@@ -318,8 +318,8 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, Registers8Bits[1]);
     #endif
-    (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG;
-    (*pMyDisasm).Argument2.Registers = REG1;
+    (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = GENERAL_REG;
+    (*pMyDisasm).Argument2.Registers.gpr = REG1;
     (*pMyDisasm).Argument2.ArgSize = 8;
     if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -400,8 +400,8 @@ void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Argument2.ArgMnemonic, Registers8Bits[1]);
     #endif
-    (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE+GENERAL_REG;
-    (*pMyDisasm).Argument2.Registers = REG1;
+    (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = GENERAL_REG;
+    (*pMyDisasm).Argument2.Registers.gpr = REG1;
     (*pMyDisasm).Argument2.ArgSize = 8;
     if (GV.REGOPCODE == 0) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;

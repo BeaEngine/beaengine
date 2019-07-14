@@ -708,8 +708,8 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
   #ifndef BEA_LIGHT_DISASSEMBLY
     (void) strcpy((char*) &(*pMyDisasm).Argument1.ArgMnemonic, Registers8Bits[0]);
   #endif
-  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-  (*pMyDisasm).Argument1.Registers = REG0;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+  (*pMyDisasm).Argument1.Registers.gpr = REG0;
   (*pMyDisasm).Argument1.ArgSize = 8;
   (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
   (*pMyDisasm).Argument2.ArgSize = 8;
@@ -727,8 +727,8 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
 void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
 {
     UInt32 MyNumber;
-    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE+GENERAL_REG;
-    (*pMyDisasm).Argument1.Registers = REG0;
+    (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+    (*pMyDisasm).Argument1.Registers.gpr = REG0;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     if (GV.OperandSize == 64) {
       if (!Security(5, pMyDisasm)) return;
@@ -868,7 +868,8 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
 {
   if (
       ((*pMyDisasm).Prefix.LockPrefix == InUsePrefix) &&
-      !((*pMyDisasm).Argument1.ArgType & (MEMORY_TYPE | REGISTER_TYPE))
+      ((*pMyDisasm).Argument1.ArgType != MEMORY_TYPE) &&
+      ((*pMyDisasm).Argument1.ArgType != REGISTER_TYPE)
     ) {
       (*pMyDisasm).Prefix.LockPrefix = InvalidPrefix;
   }
@@ -876,7 +877,7 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
     (*pMyDisasm).Argument1.SegmentReg = ESReg;
     (*pMyDisasm).Argument2.SegmentReg = DSReg;
     /* =============== override affects Arg2 */
-    if ((*pMyDisasm).Argument2.ArgType & MEMORY_TYPE) {
+    if ((*pMyDisasm).Argument2.ArgType == MEMORY_TYPE) {
       if ((*pMyDisasm).Prefix.FSPrefix == InUsePrefix) {
         (*pMyDisasm).Argument2.SegmentReg = FSReg;
       }
@@ -898,7 +899,7 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
     }
   }
   else {
-    if ((*pMyDisasm).Argument1.ArgType & MEMORY_TYPE) {
+    if ((*pMyDisasm).Argument1.ArgType == MEMORY_TYPE) {
       if (
           ((*pMyDisasm).Argument1.Memory.BaseRegister == REG4) ||
           ((*pMyDisasm).Argument1.Memory.BaseRegister == REG5)
@@ -953,7 +954,7 @@ void __bea_callspec__ FillSegmentsRegisters(PDISASM pMyDisasm)
       }
     }
 
-    if ((*pMyDisasm).Argument2.ArgType & MEMORY_TYPE) {
+    if ((*pMyDisasm).Argument2.ArgType == MEMORY_TYPE) {
       if (
         ((*pMyDisasm).Argument2.Memory.BaseRegister == REG4) ||
          ((*pMyDisasm).Argument2.Memory.BaseRegister == REG5)
@@ -1250,11 +1251,11 @@ void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
 
     /* =============== if Arg3.Exists, display it */
     if ((*pMyDisasm).Argument3.ArgMnemonic != 0) {
-      if ((*pMyDisasm).Argument3.ArgType & REGISTER_TYPE) {
+      if ((*pMyDisasm).Argument3.ArgType == REGISTER_TYPE) {
         (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "%");
         i++;
       }
-      else if ((*pMyDisasm).Argument3.ArgType & CONSTANT_TYPE) {
+      else if ((*pMyDisasm).Argument3.ArgType == CONSTANT_TYPE) {
         (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "\x24");
         i++;
       }

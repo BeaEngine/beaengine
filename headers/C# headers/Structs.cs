@@ -54,6 +54,26 @@ namespace Bea
   }
 
   [StructLayout(LayoutKind.Sequential, Pack = 1)]
+  public class RegisterType
+  {
+    public Int64 type;
+    public Int64 gpr;
+    public Int64 mmx;
+    public Int64 xmm;
+    public Int64 ymm;
+    public Int64 zmm;
+    public Int64 special;
+    public Int64 cr;
+    public Int64 dr;
+    public Int64 mem_management;
+    public Int64 mpx;
+    public Int64 opmask;
+    public Int64 segment;
+    public Int64 fpu;
+  }
+
+
+  [StructLayout(LayoutKind.Sequential, Pack = 1)]
   public class MemoryType
   {
     public Int32 BaseRegister;
@@ -86,6 +106,7 @@ namespace Bea
     public Int32 ArgPosition;
     public UInt32 AccessMode;
     public MemoryType Memory;
+    public RegisterType Registers;
     public UInt32 SegmentReg;
   }
 
