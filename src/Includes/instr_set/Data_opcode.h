@@ -58,7 +58,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     cmovo_    , cmovno_   , cmovb_    , cmovnb_   , cmove_    , cmovne_   , cmovbe_   , cmovnbe_  , cmovs_    , cmovns_   , cmovp_    , cmovnp_   , cmovl_    , cmovnl_   , cmovle_   , cmovnle_  ,
     movmskps_ , sqrtps_VW , rsqrtps_  , rcpps_    , andps_VW  , andnps_VW , orps_VW   , xorps_VW  , addps_VW  , mulps_VW  , cvtps2pd_ , cvtdq2ps_ , subps_VW  , minps_VW  , divps_VW  , maxps_VW  ,
     punpcklbw_, punpcklwd_, punpckldq_, packsswb_ , pcmpgtb_  , pcmpgtw_  , pcmpgtd_  , packuswb_ , punpckhbw_, punpckhwd_, punpckhdq_, packssdw_ ,punpcklqdq_,punpckhqdq_, movd_PE   , movq_PQ   ,
-    pshufw_   , G12_      , G13_      , G14_      , pcmpeqb_  , pcmpeqw_  , pcmpeqd_  , emms_     , vmread_   , vmwrite_  , FailDecode, FailDecode, haddpd_VW , hsubpd_VW , movd_EP   , movq_QP   ,
+    pshufw_   , G12_      , G13_      , G14_      , pcmpeqb_  , pcmpeqw_  , pcmpeqd_  , emms_     , vmread_   , vmwrite_  , FailDecode, vcvtps2qq_, haddpd_VW , hsubpd_VW , movd_EP   , movq_QP   ,
     jo_near   , jno_near  , jc_near   , jnc_near  , je_near   , jne_near  , jbe_near  , ja_near   , js_near   , jns_near  , jp_near   , jnp_near  , jl_near   , jnl_near  , jle_near  , jnle_near ,
     seto_     , setno_    , setb_     , setnb_    , sete_     , setne_    , setbe_    , setnbe_   , sets_     , setns_    , setp_     , setnp_    , setnge_   , setge_    , setle_    , setnle_   ,
     push_fs   , pop_fs    , cpuid_    , bt_EvGv   ,shld_EvGvIb,shld_EvGvCL, FailDecode, FailDecode, push_gs   , pop_gs    , rsm_      , bts_EvGv  ,shrd_EvGvIb,shrd_EvGvCL, G15_      , imul_GvEv ,
