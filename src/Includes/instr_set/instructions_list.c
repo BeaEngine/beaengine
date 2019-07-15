@@ -10636,11 +10636,60 @@ void __bea_callspec__ sets_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ setns_(PDISASM pMyDisasm)
 {
-  if (GV.VEX.state == InUsePrefix) {
-    FailDecode(pMyDisasm);
-    return;
+  if (
+      (GV.EVEX.state != InUsePrefix) &&
+      (GV.VEX.state == InUsePrefix) &&
+      (GV.VEX.L == 0) &&
+      (((GV.VEX.vvvv >> 3) & 0x1) == 1)
+    ) {
+    if (GV.REX.W_ == 0) {
+      if (GV.VEX.pp == 1) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ktestb ");
+        #endif
+        GV.MemDecoration = Arg2byte;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else if (GV.VEX.pp == 0) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ktestw ");
+        #endif
+        GV.MemDecoration = Arg2word;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      if (GV.VEX.pp == 1) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ktestd ");
+        #endif
+        GV.MemDecoration = Arg2dword;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else if (GV.VEX.pp == 0) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ktestq ");
+        #endif
+        GV.MemDecoration = Arg2qword;
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
   }
-
+  else if (GV.VEX.state != InUsePrefix){
     (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "setns ");
@@ -10651,6 +10700,10 @@ void __bea_callspec__ setns_(PDISASM pMyDisasm)
     GV.OperandSize = 32;
     GV.EIP_+= GV.DECALAGE_EIP+2;
     FillFlags(pMyDisasm,95);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 /* =======================================
