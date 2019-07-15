@@ -51,7 +51,12 @@ namespace Bea
       CET_INSTRUCTION               =          0x170000,
       BMI1_INSTRUCTION              =          0x180000,
       XSAVEOPT_INSTRUCTION          =          0x190000,
-
+      FSGSBASE_INSTRUCTION          =          0x1a0000,
+      CLWB_INSTRUCTION              =          0x1b0000,
+      CLFLUSHOPT_INSTRUCTION        =          0x1c0000,
+      FXSR_INSTRUCTION              =          0x1d0000,
+      XSAVE_INSTRUCTION             =          0x1e0000,
+      
       DATA_TRANSFER = 0x1,
       ARITHMETIC_INSTRUCTION,
       LOGICAL_INSTRUCTION,

@@ -209,7 +209,12 @@ uses Windows,SysUtils;
        CET_INSTRUCTION               =          $170000;
        BMI1_INSTRUCTION              =          $180000;
        XSAVEOPT_INSTRUCTION          =          $190000;
-
+       FSGSBASE_INSTRUCTION          =          $1a0000;
+       CLWB_INSTRUCTION              =          $1b0000;
+       CLFLUSHOPT_INSTRUCTION        =          $1c0000;
+       FXSR_INSTRUCTION              =          $1d0000;
+       XSAVE_INSTRUCTION             =          $1e0000;
+       
        DATA_TRANSFER = $1;
        ARITHMETIC_INSTRUCTION = 2;
        LOGICAL_INSTRUCTION = 3;

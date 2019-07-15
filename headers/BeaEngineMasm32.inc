@@ -176,7 +176,12 @@ Disasm  PROTO :DWORD
     CET_INSTRUCTION               equ          170000h
     BMI1_INSTRUCTION              equ          180000h
     XSAVEOPT_INSTRUCTION          equ          190000h
-
+    FSGSBASE_INSTRUCTION          equ          1a0000h
+    CLWB_INSTRUCTION              equ          1b0000h
+    CLFLUSHOPT_INSTRUCTION        equ          1c0000h
+    FXSR_INSTRUCTION              equ          1d0000h
+    XSAVE_INSTRUCTION             equ          1e0000h
+    
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
     LOGICAL_INSTRUCTION         equ 3

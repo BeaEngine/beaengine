@@ -21,6 +21,162 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
+        # F3 0F AE /2
+        # WRFSBASE r32
+
+        Buffer = 'f30faed0'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'wrfsbase ')
+        assert_equal(myDisasm.instr.repr, 'wrfsbase eax')
+        assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument1.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument1.Registers.segment, REG4)
+
+        # F3 REX.W 0F AE /2
+        # WRFSBASE r64
+
+        myREX = REX()
+        myREX.W = 1
+        Buffer = 'f3{:02x}0faed0'.format(myREX.byte()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'wrfsbase ')
+        assert_equal(myDisasm.instr.repr, 'wrfsbase rax')
+        assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument1.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument1.Registers.segment, REG4)
+
+        # F3 0F AE /3
+        # WRGSBASE r32
+
+        Buffer = 'f30faed8'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'wrgsbase ')
+        assert_equal(myDisasm.instr.repr, 'wrgsbase eax')
+        assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument1.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument1.Registers.segment, REG5)
+
+        # F3 REX.W 0F AE /3
+        # WRGSBASE r64
+
+        myREX = REX()
+        myREX.W = 1
+        Buffer = 'f3{:02x}0faed8'.format(myREX.byte()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'wrgsbase ')
+        assert_equal(myDisasm.instr.repr, 'wrgsbase rax')
+        assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument1.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument1.Registers.segment, REG5)
+
+        # F3 0F AE /0
+        # RDFSBASE r32
+
+        Buffer = 'f30faec0'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'rdfsbase ')
+        assert_equal(myDisasm.instr.repr, 'rdfsbase eax')
+        assert_equal(myDisasm.instr.Argument2.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument2.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument2.Registers.segment, REG4)
+
+        # F3 REX.W 0F AE /0
+        # RDFSBASE r64
+
+        myREX = REX()
+        myREX.W = 1
+        Buffer = 'f3{:02x}0faec0'.format(myREX.byte()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'rdfsbase ')
+        assert_equal(myDisasm.instr.repr, 'rdfsbase rax')
+        assert_equal(myDisasm.instr.Argument2.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument2.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument2.Registers.segment, REG4)
+
+        # F3 0F AE /1
+        # RDGSBASE r32
+
+        Buffer = 'f30faec8'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'rdgsbase ')
+        assert_equal(myDisasm.instr.repr, 'rdgsbase eax')
+        assert_equal(myDisasm.instr.Argument2.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument2.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument2.Registers.segment, REG5)
+
+        # F3 REX.W 0F AE /1
+        # RDGSBASE r64
+
+        myREX = REX()
+        myREX.W = 1
+        Buffer = 'f3{:02x}0faec8'.format(myREX.byte()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'rdgsbase ')
+        assert_equal(myDisasm.instr.repr, 'rdgsbase rax')
+        assert_equal(myDisasm.instr.Argument2.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument2.Registers.type, SEGMENT_REG)
+        assert_equal(myDisasm.instr.Argument2.Registers.segment, REG5)
+
+        # F3 REX.W 0F AE /4
+        # PTWRITE r64/m64
+
+        myREX = REX()
+        myREX.W = 1
+        Buffer = 'f3{:02x}0fae20'.format(myREX.byte()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'ptwrite ')
+        assert_equal(myDisasm.instr.repr, 'ptwrite qword ptr [rax]')
+        assert_equal(myDisasm.instr.Argument1.AccessMode, READ)
+
+        # F3 0F AE /4
+        # PTWRITE r32/m32
+
+        Buffer = 'f30fae20'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'ptwrite ')
+        assert_equal(myDisasm.instr.repr, 'ptwrite dword ptr [rax]')
+        assert_equal(myDisasm.instr.Argument1.AccessMode, READ)
+
+        # 66 0F AE /6
+        # CLWB m8
+
+        Buffer = '660fae30'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'clwb ')
+        assert_equal(myDisasm.instr.repr, 'clwb byte ptr [rax]')
+
+        # 66 0F AE /7
+        # CLFLUSHOPT m8
+
+        Buffer = '660fae38'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xfae)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'clflushopt ')
+        assert_equal(myDisasm.instr.repr, 'clflushopt byte ptr [rax]')
+
         # NP 0F AE /0
         # FXSAVE m512byte
 
