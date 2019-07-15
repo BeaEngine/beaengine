@@ -101,6 +101,8 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
   }
   /* ========= 0x66 */
   else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    GV.OperandSize = GV.OriginalOperandSize;
+    (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
     if (GV.REGOPCODE == 6) {
       GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) {
