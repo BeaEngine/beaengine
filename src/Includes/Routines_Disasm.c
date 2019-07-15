@@ -67,10 +67,10 @@ void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
 {
-	#ifndef BEA_LIGHT_DISASSEMBLY
+  #ifndef BEA_LIGHT_DISASSEMBLY
    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "??? ");
   #endif
-	GV.ERROR_OPCODE = UNKNOWN_OPCODE;
+  GV.ERROR_OPCODE = UNKNOWN_OPCODE;
 }
 
 /* ====================================================================
