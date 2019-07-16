@@ -21,6 +21,16 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
+        # NP 0F 79
+        # VMWRITE r64, r/m64
+
+        Buffer = '0f7920'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf79')
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmwrite ')
+        assert_equal(myDisasm.instr.repr, 'vmwrite rsp, qword ptr [rax]')
+
         # EVEX.128.0F.W0 79 /r
         # VCVTPS2UDQ xmm1 {k1}{z}, xmm2/m128/m32bcst
 
