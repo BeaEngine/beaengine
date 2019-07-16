@@ -11188,24 +11188,73 @@ void __bea_callspec__ vmread_(PDISASM pMyDisasm)
 }
 
 /* =======================================
- *
+ *  0F 79
  * ======================================= */
 void __bea_callspec__ vmwrite_(PDISASM pMyDisasm)
 {
-  if (GV.VEX.state == InUsePrefix) {
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtpd2uqq ");
+        #endif
+        ArgsVEX_GxEx(pMyDisasm);
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtps2uqq ");
+        #endif
+        ArgsVEX_GEx(pMyDisasm, Arg2qword, Arg2_m128_xmm, Arg2_m256_ymm);
+      }
+    }
+    else if (GV.VEX.pp == 2) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtss2usi ");
+      #endif
+      GV.MemDecoration = Arg2dword;
+      GV.OperandSize = (GV.EVEX.W == 1) ? 64 : 32;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+    }
+    else if (GV.VEX.pp == 3) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtsd2usi ");
+      #endif
+      GV.MemDecoration = (GV.EVEX.W == 1) ? Arg2qword : Arg2dword;
+      GV.OperandSize = (GV.EVEX.W == 1) ? 64 : 32;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+    }
+    else {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtpd2udq ");
+        #endif
+        ArgsVEX_GxEx(pMyDisasm);
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtps2udq ");
+        #endif
+        ArgsVEX_GxEx(pMyDisasm);
+      }
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
     FailDecode(pMyDisasm);
-    return;
   }
-  (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
-  #ifndef BEA_LIGHT_DISASSEMBLY
-     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmwrite ");
-  #endif
-  if (GV.Architecture == 64) {
-      GV.OperandSize = 64;
-  }
-  GvEv(pMyDisasm);
-  if (GV.Architecture == 64) {
-      GV.OperandSize = 32;
+  else {
+    (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmwrite ");
+    #endif
+    if (GV.Architecture == 64) GV.OperandSize = 64;
+    GvEv(pMyDisasm);
+    if (GV.Architecture == 64) GV.OperandSize = 32;
   }
 }
 
