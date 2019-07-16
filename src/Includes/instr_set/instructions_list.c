@@ -15595,6 +15595,45 @@ void __bea_callspec__ palignr_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 12
+* ==================================================================== */
+void __bea_callspec__ vpsllvw_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpsllvw ");
+        #endif
+        ArgsVEX(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else if (GV.VEX.pp == 2) {
+      if (GV.EVEX.W == 0) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmovusqb ");
+        #endif
+        ArgsVEX_ExG(pMyDisasm, Arg1word, Arg1dword, Arg1qword);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 11
 * ==================================================================== */
 void __bea_callspec__ vpsravw_(PDISASM pMyDisasm)
