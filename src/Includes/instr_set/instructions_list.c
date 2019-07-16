@@ -23333,52 +23333,40 @@ void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
 {
-    /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
-        if (GV.VEX.state == InUsePrefix) {
-            (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + AES_INSTRUCTION;
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaeskeygenassist ");
-            #endif
 
-            GV.Register_ = SSE_REG;
-            GV.MemDecoration = Arg2_m128i_xmm;
-            GxEx(pMyDisasm);
-            GV.ImmediatSize = 8;
-            GV.EIP_++;
-            if (!Security(0, pMyDisasm)) return;
-            (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
-            #endif
-            (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
-            (*pMyDisasm).Argument3.ArgSize = 8;
-        }
-        else {
-            GV.OperandSize = GV.OriginalOperandSize;
-            (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-            GV.MemDecoration = Arg2_m128i_xmm;
-            (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygenassist ");
-            #endif
-            GV.ImmediatSize = 8;
-            GV.Register_ = SSE_REG;
-            GxEx(pMyDisasm);
-            GV.EIP_++;
-            if (!Security(0, pMyDisasm)) return;
-            (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
-            #endif
-            (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
-            (*pMyDisasm).Argument3.ArgSize = 8;
-        }
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  /* ========== 0x66 */
+  if (GV.OperandSize == 16) {
+    if (GV.VEX.state == InUsePrefix) {
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + AES_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vaeskeygenassist ");
+      #endif
 
+      GV.Register_ = SSE_REG;
+      GV.MemDecoration = Arg2_m128i_xmm;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
     }
     else {
-        FailDecode(pMyDisasm);
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg2_m128i_xmm;
+      (*pMyDisasm).Instruction.Category = AES_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aeskeygenassist ");
+      #endif
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
     }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 
 }
 
