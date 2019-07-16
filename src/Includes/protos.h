@@ -598,6 +598,7 @@ void __bea_callspec__ rsqrtps_(PDISASM);
 void __bea_callspec__ sysenter_(PDISASM);
 void __bea_callspec__ sysexit_(PDISASM);
 void __bea_callspec__ sahf_(PDISASM);
+void __bea_callspec__ sha1rnds4_(PDISASM);
 void __bea_callspec__ salc_(PDISASM);
 void __bea_callspec__ scasb_(PDISASM);
 void __bea_callspec__ scas_(PDISASM);

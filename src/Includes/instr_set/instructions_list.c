@@ -9674,7 +9674,9 @@ void __bea_callspec__ rdtsc_(PDISASM pMyDisasm)
      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdtsc ");
   #endif
   GV.EIP_++;
-  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;(*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;
+  (*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+  (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
   (*pMyDisasm).Argument1.ArgSize = 32;
 }
 
@@ -9692,9 +9694,13 @@ void __bea_callspec__ rdmsr_(PDISASM pMyDisasm)
      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdmsr ");
   #endif
   GV.EIP_++;
-  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;(*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;
+  (*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+  (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
   (*pMyDisasm).Argument1.ArgSize = 32;
-  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = GENERAL_REG;(*pMyDisasm).Argument2.Registers.gpr = REG1;
+  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;
+  (*pMyDisasm).Argument2.Registers.type = GENERAL_REG;
+  (*pMyDisasm).Argument2.Registers.gpr = REG1;
   (*pMyDisasm).Argument2.ArgSize = 32;
 }
 
@@ -9712,9 +9718,13 @@ void __bea_callspec__ rdpmc_(PDISASM pMyDisasm)
      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdpmc ");
   #endif
   GV.EIP_++;
-  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;(*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;
+  (*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
+  (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
   (*pMyDisasm).Argument1.ArgSize = 32;
-  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = GENERAL_REG;(*pMyDisasm).Argument2.Registers.gpr = REG1;
+  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;
+  (*pMyDisasm).Argument2.Registers.type = GENERAL_REG;
+  (*pMyDisasm).Argument2.Registers.gpr = REG1;
   (*pMyDisasm).Argument2.ArgSize = 32;
 }
 
@@ -9781,9 +9791,13 @@ void __bea_callspec__ sahf_(PDISASM pMyDisasm)
      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sahf ");
   #endif
   GV.EIP_++;
-  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = SPECIAL_REG;(*pMyDisasm).Argument1.Registers.special = REG0;
+  (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;
+  (*pMyDisasm).Argument1.Registers.type = SPECIAL_REG;
+  (*pMyDisasm).Argument1.Registers.special = REG0;
   (*pMyDisasm).Argument1.ArgSize = 32;
-  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument2.Registers.type = GENERAL_REG;(*pMyDisasm).Argument2.Registers.gpr = REG0;
+  (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;
+  (*pMyDisasm).Argument2.Registers.type = GENERAL_REG;
+  (*pMyDisasm).Argument2.Registers.gpr = REG0;
   (*pMyDisasm).Argument2.ArgSize = 8;
 }
 
@@ -12445,56 +12459,63 @@ void __bea_callspec__ andps_VW(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ blendpd_(PDISASM pMyDisasm)
 {
-   /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-
-
-       if (GV.VEX.state == InUsePrefix) {
-           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
-           #ifndef BEA_LIGHT_DISASSEMBLY
-              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vblendpd ");
-           #endif
-
-           if (GV.VEX.L == 0) {
-               GV.Register_ = SSE_REG;
-               GxEx(pMyDisasm);
-               GV.MemDecoration = Arg2_m128_xmm;
-
-           }
-           else {
-               GV.Register_ = AVX_REG;
-               GxEx(pMyDisasm);
-               GV.MemDecoration = Arg2_m256_ymm;
-
-
-           }
-
-           getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-
-       }
-       else {
-
-           GV.OperandSize = GV.OriginalOperandSize;
-           (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-           GV.MemDecoration = Arg2_m128_xmm;
-           (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+PACKED_BLENDING_INSTRUCTION;
-           #ifndef BEA_LIGHT_DISASSEMBLY
-              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blendpd ");
-           #endif
-           GV.Register_ = SSE_REG;
-           GxEx(pMyDisasm);
-
-           getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-       }
-
-
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
+  /* ========== 0x66 */
+  if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    if (GV.VEX.state == InUsePrefix) {
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vblendpd ");
+      #endif
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+        GV.MemDecoration = Arg2_m128_xmm;
+        GxEx(pMyDisasm);
+      }
+      else {
+        GV.Register_ = AVX_REG;
+        GV.MemDecoration = Arg2_m256_ymm;
+        GxEx(pMyDisasm);
+      }
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+PACKED_BLENDING_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blendpd ");
+      #endif
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 
 }
 
+/* ====================================================================
+*      0x 0f 3a cc
+* ==================================================================== */
+void __bea_callspec__ sha1rnds4_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
+    GV.MemDecoration = Arg2_m128_xmm;
+    (*pMyDisasm).Instruction.Category = SHA_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sha1rnds4 ");
+    #endif
+    GV.Register_ = SSE_REG;
+    GxEx(pMyDisasm);
+    getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 3a 0c
