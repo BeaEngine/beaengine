@@ -17205,6 +17205,34 @@ void __bea_callspec__ psignd_(PDISASM pMyDisasm)
   }
 }
 
+/* ====================================================================
+*      0x 0f 38 36
+* ==================================================================== */
+void __bea_callspec__ vpermd_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermq ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermd ");
+        #endif
+      }
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 38 09
