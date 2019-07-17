@@ -17264,6 +17264,83 @@ void __bea_callspec__ psignw_(PDISASM pMyDisasm)
    }
 }
 
+
+/* ====================================================================
+*      0x 0f 38 26
+* ==================================================================== */
+void __bea_callspec__ vptestmb_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestmw ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestmb ");
+        #endif
+      }
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.Register_ = OPMASK_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+        GV.MemDecoration = Arg3_m128_xmm;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.Register_ = AVX_REG;
+        GV.MemDecoration = Arg3_m256_ymm;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.Register_ = AVX512_REG;
+        GV.MemDecoration = Arg3_m512_zmm;
+      }
+      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+    }
+    else if (GV.VEX.pp == 2) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestnmw ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestnmb ");
+        #endif
+      }
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.Register_ = OPMASK_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+        GV.MemDecoration = Arg3_m128_xmm;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.Register_ = AVX_REG;
+        GV.MemDecoration = Arg3_m256_ymm;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.Register_ = AVX512_REG;
+        GV.MemDecoration = Arg3_m512_zmm;
+      }
+      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
 /* ====================================================================
 *      0x 0f 38 16
 * ==================================================================== */
