@@ -667,6 +667,7 @@ void __bea_callspec__ vcvtph2ps_(PDISASM);
 void __bea_callspec__ vcvtps2qq_(PDISASM);
 void __bea_callspec__ vcvttps2qq_(PDISASM);
 void __bea_callspec__ vmread_(PDISASM);
+void __bea_callspec__ vpermps_(PDISASM);
 void __bea_callspec__ vmwrite_(PDISASM);
 void __bea_callspec__ vpermilps_(PDISASM);
 void __bea_callspec__ vpermilpd_(PDISASM);
