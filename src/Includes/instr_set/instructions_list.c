@@ -15594,6 +15594,54 @@ void __bea_callspec__ palignr_(PDISASM pMyDisasm)
    }
 }
 
+
+/* ====================================================================
+*      0x 0f 38 13
+* ==================================================================== */
+void __bea_callspec__ vcvtph2ps_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+
+    if (GV.VEX.pp == 1) {
+      if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if (
+          ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0)) ||
+          ((GV.EVEX.state != InUsePrefix) && (GV.REX.W_ == 0))
+        ) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtph2ps ");
+        #endif
+        ArgsVEX_GE(pMyDisasm, Arg2qword, Arg2_m128_xmm, Arg2_m256_ymm, SSE_REG, SSE_REG, AVX_REG);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else if (GV.VEX.pp == 2) {
+      if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))
+      {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmovusdw ");
+        #endif
+        ArgsVEX_ExG(pMyDisasm, Arg1qword, Arg1_m128_xmm, Arg1_m256_ymm, SSE_REG, SSE_REG, AVX_REG);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
 /* ====================================================================
 *      0x 0f 38 12
 * ==================================================================== */
@@ -15618,7 +15666,7 @@ void __bea_callspec__ vpsllvw_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmovusqb ");
         #endif
-        ArgsVEX_ExG(pMyDisasm, Arg1word, Arg1dword, Arg1qword);
+        ArgsVEX_ExG(pMyDisasm, Arg1word, Arg1dword, Arg1qword, SSE_REG, SSE_REG, SSE_REG);
       }
       else {
         FailDecode(pMyDisasm);
@@ -15657,7 +15705,7 @@ void __bea_callspec__ vpsravw_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmovusdb ");
         #endif
-        ArgsVEX_ExG(pMyDisasm, Arg1dword, Arg1qword, Arg1_m128_xmm);
+        ArgsVEX_ExG(pMyDisasm, Arg1dword, Arg1qword, Arg1_m128_xmm, SSE_REG, SSE_REG, SSE_REG);
       }
       else {
         FailDecode(pMyDisasm);
