@@ -12577,41 +12577,66 @@ void __bea_callspec__ blendps_(PDISASM pMyDisasm)
 void __bea_callspec__ blendvpd_(PDISASM pMyDisasm)
 {
  UInt8 Imm8;
+ if (GV.EVEX.state == InUsePrefix) {
+   if (GV.VEX.pp == 1) {
+     if (GV.EVEX.W == 1) {
+       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+       #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vprolvq ");
+       #endif
+     }
+     else {
+       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+       #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vprolvd ");
+       #endif
+     }
+     ArgsVEX(pMyDisasm);
+   }
+   else if (GV.VEX.pp == 2) {
+     if (GV.EVEX.W == 0) {
+       if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+       #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmovusqd ");
+       #endif
+       ArgsVEX_ExG(pMyDisasm, Arg1dword, Arg1qword, Arg1_m128_xmm, SSE_REG, SSE_REG, SSE_REG);
+     }
+     else {
+       FailDecode(pMyDisasm);
+     }
+   }
+   else {
+     FailDecode(pMyDisasm);
+   }
+ }
+
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
      if (GV.VEX.state == InUsePrefix) {
+       GV.ERROR_OPCODE = UD_;
        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+ARITHMETIC_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vblendvpd ");
        #endif
-
-       if (GV.VEX.opcode == 0xc4) {
-         /* using VEX3Bytes */
-         if (GV.REX.W_ == 0x1) {
-           GV.ERROR_OPCODE = UD_;
-         }
-       }
+      if (GV.REX.W_ == 0x1) GV.ERROR_OPCODE = UD_;
        if (GV.VEX.L == 0) {
          GV.Register_ = SSE_REG;
          GV.MemDecoration = Arg3_m128_xmm;
          GyEy(pMyDisasm);
-
          GV.EIP_++;
          if (!Security(0, pMyDisasm)) return;
          Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
          fillRegister((Imm8 >> 4) & 0xF, &(*pMyDisasm).Argument4, pMyDisasm);
-
        }
        else {
          GV.Register_ = AVX_REG;
          GV.MemDecoration = Arg3_m256_ymm;
          GyEy(pMyDisasm);
-
          GV.EIP_++;
          if (!Security(0, pMyDisasm)) return;
          Imm8 = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
          fillRegister((Imm8 >> 4) & 0xF, &(*pMyDisasm).Argument4, pMyDisasm);
-
        }
      }
      else {
