@@ -33,6 +33,15 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdd ')
         assert_equal(myDisasm.instr.repr, 'vpgatherdd xmm0, dword ptr [rbx+xmm6+22h]')
 
+        myEVEX = EVEX('EVEX.128.66.0F38.W0')
+        myEVEX.aaa = 2
+        Buffer = '{}90443322'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherdd ')
+        assert_equal(myDisasm.instr.repr, 'vpgatherdd xmm0 {k2}, dword ptr [rbx+xmm6+22h]')
+
         # EVEX.256.66.0F38.W0 90 /vsib
         # VPGATHERDD ymm1 {k1}, vm32y
 

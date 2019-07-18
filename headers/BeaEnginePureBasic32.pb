@@ -343,4 +343,5 @@ Global MyDisasm._Disasm
 #PrefixedNumeral             = $10000
 #SuffixedNumeral             = 0
 #ShowSegmentRegs             = $01000000
+#ShowEVEXMasking             = $02000000
 ;------- End Header

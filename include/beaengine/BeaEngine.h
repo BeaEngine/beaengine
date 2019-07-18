@@ -41,6 +41,7 @@ typedef struct {
    UInt8 b;
    UInt8 LL;
    UInt8 state;
+   UInt8 masking;
 } EVEX_Struct  ;
 #pragma pack()
 
@@ -188,7 +189,7 @@ typedef struct {
    UInt32 SEGMENTREGS;
    UInt32 SEGMENTFS;
    Int32 third_arg;
-   Int32 TAB_;
+   UInt64 OPTIONS;
    Int32 ERROR_OPCODE;
    REX_Struct REX;
    Int32 OutOfBlock;
@@ -237,6 +238,13 @@ typedef struct _Disasm {
 
 #define LowPosition 0
 #define HighPosition 1
+
+/* EVEX Masking */
+
+#define NO_MASK 0
+#define MERGING 1
+#define MERGING_ZEROING 2
+
 
 enum INSTRUCTION_TYPE
 {
@@ -436,7 +444,8 @@ enum SPECIAL_INFO
   SuffixedNumeral   = 0x00000000,
 
   /* === mask = 0xff000000 */
-  ShowSegmentRegs   = 0x01000000
+  ShowSegmentRegs   = 0x01000000,
+  ShowEVEXMasking   = 0x02000000
 };
 
 

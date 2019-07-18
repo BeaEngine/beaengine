@@ -128,7 +128,8 @@ class EVEX_Struct(Structure):
               ("z",c_uint8),
               ("b",c_uint8),
               ("LL",c_uint8),
-              ("state",c_uint8)]
+              ("state",c_uint8),
+              ("masking",c_uint8)]
 
 class InternalDatas(Structure):
     _pack_ = 1
@@ -158,7 +159,7 @@ class InternalDatas(Structure):
                 ('SEGMENTREGS', c_uint32),
                 ('SEGMENTFS', c_uint32),
                 ('third_arg', c_uint32),
-                ('TAB_', c_uint32),
+                ('OPTIONS', c_uint64),
                 ('ERROR_OPCODE', c_uint32),
                 ('REX', REX_Struct),
                 ('OutOfBlock', c_uint32),
@@ -206,6 +207,7 @@ IntrinsicMemSyntax= 0x800
 PrefixedNumeral = 0x10000
 SuffixedNumeral = 0x20000
 ShowSegmentRegs = 0x01000000
+ShowEVEXMasking = 0x02000000
 
 LowPosition = 0
 HighPosition = 1

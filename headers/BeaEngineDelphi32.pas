@@ -362,24 +362,25 @@ uses Windows,SysUtils;
   type
      SPECIAL_INFO =  Longint;
      Const
-       UNKNOWN_OPCODE = -(1);
-       OUT_OF_BLOCK = 0;
+      UNKNOWN_OPCODE = -(1);
+      OUT_OF_BLOCK = 0;
   { === mask = 0xff }
-       NoTabulation = $00000000;
-       Tabulation = $00000001;
+      NoTabulation = $00000000;
+      Tabulation = $00000001;
   { === mask = 0xff00 }
-       MasmSyntax = $00000000;
-       GoAsmSyntax = $00000100;
-       NasmSyntax = $00000200;
-       ATSyntax = $00000400;
-       IntrinsicMemSyntax = $00000800;
+      MasmSyntax = $00000000;
+      GoAsmSyntax = $00000100;
+      NasmSyntax = $00000200;
+      ATSyntax = $00000400;
+      IntrinsicMemSyntax = $00000800;
   { === mask = 0xff0000 }
-       PrefixedNumeral = $00010000;
-       SuffixedNumeral = $00000000;
+      PrefixedNumeral = $00010000;
+      SuffixedNumeral = $00000000;
   { === mask = 0xff000000 }
-       ShowSegmentRegs = $01000000;
-	   LowPosition = 0;
-	   HighPosition = 1;
+      ShowSegmentRegs = $01000000;
+      ShowEVEXMasking = $02000000;
+	    LowPosition = 0;
+	    HighPosition = 1;
 
 
   function Disasm(var aDisAsm:TDISASM):longint;stdcall;

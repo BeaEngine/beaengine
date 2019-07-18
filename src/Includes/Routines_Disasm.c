@@ -115,11 +115,12 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
   (*pMyDisasm).Argument3.AccessMode = READ;
   (*pMyDisasm).Argument4.AccessMode = READ;
   (void) memset (&(*pMyDisasm).Instruction, 0, sizeof (INSTRTYPE));
-  GV.TAB_ = (UInt32)(*pMyDisasm).Options & 0xff;
+  GV.OPTIONS = (UInt32)(*pMyDisasm).Options;
   GV.SYNTAX_ = (UInt32)(*pMyDisasm).Options & 0xff00;
-  GV.FORMATNUMBER = (UInt32)(*pMyDisasm).Options & 0xff0000;
-  GV.SEGMENTREGS = (UInt32)(*pMyDisasm).Options & 0xff000000;
+  GV.FORMATNUMBER = (UInt32)(*pMyDisasm).Options & PrefixedNumeral;
+  GV.SEGMENTREGS = (UInt32)(*pMyDisasm).Options & ShowSegmentRegs;
   GV.OutOfBlock = 0;
+  GV.EVEX.masking = MERGING_ZEROING;
   return 1;
 }
 /* ====================================================================
@@ -916,7 +917,7 @@ size_t __bea_callspec__ CopyFormattedNumber(PDISASM pMyDisasm, char* pBuffer, co
   if (!strcmp(pFormat,"%.2X")) MyNumber = MyNumber & 0xFF;
   if (!strcmp(pFormat,"%.4X")) MyNumber = MyNumber & 0xFFFF;
   if (!strcmp(pFormat,"%.8X")) MyNumber = MyNumber & 0xFFFFFFFF;
-  if (GV.FORMATNUMBER == PrefixedNumeral) {
+  if (GV.OPTIONS & PrefixedNumeral) {
     (void) strcpy(pBuffer, "0x");
     (void) sprintf (pBuffer+2, pFormat, MyNumber);
     i += strlen(pBuffer);
@@ -1266,16 +1267,56 @@ size_t __bea_callspec__ printArgsSeparator(ARGTYPE* pMyArgument1, ARGTYPE* pMyAr
 /* ====================================================================
  *
  * ==================================================================== */
+size_t __bea_callspec__ printEVEXMasking(PDISASM pMyDisasm, size_t i)
+{
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, " {");
+  #endif
+  i+=2;
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, RegistersOpmask[GV.EVEX.aaa]);
+  #endif
+  i = strlen((char*) &(*pMyDisasm).CompleteInstr);
+  #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "}");
+  #endif
+  i++;
+  if (GV.EVEX.masking == MERGING_ZEROING) {
+    if (GV.EVEX.z == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "{1}");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((char*) &(*pMyDisasm).CompleteInstr+i, "{0}");
+      #endif
+    }
+    i+=3;
+  }
+  return i;
+}
+
+/* ====================================================================
+ *
+ * ==================================================================== */
 void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
 {
   size_t i = 0;
 
   i = printPrefixes(pMyDisasm, i);
   i = printMnemonic(pMyDisasm, i);
-  if (GV.TAB_ == 1) {
+  if (GV.OPTIONS & Tabulation) {
     i = printTabulation(pMyDisasm, i);
   }
   i = printArg1(pMyDisasm, i);
+  if (
+    (GV.EVEX.state == InUsePrefix) &&
+    (GV.EVEX.masking != NO_MASK) &&
+    ((GV.OPTIONS & ShowEVEXMasking))
+    ) {
+    i = printEVEXMasking(pMyDisasm, i);
+  }
   i = printArgsSeparator(&(*pMyDisasm).Argument1, &(*pMyDisasm).Argument2, pMyDisasm, i);
   i = printArg2(pMyDisasm, i);
   i = printArgsSeparator(&(*pMyDisasm).Argument2, &(*pMyDisasm).Argument3, pMyDisasm, i);
@@ -1315,7 +1356,7 @@ void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
         i = strlen((char*) &(*pMyDisasm).CompleteInstr);
       }
     }
-    if (GV.TAB_ == 1) {
+    if (GV.OPTIONS & Tabulation) {
       i = printTabulation(pMyDisasm, i);
     }
 

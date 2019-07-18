@@ -181,7 +181,7 @@ Disasm  PROTO :DWORD
     CLFLUSHOPT_INSTRUCTION        equ          1c0000h
     FXSR_INSTRUCTION              equ          1d0000h
     XSAVE_INSTRUCTION             equ          1e0000h
-    
+
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
     LOGICAL_INSTRUCTION         equ 3
@@ -347,3 +347,4 @@ Disasm  PROTO :DWORD
     PrefixedNumeral             equ 10000h
     SuffixedNumeral             equ 0
     ShowSegmentRegs             equ 01000000h
+    ShowEVEXMasking             equ 02000000h

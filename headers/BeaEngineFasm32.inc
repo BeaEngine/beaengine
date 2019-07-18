@@ -351,3 +351,4 @@ ends
     PrefixedNumeral             equ 10000h
     SuffixedNumeral             equ 0
     ShowSegmentRegs             equ 01000000h
+    ShowEVEXMasking             equ 02000000h

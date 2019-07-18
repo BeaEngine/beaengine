@@ -56,7 +56,7 @@ namespace Bea
       CLFLUSHOPT_INSTRUCTION        =          0x1c0000,
       FXSR_INSTRUCTION              =          0x1d0000,
       XSAVE_INSTRUCTION             =          0x1e0000,
-      
+
       DATA_TRANSFER = 0x1,
       ARITHMETIC_INSTRUCTION,
       LOGICAL_INSTRUCTION,
@@ -221,6 +221,7 @@ namespace Bea
 
       /* === mask = 0xff000000 */
       ShowSegmentRegs = 0x01000000,
+      ShowEVEXMasking = 0x02000000,
 
       LowPosition = 0,
       HighPosition = 1

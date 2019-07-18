@@ -17326,6 +17326,7 @@ void __bea_callspec__ vptestmd_(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestmd ");
         #endif
       }
+      GV.EVEX.masking = MERGING;
       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
       GV.Register_ = OPMASK_REG;
       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -17356,6 +17357,7 @@ void __bea_callspec__ vptestmd_(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestnmd ");
         #endif
       }
+      GV.EVEX.masking = MERGING;
       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
       GV.Register_ = OPMASK_REG;
       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -17402,6 +17404,7 @@ void __bea_callspec__ vptestmb_(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestmb ");
         #endif
       }
+      GV.EVEX.masking = MERGING;
       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
       GV.Register_ = OPMASK_REG;
       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -17432,6 +17435,7 @@ void __bea_callspec__ vptestmb_(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vptestnmb ");
         #endif
       }
+      GV.EVEX.masking = MERGING;
       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
       GV.Register_ = OPMASK_REG;
       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -18623,7 +18627,7 @@ void __bea_callspec__ vgatherps_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherdps ");
        #endif
-
+       GV.EVEX.masking = MERGING;
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
          GV.VSIB_ = SSE_REG;
@@ -18670,6 +18674,7 @@ void __bea_callspec__ vgatherps_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherdpd ");
        #endif
+       GV.EVEX.masking = MERGING;
        GV.MemDecoration = Arg2dword;
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
@@ -19033,7 +19038,7 @@ void __bea_callspec__ vgatherqd_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpgatherqd ");
        #endif
-
+       GV.EVEX.masking = MERGING;
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
          GV.VSIB_ = SSE_REG;
@@ -19080,6 +19085,7 @@ void __bea_callspec__ vgatherqd_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpgatherqq ");
        #endif
+       GV.EVEX.masking = MERGING;
        GV.MemDecoration = Arg2qword;
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
@@ -19245,6 +19251,7 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpgatherdd ");
        #endif
+       GV.EVEX.masking = MERGING;
 
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
@@ -19292,6 +19299,7 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpgatherdq ");
        #endif
+       GV.EVEX.masking = MERGING;
        GV.MemDecoration = Arg2dword;
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
@@ -19756,7 +19764,7 @@ void __bea_callspec__ vgatherqps_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherqps ");
        #endif
-
+       GV.EVEX.masking = MERGING;
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
          GV.VSIB_ = SSE_REG;
@@ -19803,6 +19811,7 @@ void __bea_callspec__ vgatherqps_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgatherqpd ");
        #endif
+       GV.EVEX.masking = MERGING;
        GV.MemDecoration = Arg2qword;
        if (GV.VEX.L == 0) {
          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;

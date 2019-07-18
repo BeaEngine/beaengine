@@ -197,6 +197,30 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
         assert_equal(myDisasm.instr.repr, 'vmovupd xmm2, xmmword ptr [rax+00000000h]')
 
+
+        myEVEX = EVEX('EVEX.128.66.0F.W1')
+        myEVEX.aaa = 1
+        Buffer = '{}1090'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.read()
+        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
+        assert_equal(myDisasm.instr.Reserved_.EVEX.aaa, 1)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
+        assert_equal(myDisasm.instr.repr, 'vmovupd xmm2 {k1}{0}, xmmword ptr [rax+00000000h]')
+
+        myEVEX = EVEX('EVEX.128.66.0F.W1')
+        myEVEX.aaa = 1
+        myEVEX.z = 1
+        Buffer = '{}1090'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.read()
+        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x10')
+        assert_equal(myDisasm.instr.Reserved_.EVEX.aaa, 1)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovupd ')
+        assert_equal(myDisasm.instr.repr, 'vmovupd xmm2 {k1}{1}, xmmword ptr [rax+00000000h]')
+
         # EVEX.256.66.0F.W1 10 /r
         # VMOVUPD ymm1 {k1}{z}, ymm2/m256
 

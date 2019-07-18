@@ -355,7 +355,8 @@ enum SPECIAL_INFO
   SuffixedNumeral   = 0x00000000,
 
   /* === mask = 0xff000000 */
-  ShowSegmentRegs   = 0x01000000
+  ShowSegmentRegs   = 0x01000000,
+  ShowEVEXMasking   = 0x02000000  
 };
 
 

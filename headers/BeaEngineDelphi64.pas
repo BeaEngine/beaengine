@@ -214,7 +214,7 @@ uses Windows,SysUtils;
        CLFLUSHOPT_INSTRUCTION        =          $1c0000;
        FXSR_INSTRUCTION              =          $1d0000;
        XSAVE_INSTRUCTION             =          $1e0000;
-       
+
        DATA_TRANSFER = $1;
        ARITHMETIC_INSTRUCTION = 2;
        LOGICAL_INSTRUCTION = 3;
@@ -378,6 +378,7 @@ uses Windows,SysUtils;
        SuffixedNumeral = $00000000;
   { === mask = 0xff000000 }
        ShowSegmentRegs = $01000000;
+       ShowEVEXMasking = $02000000;
 	   LowPosition = 0;
 	   HighPosition = 1;
 
