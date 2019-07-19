@@ -177,3 +177,39 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addsd ')
         assert_equal(myDisasm.instr.repr, 'addsd xmm6, qword ptr [rax]')
+
+
+        # https://code.google.com/archive/p/corkami/wikis/x86oddities.wiki
+
+        # test REX prefix
+
+        Buffer = '4088ec'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'mov spl, bpl')
+
+        Buffer = '4f89d8'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'mov r8, r11')
+
+
+        Buffer = '2e00f7'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'add bh, dh')
+
+        Buffer = '402e00f7'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'add bh, dh')
+
+        Buffer = '4000f7'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'add dil, sil')
+
+        Buffer = '402e00f7'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.repr, 'add bh, dh')

@@ -25,6 +25,7 @@ void __bea_callspec__ PrefLock(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.LockPrefix = InvalidPrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -43,6 +44,7 @@ void __bea_callspec__ PrefREPNE(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.RepnePrefix = SuperfluousPrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -78,6 +80,7 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
@@ -111,6 +114,7 @@ void __bea_callspec__ PrefSEGCS(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.CSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -128,6 +132,7 @@ void __bea_callspec__ PrefSEGDS(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.DSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -145,6 +150,7 @@ void __bea_callspec__ PrefSEGES(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.ESPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -162,6 +168,7 @@ void __bea_callspec__ PrefSEGFS(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.FSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -180,6 +187,7 @@ void __bea_callspec__ PrefSEGGS(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.GSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -198,6 +206,7 @@ void __bea_callspec__ PrefSEGSS(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     (*pMyDisasm).Prefix.SSPrefix = InUsePrefix;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
@@ -216,6 +225,7 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
@@ -262,6 +272,7 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
+    GV.REX.state = 0;
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
