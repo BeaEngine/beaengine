@@ -49,17 +49,17 @@ class TestSuite:
         # VEX.NDS.128.66.0F38.WIG 03 /r
         # VPHADDW xmm1, xmm2, xmm3/m128
 
-        Buffer = 'c4020103443322'.decode('hex')
+        Buffer = 'c40201030e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphaddsw ')
-        assert_equal(myDisasm.instr.repr, 'vphaddsw xmm8, xmm15, xmmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.repr, 'vphaddsw xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F38.WIG 03 /r
         # VPHADDW ymm1, ymm2, ymm3/m256
 
-        Buffer = 'c4020503443322'.decode('hex')
+        Buffer = 'c40205030e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphaddsw ')
-        assert_equal(myDisasm.instr.repr, 'vphaddsw ymm8, ymm15, ymmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.repr, 'vphaddsw ymm9, ymm15, ymmword ptr [r14]')

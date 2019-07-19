@@ -524,10 +524,101 @@ void __bea_callspec__ Addr_EDI(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 	#endif
 }
 
+long __bea_callspec__ getDisp8N(PDISASM pMyDisasm)
+{
+  long N;
+  switch (GV.EVEX.tupletype) {
+    case FULL:
+      if (GV.EVEX.b == 0) {
+        N = 16 * (1 << GV.VEX.L);
+      }
+      else {
+        N = 4 * (1 << GV.EVEX.W);
+      }
+      break;
+    case HALF:
+      if (GV.EVEX.b == 0) {
+        N = 8 * (1 << GV.VEX.L);
+      }
+      else {
+        N = 4;
+      }
+      break;
+    case FULL_MEM:
+      N = 16 * (1 << GV.VEX.L);
+      break;
+    case TUPLE1_SCALAR:
+      N = 4 * (1 << GV.EVEX.W);
+      break;
+    case TUPLE1_SCALAR__8:
+      N = 1;
+      break;
+    case TUPLE1_SCALAR__16:
+      N = 2;
+      break;
+    case TUPLE1_FIXED__32:
+      N = 4;
+      break;
+    case TUPLE1_FIXED__64:
+      N = 8;
+      break;
+    case TUPLE2:
+      N = 8 * (1 << GV.EVEX.W);
+      break;
+    case TUPLE4:
+      N = 16 * (1 << GV.EVEX.W);
+      break;
+    case TUPLE8:
+      N = 32;
+      break;
+    case HALF_MEM:
+      N = 8 * (1 << GV.VEX.L);
+      break;
+    case QUARTER_MEM:
+      N = 4 * (1 << GV.VEX.L);
+      break;
+    case EIGHTH_MEM:
+      N = 2 * (1 << GV.VEX.L);
+      break;
+    case MEM128:
+      N = 16;
+      break;
+    case MOVDDUP:
+      if (GV.VEX.L == 0) {
+        N = 8;
+      }
+      else if (GV.VEX.L == 1) {
+        N = 32;
+      }
+      else if (GV.VEX.L == 2) {
+        N = 64;
+      }
+      else {
+        N = -1;
+      }
+  }
+  return N;
+}
+
+const char * __bea_callspec__ getNumFormat(long MyNumber)
+{
+  if ((MyNumber > -127) && (MyNumber < 128)) {
+    return "%.2X";
+  }
+  else {
+    return "%.4X";
+  }
+}
+
 size_t __bea_callspec__ printDisp8(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm, long MyNumber)
 {
   size_t j;
+  long N;
 
+  if ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.tupletype != 0)) {
+    N = getDisp8N(pMyDisasm);
+    if (N != -1) MyNumber = MyNumber * N;
+  }
   if (MyNumber < 0) {
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "-");
@@ -535,7 +626,7 @@ size_t __bea_callspec__ printDisp8(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDi
     i++;
     j=i;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) ~MyNumber+1);
+       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j, getNumFormat(MyNumber), (Int64) ~MyNumber+1);
     #endif
   }
   else {
@@ -545,7 +636,7 @@ size_t __bea_callspec__ printDisp8(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDi
     i ++;
     j=i;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.2X",(Int64) MyNumber);
+       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j, getNumFormat(MyNumber), (Int64) MyNumber);
     #endif
   }
   return i;

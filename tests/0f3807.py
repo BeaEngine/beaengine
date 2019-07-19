@@ -49,24 +49,24 @@ class TestSuite:
         # VEX.NDS.128.66.0F38.WIG 07 /r
         # vphsubsw xmm1, xmm2, xmm3/m128
 
-        Buffer = 'c4020107443322'.decode('hex')
+        Buffer = 'c40201070e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphsubsw ')
-        assert_equal(myDisasm.instr.repr, 'vphsubsw xmm8, xmm15, xmmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.repr, 'vphsubsw xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F38.WIG 07 /r
         # vphsubsw ymm1, ymm2, ymm3/m256
 
-        Buffer = 'c4020507443322'.decode('hex')
+        Buffer = 'c40205070e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphsubsw ')
-        assert_equal(myDisasm.instr.repr, 'vphsubsw ymm8, ymm15, ymmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.repr, 'vphsubsw ymm9, ymm15, ymmword ptr [r14]')
 
         # EVEX.NDS.128.66.0F38.WIG 07 /r
         # vphsubsw xmm1 {k1}{z}, xmm2, xmm3/m128
-        Buffer = '6202050707443322'.decode('hex')
+        Buffer = '62020507070e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, '??? ')

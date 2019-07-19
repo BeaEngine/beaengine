@@ -117,7 +117,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x29)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovapd ')
-        assert_equal(myDisasm.instr.repr, 'vmovapd xmmword ptr [rax+rax*8+12h], xmm0')
+        assert_equal(myDisasm.instr.repr, 'vmovapd xmmword ptr [rax+rax*8+0120h], xmm0')
 
         # EVEX.256.66.0F.W1 29 /r
         # VMOVAPD ymm2/m256 {k1}{z}, ymm1

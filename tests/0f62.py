@@ -31,23 +31,23 @@ class TestSuite:
 
         # VEX.NDS.128.66.0F.WIG 62 /r
         # vpunpckldq xmm1, xmm2, xmm3/m128
-        Buffer = 'c4010162443322'.decode('hex')
+        Buffer = 'c40101620e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpunpckldq ')
-        assert_equal(myDisasm.instr.repr, 'vpunpckldq xmm8, xmm15, xmmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.repr, 'vpunpckldq xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F.WIG 62 /r
         # vpunpckldq ymm1, ymm2, ymm3/m256
-        Buffer = 'c4010562443322'.decode('hex')
+        Buffer = 'c40105620e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpunpckldq ')
-        assert_equal(myDisasm.instr.repr, 'vpunpckldq ymm8, ymm15, ymmword ptr [r11+r14+22h]')
+        assert_equal(myDisasm.instr.repr, 'vpunpckldq ymm9, ymm15, ymmword ptr [r14]')
 
         # EVEX.NDS.128.66.0F.WIG 62 /r
         # vpunpckldq xmm1 {k1}{z}, xmm2, xmm3/m128
-        Buffer = '6201050662443322'.decode('hex')
+        Buffer = '62010506620e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Reserved_.EVEX.P0, 0x1)
@@ -57,11 +57,11 @@ class TestSuite:
         assert_equal(myDisasm.instr.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x62')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpunpckldq ')
-        assert_equal(myDisasm.instr.repr, 'vpunpckldq xmm0, xmm15, xmmword ptr [rbx+rsi+22h]')
+        assert_equal(myDisasm.instr.repr, 'vpunpckldq xmm1, xmm15, xmmword ptr [rsi]')
 
         # EVEX.NDS.256.66.0F.WIG 62 /r
         # vpunpckldq ymm1 {k1}{z}, ymm2, ymm3/m256
-        Buffer = '6201052062443322'.decode('hex')
+        Buffer = '62010520620e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Reserved_.EVEX.P0, 0x1)
@@ -71,11 +71,11 @@ class TestSuite:
         assert_equal(myDisasm.instr.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x62')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpunpckldq ')
-        assert_equal(myDisasm.instr.repr, 'vpunpckldq ymm0, ymm15, ymmword ptr [rbx+rsi+22h]')
+        assert_equal(myDisasm.instr.repr, 'vpunpckldq ymm1, ymm15, ymmword ptr [rsi]')
 
         # EVEX.NDS.512.66.0F.WIG 62 /r
         # vpunpckldq zmm1 {k1}{z}, zmm2, zmm3/m512
-        Buffer = '6201054062443322'.decode('hex')
+        Buffer = '62010540620e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Reserved_.EVEX.P0, 0x1)
@@ -85,4 +85,4 @@ class TestSuite:
         assert_equal(myDisasm.instr.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x62')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpunpckldq ')
-        assert_equal(myDisasm.instr.repr, 'vpunpckldq zmm0, zmm15, zmmword ptr [rbx+rsi+22h]')
+        assert_equal(myDisasm.instr.repr, 'vpunpckldq zmm1, zmm15, zmmword ptr [rsi]')

@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherqd ')
-        assert_equal(myDisasm.instr.repr, 'vpgatherqd zmm0, qword ptr [rbx+zmm6+22h]')
+        assert_equal(myDisasm.instr.repr, 'vpgatherqd zmm0, qword ptr [rbx+zmm6+0088h]')
 
         # EVEX.128.66.0F38.W1 91 /vsib
         # VPgatherqQ xmm1 {k1}, vm32x
@@ -81,7 +81,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpgatherqq ')
-        assert_equal(myDisasm.instr.repr, 'vpgatherqq zmm0, qword ptr [rbx+zmm6+22h]')
+        assert_equal(myDisasm.instr.repr, 'vpgatherqq zmm0, qword ptr [rbx+zmm6+0110h]')
 
         # VEX.DDS.128.66.0F38.W0 91 /r
         # VPgatherqD xmm1, vm32x, xmm2
