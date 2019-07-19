@@ -47,6 +47,7 @@ void __bea_callspec__ PrefREPNE(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
+    GV.PrefRepe = 0;
     GV.PrefRepne = 1;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     if (GV.VEX.state != InUsePrefix) {
@@ -81,6 +82,7 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
     (*pMyDisasm).Prefix.Number++;
     GV.NB_PREFIX++;
     GV.PrefRepe = 1;
+    GV.PrefRepne = 0;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_);
     if (GV.VEX.state != InUsePrefix) {
         (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
