@@ -424,7 +424,7 @@ void __bea_callspec__ paddusb_(PDISASM);
 void __bea_callspec__ paddusw_(PDISASM);
 void __bea_callspec__ paddw_(PDISASM);
 void __bea_callspec__ pandn_(PDISASM);
-void __bea_callspec__ pand_block(PDISASM, const char*, const char*);
+void __bea_callspec__ pand_block(PDISASM, const char*, const char*, UInt8);
 void __bea_callspec__ pand_(PDISASM);
 void __bea_callspec__ pcmpeqb_(PDISASM);
 void __bea_callspec__ pcmpeqd_(PDISASM);

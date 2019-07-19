@@ -42,6 +42,7 @@ typedef struct {
    UInt8 LL;
    UInt8 state;
    UInt8 masking;
+   UInt8 tupletype;
 } EVEX_Struct  ;
 #pragma pack()
 
@@ -245,6 +246,24 @@ typedef struct _Disasm {
 #define MERGING 1
 #define MERGING_ZEROING 2
 
+/* EVEX Compressed Displacement */
+
+#define FULL              1
+#define HALF              2
+#define FULL_MEM          3
+#define TUPLE1_SCALAR__8  4
+#define TUPLE1_SCALAR__16 5
+#define TUPLE1_SCALAR     6
+#define TUPLE1_FIXED__32  7
+#define TUPLE1_FIXED__64  8
+#define TUPLE2            9
+#define TUPLE4            10
+#define TUPLE8            11
+#define HALF_MEM          12
+#define QUARTER_MEM       13
+#define EIGHTH_MEM        14
+#define MEM128            15
+#define MOVDDUP           16
 
 enum INSTRUCTION_TYPE
 {

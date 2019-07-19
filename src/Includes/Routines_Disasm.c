@@ -419,14 +419,14 @@ void __bea_callspec__ GyEy(PDISASM pMyDisasm)
 void __bea_callspec__ ArgsVEX(PDISASM pMyDisasm)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = SSE_REG;
     GV.MemDecoration = Arg3_m128_xmm;
     GyEy(pMyDisasm);
     GV.Register_ = 0;
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = Arg3_m256_ymm;
     GyEy(pMyDisasm);
@@ -446,12 +446,12 @@ void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm)
   GV.Register_ = OPMASK_REG;
   Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = SSE_REG;
     GV.MemDecoration = Arg3_m128_xmm;
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = Arg3_m256_ymm;
   }
@@ -483,13 +483,13 @@ void __bea_callspec__ EyGy(PDISASM pMyDisasm)
 void __bea_callspec__ ArgsVEX_EyGy(PDISASM pMyDisasm)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = SSE_REG;
     GV.MemDecoration = Arg1_m128_xmm;
     EyGy(pMyDisasm);
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = Arg1_m256_ymm;
     EyGy(pMyDisasm);
@@ -508,13 +508,13 @@ void __bea_callspec__ ArgsVEX_EyGy(PDISASM pMyDisasm)
 void __bea_callspec__ ArgsVEX_ExGx(PDISASM pMyDisasm)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = SSE_REG;
     GV.MemDecoration = Arg1_m128_xmm;
     ExGx(pMyDisasm);
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = Arg1_m256_ymm;
     ExGx(pMyDisasm);
@@ -533,13 +533,13 @@ void __bea_callspec__ ArgsVEX_ExGx(PDISASM pMyDisasm)
 void __bea_callspec__ ArgsVEX_GxE(PDISASM pMyDisasm, int reg1, int reg2, int reg3)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = reg1;
     GV.MemDecoration = Arg2_m128_xmm;
     GxEx(pMyDisasm);
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = reg2;
     GV.MemDecoration = Arg2_m256_ymm;
     GxEx(pMyDisasm);
@@ -558,7 +558,7 @@ void __bea_callspec__ ArgsVEX_GxE(PDISASM pMyDisasm, int reg1, int reg2, int reg
 void __bea_callspec__ ArgsVEX_GE(PDISASM pMyDisasm, int mem1, int mem2, int mem3, int reg1, int reg2, int reg3)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = reg1;
     GV.MemDecoration = mem1;
     MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
@@ -567,7 +567,7 @@ void __bea_callspec__ ArgsVEX_GE(PDISASM pMyDisasm, int mem1, int mem2, int mem3
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = reg2;
     GV.MemDecoration = mem2;
     MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
@@ -594,13 +594,13 @@ void __bea_callspec__ ArgsVEX_GE(PDISASM pMyDisasm, int mem1, int mem2, int mem3
 void __bea_callspec__ ArgsVEX_GEx(PDISASM pMyDisasm, int mem1, int mem2, int mem3)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = SSE_REG;
     GV.MemDecoration = mem1;
     GxEx(pMyDisasm);
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = mem2;
     GxEx(pMyDisasm);
@@ -619,7 +619,7 @@ void __bea_callspec__ ArgsVEX_GEx(PDISASM pMyDisasm, int mem1, int mem2, int mem
 void __bea_callspec__ ArgsVEX_ExG(PDISASM pMyDisasm, int mem1, int mem2, int mem3, int reg1, int reg2, int reg3)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = reg1;
     GV.MemDecoration = mem1;
     MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -628,7 +628,7 @@ void __bea_callspec__ ArgsVEX_ExG(PDISASM pMyDisasm, int mem1, int mem2, int mem
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = reg2;
     GV.MemDecoration = mem2;
     MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
@@ -653,13 +653,13 @@ void __bea_callspec__ ArgsVEX_ExG(PDISASM pMyDisasm, int mem1, int mem2, int mem
 void __bea_callspec__ ArgsVEX_GxEx(PDISASM pMyDisasm)
 {
   if (GV.VEX.L == 0) {
-    (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = SSE_REG;
     GV.MemDecoration = Arg2_m128_xmm;
     GxEx(pMyDisasm);
   }
   else if (GV.VEX.L == 0x1) {
-    (*pMyDisasm).Instruction.Category = AVX2_INSTRUCTION;
+    (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = AVX_REG;
     GV.MemDecoration = Arg2_m256_ymm;
     GxEx(pMyDisasm);

@@ -99,12 +99,12 @@ class TestSuite:
         # VMOVLPD xmm2, xmm1, m64
 
         myVEX = VEX('VEX.NDS.128.66.0F.WIG')
-        Buffer = '{}1290'.format(myVEX.c4()).decode('hex')
+        Buffer = '{}1220'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x12')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovlpd ')
-        assert_equal(myDisasm.instr.repr, 'vmovlpd xmm10, xmm15, qword ptr [r8+00000000h]')
+        assert_equal(myDisasm.instr.repr, 'vmovlpd xmm12, xmm15, qword ptr [r8]')
 
         # EVEX.NDS.128.66.0F.W1 12 /r
         # VMOVLPD xmm2, xmm1, m64

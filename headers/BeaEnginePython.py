@@ -129,7 +129,8 @@ class EVEX_Struct(Structure):
               ("b",c_uint8),
               ("LL",c_uint8),
               ("state",c_uint8),
-              ("masking",c_uint8)]
+              ("masking",c_uint8),
+              ("tupletype",c_uint8)]
 
 class InternalDatas(Structure):
     _pack_ = 1
@@ -211,6 +212,25 @@ ShowEVEXMasking = 0x02000000
 
 LowPosition = 0
 HighPosition = 1
+
+# EVEX tupletypes
+
+FULL = 1
+HALF = 2
+FULL_MEM =         3
+TUPLE1_SCALAR__8 = 4
+TUPLE1_SCALAR__16 =5
+TUPLE1_SCALAR =    6
+TUPLE1_FIXED__32 = 7
+TUPLE1_FIXED__64 = 8
+TUPLE2 =           9
+TUPLE4 =           10
+TUPLE8 =           11
+HALF_MEM =         12
+QUARTER_MEM =      13
+EIGHTH_MEM =       14
+MEM128   =         15
+MOVDDUP =          16
 
 # ======================= EFLAGS states
 
