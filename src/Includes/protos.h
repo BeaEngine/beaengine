@@ -665,6 +665,7 @@ void __bea_callspec__ unpckhps_(PDISASM);
 void __bea_callspec__ unpcklps_(PDISASM);
 void __bea_callspec__ vcvtph2ps_(PDISASM);
 void __bea_callspec__ vcvtps2qq_(PDISASM);
+void __bea_callspec__ vgetexpps_(PDISASM);
 void __bea_callspec__ vcvttps2qq_(PDISASM);
 void __bea_callspec__ vmread_(PDISASM);
 void __bea_callspec__ vpermps_(PDISASM);
