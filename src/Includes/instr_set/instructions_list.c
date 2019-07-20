@@ -16804,6 +16804,36 @@ void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 44
+* ==================================================================== */
+void __bea_callspec__ vplzcntd_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vplzcntd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vplzcntq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 43
 * ==================================================================== */
 void __bea_callspec__ vgetexpss_(PDISASM pMyDisasm)
