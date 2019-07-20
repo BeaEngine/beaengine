@@ -22,6 +22,26 @@ class TestSuite:
     def test(self):
 
 
+        # F3 0F 1E FA
+        # ENDBR64
+
+        Buffer = 'f30f1efa'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf1e)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'endbr64 ')
+        assert_equal(myDisasm.instr.repr, 'endbr64 ')
+
+        # F3 0F 1E FB
+        # ENDBR32
+
+        Buffer = 'f30f1efb'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf1e)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'endbr32 ')
+        assert_equal(myDisasm.instr.repr, 'endbr32 ')
+
         # F3 0F 1E /1
         # RDSSPD R32
 

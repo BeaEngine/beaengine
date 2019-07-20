@@ -8139,6 +8139,26 @@ void __bea_callspec__ nop_1e(PDISASM pMyDisasm)
       (*pMyDisasm).Argument2.Registers.type = SPECIAL_REG;
       (*pMyDisasm).Argument2.Registers.special = REG2; /* SSP reg */
     }
+    else if (GV.REGOPCODE == 7) {
+      (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
+      if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
+      if (GV.RM_ == 0x2) {
+        (*pMyDisasm).Instruction.Category = CET_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "endbr64 ");
+        #endif
+        GV.EIP_+= GV.DECALAGE_EIP+2;
+      }
+      else if (GV.RM_ == 0x3) {
+        (*pMyDisasm).Instruction.Category = CET_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "endbr32 ");
+        #endif
+        GV.EIP_+= GV.DECALAGE_EIP+2;
+      }
+    }
     else {
       FailDecode(pMyDisasm);
     }
