@@ -240,7 +240,23 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
       (*pMyDisasm).Argument1.ArgSize = 16;
       GV.EIP_+= GV.DECALAGE_EIP+2;
   }
-
+  else if (GV.REGOPCODE == 5) {
+    if (GV.MOD_== 3) {
+      if (GV.RM_ == 2) {
+        (*pMyDisasm).Instruction.Category = CET_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "saveprevssp ");
+        #endif
+        GV.EIP_+= GV.DECALAGE_EIP+2;
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
   else if (GV.REGOPCODE == 6) {
       GV.MemDecoration = Arg1word;
       MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
