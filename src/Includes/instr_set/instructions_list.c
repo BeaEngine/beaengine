@@ -8104,6 +8104,64 @@ void __bea_callspec__ hint_nop(PDISASM pMyDisasm)
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
+
+/* =======================================
+ *
+ * ======================================= */
+void __bea_callspec__ nop_1e(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+    return;
+  }
+  else if (GV.PrefRepe == 1) {
+    /* ======= prefix f3 ========= */
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if (GV.REGOPCODE == 1) {
+      (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
+      (*pMyDisasm).Instruction.Category = CET_INSTRUCTION;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
+      if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1)) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdsspq ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rdsspd ");
+        #endif
+      }
+      GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
+      MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+      (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;
+      (*pMyDisasm).Argument2.ArgSize = 64;
+      (*pMyDisasm).Argument2.Registers.type = SPECIAL_REG;
+      (*pMyDisasm).Argument2.Registers.special = REG2; /* SSP reg */
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+MISCELLANEOUS_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "hint_nop ");
+    #endif
+    if (GV.OperandSize == 64) {
+      GV.MemDecoration = Arg2qword;
+    }
+    else if (GV.OperandSize == 32) {
+      GV.MemDecoration = Arg2dword;
+    }
+    else {
+      GV.MemDecoration = Arg2word;
+    }
+    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    GV.EIP_ += GV.DECALAGE_EIP+2;
+  }
+}
+
 /* =======================================
  *      08h
  * ======================================= */

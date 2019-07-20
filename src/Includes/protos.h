@@ -397,6 +397,7 @@ void __bea_callspec__ mulps_VW(PDISASM);
 void __bea_callspec__ nop_(PDISASM);
 void __bea_callspec__ nop_Ev(PDISASM);
 void __bea_callspec__ hint_nop(PDISASM);
+void __bea_callspec__ nop_1e(PDISASM);
 void __bea_callspec__ or_EbGb(PDISASM);
 void __bea_callspec__ or_EvGv(PDISASM);
 void __bea_callspec__ or_GbEb(PDISASM);
