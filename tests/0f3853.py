@@ -56,3 +56,16 @@ class TestSuite:
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x53)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpdpwssds ')
         assert_equal(myDisasm.instr.repr, 'vpdpwssds zmm1, zmm0, zmmword ptr [rsi]')
+
+        # EVEX.512.F2.0F38.W0 53 /r
+        # VP4DPWSSDS zmm1{k1}{z}, zmm2+3, m128
+
+        myEVEX = EVEX('EVEX.512.F2.0F38.W0')
+        myEVEX.vvvv = 0b1011
+        Buffer = '{}530e'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x53)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vp4dpwssds ')
+        assert_equal(myDisasm.instr.Argument2.Registers.zmm, REG4+REG5+REG6+REG7)
+        assert_equal(myDisasm.instr.repr, 'vp4dpwssds zmm1, zmm4...zmm7, xmmword ptr [rsi]')
