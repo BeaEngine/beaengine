@@ -288,7 +288,7 @@ ends
     SSE_REG                     equ 4h
     AVX_REG                     equ 8h
     AVX512_REG                  equ 10h
-    SPECIAL_REG                 equ 20h       ; EFLAGS (REG0), MXCSR (REG1)
+    SPECIAL_REG                 equ 20h       ; EFLAGS (REG0), MXCSR (REG1), SSP (REG2)
     CR_REG                      equ 40h
     DR_REG                      equ 80h
     MEMORY_MANAGEMENT_REG       equ 100h      ; GDTR (REG0), LDTR (REG1), IDTR (REG2), TR (REG3)

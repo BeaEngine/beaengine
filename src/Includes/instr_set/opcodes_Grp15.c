@@ -95,6 +95,27 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
       (*pMyDisasm).Argument1.AccessMode = READ;
     }
+    else if (GV.REGOPCODE == 5) {
+      (*pMyDisasm).Instruction.Category = CET_INSTRUCTION;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
+      if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1)) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "incsspq ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "incsspd ");
+        #endif
+      }
+      GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;
+      (*pMyDisasm).Argument1.ArgSize = 64;
+      (*pMyDisasm).Argument1.Registers.type = SPECIAL_REG;
+      (*pMyDisasm).Argument1.Registers.special = REG2; /* SSP reg */
+    }
     else {
       FailDecode(pMyDisasm);
     }

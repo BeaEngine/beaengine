@@ -280,3 +280,34 @@ class TestSuite:
         assert_equal(myDisasm.instr.Argument2.ArgType, REGISTER_TYPE)
         assert_equal(myDisasm.instr.Argument2.Registers.type, GENERAL_REG)
         assert_equal(myDisasm.instr.Argument2.Registers.gpr, REG0 + REG2)
+
+
+        # F3 0F AE /05
+        # INCSSPD r32
+
+        Buffer = 'f30faee8'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xfae')
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'incsspd ')
+        assert_equal(myDisasm.instr.repr, 'incsspd eax')
+        assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument1.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument1.Registers.type, SPECIAL_REG)
+        assert_equal(myDisasm.instr.Argument1.Registers.special, REG2)
+
+        # F3 REX.W 0F AE /05
+        # INCSSPQ r64
+
+        myREX = REX()
+        myREX.W = 1
+        Buffer = 'f3{:02x}0faee8'.format(myREX.byte()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xfae')
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'incsspq ')
+        assert_equal(myDisasm.instr.repr, 'incsspq rax')
+        assert_equal(myDisasm.instr.Argument1.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.instr.Argument1.ArgSize, 64)
+        assert_equal(myDisasm.instr.Argument1.Registers.type, SPECIAL_REG)
+        assert_equal(myDisasm.instr.Argument1.Registers.special, REG2)
