@@ -16867,6 +16867,66 @@ void __bea_callspec__ vgetexpss_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 54
+* ==================================================================== */
+void __bea_callspec__ vpopcntb_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpopcntb ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpopcntw ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL_MEM;
+      ArgsVEX_GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 55
+* ==================================================================== */
+void __bea_callspec__ vpopcntd_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpopcntd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpopcntq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL_MEM;
+      ArgsVEX_GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 50
 * ==================================================================== */
 void __bea_callspec__ vpdpbusd_(PDISASM pMyDisasm)
