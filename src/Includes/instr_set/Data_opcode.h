@@ -82,7 +82,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     pmovsxbw_ , pmovsxbd_ , pmovsxbq_ , pmovsxwd_  , pmovsxwq_ , pmovsxdq_ , vptestmb_ , vptestmd_ , pmuldq_   , pcmpeqq_  , movntdqa_ , packusdw_ , FailDecode, FailDecode, FailDecode, FailDecode,
     pmovzxbw_ , pmovzxbd_ , pmovzxbq_ , pmovzxwd_  , pmovzxwq_ , pmovzxdq_ , vpermd_   , pcmpgtq_  , pminsb_   , pminsd_   , pminuw_   , pminud_   , pmaxsb_   , pmaxsd_   , pmaxuw_   , pmaxud_   ,
     pmulld_   ,phminposuw_, vgetexpps_, vgetexpss_ , vplzcntd_ , psrlvd_   , psravd_   , psllvd_   , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    vpdpbusd_ , FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    vpdpbusd_ , vpdpbusds_, vpdpwssd_ , vpdpwssds_ , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     invept_   , invvpid_  , invpcid_  , FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
