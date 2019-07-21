@@ -165,11 +165,13 @@ EFLStruct EFLAGS_TABLE[] = {
     {TE_, TE_, 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0}, /* 122 - jl jnge jnl jge http://ref.x86asm.net/coder.html */
     {UN_, UN_, UN_, UN_, UN_, MO_, 0  , 0  , 0  , 0  , 0  , 0}, /* 123 - adcx */
     {MO_, UN_, UN_, UN_, UN_, UN_, 0  , 0  , 0  , 0  , 0  , 0}, /* 124 - adox */
-    {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0},  /* 125 - mulx */
-    {RE_, MO_, MO_, UN_, UN_, RE_, 0  , 0  , 0  , 0  , 0  , 0},   /* 126 - andn */
-    {RE_, UN_, MO_, UN_, UN_, RE_, RE_, RE_, RE_, RE_, RE_, 0},    /* 127 - bextr */
-    {RE_, MO_, MO_, UN_, UN_, MO_, 0  , 0  , 0  , 0  , 0  , 0},    /* 128 - bzhi */
-    {0  , 0  , 0  , RE_, 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0}  /* 129 - clac */
+    {0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0}, /* 125 - mulx */
+    {RE_, MO_, MO_, UN_, UN_, RE_, 0  , 0  , 0  , 0  , 0  , 0}, /* 126 - andn */
+    {RE_, UN_, MO_, UN_, UN_, RE_, RE_, RE_, RE_, RE_, RE_, 0}, /* 127 - bextr */
+    {RE_, MO_, MO_, UN_, UN_, MO_, 0  , 0  , 0  , 0  , 0  , 0}, /* 128 - bzhi */
+    {0  , 0  , 0  , RE_, 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0}, /* 129 - clac */
+    {RE_, RE_, RE_, RE_, RE_, MO_, 0  , 0  , 0  , 0  , 0  , 0}, /* 130 - encls */
+    {RE_, RE_, UN_, RE_, RE_, UN_, 0  , 0  , 0  , 0  , 0  , 0}  /* 131 - enclu */
     /*OF, SF , ZF , AF , PF , CF , TF , IF , DF , NT , RF , Align */
     };
 /* =====================================================

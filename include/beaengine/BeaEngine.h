@@ -297,6 +297,7 @@ enum INSTRUCTION_TYPE
   CLFLUSHOPT_INSTRUCTION        =          0x1c0000,
   FXSR_INSTRUCTION              =          0x1d0000,
   XSAVE_INSTRUCTION             =          0x1e0000,
+  SGX_INSTRUCTION               =          0x1f0000,
 
   DATA_TRANSFER = 0x1,
   ARITHMETIC_INSTRUCTION,

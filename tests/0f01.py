@@ -21,6 +21,33 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
+        # NP 0F 01 C0
+        # ENCLV
+
+        Buffer = '0f01c0'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'enclv ')
+
+        # NP 0F 01 D7
+        # ENCLU
+
+        Buffer = '0f01d7'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'enclu ')
+
+        # NP 0F 01 CF
+        # ENCLS
+
+        Buffer = '0f01cf'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'encls ')
+
 
         # F3 0F 01 EA (mod=11, /5, RM=010)
         # SAVEPREVSSP

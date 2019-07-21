@@ -189,7 +189,8 @@ enum INSTRUCTION_TYPE
   CLFLUSHOPT_INSTRUCTION        =          0x1c0000,
   FXSR_INSTRUCTION              =          0x1d0000,
   XSAVE_INSTRUCTION             =          0x1e0000,
-
+  SGX_INSTRUCTION               =          0x1f0000,
+  
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
     LOGICAL_INSTRUCTION,
@@ -356,7 +357,7 @@ enum SPECIAL_INFO
 
   /* === mask = 0xff000000 */
   ShowSegmentRegs   = 0x01000000,
-  ShowEVEXMasking   = 0x02000000  
+  ShowEVEXMasking   = 0x02000000
 };
 
 

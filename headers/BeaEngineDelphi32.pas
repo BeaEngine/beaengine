@@ -214,7 +214,8 @@ uses Windows,SysUtils;
        CLFLUSHOPT_INSTRUCTION        =          $1c0000;
        FXSR_INSTRUCTION              =          $1d0000;
        XSAVE_INSTRUCTION             =          $1e0000;
-
+       SGX_INSTRUCTION               =          $1f0000;
+       
        DATA_TRANSFER = $1;
        ARITHMETIC_INSTRUCTION = 2;
        LOGICAL_INSTRUCTION = 3;

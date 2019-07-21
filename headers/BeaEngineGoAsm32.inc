@@ -183,6 +183,7 @@ _Disasm ENDS
     CLFLUSHOPT_INSTRUCTION        equ          1c0000h
     FXSR_INSTRUCTION              equ          1d0000h
     XSAVE_INSTRUCTION             equ          1e0000h
+    SGX_INSTRUCTION               equ          1f0000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
