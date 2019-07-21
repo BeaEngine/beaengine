@@ -22,13 +22,13 @@ The Disasm function allows to decode all instructions coded according to the rul
 
 ```
 int Disasm(
-   PDISASM	&myDisasm
+   PDISASM	&infos
 );
 ```
 
 **Parameters**
 
- - **&myDisasm**  : Pointer to a structure [PDISASM](#2-disasm-infos)
+ - **&infos**  : Pointer to a structure [PDISASM](#2-disasm-infos)
 
 
 **Return**
@@ -66,19 +66,16 @@ struct PDISASM {
  - **SecurityBlock** : *[in]* By default, this value is 0. (disabled option). In other cases, this number is the number of bytes the engine is allowed to read since EIP. Thus, we can make a read block to avoid some Access violation. On INTEL processors, (in IA-32 or intel 64 modes) , instruction never exceeds 15 bytes. A SecurityBlock value outside this range is useless.
  - **Archi** : *[in]* This field is used to specify the architecture used for the decoding. If it is set to 0 or 64 (0x20), the architecture used is 64 bits. If it is set to 32 (0x20), the architecture used is IA-32. If set to 16 (0x10), architecture is 16 bits.
  - **Options** : *[in]* This field allows to define some display options. You can specify the syntax : masm, nasm ,goasm. You can specify the number format you want to use : prefixed numbers or suffixed ones. You can even add a tabulation between the mnemonic and the first operand or display the segment registers used by the memory addressing. Constants used are the following :
-   - NoTabulation = 0x0,
-   - Tabulation = 0x1,
-   - MasmSyntax = 0x000,
-   - GoAsmSyntax = 0x100,
-   - NasmSyntax = 0x200,
-   - PrefixedNumeral = 0x10000,
-   - SuffixedNumeral = 0x00000,
-   - ShowSegmentRegs = 0x01000000
+   - **Tabulation** : add a tabulation between mnemonic and first operand (default has no tabulation)
+   - **GoAsmSyntax / NasmSyntax** : change the intel syntax (default is Masm syntax)
+   - **PrefixedNumeral** : 200h is written 0x200 (default is suffixed numeral)
+   - **ShowSegmentRegs** : show segment registers used (default is hidden)
+   - **ShowEVEXMasking** : show opmask and merging/zeroing applyed on first operand for AVX512 instructions (default is hidden)
  - **Instruction** : *[out]* Structure **[INSTRTYPE](#3-instruction-infos)**.
- - **Argument1** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the first argument.
- - **Argument2** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the second argument.
- - **Argument3** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the third argument.
- - **Argument4** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the fourth argument.  
+ - **Argument1** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the first operand.
+ - **Argument2** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the second operand.
+ - **Argument3** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the third operand.
+ - **Argument4** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the fourth operand.  
  - **Prefix** : *[out]* Structure **[PREFIXINFO](#5-prefixes-infos)** containing an exhaustive list of used prefixes.
 
 # 3. Instruction infos
@@ -99,14 +96,14 @@ struct INSTRTYPE {
 
 **Members**
 
- - **Category** : *[out]* Specify the family instruction . More precisely, (MyDisasm.Instruction.Category & 0xFFFF0000) is used to know if the instruction is a standard one or comes from one of the following technologies : MMX, FPU, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX or SYSTEM. LOWORD(MyDisasm.Instruction.Category) is used to know if the instruction is an arithmetic instruction, a logical one, a data transfer one ... To see the complete list of constants used by BeaEngine, go HERE .
- - **Opcode** : *[out]* This field contains the opcode on 1, 2 or 3 bytes. If the instruction uses a mandatory prefix, this last one is not present here. For that, you have to use the structure MyDisasm.Prefix.
+ - **Category** : *[out]* Specify the family instruction . More precisely, (infos.Instruction.Category & 0xFFFF0000) is used to know if the instruction is a standard one or comes from one of the following technologies : MMX, FPU, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX or SYSTEM. LOWORD(infos.Instruction.Category) is used to know if the instruction is an arithmetic instruction, a logical one, a data transfer one ... To see the complete list of constants used by BeaEngine, go HERE .
+ - **Opcode** : *[out]* This field contains the opcode on 1, 2 or 3 bytes. If the instruction uses a mandatory prefix, this last one is not present here. For that, you have to use the structure infos.Prefix.
  - **Mnemonic** : *[out]* This field sends back the instruction mnemonic with an ASCII format. You must know that all mnemonics are followed by a space (0x20). For example , the instruction "add" is written "add ".
  - **BranchType** : *[out]* If the decoded instruction is a branch instruction, this field is set to indicate what kind of jump it is (call, ret, unconditional jump, conditional jump). To get a complete list of constants used by BeaEngine, go HERE
  - **Flags** : *[out]* Structure [EFLStruct](#6-eflags-infos) that specifies the used flags.
  - **AddrValue** : *[out]* If the decoded instruction is a branch instruction and if the destination address can be calculated, the result is stored in that field. A "jmp eax" or a "jmp [eax]" will set this field to 0 .
  - **Immediat** : *[out]* If the instruction uses a constant, this immediat value is stored here.
- - **ImplicitModifiedRegs** : *[out]* Some instructions modify registers implicitly. For example, "push 0" modifies the register ESP. In that case, MyDisasm.Instruction.ImplicitModifiedRegs == REGISTER_TYPE + GENERAL_REG + REG4.
+ - **ImplicitModifiedRegs** : *[out]* Some instructions modify registers implicitly. For example, "push 0" modifies the register ESP. In that case, infos.Instruction.ImplicitModifiedRegs == REGISTER_TYPE + GENERAL_REG + REG4.
 
 
 # 4. Argument infos
@@ -129,15 +126,15 @@ struct ARGTYPE {
 **Members**
 
  - **ArgMnemonic** : *[out]* This field sends back, when it is possible, the argument in ASCII format.
- - **ArgType** : *[out]* This field specifies the argument type. MyDisasm.Argumentxx.ArgType indicates if it is one of the following :
+ - **ArgType** : *[out]* This field specifies the argument type. infos.Argumentxx.ArgType indicates if it is one of the following :
     - REGISTER_TYPE
     - MEMORY_TYPE
     - CONSTANT_TYPE+ABSOLUTE_
     - CONSTANT_TYPE+RELATIVE_
  - **ArgSize** : *[out]* This field sends back the size of the argument.
  - **AccessMode** : *[out]* This field indicates if the argument is modified or not (READ=0x1) or (WRITE=0x2).
- - **Memory** : *[out]* Structure [MEMORYTYPE](#7-memory-infos) , filled only if MyDisasm.Argumentxx.ArgType == MEMORY_TYPE.
- - **Registers** : *[out]* Structure [REGISTERTYPE](#8-registers-infos) , filled only if MyDisasm.Argumentxx.ArgType == REGISTER_TYPE.
+ - **Memory** : *[out]* Structure [MEMORYTYPE](#7-memory-infos) , filled only if infos.Argumentxx.ArgType == MEMORY_TYPE.
+ - **Registers** : *[out]* Structure [REGISTERTYPE](#8-registers-infos) , filled only if infos.Argumentxx.ArgType == REGISTER_TYPE.
  - **SegmentReg** : *[out]* This field indicates, in the case of memory addressing mode, the segment register used :
    - ESReg 1
    - DSReg 2
@@ -243,7 +240,7 @@ Except for the field "alignment" that is only present for alignment purpose, all
 
 # 7. Memory infos
 
-This structure gives informations if `myDisasm.Argumentxx.ArgType == MEMORY_TYPE`.
+This structure gives informations if `infos.Argumentxx.ArgType == MEMORY_TYPE`.
 
 ```
 struct MEMORYTYPE {
@@ -263,7 +260,7 @@ struct MEMORYTYPE {
 
 # 8. Registers infos
 
-This structure gives informations if `myDisasm.Argumentxx.ArgType == REGISTER_TYPE`.
+This structure gives informations if `infos.Argumentxx.ArgType == REGISTER_TYPE`.
 
 
 ```
@@ -287,25 +284,25 @@ struct REGISTERTYPE{
 
 **Members**
 
-- **type** : *[out]* set of flags to define which type of registers are used. For instance, to test if operand1 is a general purpose register, use `myDisasm.Argument1.Registers.type & GENERAL_REG`.
-- **gpr** : *[out]* set of flags to define which general purpose register is used. For instance, to test if operand 1 uses RAX, test `myDisasm.Argument1.Registers.gpr & REG0`
-- **mmx** : *[out]* set of flags to define which MMX register is used. For instance, to test if operand 1 uses MM0, test `myDisasm.Argument1.Registers.mmx & REG0`
-- **xmm** : *[out]* set of flags to define which XMM register is used. For instance, to test if operand 1 uses XMM0, test `myDisasm.Argument1.Registers.xmm & REG0`
-- **ymm** : *[out]* set of flags to define which YMM register is used. For instance, to test if operand 1 uses YMM0, test `myDisasm.Argument1.Registers.ymm & REG0`
-- **zmm** : *[out]* set of flags to define which ZMM register is used. For instance, to test if operand 1 uses ZMM0, test `myDisasm.Argument1.Registers.zmm & REG0`.
+- **type** : *[out]* set of flags to define which type of registers are used. For instance, to test if operand1 is a general purpose register, use `infos.Argument1.Registers.type & GENERAL_REG`.
+- **gpr** : *[out]* set of flags to define which general purpose register is used. For instance, to test if operand 1 uses RAX, test `infos.Argument1.Registers.gpr & REG0`
+- **mmx** : *[out]* set of flags to define which MMX register is used. For instance, to test if operand 1 uses MM0, test `infos.Argument1.Registers.mmx & REG0`
+- **xmm** : *[out]* set of flags to define which XMM register is used. For instance, to test if operand 1 uses XMM0, test `infos.Argument1.Registers.xmm & REG0`
+- **ymm** : *[out]* set of flags to define which YMM register is used. For instance, to test if operand 1 uses YMM0, test `infos.Argument1.Registers.ymm & REG0`
+- **zmm** : *[out]* set of flags to define which ZMM register is used. For instance, to test if operand 1 uses ZMM0, test `infos.Argument1.Registers.zmm & REG0`.
 - **special** : *[out]* set of flags to define which special register is used. Special Registers are following :
    - EFLAGS (REG0)
    - MXCSR (REG1)
    - SSP (REG2)
-- **cr** : *[out]* set of flags to define which CR register is used. For instance, to test if operand 1 uses CR0, test `myDisasm.Argument1.Registers.cr & REG0`.
-- **dr** : *[out]* set of flags to define which DR register is used. For instance, to test if operand 1 uses DR0, test `myDisasm.Argument1.Registers.dr & REG0`.
+- **cr** : *[out]* set of flags to define which CR register is used. For instance, to test if operand 1 uses CR0, test `infos.Argument1.Registers.cr & REG0`.
+- **dr** : *[out]* set of flags to define which DR register is used. For instance, to test if operand 1 uses DR0, test `infos.Argument1.Registers.dr & REG0`.
 - **mem_management** : *[out]* set of flags to define which memory management register is used.
    - GDTR (REG0)
    - LDTR (REG1)
    - IDTR (REG2)
    - TR (REG3)
-- **mpx** : *[out]* set of flags to define which bound register is used. For instance, to test if operand 1 uses *BND0*, test `myDisasm.Argument1.Registers.mpx & REG0`.
-- **opmask** : *[out]* set of flags to define which opmask register is used. For instance, to test if operand 1 uses *k0*, test `myDisasm.Argument1.Registers.opmask & REG0`.
+- **mpx** : *[out]* set of flags to define which bound register is used. For instance, to test if operand 1 uses *BND0*, test `infos.Argument1.Registers.mpx & REG0`.
+- **opmask** : *[out]* set of flags to define which opmask register is used. For instance, to test if operand 1 uses *k0*, test `infos.Argument1.Registers.opmask & REG0`.
 - **segment** : *[out]* set of flags to define which segment register is used.
    - ES (REG0)
    - CS (REG1)
@@ -313,14 +310,14 @@ struct REGISTERTYPE{
    - DS (REG3)
    - FS (REG4)
    - GS (REG5)
-- **fpu** : *[out]* set of flags to define which FPU register is used. For instance, to test if operand 1 uses *st(0)*, test `myDisasm.Argument1.Registers.fpu & REG0`.
+- **fpu** : *[out]* set of flags to define which FPU register is used. For instance, to test if operand 1 uses *st(0)*, test `infos.Argument1.Registers.fpu & REG0`.
 
 
 # 9. Constants
 
 Here is an exhaustive list of constants used by fields sends back by BeaEngine.
 
-Values taken by (MyDisasm.Instruction.Category & 0xFFFF0000)
+Values taken by (infos.Instruction.Category & 0xFFFF0000)
 
 ```
 GENERAL_PURPOSE_INSTRUCTION   =           0x10000,
@@ -357,7 +354,7 @@ SGX_INSTRUCTION               =          0x1f0000,
 
 ```
 
-Values taken by LOWORD(MyDisasm.Instruction.Category)
+Values taken by LOWORD(infos.Instruction.Category)
 
 ```
 DATA_TRANSFER = 0x1
@@ -405,7 +402,7 @@ ACCELERATOR_INSTRUCTION = 42
 ROUND_INSTRUCTION = 43
 ```
 
-Values taken by MyDisasm.Instruction.BranchType
+Values taken by infos.Instruction.BranchType
 
 ```
   JO = 1,
@@ -432,7 +429,7 @@ Values taken by MyDisasm.Instruction.BranchType
   JNB = -9
 ```
 
-Values taken by MyDisasm.Argumentxx.ArgType
+Values taken by infos.Argumentxx.ArgType
 
 ```
 NO_ARGUMENT =               0x10000,
@@ -442,7 +439,7 @@ CONSTANT_TYPE + RELATIVE_ = 0x4040000,
 CONSTANT_TYPE + ABSOLUTE_ = 0x8040000
 ```
 
-Values taken by MyDisasm.Options
+Values taken by infos.Options
 
 ```
   NoTabulation = 0x0,
@@ -459,7 +456,7 @@ Values taken by MyDisasm.Options
   ShowEVEXMasking = 0x02000000,
 ```
 
-Values taken by MyDisasm.Argumentxx.SegmentReg
+Values taken by infos.Argumentxx.SegmentReg
 
 ```
 	ESReg 1
@@ -470,7 +467,7 @@ Values taken by MyDisasm.Argumentxx.SegmentReg
 	SSReg 6
 ```
 
-Values taken by MyDisasm.Instruction.Flags.OF_ , .SF_ ...
+Values taken by infos.Instruction.Flags.OF_ , .SF_ ...
 
 ```
 TE_      = 1   ; test

@@ -4,3 +4,4 @@ headers/libBeaEngine.so
 lib
 bin
 build
+doc/*.pdf
