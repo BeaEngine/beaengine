@@ -27002,6 +27002,32 @@ void __bea_callspec__ vpexpandb_(PDISASM pMyDisasm)
   else {
     FailDecode(pMyDisasm);
   }
+}
+
+
+/* ====================================================================
+*      0x 0f 38 63
+* ==================================================================== */
+void __bea_callspec__ vpcompressb_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+    if (GV.EVEX.W == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressb ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressw ");
+      #endif
+    }
+    GV.EVEX.tupletype = TUPLE1_SCALAR;
+    ArgsVEX_ExGx(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 
 
 }
