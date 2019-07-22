@@ -27194,3 +27194,52 @@ void __bea_callspec__ vpshrdvd_(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
 }
+
+
+/* ====================================================================
+*
+* ==================================================================== */
+void __bea_callspec__ vpermi_(PDISASM pMyDisasm, const char* mnemonic1, const char* mnemonic2, UInt8 tupletype)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, mnemonic1);
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, mnemonic2);
+      #endif
+    }
+    GV.EVEX.tupletype = tupletype;
+    ArgsVEX(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*  0f 38 75
+* ==================================================================== */
+void __bea_callspec__ vpermi2b_(PDISASM pMyDisasm)
+{
+  vpermi_(pMyDisasm, "vpermi2b ", "vpermi2w ", FULL_MEM);
+}
+
+/* ====================================================================
+*  0f 38 76
+* ==================================================================== */
+void __bea_callspec__ vpermi2d_(PDISASM pMyDisasm)
+{
+  vpermi_(pMyDisasm, "vpermi2d ", "vpermi2q ", FULL_MEM);
+}
+
+/* ====================================================================
+*  0f 38 77
+* ==================================================================== */
+void __bea_callspec__ vpermi2ps_(PDISASM pMyDisasm)
+{
+  vpermi_(pMyDisasm, "vpermi2ps ", "vpermi2pd ", FULL_MEM);
+}
