@@ -89,7 +89,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     vgatherdd_, vgatherqd_, vgatherps_, vgatherqps_, FailDecode, FailDecode, vfmaddsub132ps_, vfmsubadd132ps_, vfmadd132ps_, vfmadd132ss_, vfmsub132ps_, vfmsub132ss_, vfnmadd132ps_, vfnmadd132ss_, vfnmsub132ps_, vfnmsub132ss_,
     vpscatterdd,vpscatterqd,vpscatterdps,vpscatterqps, FailDecode, FailDecode, vfmaddsub213ps_, vfmsubadd213ps_, vfmadd213ps_, vfmadd213ss_, vfmsub213ps_, vfmsub213ss_, vfnmadd213ps_, vfnmadd213ss_, vfnmsub213ps_, vfnmsub213ss_,
     FailDecode, FailDecode, FailDecode, FailDecode ,vpmadd52luq,vpmadd52huq, vfmaddsub231ps_, vfmsubadd231ps_, vfmadd231ps_, vfmadd231ss_, vfmsub231ps_, vfmsub231ss_, vfnmadd231ps_, vfnmadd231ss_, vfnmsub231ps_, vfnmsub231ss_,
-    FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, sha1nexte_, sha1msg1_ , sha1msg2_ , sha256rnd_,sha256msg1_,sha256msg2_, FailDecode, FailDecode,
+    FailDecode, FailDecode, FailDecode, FailDecode ,vpconflictd, FailDecode, FailDecode, FailDecode, sha1nexte_, sha1msg1_ , sha1msg2_ , sha256rnd_,sha256msg1_,sha256msg2_, FailDecode, FailDecode,
     FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, aesimc    , aesenc    , aesenclast, aesdec    , aesdeclast,
     FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     crc32_GvEb, crc32_GvEv, andn_GyEy , G17_       , FailDecode, bzhi_GyEy , adcx_GyEy , bextr_GyEy, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,

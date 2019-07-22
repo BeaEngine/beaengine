@@ -688,6 +688,7 @@ void __bea_callspec__ vpermilps_(PDISASM);
 void __bea_callspec__ vpermi_(PDISASM, const char*, const char*, UInt8);
 void __bea_callspec__ vpermi2b_(PDISASM);
 void __bea_callspec__ vpmadd52luq(PDISASM);
+void __bea_callspec__ vpconflictd(PDISASM);
 void __bea_callspec__ vpmadd52huq(PDISASM);
 void __bea_callspec__ vpscatterdd(PDISASM);
 void __bea_callspec__ vpscatterqd(PDISASM);
