@@ -20119,6 +20119,7 @@ void __bea_callspec__ vfmsub132ps_(PDISASM pMyDisasm)
 
 void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
 {
+
  /* ========== 0x66 */
  if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
    GV.OperandSize = GV.OriginalOperandSize;
@@ -20140,7 +20141,6 @@ void __bea_callspec__ vgatherdd_(PDISASM pMyDisasm)
          if (GV.EVEX.state != InUsePrefix) {
            GV.MemDecoration = Arg2dword;
            GxExVEX(pMyDisasm);
-
          }
          else {
            GV.MemDecoration = Arg2dword;
@@ -26985,19 +26985,24 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
 void __bea_callspec__ vpexpandb_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpexpandb ");
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpexpandb ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpexpandw ");
+        #endif
+      }
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
+      ArgsVEX_GxEx(pMyDisasm);
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpexpandw ");
-      #endif
+      FailDecode(pMyDisasm);
     }
-    GV.EVEX.tupletype = TUPLE1_SCALAR;
-    ArgsVEX_GxEx(pMyDisasm);
   }
   else {
     FailDecode(pMyDisasm);
@@ -27011,19 +27016,24 @@ void __bea_callspec__ vpexpandb_(PDISASM pMyDisasm)
 void __bea_callspec__ vpcompressb_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressb ");
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressb ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressw ");
+        #endif
+      }
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
+      ArgsVEX_ExGx(pMyDisasm);
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressw ");
-      #endif
+      FailDecode(pMyDisasm);
     }
-    GV.EVEX.tupletype = TUPLE1_SCALAR;
-    ArgsVEX_ExGx(pMyDisasm);
   }
   else {
     FailDecode(pMyDisasm);
@@ -27037,18 +27047,23 @@ void __bea_callspec__ vpcompressb_(PDISASM pMyDisasm)
 void __bea_callspec__ vpblendmd_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmd ");
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX(pMyDisasm);
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmq ");
-      #endif
+      FailDecode(pMyDisasm);
     }
-    GV.EVEX.tupletype = FULL;
-    ArgsVEX(pMyDisasm);
   }
   else {
     FailDecode(pMyDisasm);
@@ -27061,18 +27076,23 @@ void __bea_callspec__ vpblendmd_(PDISASM pMyDisasm)
 void __bea_callspec__ vpblendmps_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmps ");
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmps ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmpd ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX(pMyDisasm);
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmpd ");
-      #endif
+      FailDecode(pMyDisasm);
     }
-    GV.EVEX.tupletype = FULL;
-    ArgsVEX(pMyDisasm);
   }
   else {
     FailDecode(pMyDisasm);
@@ -27085,18 +27105,24 @@ void __bea_callspec__ vpblendmps_(PDISASM pMyDisasm)
 void __bea_callspec__ vpblendmb_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmb ");
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmb ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmw ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL_MEM;
+      ArgsVEX(pMyDisasm);
+
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmw ");
-      #endif
+      FailDecode(pMyDisasm);
     }
-    GV.EVEX.tupletype = FULL_MEM;
-    ArgsVEX(pMyDisasm);
   }
   else {
     FailDecode(pMyDisasm);
@@ -27109,12 +27135,18 @@ void __bea_callspec__ vpblendmb_(PDISASM pMyDisasm)
 void __bea_callspec__ vpshldvw_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 1) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvw ");
-      #endif
-      GV.EVEX.tupletype = FULL_MEM;
-      ArgsVEX(pMyDisasm);
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvw ");
+        #endif
+        GV.EVEX.tupletype = FULL_MEM;
+        ArgsVEX(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+
     }
     else {
       FailDecode(pMyDisasm);
@@ -27131,34 +27163,17 @@ void __bea_callspec__ vpshldvw_(PDISASM pMyDisasm)
 void __bea_callspec__ vpshldvd_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvd ");
-      #endif
-    }
-    else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvq ");
-      #endif
-    }
-    GV.EVEX.tupletype = FULL_MEM;
-    ArgsVEX(pMyDisasm);
-  }
-  else {
-    FailDecode(pMyDisasm);
-  }
-}
-
-/* ====================================================================
-*      0x 0f 38 72
-* ==================================================================== */
-void __bea_callspec__ vpshrdvw_(PDISASM pMyDisasm)
-{
-  if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 1) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvw ");
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvq ");
+        #endif
+      }
       GV.EVEX.tupletype = FULL_MEM;
       ArgsVEX(pMyDisasm);
     }
@@ -27172,23 +27187,57 @@ void __bea_callspec__ vpshrdvw_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 72
+* ==================================================================== */
+void __bea_callspec__ vpshrdvw_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvw ");
+        #endif
+        GV.EVEX.tupletype = FULL_MEM;
+        ArgsVEX(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 73
 * ==================================================================== */
 void __bea_callspec__ vpshrdvd_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvd ");
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL_MEM;
+      ArgsVEX(pMyDisasm);
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvq ");
-      #endif
+      FailDecode(pMyDisasm);
     }
-    GV.EVEX.tupletype = FULL_MEM;
-    ArgsVEX(pMyDisasm);
+
   }
   else {
     FailDecode(pMyDisasm);
@@ -27202,18 +27251,23 @@ void __bea_callspec__ vpshrdvd_(PDISASM pMyDisasm)
 void __bea_callspec__ vpermi_(PDISASM pMyDisasm, const char* mnemonic1, const char* mnemonic2, UInt8 tupletype)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, mnemonic1);
-      #endif
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, mnemonic1);
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, mnemonic2);
+        #endif
+      }
+      GV.EVEX.tupletype = tupletype;
+      ArgsVEX(pMyDisasm);
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, mnemonic2);
-      #endif
+      FailDecode(pMyDisasm);
     }
-    GV.EVEX.tupletype = tupletype;
-    ArgsVEX(pMyDisasm);
   }
   else {
     FailDecode(pMyDisasm);
@@ -27250,12 +27304,62 @@ void __bea_callspec__ vpermi2ps_(PDISASM pMyDisasm)
 void __bea_callspec__ vpmultishift(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (GV.EVEX.W == 1) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmultishiftqb ");
-      #endif
-      GV.EVEX.tupletype = FULL;
-      ArgsVEX(pMyDisasm);
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmultishiftqb ");
+        #endif
+        GV.EVEX.tupletype = FULL;
+        ArgsVEX(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 A0
+* ==================================================================== */
+
+void __bea_callspec__ vpscatterdd(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpscatterdd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpscatterdq ");
+        #endif
+      }
+      GV.EVEX.masking = MERGING;
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
+      if (GV.VEX.L == 0) {
+        GV.VSIB_ = SSE_REG;
+        GV.Register_ = SSE_REG;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.VSIB_ = AVX_REG;
+        GV.Register_ = AVX_REG;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.VSIB_ = AVX512_REG;
+        GV.Register_ = AVX512_REG;
+      }
+      GV.MemDecoration = Arg1dword;
+      ExGx(pMyDisasm);
     }
     else {
       FailDecode(pMyDisasm);
