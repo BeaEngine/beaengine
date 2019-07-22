@@ -687,6 +687,7 @@ void __bea_callspec__ vmwrite_(PDISASM);
 void __bea_callspec__ vpermilps_(PDISASM);
 void __bea_callspec__ vpermilpd_(PDISASM);
 void __bea_callspec__ vpshldvw_(PDISASM);
+void __bea_callspec__ vpshldvd_(PDISASM);
 void __bea_callspec__ vtestps_(PDISASM);
 void __bea_callspec__ vtestpd_(PDISASM);
 void __bea_callspec__ vpsravw_(PDISASM);

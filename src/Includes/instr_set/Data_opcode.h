@@ -84,7 +84,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     pmulld_   ,phminposuw_, vgetexpps_, vgetexpss_ , vplzcntd_ , psrlvd_   , psravd_   , psllvd_   , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     vpdpbusd_ , vpdpbusds_, vpdpwssd_ , vpdpwssds_ , vpopcntb_ , vpopcntd_ , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     FailDecode, FailDecode, vpexpandb_,vpcompressb_, vpblendmd_,vpblendmps_, vpblendmb_, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
-    vpshldvw_ , FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
+    vpshldvw_ , vpshldvd_ , FailDecode, FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     invept_   , invvpid_  , invpcid_  , FailDecode , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode,
     vgatherdd_, vgatherqd_, vgatherps_, vgatherqps_, FailDecode, FailDecode, vfmaddsub132ps_, vfmsubadd132ps_, vfmadd132ps_, vfmadd132ss_, vfmsub132ps_, vfmsub132ss_, vfnmadd132ps_, vfnmadd132ss_, vfnmsub132ps_, vfnmsub132ss_,
     FailDecode, FailDecode, FailDecode, FailDecode , FailDecode, FailDecode, vfmaddsub213ps_, vfmsubadd213ps_, vfmadd213ps_, vfmadd213ss_, vfmsub213ps_, vfmsub213ss_, vfnmadd213ps_, vfnmadd213ss_, vfnmsub213ps_, vfnmsub213ss_,

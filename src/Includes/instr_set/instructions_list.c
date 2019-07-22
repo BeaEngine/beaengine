@@ -27124,3 +27124,27 @@ void __bea_callspec__ vpshldvw_(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
 }
+
+/* ====================================================================
+*      0x 0f 38 71
+* ==================================================================== */
+void __bea_callspec__ vpshldvd_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvd ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshldvq ");
+      #endif
+    }
+    GV.EVEX.tupletype = FULL_MEM;
+    ArgsVEX(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
