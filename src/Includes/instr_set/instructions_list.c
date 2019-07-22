@@ -27553,3 +27553,58 @@ void __bea_callspec__ vpscatterqps(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
 }
+
+
+/* ====================================================================
+*      0x 0f 38 b4
+* ==================================================================== */
+void __bea_callspec__ vpmadd52luq(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmadd52luq ");
+        #endif
+        GV.EVEX.tupletype = FULL;
+        ArgsVEX(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 b5
+* ==================================================================== */
+void __bea_callspec__ vpmadd52huq(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmadd52huq ");
+        #endif
+        GV.EVEX.tupletype = FULL;
+        ArgsVEX(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
