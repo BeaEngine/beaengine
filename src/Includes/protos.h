@@ -690,6 +690,7 @@ void __bea_callspec__ vpermi2b_(PDISASM);
 void __bea_callspec__ vpscatterdd(PDISASM);
 void __bea_callspec__ vpscatterqd(PDISASM);
 void __bea_callspec__ vpmultishift(PDISASM);
+void __bea_callspec__ vpscatterdps(PDISASM);
 void __bea_callspec__ vpermi2d_(PDISASM);
 void __bea_callspec__ vpermi2ps_(PDISASM);
 void __bea_callspec__ vpermilpd_(PDISASM);
