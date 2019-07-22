@@ -27243,3 +27243,25 @@ void __bea_callspec__ vpermi2ps_(PDISASM pMyDisasm)
 {
   vpermi_(pMyDisasm, "vpermi2ps ", "vpermi2pd ", FULL_MEM);
 }
+
+/* ====================================================================
+*      0x 0f 38 83
+* ==================================================================== */
+void __bea_callspec__ vpmultishift(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmultishiftqb ");
+      #endif
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
