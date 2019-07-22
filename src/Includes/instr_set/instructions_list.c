@@ -27451,7 +27451,7 @@ void __bea_callspec__ vpscatterdps(PDISASM pMyDisasm)
       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
       if (GV.EVEX.W == 0) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpscatterdps ");
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vscatterdps ");
         #endif
         if (GV.VEX.L == 0) {
           GV.VSIB_ = SSE_REG;
@@ -27468,7 +27468,7 @@ void __bea_callspec__ vpscatterdps(PDISASM pMyDisasm)
       }
       else {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpscatterdpd ");
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vscatterdpd ");
         #endif
         if (GV.VEX.L == 0) {
           GV.VSIB_ = SSE_REG;
@@ -27486,6 +27486,63 @@ void __bea_callspec__ vpscatterdps(PDISASM pMyDisasm)
       GV.EVEX.masking = MERGING;
       GV.EVEX.tupletype = TUPLE1_SCALAR;
       GV.MemDecoration = Arg1dword;
+      ExGx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 A3
+* ==================================================================== */
+
+void __bea_callspec__ vpscatterqps(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vscatterqps ");
+        #endif
+        if (GV.VEX.L == 0) {
+          GV.VSIB_ = SSE_REG;
+          GV.Register_ = SSE_REG;
+        }
+        else if (GV.VEX.L == 0x1) {
+          GV.VSIB_ = AVX_REG;
+          GV.Register_ = SSE_REG;
+        }
+        else if (GV.EVEX.LL == 0x2) {
+          GV.VSIB_ = AVX512_REG;
+          GV.Register_ = AVX_REG;
+        }
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vscatterqpd ");
+        #endif
+        if (GV.VEX.L == 0) {
+          GV.VSIB_ = SSE_REG;
+          GV.Register_ = SSE_REG;
+        }
+        else if (GV.VEX.L == 0x1) {
+          GV.VSIB_ = AVX_REG;
+          GV.Register_ = AVX_REG;
+        }
+        else if (GV.EVEX.LL == 0x2) {
+          GV.VSIB_ = AVX512_REG;
+          GV.Register_ = AVX512_REG;
+        }
+      }
+      GV.EVEX.masking = MERGING;
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
+      GV.MemDecoration = Arg1qword;
       ExGx(pMyDisasm);
     }
     else {
