@@ -27148,3 +27148,49 @@ void __bea_callspec__ vpshldvd_(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
 }
+
+/* ====================================================================
+*      0x 0f 38 72
+* ==================================================================== */
+void __bea_callspec__ vpshrdvw_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvw ");
+      #endif
+      GV.EVEX.tupletype = FULL_MEM;
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 73
+* ==================================================================== */
+void __bea_callspec__ vpshrdvd_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvd ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdvq ");
+      #endif
+    }
+    GV.EVEX.tupletype = FULL_MEM;
+    ArgsVEX(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
