@@ -27054,3 +27054,27 @@ void __bea_callspec__ vpblendmd_(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
 }
+
+/* ====================================================================
+*      0x 0f 38 65
+* ==================================================================== */
+void __bea_callspec__ vpblendmps_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmps ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendmpd ");
+      #endif
+    }
+    GV.EVEX.tupletype = FULL;
+    ArgsVEX(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
