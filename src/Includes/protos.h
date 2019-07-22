@@ -691,6 +691,7 @@ void __bea_callspec__ vtestpd_(PDISASM);
 void __bea_callspec__ vpsravw_(PDISASM);
 void __bea_callspec__ vpsllvw_(PDISASM);
 void __bea_callspec__ vpblendmd_(PDISASM);
+void __bea_callspec__ vpblendmb_(PDISASM);
 void __bea_callspec__ vpblendmps_(PDISASM);
 void __bea_callspec__ vfnmadd213ps_(PDISASM);
 void __bea_callspec__ vfnmadd213ss_(PDISASM);
