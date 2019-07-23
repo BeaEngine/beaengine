@@ -63,6 +63,7 @@ size_t __bea_callspec__ interpretIndex(ARGTYPE*, size_t, PDISASM, UInt8);
 size_t __bea_callspec__ printSIBScale(ARGTYPE*, PDISASM, size_t, UInt8);
 size_t __bea_callspec__ printVSIBRegisters(ARGTYPE*, PDISASM, size_t, Int32);
 size_t __bea_callspec__ printSeparator(ARGTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ printDisp8(ARGTYPE*, size_t, PDISASM, long);
 size_t __bea_callspec__ SIB_0(ARGTYPE*, size_t, PDISASM);
 size_t __bea_callspec__ SIB_1(ARGTYPE*, size_t, PDISASM);
 size_t __bea_callspec__ SIB_2(ARGTYPE*, size_t, PDISASM);

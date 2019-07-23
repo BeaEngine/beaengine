@@ -6570,45 +6570,45 @@ void __bea_callspec__ out_DXeAX(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
 {
-    (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-    if (!Security(1, pMyDisasm)) return;
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (GV.REGOPCODE == 0) {
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pop ");
-        #endif
-        if (GV.Architecture == 64) {
-            GV.OperandSize = 64;
-            GV.MemDecoration = Arg1qword;
-            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.EIP_ += GV.DECALAGE_EIP+2;
-            (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
-            (*pMyDisasm).Argument2.ArgSize = 64;
-            (*pMyDisasm).Argument2.Memory.BaseRegister = REG4;
-            (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
-        }
-        else if (GV.OperandSize == 32) {
-            GV.MemDecoration = Arg1dword;
-            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.EIP_ += GV.DECALAGE_EIP+2;
-            (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
-            (*pMyDisasm).Argument2.ArgSize = 32;
-            (*pMyDisasm).Argument2.Memory.BaseRegister = REG4;
-            (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
-        }
-        else {
-            GV.MemDecoration = Arg1word;
-            MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-            GV.EIP_ += GV.DECALAGE_EIP+2;
-            (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
-            (*pMyDisasm).Argument2.ArgSize = 16;
-            (*pMyDisasm).Argument2.Memory.BaseRegister = REG4;
-            (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
-        }
+  (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+  if (!Security(1, pMyDisasm)) return;
+  GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+  if (GV.REGOPCODE == 0) {
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pop ");
+    #endif
+    if (GV.Architecture == 64) {
+      GV.OperandSize = 64;
+      GV.MemDecoration = Arg1qword;
+      MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
+      (*pMyDisasm).Argument2.ArgSize = 64;
+      (*pMyDisasm).Argument2.Memory.BaseRegister = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    }
+    else if (GV.OperandSize == 32) {
+      GV.MemDecoration = Arg1dword;
+      MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
+      (*pMyDisasm).Argument2.ArgSize = 32;
+      (*pMyDisasm).Argument2.Memory.BaseRegister = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
     }
     else {
-        FailDecode(pMyDisasm);
+      GV.MemDecoration = Arg1word;
+      MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      (*pMyDisasm).Argument2.ArgType = MEMORY_TYPE;
+      (*pMyDisasm).Argument2.ArgSize = 16;
+      (*pMyDisasm).Argument2.Memory.BaseRegister = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
     }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 /* =======================================

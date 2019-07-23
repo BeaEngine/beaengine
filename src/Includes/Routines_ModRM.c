@@ -38,8 +38,8 @@ void __bea_callspec__ MOD_RM(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
       if (!Security(6, pMyDisasm)) return;
     }
     else {
-        GV.DECALAGE_EIP += 2;
-        if (!Security(4, pMyDisasm)) return;
+      GV.DECALAGE_EIP += 2;
+      if (!Security(4, pMyDisasm)) return;
     }
     ModRM_2[GV.RM_](pMyArgument, pMyDisasm);
   }
@@ -349,21 +349,26 @@ void __bea_callspec__ Addr_EBX(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ Addr_SIB(ARGTYPE* pMyArgument, PDISASM pMyDisasm)
 {
-    if (!Security(2, pMyDisasm)) return;
-    (*pMyArgument).ArgType = MEMORY_TYPE;
-    if (GV.AddressSize >= 32) {
-        GV.DECALAGE_EIP++;
-        GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr) (GV.EIP_+2))) & 0x7;
-        GV.SCALE_  = (((UInt8) *((UInt8*) (UIntPtr)(GV.EIP_+2))) & 0xc0) >> 6;
-        GV.INDEX_  = (((UInt8) *((UInt8*) (UIntPtr)(GV.EIP_+2))) & 0x38) >> 3;
-        (void) SIB[GV.SCALE_ ](pMyArgument, 0, pMyDisasm);
+  size_t i;
+  if (!Security(2, pMyDisasm)) return;
+  (*pMyArgument).ArgType = MEMORY_TYPE;
+  if (GV.AddressSize >= 32) {
+    GV.DECALAGE_EIP++;
+    GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr) (GV.EIP_+2))) & 0x7;
+    GV.SCALE_  = (((UInt8) *((UInt8*) (UIntPtr)(GV.EIP_+2))) & 0xc0) >> 6;
+    GV.INDEX_  = (((UInt8) *((UInt8*) (UIntPtr)(GV.EIP_+2))) & 0x38) >> 3;
+    (void) SIB[GV.SCALE_ ](pMyArgument, 0, pMyDisasm);
+    if (GV.BASE_ == 4) {
+      i = strlen ((char*) &(*pMyArgument).ArgMnemonic);
+      i = printDisp8(pMyArgument, i, pMyDisasm, 0);
     }
-    else {
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyArgument).ArgMnemonic, Registers16Bits[6]);
-        #endif
-        (*pMyArgument).Memory.BaseRegister = REGS[6];
-    }
+  }
+  else {
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((char*) (*pMyArgument).ArgMnemonic, Registers16Bits[6]);
+    #endif
+    (*pMyArgument).Memory.BaseRegister = REGS[6];
+  }
 }
 
 /* =======================================
@@ -611,6 +616,19 @@ const char * __bea_callspec__ getNumFormat(long MyNumber)
   }
 }
 
+long __bea_callspec__ specific_pop(PDISASM pMyDisasm)
+{
+  long N;
+  if (
+    ((*pMyDisasm).Instruction.Opcode == 0x8f)) {
+      N = GV.OperandSize / 8;
+    }
+    else {
+      N = 0;
+    }
+    return N;
+}
+
 size_t __bea_callspec__ printDisp8(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm, long MyNumber)
 {
   size_t j;
@@ -619,6 +637,9 @@ size_t __bea_callspec__ printDisp8(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDi
   if ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.tupletype != 0)) {
     N = getDisp8N(pMyDisasm);
     if (N != -1) MyNumber = MyNumber * N;
+  }
+  if ((GV.RM_ == 4) && (GV.BASE_ == 4) && (GV.Architecture >=32)) {
+    MyNumber = MyNumber + specific_pop(pMyDisasm);
   }
   if (MyNumber < 0) {
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -647,6 +668,10 @@ size_t __bea_callspec__ printDisp8(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDi
 size_t __bea_callspec__ printDisp32(ARGTYPE* pMyArgument, size_t i, PDISASM pMyDisasm, long MyNumber)
 {
   size_t j;
+
+  if ((GV.RM_ == 4) && (GV.BASE_ == 4) && (GV.Architecture >=32)) {
+    MyNumber = MyNumber + specific_pop(pMyDisasm);
+  }
 
   if (MyNumber < 0) {
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -1497,17 +1522,15 @@ size_t __bea_callspec__ interpretBase(ARGTYPE* pMyArgument, size_t i, PDISASM pM
 {
   size_t j;
   if ((GV.BASE_  == 5) && (GV.MOD_ == 0)) {
-      GV.DECALAGE_EIP += 4;
-      if (!Security(7, pMyDisasm)) return i;
-      j = i;
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
-      #endif
-      (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
-
+    GV.DECALAGE_EIP += 4;
+    if (!Security(6, pMyDisasm)) return i;
+    j = i;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyArgument).ArgMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
+    #endif
+    (*pMyArgument).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
   }
   else {
-
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy((char*) (*pMyArgument).ArgMnemonic+i, "(%");
