@@ -96,10 +96,10 @@ struct INSTRTYPE {
 
 **Members**
 
- - **Category** : *[out]* Specify the family instruction . More precisely, (infos.Instruction.Category & 0xFFFF0000) is used to know if the instruction is a standard one or comes from one of the following technologies : MMX, FPU, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX or SYSTEM. LOWORD(infos.Instruction.Category) is used to know if the instruction is an arithmetic instruction, a logical one, a data transfer one ... To see the complete list of constants used by BeaEngine, go HERE .
+ - **Category** : *[out]* Specify the family instruction . More precisely, (infos.Instruction.Category & 0xFFFF0000) is used to know if the instruction is a standard one or comes from one of the following technologies : MMX, FPU, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX or SYSTEM. LOWORD(infos.Instruction.Category) is used to know if the instruction is an arithmetic instruction, a logical one, a data transfer one ... To see the complete list of constants used by BeaEngine, go [HERE](#9-constants) .
  - **Opcode** : *[out]* This field contains the opcode on 1, 2 or 3 bytes. If the instruction uses a mandatory prefix, this last one is not present here. For that, you have to use the structure infos.Prefix.
  - **Mnemonic** : *[out]* This field sends back the instruction mnemonic with an ASCII format. You must know that all mnemonics are followed by a space (0x20). For example , the instruction "add" is written "add ".
- - **BranchType** : *[out]* If the decoded instruction is a branch instruction, this field is set to indicate what kind of jump it is (call, ret, unconditional jump, conditional jump). To get a complete list of constants used by BeaEngine, go HERE
+ - **BranchType** : *[out]* If the decoded instruction is a branch instruction, this field is set to indicate what kind of jump it is (call, ret, unconditional jump, conditional jump). To get a complete list of constants used by BeaEngine, go [HERE](#9-constants)
  - **Flags** : *[out]* Structure [EFLStruct](#6-eflags-infos) that specifies the used flags.
  - **AddrValue** : *[out]* If the decoded instruction is a branch instruction and if the destination address can be calculated, the result is stored in that field. A "jmp eax" or a "jmp [eax]" will set this field to 0 .
  - **Immediat** : *[out]* If the instruction uses a constant, this immediat value is stored here.
@@ -136,12 +136,12 @@ struct ARGTYPE {
  - **Memory** : *[out]* Structure [MEMORYTYPE](#7-memory-infos) , filled only if infos.Argumentxx.ArgType == MEMORY_TYPE.
  - **Registers** : *[out]* Structure [REGISTERTYPE](#8-registers-infos) , filled only if infos.Argumentxx.ArgType == REGISTER_TYPE.
  - **SegmentReg** : *[out]* This field indicates, in the case of memory addressing mode, the segment register used :
-   - ESReg 1
-   - DSReg 2
-   - FSReg 3
-   - GSReg 4
-   - CSReg 5
-   - SSReg 6
+   - ESReg
+   - DSReg
+   - FSReg
+   - GSReg
+   - CSReg
+   - SSReg
 
 # 5. Prefixes infos
 
@@ -203,7 +203,7 @@ struct REX_Struct {
 };
 ```
 
-Fields W_, R_, X_, B_ are set to 1 if the field is used. The field state is set to 1 if a REX prefix is used.
+Fields W_, R_, X_, B_ are set to 1 if the field is used. The field state is set to *InUsePrefix* if a REX prefix is used.
 
 
 # 6. EFLAGS infos
@@ -231,12 +231,12 @@ struct EFLStruct {
 
 Except for the field "alignment" that is only present for alignment purpose, all fields can be filled with one of the following values :
 
- - TE_	equ	1	; the flag is tested
- - MO_	equ	2	; the flag is modified
- - RE_	equ	4	; the flag is reset
- - SE_	equ	8	; the flag is set
- - UN_	equ	0x10	; undefined behavior
- - PR_	equ	0x20	; restore prior state
+ - TE_	; the flag is tested
+ - MO_	; the flag is modified
+ - RE_	; the flag is reset
+ - SE_	; the flag is set
+ - UN_	; undefined behavior
+ - PR_	; restore prior state
 
 # 7. Memory infos
 
