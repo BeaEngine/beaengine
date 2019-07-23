@@ -21,6 +21,7 @@
  * ==================================================================== */
 void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
 {
+    if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EbIb(pMyDisasm);
     if (GV.REGOPCODE == 0) {
@@ -87,6 +88,7 @@ void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
 {
+    if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
     if (GV.REGOPCODE == 0) {
@@ -152,6 +154,7 @@ void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
 {
+    if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MemDecoration = Arg1byte;
     GV.OperandSize = 8;
@@ -228,6 +231,7 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
 {
+    if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (GV.OperandSize == 64) {
         GV.MemDecoration = Arg1qword;
@@ -310,6 +314,7 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
 {
+    if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MemDecoration = Arg1byte;
     GV.OperandSize = 8;
@@ -386,6 +391,7 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
 {
+    if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     if (GV.OperandSize == 64) {
         GV.MemDecoration = Arg1qword;

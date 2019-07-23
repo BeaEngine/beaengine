@@ -21,6 +21,7 @@
  * ==================================================================== */
 void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
 {
+    if (!Security(1, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
 
     if (GV.REGOPCODE == 4) {

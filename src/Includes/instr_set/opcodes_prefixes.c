@@ -299,7 +299,7 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ Esc_2byte(PDISASM pMyDisasm)
 {
-    if (!Security(0, pMyDisasm)) return;
+    if (!Security(1, pMyDisasm)) return;
     GV.EIP_++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_)+0x0F00;
     (void) opcode_map2[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
@@ -310,7 +310,7 @@ void __bea_callspec__ Esc_2byte(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ Esc_tableA4(PDISASM pMyDisasm)
 {
-    if (!Security(0, pMyDisasm)) return;
+    if (!Security(1, pMyDisasm)) return;
     GV.EIP_++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_)+0x0F3800;
     (void) opcode_map3[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
@@ -320,7 +320,7 @@ void __bea_callspec__ Esc_tableA4(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ Esc_tableA5(PDISASM pMyDisasm)
 {
-    if (!Security(0, pMyDisasm)) return;
+    if (!Security(1, pMyDisasm)) return;
     GV.EIP_++;
     (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)GV.EIP_)+0x0F3A00;
     (void) opcode_map4[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);

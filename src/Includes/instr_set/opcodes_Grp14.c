@@ -26,6 +26,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
       FailDecode(pMyDisasm);
     }
     else if (GV.VEX.pp == 1) {
+      if (!Security(1, pMyDisasm)) return;
       GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
       if (GV.REGOPCODE == 6) {
         GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
@@ -57,6 +58,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
       }
       else if (GV.REGOPCODE == 7) {
+        if (!Security(1, pMyDisasm)) return;
         GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if (
           (GV.EVEX.state != InUsePrefix) &&
@@ -97,6 +99,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
     }
   }
   else {
+    if (!Security(1, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
       FailDecode(pMyDisasm);
