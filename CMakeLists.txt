@@ -70,7 +70,7 @@ endif ()
 if (BEA_COMPILER STREQUAL gnu)
   set (CMAKE_C_COMPILER   gcc)
   set (CMAKE_CXX_COMPILER g++)
-  set (BEA_WARNINGS -Wall -W -Wextra -Wconversion -Wno-long-long 
+  set (BEA_WARNINGS -Wall -W -Wextra -Wconversion -Wno-long-long
     -Wshadow  -Wpointer-arith -Wcast-qual  -Wcast-align -Wwrite-strings)
   set (BEA_FLAGS    -pedantic -ansi -pipe -fno-common -fshort-enums )
   set (BEA_DEFINITIONS "")
@@ -324,8 +324,8 @@ set (BEA_SRC_ROOT ${CMAKE_SOURCE_DIR}/src)
 # ======================================
 
 set (myQualification "${CMAKE_SYSTEM_NAME}.${BEA_COMPILER}.${CMAKE_BUILD_TYPE}")
-set (myLIB_OUTPUT "${CMAKE_SOURCE_DIR}/lib/${myQualification}" )
-set (myBIN_OUTPUT "${CMAKE_SOURCE_DIR}/bin/${myQualification}")
+set (myLIB_OUTPUT "${CMAKE_BINARY_DIR}/lib/${myQualification}" )
+set (myBIN_OUTPUT "${CMAKE_BINARY_DIR}/bin/${myQualification}")
 set (myOBJ_OUTPUT obj)
 
 if (optBUILD_64BIT)
@@ -348,8 +348,6 @@ set (build_modules
   #examples
   #unittest
 )
-
-
 
 if (NOT ZLIB_FOUND)
   set (ZLIB_INCLUDE_DIR unittest/thirdparty/zlib)
