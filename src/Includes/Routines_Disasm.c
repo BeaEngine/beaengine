@@ -894,6 +894,7 @@ int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ FillFlags(PDISASM pMyDisasm, int index)
 {
+  
   (*pMyDisasm).Instruction.Flags = EFLAGS_TABLE[index];
 }
 /* ====================================================================
