@@ -17183,7 +17183,36 @@ void __bea_callspec__ pminsb_(PDISASM pMyDisasm)
   }
 }
 
+/* ====================================================================
+*      0x 0f 38 4c
+* ==================================================================== */
 
+void __bea_callspec__ vrcp14ps_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcp14ps ");
+        #endif
+
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcp14pd ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX_GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 38 3a
