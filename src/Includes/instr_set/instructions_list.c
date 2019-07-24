@@ -22538,6 +22538,59 @@ void __bea_callspec__ vbroadcastss(PDISASM pMyDisasm)
 }
 
 
+
+/* ====================================================================
+*      0x 0f 38 1a
+* ==================================================================== */
+void __bea_callspec__ vbroadcastf128(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vbroadcastf32x4 ");
+        #endif
+        if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+        if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE4;
+        ArgsVEX_GE(pMyDisasm, Arg2_m128_xmm, Arg2_m128_xmm, Arg2_m128_xmm, SSE_REG, AVX_REG, AVX512_REG);
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vbroadcastf64x2 ");
+        #endif
+        if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+        if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE2;
+        ArgsVEX_GE(pMyDisasm, Arg2_m128_xmm, Arg2_m128_xmm, Arg2_m128_xmm, SSE_REG, AVX_REG, AVX512_REG);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vbroadcastf128 ");
+        #endif
+        if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+        if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
+        ArgsVEX_GE(pMyDisasm, Arg2_m128_xmm, Arg2_m128_xmm, Arg2_m128_xmm, SSE_REG, AVX_REG, AVX512_REG);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+}
+
+
 /* ====================================================================
 *      0x 0f 38 19
 * ==================================================================== */
@@ -22551,7 +22604,7 @@ void __bea_callspec__ vbroadcastsd(PDISASM pMyDisasm)
         #endif
         if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
         if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
-        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
+        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE2;
         ArgsVEX_GE(pMyDisasm, Arg2qword, Arg2qword, Arg2qword, SSE_REG, SSE_REG, SSE_REG);
       }
       else {
