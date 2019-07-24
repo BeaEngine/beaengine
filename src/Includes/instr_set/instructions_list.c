@@ -17225,15 +17225,34 @@ void __bea_callspec__ pminuw_(PDISASM pMyDisasm)
 
 void __bea_callspec__ pmaxud_(PDISASM pMyDisasm)
 {
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaxud ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaxuq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        if (GV.VEX.state == InUsePrefix) {
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaxud ");
          #endif
-         if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
          ArgsVEX(pMyDisasm);
        } else {
          (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION;
@@ -17596,8 +17615,27 @@ void __bea_callspec__ packusdw_(PDISASM pMyDisasm)
 
 void __bea_callspec__ pmaxsd_(PDISASM pMyDisasm)
 {
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaxsd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaxsq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        if (GV.VEX.state == InUsePrefix) {
@@ -17629,15 +17667,33 @@ void __bea_callspec__ pmaxsd_(PDISASM pMyDisasm)
 
 void __bea_callspec__ pminud_(PDISASM pMyDisasm)
 {
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpminud ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpminuq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      ArgsVEX(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        if (GV.VEX.state == InUsePrefix) {
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpminud ");
          #endif
-         if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
          ArgsVEX(pMyDisasm);
        } else {
          (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION;
