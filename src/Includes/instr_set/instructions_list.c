@@ -17184,6 +17184,40 @@ void __bea_callspec__ pminsb_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 4d
+* ==================================================================== */
+
+void __bea_callspec__ vrcp14ss_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcp14ss ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrcp14sd ");
+        #endif
+      }
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.Register_ = SSE_REG;
+      GV.MemDecoration = Arg2_m128_xmm;
+      GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
 *      0x 0f 38 4c
 * ==================================================================== */
 
