@@ -17356,6 +17356,49 @@ void __bea_callspec__ pmaxsb_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 2f
+* ==================================================================== */
+
+void __bea_callspec__ vmaskmovpd2_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmaskmovpd ");
+    #endif
+    ArgsVEX_EyGy(pMyDisasm);
+    if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 2e
+* ==================================================================== */
+
+void __bea_callspec__ vmaskmovps2_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmaskmovps ");
+    #endif
+    ArgsVEX_EyGy(pMyDisasm);
+    if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
 *      0x 0f 38 2d
 * ==================================================================== */
 
