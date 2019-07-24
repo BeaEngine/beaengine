@@ -17356,6 +17356,47 @@ void __bea_callspec__ pmaxsb_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 2d
+* ==================================================================== */
+
+void __bea_callspec__ vmaskmovpd_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vscalefss ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vscalefsd ");
+        #endif
+      }
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.Register_ = SSE_REG;
+      GV.MemDecoration = Arg3_m128_xmm;
+      GyEy(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmaskmovpd ");
+    #endif
+    ArgsVEX(pMyDisasm);
+    if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
 *      0x 0f 38 2c
 * ==================================================================== */
 
@@ -17381,15 +17422,11 @@ void __bea_callspec__ vmaskmovps_(PDISASM pMyDisasm)
     }
   }
   else if (GV.VEX.state == InUsePrefix) {
-    if (GV.REX.W_ == 0) {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmaskmovps ");
-      #endif
-      ArgsVEX(pMyDisasm);
-    }
-    else {
-      FailDecode(pMyDisasm);
-    }
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmaskmovps ");
+    #endif
+    ArgsVEX(pMyDisasm);
+    if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
   }
   else {
     FailDecode(pMyDisasm);
