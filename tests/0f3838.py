@@ -86,3 +86,70 @@ class TestSuite:
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x38')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpminsb ')
         assert_equal(myDisasm.instr.repr, 'vpminsb zmm1, zmm15, zmmword ptr [rsi]')
+
+
+        # EVEX.128.F3.0F38.W0 38 /r
+        # vpmovm2d xmm1, k1
+
+        myEVEX = EVEX('EVEX.128.F3.0F38.W0')
+        Buffer = '{}38c1'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x38)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovm2d ')
+        assert_equal(myDisasm.instr.repr, 'vpmovm2d xmm0, k1')
+
+        # EVEX.256.F3.0F38.W0 38 /r
+        # vpmovm2d ymm1, k1
+
+        myEVEX = EVEX('EVEX.256.F3.0F38.W0')
+        Buffer = '{}38c1'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x38)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovm2d ')
+        assert_equal(myDisasm.instr.repr, 'vpmovm2d ymm0, k1')
+
+        # EVEX.512.F3.0F38.W0 38 /r
+        # vpmovm2d zmm1, k1
+
+        myEVEX = EVEX('EVEX.512.F3.0F38.W0')
+        Buffer = '{}38c1'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x38)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovm2d ')
+        assert_equal(myDisasm.instr.repr, 'vpmovm2d zmm0, k1')
+
+        # EVEX.128.F3.0F38.W1 38 /r
+        # vpmovm2q xmm1, k1
+
+        myEVEX = EVEX('EVEX.128.F3.0F38.W1')
+        Buffer = '{}38c1'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x38)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovm2q ')
+        assert_equal(myDisasm.instr.repr, 'vpmovm2q xmm0, k1')
+
+        # EVEX.256.F3.0F38.W1 38 /r
+        # vpmovm2q ymm1, k1
+
+        myEVEX = EVEX('EVEX.256.F3.0F38.W1')
+        Buffer = '{}38c1'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x38)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovm2q ')
+        assert_equal(myDisasm.instr.repr, 'vpmovm2q ymm0, k1')
+
+        # EVEX.512.F3.0F38.W1 38 /r
+        # vpmovm2q zmm1, k1
+
+        myEVEX = EVEX('EVEX.512.F3.0F38.W1')
+        Buffer = '{}38c1'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x38)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovm2q ')
+        assert_equal(myDisasm.instr.repr, 'vpmovm2q zmm0, k1')
