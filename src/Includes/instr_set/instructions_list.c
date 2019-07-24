@@ -17191,30 +17191,56 @@ void __bea_callspec__ pminsb_(PDISASM pMyDisasm)
 
 void __bea_callspec__ pminuw_(PDISASM pMyDisasm)
 {
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpminuw ");
+      #endif
+      if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL_MEM;
+      ArgsVEX(pMyDisasm);
+    }
+    else if ((GV.VEX.pp == 2) && (GV.EVEX.state == InUsePrefix)) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpbroadcastmw2d ");
+      #endif
+      if (GV.EVEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.Register_ = AVX_REG;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.Register_ = AVX512_REG;
+      }
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.Register_ = OPMASK_REG;
+      MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+      if (GV.MOD_ != 3) GV.ERROR_OPCODE = UD_;
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+    }
+
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       if (GV.VEX.state == InUsePrefix) {
-         #ifndef BEA_LIGHT_DISASSEMBLY
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpminuw ");
-         #endif
-         if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL_MEM;
-         ArgsVEX(pMyDisasm);
-       } else {
-         (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION;
-         GV.MemDecoration = Arg2_m128_xmm;
-         #ifndef BEA_LIGHT_DISASSEMBLY
-            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pminuw ");
-         #endif
-         GV.Register_ = SSE_REG;
-         GxEx(pMyDisasm);
-
-       }
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
+       (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION;
+       GV.MemDecoration = Arg2_m128_xmm;
+       #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pminuw ");
+       #endif
+       GV.Register_ = SSE_REG;
+       GxEx(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 

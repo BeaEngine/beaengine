@@ -87,3 +87,45 @@ class TestSuite:
         assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x3a')
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpminuw ')
         assert_equal(myDisasm.instr.repr, 'vpminuw zmm1, zmm15, zmmword ptr [rsi]')
+
+        myEVEX = EVEX('EVEX.512.66.0F38.W0')
+        Buffer = '{}3a20'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x3a)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpminuw ')
+        assert_equal(myDisasm.instr.repr, 'vpminuw zmm4, zmm0, zmmword ptr [rax]')
+
+        # EVEX.128.F3.0F38.W1 3a /r
+        # VPBROADCASTmw2d xmm1, k1
+
+        myEVEX = EVEX('EVEX.128.F3.0F38.W1')
+        Buffer = '{}3ac0'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x3a)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastmw2d ')
+        assert_equal(myDisasm.instr.repr, 'vpbroadcastmw2d xmm0, k0')
+
+
+        # EVEX.256.F3.0F38.W1 3a /r
+        # VPBROADCASTmw2d ymm1, k1
+
+        myEVEX = EVEX('EVEX.256.F3.0F38.W1')
+        Buffer = '{}3ac0'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x3a)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastmw2d ')
+        assert_equal(myDisasm.instr.repr, 'vpbroadcastmw2d ymm0, k0')
+
+        # EVEX.512.F3.0F38.W1 3a /r
+        # VPBROADCASTmw2d zmm1, k1
+
+        myEVEX = EVEX('EVEX.512.F3.0F38.W1')
+        Buffer = '{}3ac0'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x3a)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastmw2d ')
+        assert_equal(myDisasm.instr.repr, 'vpbroadcastmw2d zmm0, k0')
