@@ -96,3 +96,17 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vfmsub132pd ')
         assert_equal(myDisasm.instr.repr, 'vfmsub132pd xmm9, xmm15, xmmword ptr [r14]')
+
+
+        # EVEX.512.F2.0F38.W0 9A /r
+        # V4FMADDPS zmm1{k1}{z}, zmm2+3, m128
+
+        myEVEX = EVEX('EVEX.512.F2.0F38.W0')
+        myEVEX.vvvv = 0b1011
+        Buffer = '{}9a0e'.format(myEVEX.prefix()).decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.instr.Instruction.Opcode, 0x9a)
+        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'v4fmaddps ')
+        assert_equal(myDisasm.instr.Argument2.Registers.zmm, REG4+REG5+REG6+REG7)
+        assert_equal(myDisasm.instr.repr, 'v4fmaddps zmm1, zmm4...zmm7, xmmword ptr [rsi]')
