@@ -23055,13 +23055,66 @@ void __bea_callspec__ vpbroadcastw(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 8e
+* ==================================================================== */
+void __bea_callspec__ vpmaskmovd2(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.REX.W_ == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaskmovd ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaskmovq ");
+      #endif
+    }
+    ArgsVEX_EyGy(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
+}
+
+/* ====================================================================
+*      0x 0f 38 8c
+* ==================================================================== */
+void __bea_callspec__ vpmaskmovd(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.REX.W_ == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaskmovd ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpmaskmovq ");
+      #endif
+    }
+    ArgsVEX(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
+}
+
+/* ====================================================================
 *      0x 0f 38 7f
 * ==================================================================== */
 void __bea_callspec__ vpermt2ps(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.VEX.pp == 1) {
-      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
       if (GV.EVEX.W == 0) {
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermt2ps ");
