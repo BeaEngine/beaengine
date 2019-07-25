@@ -19045,8 +19045,50 @@ void __bea_callspec__ vfmsub132ss_(PDISASM pMyDisasm)
 
 void __bea_callspec__ vfmsub213ps_(PDISASM pMyDisasm)
 {
+  size_t i;
+  int index;
+  if ((GV.EVEX.state == InUsePrefix) && (GV.VEX.pp == 3)) {
+    if (GV.EVEX.W == 0) {
+      if (GV.VEX.L == 2) {
+        if (!Security(1, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "v4fnmaddps ");
+        #endif
+        GV.EVEX.tupletype = TUPLE1_SCALAR;
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        GV.Register_ = AVX512_REG;
+        GV.MemDecoration = Arg3_m128_xmm;
+        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+
+        index = (~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V;
+        index = (index / 4) * 4;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, RegistersAVX512[index]);
+           i = strlen((char*) &(*pMyDisasm).Argument2.ArgMnemonic);
+           (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic+i, "...");
+           i+=3;
+           (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic+i, RegistersAVX512[index+3]);
+        #endif
+
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;
+        (*pMyDisasm).Argument2.Registers.type = AVX512_REG;
+        (*pMyDisasm).Argument2.Registers.zmm = REGS[index] + REGS[index+1] + REGS[index+2] + REGS[index+3];
+        (*pMyDisasm).Argument2.ArgSize = 512;
+
+        MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+        GV.EIP_ += GV.DECALAGE_EIP+2;
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        if (GV.VEX.state == InUsePrefix) {
@@ -19144,8 +19186,50 @@ void __bea_callspec__ vfmadd231ss_(PDISASM pMyDisasm)
 
 void __bea_callspec__ vfmsub213ss_(PDISASM pMyDisasm)
 {
+  size_t i;
+  int index;
+  if ((GV.EVEX.state == InUsePrefix) && (GV.VEX.pp == 3)) {
+    if (GV.EVEX.W == 0) {
+      if (GV.VEX.L == 2) {
+        if (!Security(1, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "v4fnmaddss ");
+        #endif
+        GV.EVEX.tupletype = TUPLE1_SCALAR;
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        GV.Register_ = AVX512_REG;
+        GV.MemDecoration = Arg3_m128_xmm;
+        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+
+        index = (~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V;
+        index = (index / 4) * 4;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic, RegistersAVX512[index]);
+           i = strlen((char*) &(*pMyDisasm).Argument2.ArgMnemonic);
+           (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic+i, "...");
+           i+=3;
+           (void) strcpy ((char*) (*pMyDisasm).Argument2.ArgMnemonic+i, RegistersAVX512[index+3]);
+        #endif
+
+        (*pMyDisasm).Argument2.ArgType = REGISTER_TYPE;
+        (*pMyDisasm).Argument2.Registers.type = AVX512_REG;
+        (*pMyDisasm).Argument2.Registers.zmm = REGS[index] + REGS[index+1] + REGS[index+2] + REGS[index+3];
+        (*pMyDisasm).Argument2.ArgSize = 512;
+
+        MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+        GV.EIP_ += GV.DECALAGE_EIP+2;
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        if (GV.VEX.state == InUsePrefix) {
