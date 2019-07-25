@@ -679,6 +679,8 @@ void __bea_callspec__ vmaskmovps_(PDISASM);
 void __bea_callspec__ vmaskmovps2_(PDISASM);
 void __bea_callspec__ vmaskmovpd2_(PDISASM);
 void __bea_callspec__ vrcp14ps_(PDISASM);
+void __bea_callspec__ vrsqrt14ps_(PDISASM);
+void __bea_callspec__ vrsqrt14ss_(PDISASM);
 void __bea_callspec__ vrcp14ss_(PDISASM);
 void __bea_callspec__ vmaskmovpd_(PDISASM);
 void __bea_callspec__ vpdpbusds_(PDISASM);
