@@ -687,6 +687,7 @@ void __bea_callspec__ vpdpbusds_(PDISASM);
 void __bea_callspec__ vpdpwssd_(PDISASM);
 void __bea_callspec__ vpabsq_(PDISASM);
 void __bea_callspec__ vbroadcastss(PDISASM);
+void __bea_callspec__ vpbroadcastd(PDISASM);
 void __bea_callspec__ vbroadcastsd(PDISASM);
 void __bea_callspec__ vbroadcastf128(PDISASM);
 void __bea_callspec__ vbroadcastf32(PDISASM);

@@ -23054,7 +23054,33 @@ void __bea_callspec__ vbroadcastss(PDISASM pMyDisasm)
   }
 }
 
-
+/* ====================================================================
+*      0x 0f 38 58
+* ==================================================================== */
+void __bea_callspec__ vpbroadcastd(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpbroadcastd ");
+        #endif
+        if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
+        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
+        ArgsVEX_GE(pMyDisasm, Arg2dword, Arg2dword, Arg2dword, SSE_REG, SSE_REG, SSE_REG);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 38 1b
