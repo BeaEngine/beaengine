@@ -58,3 +58,7 @@ make
 Current documentation is [HERE](./doc/beaengine.md)
 
 *old documentation can be read here :* http://beatrix2004.free.fr/BeaEngine/index1.php
+
+### 6. Examples
+
+Some basic examples to show how BeaEngine is working [HERE](./doc/examples.md)
