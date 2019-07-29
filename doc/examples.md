@@ -280,7 +280,7 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
       else if (
         (infos.Argument2.AccessMode == WRITE) &&
         (infos.Argument2.ArgType == REGISTER_TYPE) &&
-        (infos.Argument2.Registers.grp & REG0)
+        (infos.Argument2.Registers.gpr & REG0)
         ) {
         (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
       }

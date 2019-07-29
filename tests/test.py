@@ -37,7 +37,7 @@ class TestSuite:
         Buffer = b'\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\xf0\x90'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Prefix.Number, 15)
+        assert_equal(myDisasm.instr.Prefix.Number, 14)
         assert_equal(myDisasm.instr.repr, '')
 
 

@@ -24,17 +24,20 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm)
   if (InitVariables(pMyDisasm)) {
     (void) AnalyzeOpcode(pMyDisasm);
     if (!GV.OutOfBlock) {
-      FixArgSizeForMemoryOperand(pMyDisasm);
-      FixREXPrefixes(pMyDisasm);
-      FillSegmentsRegisters(pMyDisasm);
-      CompleteInstructionFields(pMyDisasm);
-      #ifndef BEA_LIGHT_DISASSEMBLY
-      BuildCompleteInstruction(pMyDisasm);
-      #endif
       if (GV.ERROR_OPCODE == UNKNOWN_OPCODE) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+        BuildCompleteInstruction(pMyDisasm);
+        #endif        
         return -1;
       }
       else {
+        FixArgSizeForMemoryOperand(pMyDisasm);
+        FixREXPrefixes(pMyDisasm);
+        FillSegmentsRegisters(pMyDisasm);
+        CompleteInstructionFields(pMyDisasm);
+        #ifndef BEA_LIGHT_DISASSEMBLY
+        BuildCompleteInstruction(pMyDisasm);
+        #endif
         return (int) (GV.EIP_-(*pMyDisasm).EIP);
       }
     }
@@ -175,6 +178,7 @@ void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm)
  * ==================================================================== */
 int __bea_callspec__ AnalyzeOpcode (PDISASM pMyDisasm)
 {
+  if (!Security(0, pMyDisasm)) return 0;
   (*pMyDisasm).Instruction.Opcode = *((UInt8*) (UIntPtr)(GV.EIP_));
   (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
   return 1;
@@ -772,7 +776,7 @@ void __bea_callspec__ GvEw(PDISASM pMyDisasm)
 void __bea_callspec__ ALIb(PDISASM pMyDisasm)
 {
   long MyNumber;
-  if (!Security(2, pMyDisasm)) return;
+  if (!Security(1, pMyDisasm)) return;
   GV.ImmediatSize = 8;
   MyNumber = *((Int8*)(IntPtr) (GV.EIP_+1));
   #ifndef BEA_LIGHT_DISASSEMBLY
@@ -805,7 +809,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
     (*pMyDisasm).Argument1.Registers.gpr = REG0;
     (*pMyDisasm).Argument2.ArgType = CONSTANT_TYPE+ABSOLUTE_;
     if (GV.OperandSize == 64) {
-      if (!Security(5, pMyDisasm)) return;
+      if (!Security(4, pMyDisasm)) return;
       GV.ImmediatSize = 32;
       (*pMyDisasm).Argument1.ArgSize = 64;
       (*pMyDisasm).Argument2.ArgSize = 32;
@@ -827,7 +831,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
       GV.EIP_+= 5;
     }
     else if (GV.OperandSize == 32) {
-      if (!Security(5, pMyDisasm)) return;
+      if (!Security(4, pMyDisasm)) return;
       GV.ImmediatSize = 32;
       (*pMyDisasm).Argument1.ArgSize = 32;
       (*pMyDisasm).Argument2.ArgSize = 32;
@@ -849,7 +853,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
       GV.EIP_+= 5;
     }
     else {
-      if (!Security(3, pMyDisasm)) return;
+      if (!Security(2, pMyDisasm)) return;
       GV.ImmediatSize = 16;
       (*pMyDisasm).Argument1.ArgSize = 16;
       (*pMyDisasm).Argument2.ArgSize = 16;
@@ -894,7 +898,7 @@ int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ FillFlags(PDISASM pMyDisasm, int index)
 {
-  
+
   (*pMyDisasm).Instruction.Flags = EFLAGS_TABLE[index];
 }
 /* ====================================================================
