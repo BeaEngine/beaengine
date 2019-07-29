@@ -719,6 +719,7 @@ void __bea_callspec__ vpermi2b_(PDISASM);
 void __bea_callspec__ vpmadd52luq(PDISASM);
 void __bea_callspec__ vpexpandd(PDISASM);
 void __bea_callspec__ vcompressps(PDISASM);
+void __bea_callspec__ vpcompressd(PDISASM);
 void __bea_callspec__ vpconflictd(PDISASM);
 void __bea_callspec__ vpmadd52huq(PDISASM);
 void __bea_callspec__ vpscatterdd(PDISASM);

@@ -26914,6 +26914,30 @@ void __bea_callspec__ vcompressps(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 8b
+* ==================================================================== */
+void __bea_callspec__ vpcompressd(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressq ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcompressd ");
+      #endif
+    }
+    GV.EVEX.tupletype = TUPLE1_SCALAR;
+    ArgsVEX_ExGx(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 83
 * ==================================================================== */
 void __bea_callspec__ vpmultishift(PDISASM pMyDisasm)
