@@ -26866,6 +26866,30 @@ void __bea_callspec__ vexpandps(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 89
+* ==================================================================== */
+void __bea_callspec__ vpexpandd(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpexpandq ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpexpandd ");
+      #endif
+    }
+    GV.EVEX.tupletype = TUPLE1_SCALAR;
+    ArgsVEX_GxEx(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 83
 * ==================================================================== */
 void __bea_callspec__ vpmultishift(PDISASM pMyDisasm)
