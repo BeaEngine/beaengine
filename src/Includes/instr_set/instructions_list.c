@@ -26938,6 +26938,30 @@ void __bea_callspec__ vpcompressd(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 38 8d
+* ==================================================================== */
+void __bea_callspec__ vpermb(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.EVEX.W == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermw ");
+      #endif
+    }
+    else {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermb ");
+      #endif
+    }
+    GV.EVEX.tupletype = FULL_MEM;
+    ArgsVEX(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 83
 * ==================================================================== */
 void __bea_callspec__ vpmultishift(PDISASM pMyDisasm)
