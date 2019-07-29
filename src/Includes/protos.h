@@ -717,6 +717,7 @@ void __bea_callspec__ vexpandps(PDISASM);
 void __bea_callspec__ vpermi_(PDISASM, const char*, const char*, UInt8);
 void __bea_callspec__ vpermi2b_(PDISASM);
 void __bea_callspec__ vpmadd52luq(PDISASM);
+void __bea_callspec__ vpshufbitqmb(PDISASM);
 void __bea_callspec__ vpexpandd(PDISASM);
 void __bea_callspec__ vpermb(PDISASM);
 void __bea_callspec__ vcompressps(PDISASM);
