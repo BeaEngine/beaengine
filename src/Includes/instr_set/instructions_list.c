@@ -11057,6 +11057,39 @@ void __bea_callspec__ andps_VW(PDISASM pMyDisasm)
    }
 }
 
+/* ====================================================================
+*      0x 0f 3a 00
+* ==================================================================== */
+void __bea_callspec__ vpermq_(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (
+        ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 1)) ||
+        ((GV.EVEX.state != InUsePrefix) && (GV.REX.W_ == 1))) {
+          verifyVEXvvvv(pMyDisasm);
+          if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+          if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermq ");
+          #endif
+          ArgsVEX_GxEx(pMyDisasm);
+          getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+        }
+        else {
+          FailDecode(pMyDisasm);
+        }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
 
 /* ====================================================================
 *      0x 0f 3a 0d

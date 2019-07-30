@@ -694,6 +694,7 @@ void __bea_callspec__ vpbroadcastb2(PDISASM);
 void __bea_callspec__ vpbroadcastw2(PDISASM);
 void __bea_callspec__ vpbroadcastd2(PDISASM);
 void __bea_callspec__ vpermt2b(PDISASM);
+void __bea_callspec__ vpermq_(PDISASM);
 void __bea_callspec__ vpermt2d(PDISASM);
 void __bea_callspec__ vpermt2ps(PDISASM);
 void __bea_callspec__ vpbroadcastw(PDISASM);
