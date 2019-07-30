@@ -11130,16 +11130,52 @@ void __bea_callspec__ vpblendd(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
   else if (GV.VEX.state == InUsePrefix) {
-    if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendd ");
-    #endif
-    ArgsVEX(pMyDisasm);
-    getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    if (GV.VEX.pp == 1) {
+      if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendd ");
+      #endif
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
   }
   else {
     FailDecode(pMyDisasm);
   }
+}
+
+/* ====================================================================
+*      0x 0f 3a 03
+* ==================================================================== */
+void __bea_callspec__ valignd(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "valignq ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "valignd ");
+        #endif
+      }
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
 }
 /* ====================================================================
 *      0x 0f 3a 0d
