@@ -16069,6 +16069,36 @@ void __bea_callspec__ pmulhrsw_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 3a 04
+* ==================================================================== */
+void __bea_callspec__ vpermilps2(PDISASM pMyDisasm)
+{
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
+      if ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 1)) {
+        FailDecode(pMyDisasm);
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermilps ");
+        #endif
+        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
+        ArgsVEX_GxEx(pMyDisasm);
+        getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+        verifyVEXvvvv(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 38 0c
 * ==================================================================== */
 void __bea_callspec__ vpermilps_(PDISASM pMyDisasm)
@@ -16078,7 +16108,6 @@ void __bea_callspec__ vpermilps_(PDISASM pMyDisasm)
       if (GV.REX.W_ == 1) {
         GV.ERROR_OPCODE = UD_;
       }
-      (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpermilps ");
       #endif
