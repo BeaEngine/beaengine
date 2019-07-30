@@ -674,6 +674,7 @@ void __bea_callspec__ vgetexpps_(PDISASM);
 void __bea_callspec__ vpopcntb_(PDISASM);
 void __bea_callspec__ vpmaskmovd(PDISASM);
 void __bea_callspec__ vpermilps2(PDISASM);
+void __bea_callspec__ vperm2f128(PDISASM);
 void __bea_callspec__ vpermilpd2(PDISASM);
 void __bea_callspec__ vpopcntd_(PDISASM);
 void __bea_callspec__ vgetexpss_(PDISASM);
