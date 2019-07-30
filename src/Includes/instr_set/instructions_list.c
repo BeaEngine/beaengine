@@ -13065,29 +13065,52 @@ void __bea_callspec__ dpps_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ extractps_(PDISASM pMyDisasm)
 {
-   /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-       GV.OperandSize = GV.OriginalOperandSize;
-       (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       GV.MemDecoration = Arg1dword;
-       (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "extractps ");
-       #endif
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg1dword;
+      if (GV.EVEX.state == InUsePrefix) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION+INSERTION_EXTRACTION;
+        GV.EVEX.tupletype = TUPLE1_SCALAR;
+      }
+      else {
+        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+INSERTION_EXTRACTION;
+      }
 
-       MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-       GV.Register_ = SSE_REG;
-       Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
-
-       GV.EIP_+= GV.DECALAGE_EIP+2;
-       getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-
-
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
-
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vextractps ");
+      #endif
+      MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.EIP_+= GV.DECALAGE_EIP+2;
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg1dword;
+      (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "extractps ");
+      #endif
+      MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.EIP_+= GV.DECALAGE_EIP+2;
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
 }
 
 
