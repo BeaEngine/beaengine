@@ -11121,7 +11121,26 @@ void __bea_callspec__ vpermpd(PDISASM pMyDisasm)
   }
 }
 
-
+/* ====================================================================
+*      0x 0f 3a 02
+* ==================================================================== */
+void __bea_callspec__ vpblendd(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.REX.W_ == 1) GV.ERROR_OPCODE = UD_;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpblendd ");
+    #endif
+    ArgsVEX(pMyDisasm);
+    getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 /* ====================================================================
 *      0x 0f 3a 0d
 * ==================================================================== */
