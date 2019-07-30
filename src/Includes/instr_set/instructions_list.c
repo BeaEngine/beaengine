@@ -14813,31 +14813,60 @@ void __bea_callspec__ pcmpistrm_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ pextrb_(PDISASM pMyDisasm)
 {
-   /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-       GV.OperandSize = GV.OriginalOperandSize;
-       (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrb ");
-       #endif
-       if (!Security(1, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-       if (GV.MOD_== 0x3) {
-           GV.MemDecoration = Arg1dword;
-       }
-       else {
-           GV.MemDecoration = Arg1byte;
-       }
-       MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
-       GV.Register_ = SSE_REG;
-       Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
-
-       GV.EIP_ += GV.DECALAGE_EIP+2;
-       getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      verifyVEXvvvv(pMyDisasm);
+      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+      if (GV.REX.W_ == 1) {
+        FailDecode(pMyDisasm);
+      }
+      else {
+        if (GV.EVEX.state == InUsePrefix) {
+          (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION+INSERTION_EXTRACTION;
+          GV.EVEX.tupletype = TUPLE1_SCALAR;
+        }
+        else {
+          (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+INSERTION_EXTRACTION;
+        }
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpextrb ");
+        #endif
+        if (!Security(1, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        GV.MemDecoration = (GV.MOD_== 0x3) ? Arg1dword : Arg1byte;
+        MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+        GV.Register_ = SSE_REG;
+        Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+        GV.EIP_ += GV.DECALAGE_EIP+2;
+        getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+INSERTION_EXTRACTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pextrb ");
+      #endif
+      if (!Security(1, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MemDecoration = (GV.MOD_== 0x3) ? Arg1dword : Arg1byte;
+      MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
 
 }
 
