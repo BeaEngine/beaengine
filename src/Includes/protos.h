@@ -666,6 +666,7 @@ void __bea_callspec__ ucomiss_VW(PDISASM);
 void __bea_callspec__ unpckhps_(PDISASM);
 void __bea_callspec__ unpcklps_(PDISASM);
 void __bea_callspec__ valignd(PDISASM);
+void __bea_callspec__ vgetmantps(PDISASM);
 void __bea_callspec__ vcvtph2ps_(PDISASM);
 void __bea_callspec__ vpexpandb_(PDISASM);
 void __bea_callspec__ vpcompressb_(PDISASM);
