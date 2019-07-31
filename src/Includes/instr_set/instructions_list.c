@@ -13433,6 +13433,142 @@ void __bea_callspec__ kshiftrd(PDISASM pMyDisasm)
   }
 }
 
+/* ====================================================================
+*      0x 0f 3a 67
+* ==================================================================== */
+void __bea_callspec__ vfpclassss(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vfpclassss ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vfpclasssd ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+      }
+      GV.EVEX.tupletype = FULL;
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
+*      0x 0f 3a 57
+* ==================================================================== */
+void __bea_callspec__ vreducess(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vreducess ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vreducesd ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+      }
+      GV.EVEX.tupletype = FULL;
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
+*      0x 0f 3a 55
+* ==================================================================== */
+void __bea_callspec__ vfixupmmss(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vfixupmmss ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vfixupmmsd ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+      }
+      GV.EVEX.tupletype = FULL;
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
+*      0x 0f 3a 51
+* ==================================================================== */
+void __bea_callspec__ vrangess(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrangess ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrangesd ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+      }
+      GV.EVEX.tupletype = FULL;
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
 
 /* ====================================================================
 *      0x 0f 3a 27
@@ -13455,7 +13591,7 @@ void __bea_callspec__ vgetmantss(PDISASM pMyDisasm)
         #endif
         GV.MemDecoration = Arg3qword;
       }
-      GV.EVEX.tupletype = FULL;
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
       if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
     }
     else {
