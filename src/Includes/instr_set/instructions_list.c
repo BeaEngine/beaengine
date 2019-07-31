@@ -15298,8 +15298,30 @@ void __bea_callspec__ pblendw_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ pcmpestri_(PDISASM pMyDisasm)
 {
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      verifyVEXvvvv(pMyDisasm);
+      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+COMPARISON_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcmpestri ");
+      #endif
+      (*pMyDisasm).Argument1.AccessMode = READ;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        GV.MemDecoration = Arg2_m128_xmm;
@@ -15307,6 +15329,7 @@ void __bea_callspec__ pcmpestri_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpestri ");
        #endif
+       (*pMyDisasm).Argument1.AccessMode = READ;
        GV.Register_ = SSE_REG;
        GxEx(pMyDisasm);
 
@@ -15324,24 +15347,44 @@ void __bea_callspec__ pcmpestri_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ pcmpestrm_(PDISASM pMyDisasm)
 {
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      verifyVEXvvvv(pMyDisasm);
+      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+COMPARISON_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcmpestrm ");
+      #endif
+      (*pMyDisasm).Argument1.AccessMode = READ;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-       GV.OperandSize = GV.OriginalOperandSize;
-       (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       GV.MemDecoration = Arg2_m128_xmm;
-       (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION+COMPARISON_INSTRUCTION;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpestrm ");
-       #endif
-       GV.Register_ = SSE_REG;
-       GxEx(pMyDisasm);
-
-       getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    GV.OperandSize = GV.OriginalOperandSize;
+    (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+    GV.MemDecoration = Arg2_m128_xmm;
+    (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION+COMPARISON_INSTRUCTION;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+      (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpestrm ");
+    #endif
+    (*pMyDisasm).Argument1.AccessMode = READ;
+    GV.Register_ = SSE_REG;
+    GxEx(pMyDisasm);
+    getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
    }
    else {
-       FailDecode(pMyDisasm);
+    FailDecode(pMyDisasm);
    }
-
 }
 
 
@@ -15350,8 +15393,30 @@ void __bea_callspec__ pcmpestrm_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ pcmpistri_(PDISASM pMyDisasm)
 {
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      verifyVEXvvvv(pMyDisasm);
+      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+COMPARISON_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcmpistri ");
+      #endif
+      (*pMyDisasm).Argument1.AccessMode = READ;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        GV.MemDecoration = Arg2_m128_xmm;
@@ -15359,6 +15424,7 @@ void __bea_callspec__ pcmpistri_(PDISASM pMyDisasm)
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpistri ");
        #endif
+       (*pMyDisasm).Argument1.AccessMode = READ;
        GV.Register_ = SSE_REG;
        GxEx(pMyDisasm);
 
@@ -15376,15 +15442,37 @@ void __bea_callspec__ pcmpistri_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ pcmpistrm_(PDISASM pMyDisasm)
 {
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      verifyVEXvvvv(pMyDisasm);
+      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION+COMPARISON_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpcmpistrm ");
+      #endif
+      (*pMyDisasm).Argument1.AccessMode = READ;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
    /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
        GV.MemDecoration = Arg2_m128_xmm;
        (*pMyDisasm).Instruction.Category = SSE42_INSTRUCTION+COMPARISON_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpestrm ");
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pcmpistrm ");
        #endif
+       (*pMyDisasm).Argument1.AccessMode = READ;
        GV.Register_ = SSE_REG;
        GxEx(pMyDisasm);
 
