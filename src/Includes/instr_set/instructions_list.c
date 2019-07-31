@@ -13228,6 +13228,49 @@ void __bea_callspec__ hsubpd_VW(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 3a 30
+* ==================================================================== */
+void __bea_callspec__ kshiftrb(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.L == 0) {
+      if (GV.VEX.pp == 1) {
+        if (!Security(1, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
+
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        if (GV.REX.W_ == 0) {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kshiftrb ");
+          #endif
+        }
+        else {
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "kshiftrw ");
+          #endif
+        }
+        GV.Register_ = OPMASK_REG;
+        GxEx(pMyDisasm);
+        getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 3a 27
 * ==================================================================== */
 void __bea_callspec__ vgetmantss(PDISASM pMyDisasm)
