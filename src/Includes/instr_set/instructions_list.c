@@ -13228,6 +13228,40 @@ void __bea_callspec__ hsubpd_VW(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 3a 27
+* ==================================================================== */
+void __bea_callspec__ vgetmantss(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgetmantss ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vgetmantsd ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+      }
+      GV.EVEX.tupletype = FULL;
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
 *      0x 0f 3a 26
 * ==================================================================== */
 void __bea_callspec__ vgetmantps(PDISASM pMyDisasm)
