@@ -25284,6 +25284,32 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
 
 }
 
+/* ====================================================================
+ *      0x 0f 3a 46
+ * ==================================================================== */
+void __bea_callspec__ vperm2i128(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vperm2i128 ");
+      #endif
+      if (GV.VEX.L == 1) GV.ERROR_OPCODE = UD_;
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
 
 /* ====================================================================
  *      0x 0f 3a 44
