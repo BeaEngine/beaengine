@@ -14715,24 +14715,54 @@ void __bea_callspec__ movups_WV(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ mpsadbw_(PDISASM pMyDisasm)
 {
-   /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-       GV.OperandSize = GV.OriginalOperandSize;
-       (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       GV.MemDecoration = Arg2_m128_xmm;
-       (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+SAD_INSTRUCTION;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mpsadbw ");
-       #endif
-       GV.Register_ = SSE_REG;
-       GxEx(pMyDisasm);
-
-       getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
-
+  if (GV.EVEX.state  == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vdbpsadbw ");
+        #endif
+        GV.EVEX.tupletype = FULL_MEM;
+        ArgsVEX(pMyDisasm);
+        getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmpsadbw ");
+      #endif
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+SAD_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "mpsadbw ");
+      #endif
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+        FailDecode(pMyDisasm);
+    }
+  }
 }
 
 
