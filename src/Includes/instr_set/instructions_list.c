@@ -25290,57 +25290,61 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ pclmulqdq_(PDISASM pMyDisasm)
 {
-  if (GV.EVEX.state == InUsePrefix) {
-    FailDecode(pMyDisasm);
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpclmulqdq ");
+      #endif
+      if (GV.VEX.L == 1) GV.ERROR_OPCODE = UD_;
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
   }
     /* ========== 0x66 */
   else if (GV.OperandSize == 16) {
-        (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-        GV.MemDecoration = Arg2_m128_xmm;
-        (*pMyDisasm).Instruction.Category = CLMUL_INSTRUCTION;
-
-        GV.ImmediatSize = 8;
-        GV.Register_ = SSE_REG;
-        GxEx(pMyDisasm);
-        GV.EIP_++;
-        if (!Security(0, pMyDisasm)) return;
-
-        (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
-
-        if ((*pMyDisasm).Instruction.Immediat == 0) {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqlqdq ");
-            #endif
-        }
-        else if ((*pMyDisasm).Instruction.Immediat == 0x01 ) {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqlqdq ");
-            #endif
-        }
-        else if ((*pMyDisasm).Instruction.Immediat == 0x10 ) {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqhqdq ");
-            #endif
-        }
-        else if ((*pMyDisasm).Instruction.Immediat == 0x011 ) {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqhqdq ");
-            #endif
-        }
-        else {
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulqdq ");
-            #endif
-            #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
-            #endif
-            (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
-            (*pMyDisasm).Argument3.ArgSize = 8;
-        }
+    (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+    GV.MemDecoration = Arg2_m128_xmm;
+    (*pMyDisasm).Instruction.Category = CLMUL_INSTRUCTION;
+    GV.Register_ = SSE_REG;
+    GxEx(pMyDisasm);
+    getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    if ((*pMyDisasm).Instruction.Immediat == 0) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqlqdq ");
+      #endif
+    }
+    else if ((*pMyDisasm).Instruction.Immediat == 0x01 ) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqlqdq ");
+        #endif
+    }
+    else if ((*pMyDisasm).Instruction.Immediat == 0x10 ) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmullqhqdq ");
+        #endif
+    }
+    else if ((*pMyDisasm).Instruction.Immediat == 0x11 ) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulhqhqdq ");
+        #endif
     }
     else {
-        FailDecode(pMyDisasm);
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pclmulqdq ");
+        #endif
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Argument3.ArgMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+        #endif
+        (*pMyDisasm).Argument3.ArgType = CONSTANT_TYPE+ABSOLUTE_;
+        (*pMyDisasm).Argument3.ArgSize = 8;
     }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 }
 
 
