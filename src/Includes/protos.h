@@ -319,6 +319,7 @@ void __bea_callspec__ jmp_near(PDISASM);
 void __bea_callspec__ jmp_far(PDISASM);
 void __bea_callspec__ jmp_short(PDISASM);
 void __bea_callspec__ kshiftrb(PDISASM);
+void __bea_callspec__ kshiftrd(PDISASM);
 void __bea_callspec__ lahf_(PDISASM);
 void __bea_callspec__ lar_GvEw(PDISASM);
 void __bea_callspec__ lds_GvM(PDISASM);
