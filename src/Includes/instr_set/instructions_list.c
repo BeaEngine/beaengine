@@ -15841,37 +15841,42 @@ void __bea_callspec__ phsubsw_(PDISASM pMyDisasm)
 void __bea_callspec__ pinsrb_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) {
-    if (GV.REX.W_ == 1) {
-      FailDecode(pMyDisasm);
+    if (GV.VEX.pp == 1) {
+      if (GV.REX.W_ == 1) {
+        FailDecode(pMyDisasm);
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpinsrb ");
+        #endif
+        if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
+        if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+
+        if (GV.VEX.L == 0) {
+          (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
+          GV.Register_ = SSE_REG;
+        }
+        else if (GV.VEX.L == 0x1) {
+          (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
+          GV.Register_ = AVX_REG;
+        }
+        else if (GV.EVEX.LL == 0x2) {
+          (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+          GV.Register_ = AVX512_REG;
+        }
+        GV.MemDecoration = Arg3byte;
+        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+        fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+        GV.Register_ = 0;
+        GV.OperandSize = 32;
+        MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+        GV.EIP_ += GV.DECALAGE_EIP+2;
+
+        getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      }
     }
     else {
-      #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpinsrb ");
-      #endif
-      if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
-      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
-
-      if (GV.VEX.L == 0) {
-        (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
-        GV.Register_ = SSE_REG;
-      }
-      else if (GV.VEX.L == 0x1) {
-        (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
-        GV.Register_ = AVX_REG;
-      }
-      else if (GV.EVEX.LL == 0x2) {
-        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
-        GV.Register_ = AVX512_REG;
-      }
-      GV.MemDecoration = Arg3byte;
-      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
-      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
-      GV.Register_ = 0;
-      GV.OperandSize = 32;
-      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
-      GV.EIP_ += GV.DECALAGE_EIP+2;
-
-      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      FailDecode(pMyDisasm);
     }
   }
   else {
@@ -15902,6 +15907,57 @@ void __bea_callspec__ pinsrb_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ pinsrd_(PDISASM pMyDisasm)
 {
+
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+
+      if ((GV.EVEX.W == 1) || (GV.REX.W_ == 1)) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpinsrq ");
+        #endif
+        GV.MemDecoration = Arg3qword;
+        GV.OperandSize = 64;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpinsrd ");
+        #endif
+        GV.MemDecoration = Arg3dword;
+        GV.OperandSize = 32;
+      }
+
+      if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
+      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+
+      if (GV.VEX.L == 0) {
+        (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
+        GV.Register_ = SSE_REG;
+      }
+      else if (GV.VEX.L == 0x1) {
+        (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
+        GV.Register_ = AVX_REG;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+        GV.Register_ = AVX512_REG;
+      }
+
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = 0;
+      GV.OperandSize = 32;
+      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+
    /* ========== 0x66 */
    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
@@ -15912,17 +15968,18 @@ void __bea_callspec__ pinsrd_(PDISASM pMyDisasm)
            #ifndef BEA_LIGHT_DISASSEMBLY
               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pinsrq ");
            #endif
-           GV.MemDecoration = Arg1qword;
+           GV.MemDecoration = Arg2qword;
+           GV.OperandSize = 64;
        }
        else {
            #ifndef BEA_LIGHT_DISASSEMBLY
               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "pinsrd ");
            #endif
-           GV.MemDecoration = Arg1dword;
+           GV.MemDecoration = Arg2dword;
        }
-       MOD_RM(&(*pMyDisasm).Argument1, pMyDisasm);
+       MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
        GV.Register_ = SSE_REG;
-       Reg_Opcode(&(*pMyDisasm).Argument2, pMyDisasm);
+       Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
 
        GV.EIP_ += GV.DECALAGE_EIP+2;
        getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
@@ -15930,6 +15987,7 @@ void __bea_callspec__ pinsrd_(PDISASM pMyDisasm)
    else {
        FailDecode(pMyDisasm);
    }
+ }
 
 }
 
