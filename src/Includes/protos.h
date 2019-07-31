@@ -677,6 +677,7 @@ void __bea_callspec__ vpexpandb_(PDISASM);
 void __bea_callspec__ vpcompressb_(PDISASM);
 void __bea_callspec__ vpternlogd(PDISASM);
 void __bea_callspec__ vshuff32x4(PDISASM);
+void __bea_callspec__ vshufi32x4(PDISASM);
 void __bea_callspec__ vcvtps2qq_(PDISASM);
 void __bea_callspec__ vgetexpps_(PDISASM);
 void __bea_callspec__ vpopcntb_(PDISASM);

@@ -13531,6 +13531,36 @@ void __bea_callspec__ vpternlogd(PDISASM pMyDisasm)
   }
 }
 
+/* ====================================================================
+*      0x 0f 3a 43
+* ==================================================================== */
+void __bea_callspec__ vshufi32x4(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vshufi32x4 ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vshufi64x2 ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 3a 23
