@@ -13227,6 +13227,37 @@ void __bea_callspec__ hsubpd_VW(PDISASM pMyDisasm)
  }
 }
 
+/* ====================================================================
+*      0x 0f 3a 25
+* ==================================================================== */
+void __bea_callspec__ vpternlogd(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpternlogd ");
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpternlogq ");
+        #endif
+      }
+      GV.EVEX.tupletype = FULL;
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
 
 /* ====================================================================
 *      0x 0f 3a 23
@@ -13245,6 +13276,7 @@ void __bea_callspec__ vshuff32x4(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vshuff64x2 ");
         #endif
       }
+      GV.EVEX.tupletype = FULL;
       if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
       ArgsVEX(pMyDisasm);
       getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
