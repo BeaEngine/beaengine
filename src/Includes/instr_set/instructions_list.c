@@ -15028,7 +15028,83 @@ void __bea_callspec__ palignr_(PDISASM pMyDisasm)
   }
 }
 
+/* ====================================================================
+*      0x 0f 3a 18
+* ==================================================================== */
+void __bea_callspec__ vinsertf128(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vinsertf32x4 ");
+        #endif
+        GV.EVEX.tupletype = TUPLE4;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vinsertf64x2 ");
+        #endif
+        GV.EVEX.tupletype = TUPLE2;
+      }
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.MemDecoration = Arg3_m128_xmm;
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.Register_ = AVX_REG;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.Register_ = AVX512_REG;
+      }
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = SSE_REG;
+      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.REX.W_ == 0) {
+        if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vinsertf128 ");
+        #endif
+        (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
+        GV.MemDecoration = Arg3_m128_xmm;
+        if (GV.VEX.L == 0) {
+          GV.Register_ = SSE_REG;
+        }
+        else {
+          GV.Register_ = AVX_REG;
+        }
+        Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+        fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+        GV.Register_ = SSE_REG;
+        MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+        GV.EIP_ += GV.DECALAGE_EIP+2;
+        getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
 
+}
 /* ====================================================================
 *      0x 0f 38 13
 * ==================================================================== */
