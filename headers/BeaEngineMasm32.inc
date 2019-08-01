@@ -111,6 +111,7 @@ _Disasm STRUCT
     Argument3       ARGTYPE <>
     Argument4       ARGTYPE <>
     Prefix          PREFIXINFO <>
+    Status          DWORD   0
     Reserved_       DWORD   48 dup(0)
 _Disasm ENDS
 
@@ -337,7 +338,7 @@ Disasm  PROTO :DWORD
     ; ************ SPECIAL_INFO
 
     UNKNOWN_OPCODE              equ -1
-    OUT_OF_BLOCK                equ 0
+    OUT_OF_BLOCK                equ -2
     NoTabulation                equ 0
     Tabulation                  equ 1
     MasmSyntax                  equ 0

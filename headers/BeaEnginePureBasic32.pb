@@ -113,6 +113,7 @@ Structure _Disasm
   Argument3.ARGTYPE
   Argument4.ARGTYPE
   Prefix.PREFIXINFO
+  Status.l
   Reserved_.l[48]
 EndStructure
 Global MyDisasm._Disasm
@@ -333,7 +334,7 @@ Global MyDisasm._Disasm
 
 ; ************ SPECIAL_REG
 #UNKNOWN_OPCODE              = -1
-#OUT_OF_BLOCK                = 0
+#OUT_OF_BLOCK                = -2
 #NoTabulation                = 0
 #Tabulation                  = 1
 #MasmSyntax                  = 0

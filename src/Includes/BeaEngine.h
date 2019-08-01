@@ -446,7 +446,7 @@ enum ARGUMENTS_TYPE
 enum SPECIAL_INFO
 {
   UNKNOWN_OPCODE = -1,
-  OUT_OF_BLOCK = 0,
+  OUT_OF_BLOCK = -2,
 
   /* === mask = 0xff */
   NoTabulation      = 0x00000000,

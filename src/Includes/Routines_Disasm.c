@@ -23,12 +23,13 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm)
 {
   if (InitVariables(pMyDisasm)) {
     (void) AnalyzeOpcode(pMyDisasm);
+    (*pMyDisasm).Status = GV.ERROR_OPCODE;
     if (!GV.OutOfBlock) {
       if (GV.ERROR_OPCODE == UNKNOWN_OPCODE) {
         #ifndef BEA_LIGHT_DISASSEMBLY
         BuildCompleteInstruction(pMyDisasm);
-        #endif        
-        return -1;
+        #endif
+        return UNKNOWN_OPCODE;
       }
       else {
         FixArgSizeForMemoryOperand(pMyDisasm);
@@ -42,11 +43,11 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm)
       }
     }
     else {
-      return 0;
+      return OUT_OF_BLOCK;
     }
   }
   else {
-    return -1;
+    return UNKNOWN_OPCODE;
   }
 }
 

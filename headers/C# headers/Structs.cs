@@ -126,6 +126,7 @@ namespace Bea
     public ArgumentType Argument3;
     public ArgumentType Argument4;
     public PrefixInfo Prefix;
+    public Int32 Status;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 48, ArraySubType = UnmanagedType.U4)]
     UInt32[] Reserved_;
   }

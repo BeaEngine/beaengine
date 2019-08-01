@@ -161,6 +161,7 @@ uses Windows,SysUtils;
           Argument3 : TARGTYPE;
           Argument4 : TARGTYPE;
           Prefix : TPREFIXINFO;
+          Status : longint;
           Reserved_ : array[0..48] of longint;
        end;
      TDISASM = _Disasm;
@@ -364,7 +365,7 @@ uses Windows,SysUtils;
      SPECIAL_INFO =  Longint;
      Const
        UNKNOWN_OPCODE = -(1);
-       OUT_OF_BLOCK = 0;
+       OUT_OF_BLOCK = -(2);
   { === mask = 0xff }
        NoTabulation = $00000000;
        Tabulation = $00000001;

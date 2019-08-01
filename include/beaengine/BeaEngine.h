@@ -216,6 +216,7 @@ typedef struct _Disasm {
    ARGTYPE Argument3;
    ARGTYPE Argument4;
    PREFIXINFO Prefix;
+   Int32 Status;
    InternalDatas Reserved_;
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()
@@ -446,7 +447,7 @@ enum ARGUMENTS_TYPE
 enum SPECIAL_INFO
 {
   UNKNOWN_OPCODE = -1,
-  OUT_OF_BLOCK = 0,
+  OUT_OF_BLOCK = -2,
 
   /* === mask = 0xff */
   NoTabulation      = 0x00000000,

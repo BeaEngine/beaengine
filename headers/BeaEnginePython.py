@@ -184,6 +184,7 @@ class INSTRUCTION(Structure):
                ("Argument3", ARGTYPE),
                ("Argument4", ARGTYPE),
                ("Prefix", PREFIXINFO),
+               ("Status", c_int32),
                ("Reserved_", InternalDatas)]
 
 # ======================= PREFIXES
@@ -195,7 +196,7 @@ InvalidPrefix = 4
 MandatoryPrefix = 8
 
 UNKNOWN_OPCODE = -1
-OUT_OF_BLOCK = 0
+OUT_OF_BLOCK = -2
 
 # ======================= OPTIONS
 NoTabulation = 0
@@ -399,9 +400,6 @@ REG28 = 0x10000000
 REG29 = 0x20000000
 REG30 = 0x40000000
 REG31 = 0x80000000
-
-UNKNOWN_OPCODE = -1
-OUT_OF_BLOCK = 0
 
 # Exceptions codes
 UD_ = 2

@@ -116,6 +116,7 @@ STRUC _Disasm
     Argument3:       resb   ARGTYPE_size
     Argument4:       resb   ARGTYPE_size
     Prefix:          resb   PREFIXINFO_size
+    Status:          resd   1
     Reserved_        resd   48
 ENDSTRUC
 
@@ -338,7 +339,7 @@ ENDSTRUC
     ; ************ SPECIAL_REG
 
     UNKNOWN_OPCODE              equ -1
-    OUT_OF_BLOCK                equ 0
+    OUT_OF_BLOCK                equ -2
     NoTabulation                equ 0
     Tabulation                  equ 1
     MasmSyntax                  equ 0

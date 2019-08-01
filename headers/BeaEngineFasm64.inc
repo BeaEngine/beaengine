@@ -118,6 +118,7 @@ struct _Disasm
     Argument3       ARGTYPE
     Argument4       ARGTYPE
     Prefix          PREFIXINFO
+    Status          dd   0
     Reserved_       dd   48 dup(0)
 ends
 
@@ -341,7 +342,7 @@ ends
     ; ************ SPECIAL_REG
 
     UNKNOWN_OPCODE              equ -1
-    OUT_OF_BLOCK                equ 0
+    OUT_OF_BLOCK                equ -2
     NoTabulation                equ 0
     Tabulation                  equ 1
     MasmSyntax                  equ 0

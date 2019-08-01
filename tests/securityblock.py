@@ -26,7 +26,7 @@ class TestSuite:
         if myDisasm.instr.SecurityBlock != 0:
             myDisasm.read()
             if myDisasm.length != -1:
-                assert_equal(myDisasm.length, 0)
+                assert_equal(myDisasm.length, OUT_OF_BLOCK)
 
     def disasmVEX0F(self, i):
 
@@ -893,7 +893,7 @@ class TestSuite:
             myDisasm = Disasm(Buffer)
             myDisasm.instr.SecurityBlock = i
             myDisasm.read()
-            assert_equal(myDisasm.length, 0)
+            assert_equal(myDisasm.length, OUT_OF_BLOCK)
 
         # SecurityBlock if MOD == 0 and RM = 5
 
@@ -911,7 +911,7 @@ class TestSuite:
             myDisasm = Disasm(Buffer)
             myDisasm.instr.SecurityBlock = i
             myDisasm.read()
-            assert_equal(myDisasm.length, 0)
+            assert_equal(myDisasm.length, OUT_OF_BLOCK)
 
         # SecurityBlock if MOD == 1 (disp8)
 
@@ -925,7 +925,7 @@ class TestSuite:
             myDisasm = Disasm(Buffer)
             myDisasm.instr.SecurityBlock = i
             myDisasm.read()
-            assert_equal(myDisasm.length, 0)
+            assert_equal(myDisasm.length, OUT_OF_BLOCK)
 
         # SecurityBlock if MOD == 1 (disp8) and RM == 4 (SIB enabled)
 
@@ -935,7 +935,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.instr.SecurityBlock = len(Buffer) - 1
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
 
         myVEX = VEX('VEX.128.66.0F38.WIG')
         myVEX.vvvv = 0b1111
@@ -954,7 +954,7 @@ class TestSuite:
         myDisasm.instr.SecurityBlock = len(Buffer) - 1
         offset = myDisasm.instr.offset
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.instr.Reserved_.EIP_ - offset, myDisasm.instr.SecurityBlock)
         assert_equal(myDisasm.instr.Argument1.Memory.Displacement, 0)
 
@@ -975,7 +975,7 @@ class TestSuite:
         myDisasm.instr.VirtualAddr = 0x400000
         offset = myDisasm.instr.offset
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.instr.Reserved_.EIP_ - offset, 3)
         assert_equal(myDisasm.instr.Reserved_.MOD_, 0)
         assert_equal(myDisasm.instr.Reserved_.RM_, 0)
@@ -987,7 +987,7 @@ class TestSuite:
         myDisasm.instr.VirtualAddr = 0x400000
         offset = myDisasm.instr.offset
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.instr.Reserved_.EIP_ - offset, 0)
         assert_equal(myDisasm.instr.Reserved_.MOD_, 0)
         assert_equal(myDisasm.instr.Reserved_.RM_, 0)
@@ -998,7 +998,7 @@ class TestSuite:
         myDisasm.instr.VirtualAddr = 0x400000
         offset = myDisasm.instr.offset
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.instr.Reserved_.MOD_, 0)
         assert_equal(myDisasm.instr.Reserved_.RM_, 0)
         assert_equal(myDisasm.instr.Reserved_.EIP_ - offset, 3)
@@ -1009,7 +1009,7 @@ class TestSuite:
         myDisasm.instr.VirtualAddr = 0x400000
         offset = myDisasm.instr.offset
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.instr.Reserved_.EIP_ - offset, 0)
 
         Buffer = '691011223344'.decode('hex')
@@ -1017,7 +1017,7 @@ class TestSuite:
         myDisasm.instr.SecurityBlock = 5
         offset = myDisasm.instr.offset
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.instr.Reserved_.EIP_ - offset, 2)
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x69)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'imul ')
@@ -1028,7 +1028,7 @@ class TestSuite:
         myDisasm.instr.SecurityBlock = 2
         offset = myDisasm.instr.offset
         myDisasm.read()
-        assert_equal(myDisasm.length, 0)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.instr.Reserved_.EIP_ - offset, 2)
         assert_equal(myDisasm.instr.Instruction.Opcode, 0x6b)
         assert_equal(myDisasm.instr.Instruction.Mnemonic, 'imul ')

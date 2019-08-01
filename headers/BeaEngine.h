@@ -137,6 +137,7 @@ typedef struct _Disasm {
    ARGTYPE Argument3;
    ARGTYPE Argument4;
    PREFIXINFO Prefix;
+   Int32 Status;
    UInt32 Reserved_[48];
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()
@@ -190,7 +191,7 @@ enum INSTRUCTION_TYPE
   FXSR_INSTRUCTION              =          0x1d0000,
   XSAVE_INSTRUCTION             =          0x1e0000,
   SGX_INSTRUCTION               =          0x1f0000,
-  
+
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
     LOGICAL_INSTRUCTION,
@@ -338,7 +339,7 @@ enum ARGUMENTS_TYPE
 enum SPECIAL_INFO
 {
   UNKNOWN_OPCODE = -1,
-  OUT_OF_BLOCK = 0,
+  OUT_OF_BLOCK = -2,
 
   /* === mask = 0xff */
   NoTabulation      = 0x00000000,
@@ -360,6 +361,8 @@ enum SPECIAL_INFO
   ShowEVEXMasking   = 0x02000000
 };
 
+#define UD_   2
+#define DE__  3
 
 #ifdef __cplusplus
 extern "C" {
