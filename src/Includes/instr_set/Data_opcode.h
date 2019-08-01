@@ -106,7 +106,7 @@ void (__bea_callspec__ *opcode_map2[])(PDISASM) = {
     vpermq_   , vpermpd   , vpblendd  , valignd   , vpermilps2, vpermilpd2, vperm2f128, FailDecode, roundps_  , roundpd_     , roundss_     , roundsd_      , blendps_  , blendpd_  , pblendw_  , palignr_  ,
     FailDecode, FailDecode, FailDecode, FailDecode, pextrb_   , pextrw2_  , pextrd_   , extractps_,vinsertf128, vextractf128 , vinsertf32x8 , vextractf32x8 , FailDecode, vcvtps2ph , vpcmpccud , vpcmpccd  ,
     pinsrb_   , insertps_ , pinsrd_   , vshuff32x4, FailDecode, vpternlogd, vgetmantps, vgetmantss, FailDecode, FailDecode   , FailDecode   , FailDecode    , FailDecode, FailDecode, FailDecode, FailDecode,
-    kshiftrb  , kshiftrd  , kshiftlb  , kshiftld  , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode   , FailDecode   , FailDecode    , FailDecode, FailDecode, FailDecode, FailDecode,
+    kshiftrb  , kshiftrd  , kshiftlb  , kshiftld  , FailDecode, FailDecode, FailDecode, FailDecode, FailDecode, FailDecode   , FailDecode   , FailDecode    , FailDecode, FailDecode, vpcmpccub , vpcmpccb  ,
     dpps_     , dppd_     , mpsadbw_  , vshufi32x4, pclmulqdq_, FailDecode, vperm2i128, FailDecode, FailDecode, FailDecode   , blendvps_    , blendvpd_     , pblendvb_ , FailDecode, FailDecode, FailDecode,
     vrangeps  , vrangess  , FailDecode, FailDecode, vfixupmmps, vfixupmmss, vreduceps , vreducess , FailDecode, FailDecode   , FailDecode   , FailDecode    , FailDecode, FailDecode, FailDecode, FailDecode,
     pcmpestrm_, pcmpestri_, pcmpistrm_, pcmpistri_, FailDecode, FailDecode, vfpclassps, vfpclassss, FailDecode, FailDecode   , FailDecode   , FailDecode    , FailDecode, FailDecode, FailDecode, FailDecode,

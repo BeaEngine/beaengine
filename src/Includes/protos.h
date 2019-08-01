@@ -680,6 +680,8 @@ void __bea_callspec__ vreduceps(PDISASM);
 void __bea_callspec__ vfpclassps(PDISASM);
 void __bea_callspec__ vgetmantps(PDISASM);
 void __bea_callspec__ vgetmantss(PDISASM);
+void __bea_callspec__ vpcmpccb(PDISASM);
+void __bea_callspec__ vpcmpccub(PDISASM);
 void __bea_callspec__ vrangess(PDISASM);
 void __bea_callspec__ vfixupmmss(PDISASM);
 void __bea_callspec__ vreducess(PDISASM);
