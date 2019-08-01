@@ -216,7 +216,7 @@ typedef struct _Disasm {
    ARGTYPE Argument3;
    ARGTYPE Argument4;
    PREFIXINFO Prefix;
-   Int32 Status;
+   Int32 Error;
    InternalDatas Reserved_;
 } DISASM, *PDISASM, *LPDISASM;
 #pragma pack()

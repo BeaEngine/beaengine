@@ -23,7 +23,7 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm)
 {
   if (InitVariables(pMyDisasm)) {
     (void) AnalyzeOpcode(pMyDisasm);
-    (*pMyDisasm).Status = GV.ERROR_OPCODE;
+    (*pMyDisasm).Error = GV.ERROR_OPCODE;
     if (!GV.OutOfBlock) {
       if (GV.ERROR_OPCODE == UNKNOWN_OPCODE) {
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -43,6 +43,7 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm)
       }
     }
     else {
+      (*pMyDisasm).Error = OUT_OF_BLOCK;
       return OUT_OF_BLOCK;
     }
   }
@@ -127,6 +128,7 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
   GV.FORMATNUMBER = (UInt32)(*pMyDisasm).Options & PrefixedNumeral;
   GV.SEGMENTREGS = (UInt32)(*pMyDisasm).Options & ShowSegmentRegs;
   GV.OutOfBlock = 0;
+  GV.ERROR_OPCODE = 0;
   GV.EVEX.masking = MERGING_ZEROING;
   return 1;
 }
@@ -889,6 +891,7 @@ int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
 {
   if ((GV.EndOfBlock != 0) && (GV.EIP_+(UInt64)len >= GV.EndOfBlock)) {
     GV.OutOfBlock = 1;
+    GV.ERROR_OPCODE = OUT_OF_BLOCK;
     return 0;
   }
   return 1;

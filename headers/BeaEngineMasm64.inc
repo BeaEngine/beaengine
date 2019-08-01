@@ -111,7 +111,7 @@ _Disasm STRUCT
     Argument3       ARGTYPE <>
     Argument4       ARGTYPE <>
     Prefix          PREFIXINFO <>
-    Status          DWORD   0
+    Error          DWORD   0
     Reserved_       DWORD   48 dup(0)
 _Disasm ENDS
 

@@ -116,7 +116,7 @@ STRUC _Disasm
     Argument3:       resb   ARGTYPE_size
     Argument4:       resb   ARGTYPE_size
     Prefix:          resb   PREFIXINFO_size
-    Status:          resd   1
+    Error:          resd   1
     Reserved_        resd   48
 ENDSTRUC
 

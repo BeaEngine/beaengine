@@ -33,7 +33,7 @@ int Disasm(
 
 **Return**
 
-The function may sends you back 3 values. if it has analyzed an invalid opcode, it sends back UNKNOWN_OPCODE (-1). If it tried to read a byte located outside the Security Block, it sends back OUT_OF_BLOCK (-2). In others cases, it sends back the length instruction. Thus, you can use it as a LDE. To have a detailed status, use **infos.status** field.
+The function may sends you back 3 values. if it has analyzed an invalid opcode, it sends back UNKNOWN_OPCODE (-1). If it tried to read a byte located outside the Security Block, it sends back OUT_OF_BLOCK (-2). In others cases, it sends back the length instruction. Thus, you can use it as a LDE. To have a detailed status, use **infos.Error** field.
 
 
 # 2. Disasm infos
@@ -54,7 +54,7 @@ struct PDISASM {
   ARGTYPE Argument3;
   ARGTYPE Argument4;
   PREFIXINFO Prefix;
-  Int32 Status;
+  Int32 Error;
   UInt32 Reserved_[48];
 };
 ```
@@ -78,7 +78,7 @@ struct PDISASM {
  - **Argument3** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the third operand.
  - **Argument4** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the fourth operand.  
  - **Prefix** : *[out]* Structure **[PREFIXINFO](#5-prefixes-infos)** containing an exhaustive list of used prefixes.
- - **Status** : *[out]* This field returns the status of the disassemble process :
+ - **Error** : *[out]* This field returns the status of the disassemble process :
    - **Success** : (0) instruction has been recognized by the engine
    - **Out of block** : (-2) instruction length is out of SecurityBlock
    - **Unknown opcode** : (-1) instruction is not recognized by the engine

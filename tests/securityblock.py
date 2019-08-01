@@ -25,8 +25,8 @@ class TestSuite:
         myDisasm.instr.SecurityBlock = len(buffer) - 1
         if myDisasm.instr.SecurityBlock != 0:
             myDisasm.read()
-            if myDisasm.length != -1:
-                assert_equal(myDisasm.length, OUT_OF_BLOCK)
+            if myDisasm.length != UNKNOWN_OPCODE:
+                assert_equal(myDisasm.instr.Error, OUT_OF_BLOCK)
 
     def disasmVEX0F(self, i):
 
@@ -662,9 +662,7 @@ class TestSuite:
             self.disasm0FNoImm(i)
 
         for i in range(0x24, 0x30):
-            print(i)
             self.disasm0FNoImm(i)
-
 
 
         for i in range(0,0x77):

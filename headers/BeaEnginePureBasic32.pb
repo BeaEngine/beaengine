@@ -113,7 +113,7 @@ Structure _Disasm
   Argument3.ARGTYPE
   Argument4.ARGTYPE
   Prefix.PREFIXINFO
-  Status.l
+  Error.l
   Reserved_.l[48]
 EndStructure
 Global MyDisasm._Disasm

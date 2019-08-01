@@ -161,7 +161,7 @@ uses Windows,SysUtils;
           Argument3 : TARGTYPE;
           Argument4 : TARGTYPE;
           Prefix : TPREFIXINFO;
-          Status : longint;
+          Error : longint;
           Reserved_ : array[0..48] of longint;
        end;
      TDISASM = _Disasm;

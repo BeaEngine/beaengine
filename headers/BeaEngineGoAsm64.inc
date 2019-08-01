@@ -112,7 +112,7 @@ _Disasm STRUCT
     Argument3       ARGTYPE <>
     Argument4       ARGTYPE <>
     Prefix          PREFIXINFO <>
-    Status          dd   0
+    Error          dd   0
     Reserved_       dd   48 dup 0
 _Disasm ENDS
 

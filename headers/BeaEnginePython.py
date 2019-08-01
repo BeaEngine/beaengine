@@ -184,7 +184,7 @@ class INSTRUCTION(Structure):
                ("Argument3", ARGTYPE),
                ("Argument4", ARGTYPE),
                ("Prefix", PREFIXINFO),
-               ("Status", c_int32),
+               ("Error", c_int32),
                ("Reserved_", InternalDatas)]
 
 # ======================= PREFIXES
