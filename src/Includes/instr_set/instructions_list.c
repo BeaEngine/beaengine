@@ -11484,6 +11484,77 @@ void __bea_callspec__ blendvps_(PDISASM pMyDisasm)
   }
 }
 
+/* ====================================================================
+*      0x 0f 3a 1e
+* ==================================================================== */
+void __bea_callspec__ vpcmpccd(PDISASM pMyDisasm)
+{
+  UInt8 Imm8;
+
+  char pseudoOpcodes_ud[8][16] = {
+    "vpcmpeqd ",
+    "vpcmpltd ",
+    "vpcmpled ",
+    "vpcmpfalsed ",
+    "vpcmpneqd ",
+    "vpcmpnltd ",
+    "vpcmpnled ",
+    "vpcmptrued "
+  };
+  char pseudoOpcodes_uq[8][16] = {
+    "vpcmpeqq ",
+    "vpcmpltq ",
+    "vpcmpleq ",
+    "vpcmpfalseq ",
+    "vpcmpneqq ",
+    "vpcmpnltq ",
+    "vpcmpnleq ",
+    "vpcmptrueq "
+  };
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      GV.EVEX.tupletype = FULL;
+      GV.EVEX.masking = MERGING;
+      (*pMyDisasm).Argument1.AccessMode = READ;
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.Register_ = OPMASK_REG;
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+        GV.MemDecoration = Arg3_m128_xmm;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.Register_ = AVX_REG;
+        GV.MemDecoration = Arg3_m256_ymm;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.Register_ = AVX512_REG;
+        GV.MemDecoration = Arg3_m512_zmm;
+      }
+      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      Imm8 = (*pMyDisasm).Instruction.Immediat & 0x7;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes_ud[Imm8]);
+        #endif
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, pseudoOpcodes_uq[Imm8]);
+        #endif
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 3a 1e
