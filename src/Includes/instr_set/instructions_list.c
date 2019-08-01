@@ -15107,6 +15107,108 @@ void __bea_callspec__ vextractf128(PDISASM pMyDisasm)
 }
 
 
+/* ====================================================================
+*      0x 0f 3a 1b
+* ==================================================================== */
+void __bea_callspec__ vextractf32x8(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vextractf32x8 ");
+        #endif
+        GV.EVEX.tupletype = TUPLE8;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vextractf64x4 ");
+        #endif
+        GV.EVEX.tupletype = TUPLE4;
+      }
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.MemDecoration = Arg3_m256_ymm;
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.Register_ = AVX_REG;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.Register_ = AVX512_REG;
+      }
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = AVX_REG;
+      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
+}
+
+/* ====================================================================
+*      0x 0f 3a 1a
+* ==================================================================== */
+void __bea_callspec__ vinsertf32x8(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
+      if (GV.EVEX.W == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vinsertf32x8 ");
+        #endif
+        GV.EVEX.tupletype = TUPLE8;
+      }
+      else {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vinsertf64x4 ");
+        #endif
+        GV.EVEX.tupletype = TUPLE4;
+      }
+      (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
+      GV.MemDecoration = Arg3_m256_ymm;
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+      }
+      else if (GV.VEX.L == 0x1) {
+        GV.Register_ = AVX_REG;
+      }
+      else if (GV.EVEX.LL == 0x2) {
+        GV.Register_ = AVX512_REG;
+      }
+      Reg_Opcode(&(*pMyDisasm).Argument1, pMyDisasm);
+      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument2, pMyDisasm);
+      GV.Register_ = AVX_REG;
+      MOD_RM(&(*pMyDisasm).Argument3, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+
+}
+
 
 /* ====================================================================
 *      0x 0f 3a 18
