@@ -597,6 +597,7 @@ void __bea_callspec__ getsec_(PDISASM);
 void __bea_callspec__ rdmsr_(PDISASM);
 void __bea_callspec__ rdpmc_(PDISASM);
 void __bea_callspec__ rsm_(PDISASM);
+void __bea_callspec__ rorx_(PDISASM);
 void __bea_callspec__ rcpps_(PDISASM);
 void __bea_callspec__ roundpd_(PDISASM);
 void __bea_callspec__ roundps_(PDISASM);

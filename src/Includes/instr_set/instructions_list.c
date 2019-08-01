@@ -15437,6 +15437,34 @@ void __bea_callspec__ pcmpistri_(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+*      0x 0f 3a f0
+* ==================================================================== */
+void __bea_callspec__ rorx_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 3) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "rorx ");
+      #endif
+      if (GV.VEX.L != 0) GV.ERROR_OPCODE = UD_;
+      GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
+      GV.MemDecoration = (GV.REX.W_ == 1) ? Arg2qword : Arg2dword;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
 *      0x 0f 3a 73
 * ==================================================================== */
 void __bea_callspec__ vpshrdd(PDISASM pMyDisasm)
