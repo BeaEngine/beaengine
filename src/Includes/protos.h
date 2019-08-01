@@ -688,6 +688,7 @@ void __bea_callspec__ vpshrdw(PDISASM);
 void __bea_callspec__ vfpclassss(PDISASM);
 void __bea_callspec__ vcvtph2ps_(PDISASM);
 void __bea_callspec__ vinsertf128(PDISASM);
+void __bea_callspec__ vextractf128(PDISASM);
 void __bea_callspec__ vpexpandb_(PDISASM);
 void __bea_callspec__ vpcompressb_(PDISASM);
 void __bea_callspec__ vpternlogd(PDISASM);
