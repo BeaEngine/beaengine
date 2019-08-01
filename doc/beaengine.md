@@ -33,7 +33,7 @@ int Disasm(
 
 **Return**
 
-The function may sends you back 3 values. if it has analyzed an invalid opcode, it sends back UNKNOWN_OPCODE (-1). If it tried to read a byte located outside the Security Block, it sends back OUT_OF_RANGE (-2). In others cases, it sends back the length instruction. Thus, you can use it as a LDE. To have a detailed status, use **infos.status** field.
+The function may sends you back 3 values. if it has analyzed an invalid opcode, it sends back UNKNOWN_OPCODE (-1). If it tried to read a byte located outside the Security Block, it sends back OUT_OF_BLOCK (-2). In others cases, it sends back the length instruction. Thus, you can use it as a LDE. To have a detailed status, use **infos.status** field.
 
 
 # 2. Disasm infos
