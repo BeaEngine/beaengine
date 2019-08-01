@@ -11247,51 +11247,45 @@ void __bea_callspec__ sha1rnds4_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ blendps_(PDISASM pMyDisasm)
 {
-   /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-
-       if (GV.VEX.state == InUsePrefix) {
-          (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-           (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
-           #ifndef BEA_LIGHT_DISASSEMBLY
-              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vblendps ");
-           #endif
-
-           if (GV.VEX.L == 0) {
-               GV.Register_ = SSE_REG;
-               GxEx(pMyDisasm);
-               GV.MemDecoration = Arg2_m128_xmm;
-
-           }
-           else {
-               GV.Register_ = AVX_REG;
-               GxEx(pMyDisasm);
-               GV.MemDecoration = Arg2_m256_ymm;
-
-
-           }
-
-           getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-
-       }
-       else {
-           GV.OperandSize = GV.OriginalOperandSize;
-           (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-           GV.MemDecoration = Arg2_m128_xmm;
-           (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+PACKED_BLENDING_INSTRUCTION;
-           #ifndef BEA_LIGHT_DISASSEMBLY
-              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blendps ");
-           #endif
-           GV.Register_ = SSE_REG;
-           GxEx(pMyDisasm);
-
-           getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-       }
-
-   }
-   else {
-       FailDecode(pMyDisasm);
-   }
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  /* ========== 0x66 */
+  else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    if (GV.VEX.state == InUsePrefix) {
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + PACKED_BLENDING_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vblendps ");
+      #endif
+      if (GV.VEX.L == 0) {
+        GV.Register_ = SSE_REG;
+        GxEx(pMyDisasm);
+        GV.MemDecoration = Arg2_m128_xmm;
+      }
+      else {
+        GV.Register_ = AVX_REG;
+        GxEx(pMyDisasm);
+        GV.MemDecoration = Arg2_m256_ymm;
+      }
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+    else {
+      GV.OperandSize = GV.OriginalOperandSize;
+      (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+      GV.MemDecoration = Arg2_m128_xmm;
+      (*pMyDisasm).Instruction.Category = SSE41_INSTRUCTION+PACKED_BLENDING_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blendps ");
+      #endif
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+    }
+  }
+  else {
+     FailDecode(pMyDisasm);
+  }
 }
 
 
@@ -17790,6 +17784,7 @@ void __bea_callspec__ roundpd_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrndscalepd ");
         #endif
+        GV.EVEX.tupletype = FULL;
         ArgsVEX_GxEx(pMyDisasm);
         getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
       }
@@ -17843,6 +17838,7 @@ void __bea_callspec__ roundps_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vrndscaleps ");
         #endif
+        GV.EVEX.tupletype = FULL;
         ArgsVEX_GxEx(pMyDisasm);
         getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
       }
