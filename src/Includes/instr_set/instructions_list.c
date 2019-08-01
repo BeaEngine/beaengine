@@ -15436,6 +15436,33 @@ void __bea_callspec__ pcmpistri_(PDISASM pMyDisasm)
 
 }
 
+/* ====================================================================
+*      0x 0f 3a 72
+* ==================================================================== */
+void __bea_callspec__ vpshrdw(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      if (GV.EVEX.W == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpshrdw ");
+        #endif
+        GV.EVEX.tupletype = FULL_MEM;
+        ArgsVEX(pMyDisasm);
+        getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 3a 70
