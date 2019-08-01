@@ -14993,30 +14993,39 @@ void __bea_callspec__ orps_VW(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ palignr_(PDISASM pMyDisasm)
 {
-   (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
-   /* ========== 0x66 */
-   if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
-       GV.OperandSize = GV.OriginalOperandSize;
-       (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
-       GV.MemDecoration = Arg2_m128_xmm;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "palignr ");
-       #endif
-       GV.Register_ = SSE_REG;
-       GxEx(pMyDisasm);
+  if (GV.VEX.state == InUsePrefix) {
+    if (GV.VEX.pp == 1) {
+      #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vpalignr ");
+      #endif
+      if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL_MEM;
+      ArgsVEX(pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Argument4, pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
+    /* ========== 0x66 */
+    if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+     GV.OperandSize = GV.OriginalOperandSize;
+     (*pMyDisasm).Prefix.OperandSize = MandatoryPrefix;
+     GV.MemDecoration = Arg2_m128_xmm;
+     GV.Register_ = SSE_REG;
+    }
+    else {
+     GV.MemDecoration = Arg2qword;
+     GV.Register_ = MMX_REG;
+    }
+    #ifndef BEA_LIGHT_DISASSEMBLY
+     (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "palignr ");
+    #endif
 
-       getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-   }
-   else {
-       GV.MemDecoration = Arg2qword;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "palignr ");
-       #endif
-       GV.Register_ = MMX_REG;
-       GxEx(pMyDisasm);
-
-       getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
-   }
+    GxEx(pMyDisasm);
+    getImmediat8(&(*pMyDisasm).Argument3, pMyDisasm);
+  }
 }
 
 
