@@ -1,6 +1,6 @@
 # =====================================
 #
-#	BeaEngine 4.x header for Python
+#	BeaEngine 5.x header for Python
 #	using ctypes
 #
 # =====================================
@@ -577,11 +577,11 @@ class Disasm():
         """
         self.buffer = buffer
         self.target = create_string_buffer(buffer,len(buffer))
-        self.instr = INSTRUCTION()
-        #self.instr.Options = PrefixedNumeral
-        self.instr.offset = addressof(self.target) + offset
-        self.instr.VirtualAddr = virtualAddr
-        self.instr.Archi = 64
+        self.infos = INSTRUCTION()
+        #self.infos.Options = PrefixedNumeral
+        self.infos.offset = addressof(self.target) + offset
+        self.infos.VirtualAddr = virtualAddr
+        self.infos.Archi = 64
         self.length = 0
         self.bytes = bytearray()
 
@@ -593,9 +593,9 @@ class Disasm():
             print("%08x" % disasm.seek())   # get offset position
         """
         if offset == -1:
-            return self.instr.offset - addressof(self.target)
+            return self.infos.offset - addressof(self.target)
         else:
-            self.instr.offset = addressof(self.target) + offset
+            self.infos.offset = addressof(self.target) + offset
             return offset
 
     def getBytes(self):
@@ -604,7 +604,7 @@ class Disasm():
         Example:
             print(" ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes))
         """
-        offset = self.instr.offset - addressof(self.target)
+        offset = self.infos.offset - addressof(self.target)
         if self.length == -1:
             self.bytes = self.buffer[offset : offset + 1]
         else:
@@ -614,12 +614,12 @@ class Disasm():
         """
         setter to define next instruction offset
         """
-        if self.length == -1:
-            self.instr.offset += 1
-            self.instr.VirtualAddr += 1
+        if self.infos.Error < 0:
+            self.infos.offset += 1
+            self.infos.VirtualAddr += 1
         else:
-            self.instr.offset = self.instr.offset + self.length
-            self.instr.VirtualAddr= self.instr.VirtualAddr+ self.length
+            self.infos.offset = self.infos.offset + self.length
+            self.infos.VirtualAddr= self.infos.VirtualAddr+ self.length
         self.length = 0
 
     def read(self):
@@ -632,7 +632,7 @@ class Disasm():
                 disasm.read()
         """
         self.getNextOffset()
-        self.length = BeaDisasm(c_void_p(addressof(self.instr)))
+        self.length = BeaDisasm(c_void_p(addressof(self.infos)))
         self.getBytes()
 
         return self.length
@@ -647,10 +647,10 @@ class Disasm():
                 disasm.read()
                 print(disasm.repr())
         """
-        return "{}".format(self.instr.repr.decode("utf-8"))
+        return "{}".format(self.infos.repr.decode("utf-8"))
 
         # return "{} {:<30} {}".format(
         #    "0x%08x" %(self.seek()),
         #    " ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes),
-        #    self.instr.repr.decode("utf-8")
+        #    self.infos.repr.decode("utf-8")
         # )

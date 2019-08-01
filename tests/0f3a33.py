@@ -31,9 +31,9 @@ class TestSuite:
         Buffer = '{}33c911'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x33)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kshiftlq ')
-        assert_equal(myDisasm.instr.repr, 'kshiftlq k1, k1, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x33)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kshiftlq ')
+        assert_equal(myDisasm.infos.repr, 'kshiftlq k1, k1, 11h')
 
         # VEX.L0.66.0F3A.W0 33 /r
         # KSHIFTLD k1, k2, imm8
@@ -43,6 +43,6 @@ class TestSuite:
         Buffer = '{}33e011'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x33)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kshiftld ')
-        assert_equal(myDisasm.instr.repr, 'kshiftld k4, k0, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x33)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kshiftld ')
+        assert_equal(myDisasm.infos.repr, 'kshiftld k4, k0, 11h')

@@ -28,9 +28,9 @@ class TestSuite:
         Buffer = '660f384120'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf3841)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'phminposuw ')
-        assert_equal(myDisasm.instr.repr, 'phminposuw xmm4, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3841)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'phminposuw ')
+        assert_equal(myDisasm.infos.repr, 'phminposuw xmm4, xmmword ptr [rax]')
 
         # VEX.128.66.0F38.WIG 41 /r
         # VPHMINPOSUW xmm1, xmm2/m128
@@ -41,9 +41,9 @@ class TestSuite:
         Buffer = '{}412b'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x41)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphminposuw ')
-        assert_equal(myDisasm.instr.repr, 'vphminposuw xmm5, xmmword ptr [r11]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x41)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vphminposuw ')
+        assert_equal(myDisasm.infos.repr, 'vphminposuw xmm5, xmmword ptr [r11]')
 
 
         myVEX = VEX('VEX.128.L1.66.0F38.WIG')
@@ -52,9 +52,9 @@ class TestSuite:
         Buffer = '{}412b'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x41)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphminposuw ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x41)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vphminposuw ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
 
         myVEX = VEX('VEX.128.66.0F38.WIG')
@@ -63,6 +63,6 @@ class TestSuite:
         Buffer = '{}412b'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x41)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphminposuw ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x41)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vphminposuw ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

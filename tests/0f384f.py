@@ -30,9 +30,9 @@ class TestSuite:
         Buffer = '{}4f20'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x4f)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrsqrt14ss ')
-        assert_equal(myDisasm.instr.repr, 'vrsqrt14ss xmm4, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x4f)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrsqrt14ss ')
+        assert_equal(myDisasm.infos.repr, 'vrsqrt14ss xmm4, xmmword ptr [rax]')
 
 
         # EVEX.LIG.66.0F38.W1 4f /r
@@ -42,6 +42,6 @@ class TestSuite:
         Buffer = '{}4f20'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x4f)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrsqrt14sd ')
-        assert_equal(myDisasm.instr.repr, 'vrsqrt14sd xmm4, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x4f)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrsqrt14sd ')
+        assert_equal(myDisasm.infos.repr, 'vrsqrt14sd xmm4, xmmword ptr [rax]')

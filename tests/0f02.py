@@ -27,9 +27,9 @@ class TestSuite:
         Buffer = '660f02e0'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'lar ')
-        assert_equal(myDisasm.instr.repr, 'lar sp, ax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
+        assert_equal(myDisasm.infos.repr, 'lar sp, ax')
 
         # 0F 02 /r
         # LAR reg, r32/m16
@@ -37,21 +37,21 @@ class TestSuite:
         Buffer = '0f02e0'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'lar ')
-        assert_equal(myDisasm.instr.repr, 'lar esp, eax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
+        assert_equal(myDisasm.infos.repr, 'lar esp, eax')
 
         Buffer = '0f0290'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'lar ')
-        assert_equal(myDisasm.instr.repr, 'lar edx, word ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
+        assert_equal(myDisasm.infos.repr, 'lar edx, word ptr [rax+00000000h]')
 
 
         Buffer = 'f00f02e0'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'lar ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

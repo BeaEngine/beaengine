@@ -30,9 +30,9 @@ class TestSuite:
         Buffer = '{}432011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x43)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vshufi32x4 ')
-        assert_equal(myDisasm.instr.repr, 'vshufi32x4 ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufi32x4 ')
+        assert_equal(myDisasm.infos.repr, 'vshufi32x4 ymm4, ymm0, ymmword ptr [rax], 11h')
 
         # EVEX.512.66.0F3A.W0 43 /r ib
         # vshufi32x4 zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst, imm8
@@ -41,9 +41,9 @@ class TestSuite:
         Buffer = '{}432011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x43)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vshufi32x4 ')
-        assert_equal(myDisasm.instr.repr, 'vshufi32x4 zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufi32x4 ')
+        assert_equal(myDisasm.infos.repr, 'vshufi32x4 zmm4, zmm0, zmmword ptr [rax], 11h')
 
         # EVEX.256.66.0F3A.W1 43 /r ib
         # vshufi64X2 ymm1{k1}{z}, ymm2, ymm3/m256/m64bcst, imm8
@@ -52,9 +52,9 @@ class TestSuite:
         Buffer = '{}432011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x43)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vshufi64x2 ')
-        assert_equal(myDisasm.instr.repr, 'vshufi64x2 ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufi64x2 ')
+        assert_equal(myDisasm.infos.repr, 'vshufi64x2 ymm4, ymm0, ymmword ptr [rax], 11h')
 
         # EVEX.512.66.0F3A.W1 43 /r ib
         # vshufi64x2 zmm1{k1}{z}, zmm2, zmm3/m512/m64bcst, imm8
@@ -63,6 +63,6 @@ class TestSuite:
         Buffer = '{}432011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x43)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vshufi64x2 ')
-        assert_equal(myDisasm.instr.repr, 'vshufi64x2 zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufi64x2 ')
+        assert_equal(myDisasm.infos.repr, 'vshufi64x2 zmm4, zmm0, zmmword ptr [rax], 11h')

@@ -28,9 +28,9 @@ class TestSuite:
         Buffer = '0f37'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'getsec ')
-        assert_equal(myDisasm.instr.repr, 'getsec ')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'getsec ')
+        assert_equal(myDisasm.infos.repr, 'getsec ')
 
 
         # 66 0F 37 /r
@@ -39,9 +39,9 @@ class TestSuite:
         Buffer = '660f37'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'getsec ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'getsec ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # F0 0F 37 /r
         # GETSEC
@@ -49,9 +49,9 @@ class TestSuite:
         Buffer = 'f00f37'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'getsec ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'getsec ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # F2 0F 37 /r
         # GETSEC
@@ -59,9 +59,9 @@ class TestSuite:
         Buffer = 'f20f37'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'getsec ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'getsec ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # F3 0F 37 /r
         # GETSEC
@@ -69,9 +69,9 @@ class TestSuite:
         Buffer = 'f30f37'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'getsec ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'getsec ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
 
         # VEX.NDS.128.0F.WIG 37 /r
@@ -81,7 +81,7 @@ class TestSuite:
         Buffer = '{}37'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, '??? ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, '??? ')
 
         # EVEX.NDS.128.0F.W0 37 /r
         # getsec
@@ -90,4 +90,4 @@ class TestSuite:
         Buffer = '{}37'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, '??? ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, '??? ')

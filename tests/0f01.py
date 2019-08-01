@@ -27,8 +27,8 @@ class TestSuite:
         Buffer = '0f01c0'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'enclv ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'enclv ')
 
         # NP 0F 01 D7
         # ENCLU
@@ -36,8 +36,8 @@ class TestSuite:
         Buffer = '0f01d7'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'enclu ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'enclu ')
 
         # NP 0F 01 CF
         # ENCLS
@@ -45,8 +45,8 @@ class TestSuite:
         Buffer = '0f01cf'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'encls ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'encls ')
 
 
         # F3 0F 01 EA (mod=11, /5, RM=010)
@@ -55,5 +55,5 @@ class TestSuite:
         Buffer = 'f30f01ea'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'saveprevssp ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'saveprevssp ')

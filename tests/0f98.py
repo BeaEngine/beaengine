@@ -27,9 +27,9 @@ class TestSuite:
         Buffer = '0f9800'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f98)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'sets ')
-        assert_equal(myDisasm.instr.repr, 'sets byte ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f98)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'sets ')
+        assert_equal(myDisasm.infos.repr, 'sets byte ptr [rax]')
 
         # VEX.L0.0F.W0 98 /r
         # KORTESTW k1, k2
@@ -39,9 +39,9 @@ class TestSuite:
         Buffer = '{}98da'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x98)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kortestw ')
-        assert_equal(myDisasm.instr.repr, 'kortestw k3, k2')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x98)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kortestw ')
+        assert_equal(myDisasm.infos.repr, 'kortestw k3, k2')
 
         # VEX.L0.66.0F.W0 98 /r
         # KORTESTB k1, k2
@@ -51,9 +51,9 @@ class TestSuite:
         Buffer = '{}98db'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x98)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kortestb ')
-        assert_equal(myDisasm.instr.repr, 'kortestb k3, k3')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x98)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kortestb ')
+        assert_equal(myDisasm.infos.repr, 'kortestb k3, k3')
 
         # VEX.L0.0F.W1 98 /r
         # KORTESTQ k1, k2
@@ -63,9 +63,9 @@ class TestSuite:
         Buffer = '{}98db'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x98)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kortestq ')
-        assert_equal(myDisasm.instr.repr, 'kortestq k3, k3')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x98)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kortestq ')
+        assert_equal(myDisasm.infos.repr, 'kortestq k3, k3')
 
         # VEX.L0.66.0F.W1 98 /r
         # KORTESTD k1, k2
@@ -75,6 +75,6 @@ class TestSuite:
         Buffer = '{}98db'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x98)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kortestd ')
-        assert_equal(myDisasm.instr.repr, 'kortestd k3, k3')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x98)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kortestd ')
+        assert_equal(myDisasm.infos.repr, 'kortestd k3, k3')

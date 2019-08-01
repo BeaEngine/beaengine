@@ -29,9 +29,9 @@ class TestSuite:
         Buffer = '660f3a162011'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f3a16)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'pextrd ')
-        assert_equal(myDisasm.instr.repr, 'pextrd dword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a16)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pextrd ')
+        assert_equal(myDisasm.infos.repr, 'pextrd dword ptr [rax], xmm4, 11h')
 
         # 66 REX.W 0F 3A 16 /r ib
         # PEXTRQ r/m64, xmm2, imm8
@@ -42,9 +42,9 @@ class TestSuite:
 
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f3a16)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'pextrq ')
-        assert_equal(myDisasm.instr.repr, 'pextrq qword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a16)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pextrq ')
+        assert_equal(myDisasm.infos.repr, 'pextrq qword ptr [rax], xmm4, 11h')
 
         # VEX.128.66.0F3A.W0 16 /r ib
         # VPEXTRD r32/m32, xmm2, imm8
@@ -53,9 +53,9 @@ class TestSuite:
         Buffer = '{}16e011'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpextrd ')
-        assert_equal(myDisasm.instr.repr, 'vpextrd r8d, xmm12, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrd ')
+        assert_equal(myDisasm.infos.repr, 'vpextrd r8d, xmm12, 11h')
 
         # VEX.128.66.0F3A.W1 16 /r ib
         # VPEXTRQ r64/m64, xmm2, imm8
@@ -64,9 +64,9 @@ class TestSuite:
         Buffer = '{}16e011'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpextrq ')
-        assert_equal(myDisasm.instr.repr, 'vpextrq r8, xmm12, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrq ')
+        assert_equal(myDisasm.infos.repr, 'vpextrq r8, xmm12, 11h')
 
         # EVEX.128.66.0F3A.W0 16 /r ib
         # VPEXTRD r32/m32, xmm2, imm8
@@ -75,9 +75,9 @@ class TestSuite:
         Buffer = '{}162011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpextrd ')
-        assert_equal(myDisasm.instr.repr, 'vpextrd dword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrd ')
+        assert_equal(myDisasm.infos.repr, 'vpextrd dword ptr [rax], xmm4, 11h')
 
         # EVEX.128.66.0F3A.W1 16 /r ib
         # VPEXTRQ r64/m64, xmm2, imm8
@@ -86,6 +86,6 @@ class TestSuite:
         Buffer = '{}162011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpextrq ')
-        assert_equal(myDisasm.instr.repr, 'vpextrq qword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrq ')
+        assert_equal(myDisasm.infos.repr, 'vpextrq qword ptr [rax], xmm4, 11h')

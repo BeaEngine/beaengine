@@ -28,9 +28,9 @@ class TestSuite:
         Buffer = 'f20ff010'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xff0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'lddqu ')
-        assert_equal(myDisasm.instr.repr, 'lddqu xmm2, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xff0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lddqu ')
+        assert_equal(myDisasm.infos.repr, 'lddqu xmm2, xmmword ptr [rax]')
 
         # VEX.128.F2.0F.WIG F0 /r
         # VLDDQU xmm1, m128
@@ -39,9 +39,9 @@ class TestSuite:
         Buffer = '{}f020'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vlddqu ')
-        assert_equal(myDisasm.instr.repr, 'vlddqu xmm12, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vlddqu ')
+        assert_equal(myDisasm.infos.repr, 'vlddqu xmm12, xmmword ptr [r8]')
 
         # VEX.256.F2.0F.WIG F0 /r
         # VLDDQU ymm1, m256
@@ -50,6 +50,6 @@ class TestSuite:
         Buffer = '{}f020'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vlddqu ')
-        assert_equal(myDisasm.instr.repr, 'vlddqu ymm12, ymmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vlddqu ')
+        assert_equal(myDisasm.infos.repr, 'vlddqu ymm12, ymmword ptr [r8]')

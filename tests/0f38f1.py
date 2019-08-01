@@ -30,9 +30,9 @@ class TestSuite:
         Buffer = '0f38f120'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'movbe ')
-        assert_equal(myDisasm.instr.repr, 'movbe dword ptr [rax], esp')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'movbe ')
+        assert_equal(myDisasm.infos.repr, 'movbe dword ptr [rax], esp')
 
         # REX.W + 0F 38 f1 /r
         # MOVBE m64, r64
@@ -43,9 +43,9 @@ class TestSuite:
         Buffer = '{:02x}0f38f127'.format(myREX.byte()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'movbe ')
-        assert_equal(myDisasm.instr.repr, 'movbe qword ptr [rdi], rsp')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'movbe ')
+        assert_equal(myDisasm.infos.repr, 'movbe qword ptr [rdi], rsp')
 
         # F2 0F 38 F1 /r
         # CRC32 r32, r/m32
@@ -53,9 +53,9 @@ class TestSuite:
         Buffer = 'f20f38f120'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'crc32 ')
-        assert_equal(myDisasm.instr.repr, 'crc32 esp, dword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'crc32 ')
+        assert_equal(myDisasm.infos.repr, 'crc32 esp, dword ptr [rax]')
 
         # F2 REX.W 0F 38 F1 /r
         # CRC32 r64, r/m64
@@ -65,6 +65,6 @@ class TestSuite:
         Buffer = 'f2{:02x}0f38f127'.format(myREX.byte()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'crc32 ')
-        assert_equal(myDisasm.instr.repr, 'crc32 rsp, qword ptr [rdi]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'crc32 ')
+        assert_equal(myDisasm.infos.repr, 'crc32 rsp, qword ptr [rdi]')

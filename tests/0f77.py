@@ -44,8 +44,8 @@ class TestSuite:
         Buffer = '0f77'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f77)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'emms ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f77)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'emms ')
 
         # VEX.256.0F.WIG
         # VZEROALL
@@ -54,9 +54,9 @@ class TestSuite:
         Buffer = '{}77'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x77)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vzeroall ')
-        assert_equal(myDisasm.instr.Instruction.ImplicitModifiedRegs, YMM1|YMM0
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vzeroall ')
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs, YMM1|YMM0
          |YMM2 |YMM3 |YMM4 |YMM5 |YMM6 |YMM7 |YMM8 |YMM9
          |YMM10 |YMM11 |YMM12 |YMM13 |YMM14 |YMM15)
 
@@ -67,9 +67,9 @@ class TestSuite:
         Buffer = '{}77'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x77)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vzeroupper ')
-        assert_equal(myDisasm.instr.Instruction.ImplicitModifiedRegs, YMM1|YMM0
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vzeroupper ')
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs, YMM1|YMM0
          |YMM2 |YMM3 |YMM4 |YMM5 |YMM6 |YMM7 |YMM8 |YMM9
          |YMM10 |YMM11 |YMM12 |YMM13 |YMM14 |YMM15)
 
@@ -81,6 +81,6 @@ class TestSuite:
         Buffer = '{}77'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x77)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vzeroupper ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vzeroupper ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

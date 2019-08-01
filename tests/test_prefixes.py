@@ -31,9 +31,9 @@ class TestSuite:
         Buffer = '0f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addps ')
-        assert_equal(myDisasm.instr.repr, 'addps xmm6, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addps ')
+        assert_equal(myDisasm.infos.repr, 'addps xmm6, xmmword ptr [rax]')
 
 
         # F2 0F 58 /r
@@ -42,9 +42,9 @@ class TestSuite:
         Buffer = 'f20f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addsd ')
-        assert_equal(myDisasm.instr.repr, 'addsd xmm6, qword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsd ')
+        assert_equal(myDisasm.infos.repr, 'addsd xmm6, qword ptr [rax]')
 
         # F3 0F 58 /r
         # ADDSS xmm1, xmm2/m32
@@ -52,9 +52,9 @@ class TestSuite:
         Buffer = 'f30f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addss ')
-        assert_equal(myDisasm.instr.repr, 'addss xmm6, dword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addss ')
+        assert_equal(myDisasm.infos.repr, 'addss xmm6, dword ptr [rax]')
 
 
         # 66 0F 58 /r
@@ -63,9 +63,9 @@ class TestSuite:
         Buffer = '660f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addpd ')
-        assert_equal(myDisasm.instr.repr, 'addpd xmm6, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addpd ')
+        assert_equal(myDisasm.infos.repr, 'addpd xmm6, xmmword ptr [rax]')
 
         # 66 0F 58 /r
         # ADDPD xmm1, xmm2/m128
@@ -73,9 +73,9 @@ class TestSuite:
         Buffer = '66670f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addpd ')
-        assert_equal(myDisasm.instr.repr, 'addpd xmm6, xmmword ptr [eax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addpd ')
+        assert_equal(myDisasm.infos.repr, 'addpd xmm6, xmmword ptr [eax]')
 
         # 66 0F 58 /r
         # ADDPD xmm1, xmm2/m128
@@ -83,9 +83,9 @@ class TestSuite:
         Buffer = '662e0f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addpd ')
-        assert_equal(myDisasm.instr.repr, 'addpd xmm6, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addpd ')
+        assert_equal(myDisasm.infos.repr, 'addpd xmm6, xmmword ptr [rax]')
 
         # F2 0F 58 /r
         # ADDSD xmm1, xmm2/m64
@@ -93,9 +93,9 @@ class TestSuite:
         Buffer = 'f2670f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addsd ')
-        assert_equal(myDisasm.instr.repr, 'addsd xmm6, qword ptr [eax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsd ')
+        assert_equal(myDisasm.infos.repr, 'addsd xmm6, qword ptr [eax]')
 
         # F2 0F 58 /r
         # ADDSD xmm1, xmm2/m64
@@ -103,9 +103,9 @@ class TestSuite:
         Buffer = 'f2660f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addsd ')
-        assert_equal(myDisasm.instr.repr, 'addsd xmm6, qword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsd ')
+        assert_equal(myDisasm.infos.repr, 'addsd xmm6, qword ptr [rax]')
 
         # F3 0F 58 /r
         # ADDSS xmm1, xmm2/m32
@@ -113,9 +113,9 @@ class TestSuite:
         Buffer = 'f3660f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addss ')
-        assert_equal(myDisasm.instr.repr, 'addss xmm6, dword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addss ')
+        assert_equal(myDisasm.infos.repr, 'addss xmm6, dword ptr [rax]')
 
         # F2 0F 58 /r
         # ADDSD xmm1, xmm2/m64
@@ -123,9 +123,9 @@ class TestSuite:
         Buffer = '66f20f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addsd ')
-        assert_equal(myDisasm.instr.repr, 'addsd xmm6, qword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsd ')
+        assert_equal(myDisasm.infos.repr, 'addsd xmm6, qword ptr [rax]')
 
         # F3 0F 58 /r
         # ADDSS xmm1, xmm2/m32
@@ -133,9 +133,9 @@ class TestSuite:
         Buffer = '66f30f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addss ')
-        assert_equal(myDisasm.instr.repr, 'addss xmm6, dword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addss ')
+        assert_equal(myDisasm.infos.repr, 'addss xmm6, dword ptr [rax]')
 
 
         # F3 0F 58 /r
@@ -144,9 +144,9 @@ class TestSuite:
         Buffer = 'f2f30f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addss ')
-        assert_equal(myDisasm.instr.repr, 'addss xmm6, dword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addss ')
+        assert_equal(myDisasm.infos.repr, 'addss xmm6, dword ptr [rax]')
 
         # F2 0F 58 /r
         # ADDSD xmm1, xmm2/m64
@@ -154,9 +154,9 @@ class TestSuite:
         Buffer = 'f3f20f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addsd ')
-        assert_equal(myDisasm.instr.repr, 'addsd xmm6, qword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsd ')
+        assert_equal(myDisasm.infos.repr, 'addsd xmm6, qword ptr [rax]')
 
         # F3 0F 58 /r
         # ADDSS xmm1, xmm2/m32
@@ -164,9 +164,9 @@ class TestSuite:
         Buffer = 'f2f3660f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addss ')
-        assert_equal(myDisasm.instr.repr, 'addss xmm6, dword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addss ')
+        assert_equal(myDisasm.infos.repr, 'addss xmm6, dword ptr [rax]')
 
         # F2 0F 58 /r
         # ADDSD xmm1, xmm2/m64
@@ -174,9 +174,9 @@ class TestSuite:
         Buffer = 'f3f2660f5830'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f58)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'addsd ')
-        assert_equal(myDisasm.instr.repr, 'addsd xmm6, qword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsd ')
+        assert_equal(myDisasm.infos.repr, 'addsd xmm6, qword ptr [rax]')
 
 
         # https://code.google.com/archive/p/corkami/wikis/x86oddities.wiki
@@ -186,30 +186,30 @@ class TestSuite:
         Buffer = '4088ec'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'mov spl, bpl')
+        assert_equal(myDisasm.infos.repr, 'mov spl, bpl')
 
         Buffer = '4f89d8'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'mov r8, r11')
+        assert_equal(myDisasm.infos.repr, 'mov r8, r11')
 
 
         Buffer = '2e00f7'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'add bh, dh')
+        assert_equal(myDisasm.infos.repr, 'add bh, dh')
 
         Buffer = '402e00f7'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'add bh, dh')
+        assert_equal(myDisasm.infos.repr, 'add bh, dh')
 
         Buffer = '4000f7'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'add dil, sil')
+        assert_equal(myDisasm.infos.repr, 'add dil, sil')
 
         Buffer = '402e00f7'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'add bh, dh')
+        assert_equal(myDisasm.infos.repr, 'add bh, dh')

@@ -25,5 +25,5 @@ class TestSuite:
         Buffer = '0f08'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf08)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'invd ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf08)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'invd ')

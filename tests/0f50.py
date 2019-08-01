@@ -27,9 +27,9 @@ class TestSuite:
         Buffer = '0f50e0'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf50')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'movmskps ')
-        assert_equal(myDisasm.instr.repr, 'movmskps rsp, xmm0')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf50')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'movmskps ')
+        assert_equal(myDisasm.infos.repr, 'movmskps rsp, xmm0')
 
         # VEX.128.0F.WIG 50 /r
         # VMOVMSKPS reg, xmm2
@@ -39,9 +39,9 @@ class TestSuite:
         Buffer = '{}50e0'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovmskps ')
-        assert_equal(myDisasm.instr.repr, 'vmovmskps r12, xmm8')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovmskps ')
+        assert_equal(myDisasm.infos.repr, 'vmovmskps r12, xmm8')
 
         # VEX.256.0F.WIG 50 /r
         # VMOVMSKPS reg, ymm2
@@ -50,9 +50,9 @@ class TestSuite:
         Buffer = '{}50e0'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovmskps ')
-        assert_equal(myDisasm.instr.repr, 'vmovmskps r12, ymm8')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovmskps ')
+        assert_equal(myDisasm.infos.repr, 'vmovmskps r12, ymm8')
 
         # 66 0F 50 /r
         # MOVMSKPD reg, xmm
@@ -60,9 +60,9 @@ class TestSuite:
         Buffer = '660f50e0'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf50')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'movmskpd ')
-        assert_equal(myDisasm.instr.repr, 'movmskpd rsp, xmm0')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf50')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'movmskpd ')
+        assert_equal(myDisasm.infos.repr, 'movmskpd rsp, xmm0')
 
         # VEX.128.66.0F.WIG 50 /r
         # VMOVMSKPD reg, xmm2
@@ -71,9 +71,9 @@ class TestSuite:
         Buffer = '{}50e0'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovmskpd ')
-        assert_equal(myDisasm.instr.repr, 'vmovmskpd r12, xmm8')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovmskpd ')
+        assert_equal(myDisasm.infos.repr, 'vmovmskpd r12, xmm8')
 
         # VEX.256.66.0F.WIG 50 /r
         # VMOVMSKPD reg, ymm2
@@ -82,9 +82,9 @@ class TestSuite:
         Buffer = '{}50e0'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmovmskpd ')
-        assert_equal(myDisasm.instr.repr, 'vmovmskpd r12, ymm8')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovmskpd ')
+        assert_equal(myDisasm.infos.repr, 'vmovmskpd r12, ymm8')
 
         #UD If VEX.vvvv ≠ 1111B.
 
@@ -93,5 +93,5 @@ class TestSuite:
         Buffer = '{}50e0'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

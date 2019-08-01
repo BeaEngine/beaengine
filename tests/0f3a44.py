@@ -30,9 +30,9 @@ class TestSuite:
         Buffer = '660f3a442001'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf3a44)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'pclmulhqlqdq ')
-        assert_equal(myDisasm.instr.repr, 'pclmulhqlqdq xmm4, xmmword ptr [rax], 01h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3a44)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pclmulhqlqdq ')
+        assert_equal(myDisasm.infos.repr, 'pclmulhqlqdq xmm4, xmmword ptr [rax], 01h')
 
         # VEX.128.66.0F3A.WIG 44 /r ib
         # VPCLMULQDQ xmm1, xmm2, xmm3/m128, imm8
@@ -41,9 +41,9 @@ class TestSuite:
         Buffer = '{}441033'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x44)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.instr.repr, 'vpclmulqdq xmm10, xmm0, xmmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq xmm10, xmm0, xmmword ptr [r8], 33h')
 
         # VEX.256.66.0F3A.WIG 44 /r /ib
         # VPCLMULQDQ ymm1, ymm2, ymm3/m256, imm8
@@ -52,9 +52,9 @@ class TestSuite:
         Buffer = '{}441033'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x44)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.instr.repr, 'vpclmulqdq ymm10, ymm0, ymmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq ymm10, ymm0, ymmword ptr [r8], 33h')
 
         # EVEX.128.66.0F3A.WIG 44 /r /ib
         # VPCLMULQDQ xmm1, xmm2, xmm3/m128, imm8
@@ -63,9 +63,9 @@ class TestSuite:
         Buffer = '{}442011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x44)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.instr.repr, 'vpclmulqdq xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq xmm4, xmm0, xmmword ptr [rax], 11h')
 
         # EVEX.256.66.0F3A.WIG 44 /r /ib
         # VPCLMULQDQ ymm1, ymm2, ymm3/m256, imm8
@@ -74,9 +74,9 @@ class TestSuite:
         Buffer = '{}442011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x44)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.instr.repr, 'vpclmulqdq ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq ymm4, ymm0, ymmword ptr [rax], 11h')
 
         # EVEX.512.66.0F3A.WIG 44 /r /ib
         # VPCLMULQDQ zmm1, zmm2, zmm3/m512, imm8
@@ -85,6 +85,6 @@ class TestSuite:
         Buffer = '{}442011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x44)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.instr.repr, 'vpclmulqdq zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq zmm4, zmm0, zmmword ptr [rax], 11h')

@@ -27,9 +27,9 @@ class TestSuite:
         Buffer = '660f383190'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f3831)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'pmovzxbd ')
-        assert_equal(myDisasm.instr.repr, 'pmovzxbd xmm2, qword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3831)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pmovzxbd ')
+        assert_equal(myDisasm.infos.repr, 'pmovzxbd xmm2, qword ptr [rax+00000000h]')
 
         # VEX.128.66.0F38.WIG 31 /r
         # vpmovzxbd xmm1, xmm2/m64
@@ -38,9 +38,9 @@ class TestSuite:
         Buffer = '{}3190'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovzxbd ')
-        assert_equal(myDisasm.instr.repr, 'vpmovzxbd xmm10, qword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovzxbd ')
+        assert_equal(myDisasm.infos.repr, 'vpmovzxbd xmm10, qword ptr [r8+00000000h]')
 
         # VEX.256.66.0F38.WIG 31 /r
         # vpmovzxbd ymm1, xmm2/m128
@@ -49,9 +49,9 @@ class TestSuite:
         Buffer = '{}3190'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovzxbd ')
-        assert_equal(myDisasm.instr.repr, 'vpmovzxbd ymm10, xmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovzxbd ')
+        assert_equal(myDisasm.infos.repr, 'vpmovzxbd ymm10, xmmword ptr [r8+00000000h]')
 
         # EVEX.128.66.0F38.WIG 31 /r
         # vpmovzxbd xmm1 {k1}{z}, xmm2/m64
@@ -60,9 +60,9 @@ class TestSuite:
         Buffer = '{}3190'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovzxbd ')
-        assert_equal(myDisasm.instr.repr, 'vpmovzxbd xmm2, qword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovzxbd ')
+        assert_equal(myDisasm.infos.repr, 'vpmovzxbd xmm2, qword ptr [rax+00000000h]')
 
         # EVEX.256.66.0F38.WIG 31 /r
         # vpmovzxbd ymm1 {k1}{z}, xmm2/m128
@@ -71,9 +71,9 @@ class TestSuite:
         Buffer = '{}3190'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovzxbd ')
-        assert_equal(myDisasm.instr.repr, 'vpmovzxbd ymm2, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovzxbd ')
+        assert_equal(myDisasm.infos.repr, 'vpmovzxbd ymm2, xmmword ptr [rax+00000000h]')
 
         # EVEX.512.66.0F38.WIG 31 /r
         # vpmovzxbd zmm1 {k1}{z}, ymm2/m256
@@ -82,9 +82,9 @@ class TestSuite:
         Buffer = '{}3190'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovzxbd ')
-        assert_equal(myDisasm.instr.repr, 'vpmovzxbd zmm2, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovzxbd ')
+        assert_equal(myDisasm.infos.repr, 'vpmovzxbd zmm2, ymmword ptr [rax+00000000h]')
 
         # EVEX.128.F3.0F38.W0 31 /r
         # vpmovdb xmm1/m64 {k1}{z},xmm2
@@ -93,9 +93,9 @@ class TestSuite:
         Buffer = '{}3190'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovdb ')
-        assert_equal(myDisasm.instr.repr, 'vpmovdb qword ptr [rax+00000000h], xmm2')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovdb ')
+        assert_equal(myDisasm.infos.repr, 'vpmovdb qword ptr [rax+00000000h], xmm2')
 
         # EVEX.256.F3.0F38.W0 31 /r
         # vpmovdb xmm1/m128 {k1}{z},ymm2
@@ -104,9 +104,9 @@ class TestSuite:
         Buffer = '{}3190'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovdb ')
-        assert_equal(myDisasm.instr.repr, 'vpmovdb xmmword ptr [rax+00000000h], ymm2')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovdb ')
+        assert_equal(myDisasm.infos.repr, 'vpmovdb xmmword ptr [rax+00000000h], ymm2')
 
         # EVEX.512.F3.0F38.W0 31 /r
         # vpmovdb ymm1/m256 {k1}{z},zmm2
@@ -115,6 +115,6 @@ class TestSuite:
         Buffer = '{}3190'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmovdb ')
-        assert_equal(myDisasm.instr.repr, 'vpmovdb ymmword ptr [rax+00000000h], zmm2')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovdb ')
+        assert_equal(myDisasm.infos.repr, 'vpmovdb ymmword ptr [rax+00000000h], zmm2')

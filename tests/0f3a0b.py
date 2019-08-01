@@ -29,16 +29,16 @@ class TestSuite:
         Buffer = '660f3a0b2011'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f3a0b)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'roundsd ')
-        assert_equal(myDisasm.instr.repr, 'roundsd xmm4, qword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a0b)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'roundsd ')
+        assert_equal(myDisasm.infos.repr, 'roundsd xmm4, qword ptr [rax], 11h')
 
         Buffer = '660f3a0bc011'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f3a0b)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'roundsd ')
-        assert_equal(myDisasm.instr.repr, 'roundsd xmm0, xmm0, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a0b)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'roundsd ')
+        assert_equal(myDisasm.infos.repr, 'roundsd xmm0, xmm0, 11h')
 
         # VEX.LIG.66.0F3A.WIG 0b /r ib
         # Vroundsd xmm1, xmm2, xmm3/m64, imm8
@@ -47,9 +47,9 @@ class TestSuite:
         Buffer = '{}0b1033'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0b)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vroundsd ')
-        assert_equal(myDisasm.instr.repr, 'vroundsd xmm10, xmm0, qword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0b)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vroundsd ')
+        assert_equal(myDisasm.infos.repr, 'vroundsd xmm10, xmm0, qword ptr [r8], 33h')
 
         # EVEX.LIG.66.0F3A.W0 0b /r ib
         # VRNDscalesd xmm1 {k1}{z}, xmm2, xmm3/m64{sae}, imm8
@@ -58,6 +58,6 @@ class TestSuite:
         Buffer = '{}0b2011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0b)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrndscalesd ')
-        assert_equal(myDisasm.instr.repr, 'vrndscalesd xmm4, xmm0, qword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0b)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscalesd ')
+        assert_equal(myDisasm.infos.repr, 'vrndscalesd xmm4, xmm0, qword ptr [rax], 11h')

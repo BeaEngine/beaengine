@@ -31,12 +31,12 @@ class TestSuite:
         Buffer = '{}4bcb'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x4b')
-        assert_equal(myDisasm.instr.Reserved_.VEX.L, 1)
-        assert_equal(myDisasm.instr.Reserved_.REX.W_, 0)
-        assert_equal(myDisasm.instr.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kunpckbw ')
-        assert_equal(myDisasm.instr.repr, 'kunpckbw k1, k2, k3')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x4b')
+        assert_equal(myDisasm.infos.Reserved_.VEX.L, 1)
+        assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
+        assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kunpckbw ')
+        assert_equal(myDisasm.infos.repr, 'kunpckbw k1, k2, k3')
 
         # VEX.NDS.L1.0F.W0 4B /r
         # KUNPCKWD k1, k2, k3
@@ -47,9 +47,9 @@ class TestSuite:
         Buffer = '{}4bcb'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x4b')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kunpckwd ')
-        assert_equal(myDisasm.instr.repr, 'kunpckwd k1, k2, k3')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x4b')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kunpckwd ')
+        assert_equal(myDisasm.infos.repr, 'kunpckwd k1, k2, k3')
 
 
         # VEX.NDS.L1.0F.W1 4B /r
@@ -61,6 +61,6 @@ class TestSuite:
         Buffer = '{}4bcb'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x4b')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kunpckdq ')
-        assert_equal(myDisasm.instr.repr, 'kunpckdq k1, k2, k3')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x4b')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kunpckdq ')
+        assert_equal(myDisasm.infos.repr, 'kunpckdq k1, k2, k3')

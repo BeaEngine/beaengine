@@ -32,9 +32,9 @@ class TestSuite:
         Buffer = '0f38039011223344'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf3803')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'phaddsw ')
-        assert_equal(myDisasm.instr.repr, 'phaddsw mm2, qword ptr [rax+44332211h]')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf3803')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'phaddsw ')
+        assert_equal(myDisasm.infos.repr, 'phaddsw mm2, qword ptr [rax+44332211h]')
 
         # 66 0F 38 03 /r
         # PHADDW xmm1, xmm2/m128
@@ -42,9 +42,9 @@ class TestSuite:
         Buffer = '660f38039011223344'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf3803')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'phaddsw ')
-        assert_equal(myDisasm.instr.repr, 'phaddsw xmm2, xmmword ptr [rax+44332211h]')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf3803')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'phaddsw ')
+        assert_equal(myDisasm.infos.repr, 'phaddsw xmm2, xmmword ptr [rax+44332211h]')
 
         # VEX.NDS.128.66.0F38.WIG 03 /r
         # VPHADDW xmm1, xmm2, xmm3/m128
@@ -52,8 +52,8 @@ class TestSuite:
         Buffer = 'c40201030e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphaddsw ')
-        assert_equal(myDisasm.instr.repr, 'vphaddsw xmm9, xmm15, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vphaddsw ')
+        assert_equal(myDisasm.infos.repr, 'vphaddsw xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F38.WIG 03 /r
         # VPHADDW ymm1, ymm2, ymm3/m256
@@ -61,5 +61,5 @@ class TestSuite:
         Buffer = 'c40205030e'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vphaddsw ')
-        assert_equal(myDisasm.instr.repr, 'vphaddsw ymm9, ymm15, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vphaddsw ')
+        assert_equal(myDisasm.infos.repr, 'vphaddsw ymm9, ymm15, ymmword ptr [r14]')

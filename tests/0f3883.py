@@ -28,9 +28,9 @@ class TestSuite:
         Buffer = '{}830e'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x83)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmultishiftqb ')
-        assert_equal(myDisasm.instr.repr, 'vpmultishiftqb xmm1, xmm0, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x83)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmultishiftqb ')
+        assert_equal(myDisasm.infos.repr, 'vpmultishiftqb xmm1, xmm0, xmmword ptr [rsi]')
 
         # EVEX.256.66.0F38.W1 83 /r
         # vpmultishiftqb ymm1{k1}{z}, ymm2, ymm3/m256
@@ -39,9 +39,9 @@ class TestSuite:
         Buffer = '{}830e'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x83)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmultishiftqb ')
-        assert_equal(myDisasm.instr.repr, 'vpmultishiftqb ymm1, ymm0, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x83)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmultishiftqb ')
+        assert_equal(myDisasm.infos.repr, 'vpmultishiftqb ymm1, ymm0, ymmword ptr [rsi]')
 
         # EVEX.512.66.0F38.W1 83 /r
         # vpmultishiftqb zmm1{k1}{z}, zmm2, zmm3/m512
@@ -50,6 +50,6 @@ class TestSuite:
         Buffer = '{}830e'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x83)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpmultishiftqb ')
-        assert_equal(myDisasm.instr.repr, 'vpmultishiftqb zmm1, zmm0, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x83)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmultishiftqb ')
+        assert_equal(myDisasm.infos.repr, 'vpmultishiftqb zmm1, zmm0, zmmword ptr [rsi]')

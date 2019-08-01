@@ -28,9 +28,9 @@ class TestSuite:
         Buffer = 'f30f1efa'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'endbr64 ')
-        assert_equal(myDisasm.instr.repr, 'endbr64 ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'endbr64 ')
+        assert_equal(myDisasm.infos.repr, 'endbr64 ')
 
         # F3 0F 1E FB
         # ENDBR32
@@ -38,9 +38,9 @@ class TestSuite:
         Buffer = 'f30f1efb'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'endbr32 ')
-        assert_equal(myDisasm.instr.repr, 'endbr32 ')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'endbr32 ')
+        assert_equal(myDisasm.infos.repr, 'endbr32 ')
 
         # F3 0F 1E /1
         # RDSSPD R32
@@ -48,13 +48,13 @@ class TestSuite:
         Buffer = 'f30f1ec8'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'rdsspd ')
-        assert_equal(myDisasm.instr.repr, 'rdsspd eax')
-        assert_equal(myDisasm.instr.Argument2.ArgType, REGISTER_TYPE)
-        assert_equal(myDisasm.instr.Argument2.ArgSize, 64)
-        assert_equal(myDisasm.instr.Argument2.Registers.type, SPECIAL_REG)
-        assert_equal(myDisasm.instr.Argument2.Registers.special, REG2)
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rdsspd ')
+        assert_equal(myDisasm.infos.repr, 'rdsspd eax')
+        assert_equal(myDisasm.infos.Argument2.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.infos.Argument2.Registers.type, SPECIAL_REG)
+        assert_equal(myDisasm.infos.Argument2.Registers.special, REG2)
 
         # F3 REX.W 0F 1E /1
         # RDSSPQ R64
@@ -64,10 +64,10 @@ class TestSuite:
         Buffer = 'f3{:02x}0f1ec8'.format(myREX.byte()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0xf1e')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'rdsspq ')
-        assert_equal(myDisasm.instr.repr, 'rdsspq rax')
-        assert_equal(myDisasm.instr.Argument2.ArgType, REGISTER_TYPE)
-        assert_equal(myDisasm.instr.Argument2.ArgSize, 64)
-        assert_equal(myDisasm.instr.Argument2.Registers.type, SPECIAL_REG)
-        assert_equal(myDisasm.instr.Argument2.Registers.special, REG2)
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf1e')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rdsspq ')
+        assert_equal(myDisasm.infos.repr, 'rdsspq rax')
+        assert_equal(myDisasm.infos.Argument2.ArgType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Argument2.ArgSize, 64)
+        assert_equal(myDisasm.infos.Argument2.Registers.type, SPECIAL_REG)
+        assert_equal(myDisasm.infos.Argument2.Registers.special, REG2)

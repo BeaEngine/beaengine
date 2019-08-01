@@ -30,9 +30,9 @@ class TestSuite:
         Buffer = '{}272011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x27)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgetmantss ')
-        assert_equal(myDisasm.instr.repr, 'vgetmantss ymm4, ymm0, dword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x27)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantss ')
+        assert_equal(myDisasm.infos.repr, 'vgetmantss ymm4, ymm0, dword ptr [rax], 11h')
 
         # EVEX.512.66.0F3A.W0 27 /r ib
         # vgetmantss zmm1{k1}{z}, zmm2, zmm3/m32, imm8
@@ -41,9 +41,9 @@ class TestSuite:
         Buffer = '{}272011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x27)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgetmantss ')
-        assert_equal(myDisasm.instr.repr, 'vgetmantss zmm4, zmm0, dword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x27)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantss ')
+        assert_equal(myDisasm.infos.repr, 'vgetmantss zmm4, zmm0, dword ptr [rax], 11h')
 
         # EVEX.256.66.0F3A.W1 27 /r ib
         # vgetmantsd ymm1{k1}{z}, ymm2, ymm3/m64, imm8
@@ -52,9 +52,9 @@ class TestSuite:
         Buffer = '{}272011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x27)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgetmantsd ')
-        assert_equal(myDisasm.instr.repr, 'vgetmantsd ymm4, ymm0, qword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x27)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantsd ')
+        assert_equal(myDisasm.infos.repr, 'vgetmantsd ymm4, ymm0, qword ptr [rax], 11h')
 
         # EVEX.512.66.0F3A.W1 27 /r ib
         # vgetmantsd zmm1{k1}{z}, zmm2, zmm3/m64, imm8
@@ -63,6 +63,6 @@ class TestSuite:
         Buffer = '{}272011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x27)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vgetmantsd ')
-        assert_equal(myDisasm.instr.repr, 'vgetmantsd zmm4, zmm0, qword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x27)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantsd ')
+        assert_equal(myDisasm.infos.repr, 'vgetmantsd zmm4, zmm0, qword ptr [rax], 11h')

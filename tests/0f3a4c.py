@@ -41,7 +41,7 @@ class TestSuite:
         Buffer = 'c4{:02x}{:02x}4c2700'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'vpblendvb xmm4, xmm15, xmmword ptr [rdi], xmm0')
+        assert_equal(myDisasm.infos.repr, 'vpblendvb xmm4, xmm15, xmmword ptr [rdi], xmm0')
 
         # VEX.256.66.0F3A.W0 4C /r /is4
         # VPBLENDVB ymm1, ymm2, ymm3/m256, ymm4
@@ -57,7 +57,7 @@ class TestSuite:
         Buffer = 'c4{:02x}{:02x}4c0e50'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.repr, 'vpblendvb ymm1, ymm15, ymmword ptr [rsi], ymm5')
+        assert_equal(myDisasm.infos.repr, 'vpblendvb ymm1, ymm15, ymmword ptr [rsi], ymm5')
 
 
         # if VEX.W = 1 #UD
@@ -71,5 +71,5 @@ class TestSuite:
         Buffer = 'c4{:02x}{:02x}4c0000'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpblendvb ')
-        assert_equal(myDisasm.instr.Reserved_.ERROR_OPCODE, UD_)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendvb ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

@@ -29,16 +29,16 @@ class TestSuite:
         Buffer = '0f9000'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f90)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'seto ')
-        assert_equal(myDisasm.instr.repr, 'seto byte ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f90)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'seto ')
+        assert_equal(myDisasm.infos.repr, 'seto byte ptr [rax]')
 
         Buffer = '0f90c0'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f90)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'seto ')
-        assert_equal(myDisasm.instr.repr, 'seto al')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f90)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'seto ')
+        assert_equal(myDisasm.infos.repr, 'seto al')
 
         # VEX.L0.0F.W0 90 /r
         # KMOVW k1, k2/m16
@@ -48,9 +48,9 @@ class TestSuite:
         Buffer = '{}9020'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovw ')
-        assert_equal(myDisasm.instr.repr, 'kmovw k4, word ptr [r8]')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x90')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovw ')
+        assert_equal(myDisasm.infos.repr, 'kmovw k4, word ptr [r8]')
 
         # VEX.L0.66.0F.W0 90 /r
         # KMOVB k1, k2/m8
@@ -60,9 +60,9 @@ class TestSuite:
         Buffer = '{}9020'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovb ')
-        assert_equal(myDisasm.instr.repr, 'kmovb k4, byte ptr [r8]')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x90')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovb ')
+        assert_equal(myDisasm.infos.repr, 'kmovb k4, byte ptr [r8]')
 
         # VEX.L0.0F.W1 90 /r
         # KMOVQ k1, k2/m64
@@ -72,9 +72,9 @@ class TestSuite:
         Buffer = '{}9020'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovq ')
-        assert_equal(myDisasm.instr.repr, 'kmovq k4, qword ptr [r8]')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x90')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovq ')
+        assert_equal(myDisasm.infos.repr, 'kmovq k4, qword ptr [r8]')
 
         # VEX.L0.66.0F.W1 90 /r
         # KMOVD k1, k2/m32
@@ -84,6 +84,6 @@ class TestSuite:
         Buffer = '{}9020'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.instr.Instruction.Opcode), '0x90')
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovd ')
-        assert_equal(myDisasm.instr.repr, 'kmovd k4, dword ptr [r8]')
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x90')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovd ')
+        assert_equal(myDisasm.infos.repr, 'kmovd k4, dword ptr [r8]')

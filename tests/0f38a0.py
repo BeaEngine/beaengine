@@ -29,11 +29,11 @@ class TestSuite:
         myEVEX.aaa = 1
         Buffer = '{}a0443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xa0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpscatterdd ')
-        assert_equal(myDisasm.instr.repr, 'vpscatterdd dword ptr [rbx+xmm6+0088h] {k1}, xmm0')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xa0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpscatterdd ')
+        assert_equal(myDisasm.infos.repr, 'vpscatterdd dword ptr [rbx+xmm6+0088h] {k1}, xmm0')
 
         # EVEX.256.66.0F38.W0 A0 /vsib
         # VPSCATTERDD vm32y {k1}, ymm1
@@ -42,11 +42,11 @@ class TestSuite:
         myEVEX.aaa = 1
         Buffer = '{}a0443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xa0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpscatterdd ')
-        assert_equal(myDisasm.instr.repr, 'vpscatterdd dword ptr [rbx+ymm6+0088h] {k1}, ymm0')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xa0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpscatterdd ')
+        assert_equal(myDisasm.infos.repr, 'vpscatterdd dword ptr [rbx+ymm6+0088h] {k1}, ymm0')
 
         # EVEX.512.66.0F38.W0 A0 /vsib
         # VPSCATTERDD vm32z {k1}, zmm1
@@ -55,11 +55,11 @@ class TestSuite:
         myEVEX.aaa = 1
         Buffer = '{}a0443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xa0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpscatterdd ')
-        assert_equal(myDisasm.instr.repr, 'vpscatterdd dword ptr [rbx+zmm6+0088h] {k1}, zmm0')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xa0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpscatterdd ')
+        assert_equal(myDisasm.infos.repr, 'vpscatterdd dword ptr [rbx+zmm6+0088h] {k1}, zmm0')
 
         # EVEX.128.66.0F38.W1 A0 /vsib
         # VPSCATTERDQ vm32x {k1}, xmm1
@@ -68,11 +68,11 @@ class TestSuite:
         myEVEX.aaa = 1
         Buffer = '{}a0443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xa0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpscatterdq ')
-        assert_equal(myDisasm.instr.repr, 'vpscatterdq dword ptr [rbx+xmm6+0110h] {k1}, xmm0')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xa0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpscatterdq ')
+        assert_equal(myDisasm.infos.repr, 'vpscatterdq dword ptr [rbx+xmm6+0110h] {k1}, xmm0')
 
         # EVEX.256.66.0F38.W1 A0 /vsib
         # VPSCATTERDQ vm32x {k1}, ymm1
@@ -81,11 +81,11 @@ class TestSuite:
         myEVEX.aaa = 1
         Buffer = '{}a0443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xa0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpscatterdq ')
-        assert_equal(myDisasm.instr.repr, 'vpscatterdq dword ptr [rbx+xmm6+0110h] {k1}, ymm0')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xa0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpscatterdq ')
+        assert_equal(myDisasm.infos.repr, 'vpscatterdq dword ptr [rbx+xmm6+0110h] {k1}, ymm0')
 
         # EVEX.512.66.0F38.W1 A0 /vsib
         # VPSCATTERDQ vm32y {k1}, zmm1
@@ -94,8 +94,8 @@ class TestSuite:
         myEVEX.aaa = 1
         Buffer = '{}a0443322'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
-        myDisasm.instr.Options = ShowEVEXMasking
+        myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xa0)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpscatterdq ')
-        assert_equal(myDisasm.instr.repr, 'vpscatterdq dword ptr [rbx+ymm6+0110h] {k1}, zmm0')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xa0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpscatterdq ')
+        assert_equal(myDisasm.infos.repr, 'vpscatterdq dword ptr [rbx+ymm6+0110h] {k1}, zmm0')

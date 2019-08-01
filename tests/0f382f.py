@@ -30,9 +30,9 @@ class TestSuite:
         Buffer = '{}2f10'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x2f)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmaskmovpd ')
-        assert_equal(myDisasm.instr.repr, 'vmaskmovpd xmmword ptr [r8], xmm0, xmm10')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x2f)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaskmovpd ')
+        assert_equal(myDisasm.infos.repr, 'vmaskmovpd xmmword ptr [r8], xmm0, xmm10')
 
         # VEX.256.66.0F38.W0 2f /r
         # vmaskmovpd m256, ymm1, ymm2
@@ -42,6 +42,6 @@ class TestSuite:
         Buffer = '{}2f10'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x2f)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vmaskmovpd ')
-        assert_equal(myDisasm.instr.repr, 'vmaskmovpd ymmword ptr [r8], ymm0, ymm10')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x2f)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaskmovpd ')
+        assert_equal(myDisasm.infos.repr, 'vmaskmovpd ymmword ptr [r8], ymm0, ymm10')

@@ -28,11 +28,11 @@ class TestSuite:
                 MODRM = (MOD << 6) + (REGOPCODE << 3) + RM
                 Buffer = instr.format(MODRM).decode('hex')
                 myDisasm = Disasm(Buffer)
-                myDisasm.instr.Archi = archi
+                myDisasm.infos.Archi = archi
                 myDisasm.read()
                 #print(myDisasm.repr())
-                #print(myDisasm.instr.Reserved_.Register_)
-                assert_equal(myDisasm.instr.Argument2.ArgMnemonic, registers[REGOPCODE])
+                #print(myDisasm.infos.Reserved_.Register_)
+                assert_equal(myDisasm.infos.Argument2.ArgMnemonic, registers[REGOPCODE])
 
     def verifyRegopcodeArg1ForMod(self, MOD, registers, instr, archi):
 
@@ -41,10 +41,10 @@ class TestSuite:
                 MODRM = (MOD << 6) + (REGOPCODE << 3) + RM
                 Buffer = instr.format(MODRM).decode('hex')
                 myDisasm = Disasm(Buffer)
-                myDisasm.instr.Archi = archi
+                myDisasm.infos.Archi = archi
                 myDisasm.read()
                 print(myDisasm.repr())
-                assert_equal(myDisasm.instr.Argument1.ArgMnemonic, registers[REGOPCODE])
+                assert_equal(myDisasm.infos.Argument1.ArgMnemonic, registers[REGOPCODE])
 
     def test_RegOpcode(self):
 

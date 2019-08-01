@@ -29,9 +29,9 @@ class TestSuite:
         Buffer = '{}7cc0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x7c)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastd ')
-        assert_equal(myDisasm.instr.repr, 'vpbroadcastd xmm0, eax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x7c)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastd ')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastd xmm0, eax')
 
         # EVEX.256.66.0F38.W0 7c /r
         # vpbroadcastd ymm1 {k1}{z}, reg
@@ -40,9 +40,9 @@ class TestSuite:
         Buffer = '{}7cc0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x7c)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastd ')
-        assert_equal(myDisasm.instr.repr, 'vpbroadcastd ymm0, eax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x7c)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastd ')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastd ymm0, eax')
 
         # EVEX.512.66.0F38.W0 7c /r
         # vpbroadcastd zmm1 {k1}{z}, reg
@@ -51,9 +51,9 @@ class TestSuite:
         Buffer = '{}7cc0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x7c)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastd ')
-        assert_equal(myDisasm.instr.repr, 'vpbroadcastd zmm0, eax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x7c)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastd ')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastd zmm0, eax')
 
 
         # EVEX.128.66.0F38.W1 7c /r
@@ -63,9 +63,9 @@ class TestSuite:
         Buffer = '{}7cc0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x7c)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.instr.repr, 'vpbroadcastq xmm0, rax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x7c)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastq xmm0, rax')
 
         # EVEX.256.66.0F38.W1 7c /r
         # vpbroadcastd ymm1 {k1}{z}, reg
@@ -74,9 +74,9 @@ class TestSuite:
         Buffer = '{}7cc0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x7c)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.instr.repr, 'vpbroadcastq ymm0, rax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x7c)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastq ymm0, rax')
 
         # EVEX.512.66.0F38.W1 7c /r
         # vpbroadcastd zmm1 {k1}{z}, reg
@@ -85,6 +85,6 @@ class TestSuite:
         Buffer = '{}7cc0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x7c)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.instr.repr, 'vpbroadcastq zmm0, rax')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x7c)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastq zmm0, rax')

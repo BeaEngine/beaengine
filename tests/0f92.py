@@ -30,9 +30,9 @@ class TestSuite:
         Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovw ')
-        assert_equal(myDisasm.instr.repr, 'kmovw k3, r11d')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovw ')
+        assert_equal(myDisasm.infos.repr, 'kmovw k3, r11d')
 
         # VEX.L0.66.0F.W0 92 /r
         # KMOVB k1, r32
@@ -42,9 +42,9 @@ class TestSuite:
         Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovb ')
-        assert_equal(myDisasm.instr.repr, 'kmovb k3, r11d')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovb ')
+        assert_equal(myDisasm.infos.repr, 'kmovb k3, r11d')
 
         # VEX.L0.F2.0F.W0 92 /r
         # KMOVD k1, r32
@@ -54,11 +54,11 @@ class TestSuite:
         Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovd ')
-        assert_equal(myDisasm.instr.Reserved_.REX.W_, 0)
-        assert_equal(myDisasm.instr.Reserved_.VEX.pp, 3)
-        assert_equal(myDisasm.instr.repr, 'kmovd k3, r11d')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovd ')
+        assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
+        assert_equal(myDisasm.infos.Reserved_.VEX.pp, 3)
+        assert_equal(myDisasm.infos.repr, 'kmovd k3, r11d')
 
         # VEX.L0.F2.0F.W1 92 /r
         # KMOVQ k1, r64
@@ -68,9 +68,9 @@ class TestSuite:
         Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'kmovq ')
-        assert_equal(myDisasm.instr.repr, 'kmovq k3, r11')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovq ')
+        assert_equal(myDisasm.infos.repr, 'kmovq k3, r11')
 
         # 0F 92
         # REX + 0F 92
@@ -79,6 +79,6 @@ class TestSuite:
         Buffer = '0f9200'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f92)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'setb ')
-        assert_equal(myDisasm.instr.repr, 'setb byte ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f92)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'setb ')
+        assert_equal(myDisasm.infos.repr, 'setb byte ptr [rax]')

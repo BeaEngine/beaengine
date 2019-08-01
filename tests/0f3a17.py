@@ -29,9 +29,9 @@ class TestSuite:
         Buffer = '660f3a172011'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x0f3a17)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'extractps ')
-        assert_equal(myDisasm.instr.repr, 'extractps dword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a17)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'extractps ')
+        assert_equal(myDisasm.infos.repr, 'extractps dword ptr [rax], xmm4, 11h')
 
         # VEX.128.66.0F3A.WIG 17 /r ib
         # VEXTRACTPS reg/m32, xmm1, imm8
@@ -40,9 +40,9 @@ class TestSuite:
         Buffer = '{}17e011'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x17)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vextractps ')
-        assert_equal(myDisasm.instr.repr, 'vextractps r8d, xmm12, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractps ')
+        assert_equal(myDisasm.infos.repr, 'vextractps r8d, xmm12, 11h')
 
         # EVEX.128.66.0F3A.WIG 17 /r ib
         # VEXTRACTPS reg/m32, xmm1, imm8
@@ -51,6 +51,6 @@ class TestSuite:
         Buffer = '{}172011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x17)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vextractps ')
-        assert_equal(myDisasm.instr.repr, 'vextractps dword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractps ')
+        assert_equal(myDisasm.infos.repr, 'vextractps dword ptr [rax], xmm4, 11h')

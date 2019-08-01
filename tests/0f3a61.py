@@ -29,9 +29,9 @@ class TestSuite:
         Buffer = '660f3a612001'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0xf3a61)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'pcmpestri ')
-        assert_equal(myDisasm.instr.repr, 'pcmpestri xmm4, xmmword ptr [rax], 01h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3a61)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pcmpestri ')
+        assert_equal(myDisasm.infos.repr, 'pcmpestri xmm4, xmmword ptr [rax], 01h')
 
         # VEX.128.66.0F3A 61 /r ib
         # Vpcmpestri xmm1, xmm2/m128, imm8
@@ -40,6 +40,6 @@ class TestSuite:
         Buffer = '{}611033'.format(myVEX.c4()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x61)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vpcmpestri ')
-        assert_equal(myDisasm.instr.repr, 'vpcmpestri xmm10, xmmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x61)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpcmpestri ')
+        assert_equal(myDisasm.infos.repr, 'vpcmpestri xmm10, xmmword ptr [r8], 33h')

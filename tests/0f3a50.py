@@ -31,9 +31,9 @@ class TestSuite:
         Buffer = '{}502011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x50)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrangeps ')
-        assert_equal(myDisasm.instr.repr, 'vrangeps xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangeps ')
+        assert_equal(myDisasm.infos.repr, 'vrangeps xmm4, xmm0, xmmword ptr [rax], 11h')
 
         # EVEX.256.66.0F3A.W0 50 /r ib
         # VRANGEPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst, imm8
@@ -42,9 +42,9 @@ class TestSuite:
         Buffer = '{}502011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x50)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrangeps ')
-        assert_equal(myDisasm.instr.repr, 'vrangeps ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangeps ')
+        assert_equal(myDisasm.infos.repr, 'vrangeps ymm4, ymm0, ymmword ptr [rax], 11h')
 
         # EVEX.512.66.0F3A.W0 50 /r ib
         # VRANGEPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8
@@ -53,9 +53,9 @@ class TestSuite:
         Buffer = '{}502011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x50)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrangeps ')
-        assert_equal(myDisasm.instr.repr, 'vrangeps zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangeps ')
+        assert_equal(myDisasm.infos.repr, 'vrangeps zmm4, zmm0, zmmword ptr [rax], 11h')
 
         # EVEX.128.66.0F3A.W1 50 /r ib
         # VRANGEPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8
@@ -64,9 +64,9 @@ class TestSuite:
         Buffer = '{}502011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x50)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrangepd ')
-        assert_equal(myDisasm.instr.repr, 'vrangepd xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangepd ')
+        assert_equal(myDisasm.infos.repr, 'vrangepd xmm4, xmm0, xmmword ptr [rax], 11h')
 
         # EVEX.256.66.0F3A.W1 50 /r ib
         # VRANGEPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8
@@ -75,9 +75,9 @@ class TestSuite:
         Buffer = '{}502011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x50)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrangepd ')
-        assert_equal(myDisasm.instr.repr, 'vrangepd ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangepd ')
+        assert_equal(myDisasm.infos.repr, 'vrangepd ymm4, ymm0, ymmword ptr [rax], 11h')
 
         # EVEX.512.66.0F3A.W1 50 /r ib
         # VRANGEPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8
@@ -86,6 +86,6 @@ class TestSuite:
         Buffer = '{}502011'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.instr.Instruction.Opcode, 0x50)
-        assert_equal(myDisasm.instr.Instruction.Mnemonic, 'vrangepd ')
-        assert_equal(myDisasm.instr.repr, 'vrangepd zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangepd ')
+        assert_equal(myDisasm.infos.repr, 'vrangepd zmm4, zmm0, zmmword ptr [rax], 11h')
