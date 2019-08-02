@@ -88,17 +88,17 @@ Structure INSTRTYPE
 EndStructure
 Global Instrtype.INSTRTYPE
 
-Structure ARGTYPE
-  ArgMnemonic.b[24]
-  ArgType.q
-  ArgSize.l
-  ArgPosition.l
+Structure OPTYPE
+  OpMnemonic.b[24]
+  OpType.q
+  OpSize.l
+  OpPosition.l
   AccessMode.l
   Memory.MEMORYTYPE
   Registers.REGISTERTYPE
   SegmentReg.l
 EndStructure
-Global Argtype.ARGTYPE
+Global Argtype.OPTYPE
 
 Structure _Disasm
   EIP.q
@@ -108,10 +108,10 @@ Structure _Disasm
   Archi.l
   Options.q
   Instruction.INSTRTYPE
-  Argument1.ARGTYPE
-  Argument2.ARGTYPE
-  Argument3.ARGTYPE
-  Argument4.ARGTYPE
+  Operand1.OPTYPE
+  Operand2.OPTYPE
+  Operand3.OPTYPE
+  Operand4.OPTYPE
   Prefix.PREFIXINFO
   Error.l
   Reserved_.l[48]

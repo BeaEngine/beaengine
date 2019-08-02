@@ -18,58 +18,58 @@
 
 
 /* ====================================== Routines_MODRM */
-void __bea_callspec__ MOD_RM(ARGTYPE*, PDISASM);
-void __bea_callspec__ fillRegister(int, ARGTYPE*, PDISASM);
-void __bea_callspec__ Reg_Opcode(ARGTYPE*, PDISASM);
+void __bea_callspec__ MOD_RM(OPTYPE*, PDISASM);
+void __bea_callspec__ fillRegister(int, OPTYPE*, PDISASM);
+void __bea_callspec__ Reg_Opcode(OPTYPE*, PDISASM);
 
-void __bea_callspec__ Addr_EAX(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_ECX(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EDX(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EBX(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_SIB(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_ESI(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EDI(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EAX(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_ECX(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDX(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBX(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_SIB(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_ESI(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDI(OPTYPE*, PDISASM);
 
-void __bea_callspec__ Addr_EAX_disp8(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_ECX_disp8(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EDX_disp8(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EBX_disp8(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_SIB_disp8(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EBP_disp8(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_ESI_disp8(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EDI_disp8(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EAX_disp8(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_ECX_disp8(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDX_disp8(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBX_disp8(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_SIB_disp8(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBP_disp8(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_ESI_disp8(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDI_disp8(OPTYPE*, PDISASM);
 
-void __bea_callspec__ Addr_EAX_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_ECX_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EDX_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EBX_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_SIB_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EBP_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_ESI_disp32(ARGTYPE*, PDISASM);
-void __bea_callspec__ Addr_EDI_disp32(ARGTYPE*, PDISASM);
+void __bea_callspec__ Addr_EAX_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_ECX_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDX_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBX_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_SIB_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EBP_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_ESI_disp32(OPTYPE*, PDISASM);
+void __bea_callspec__ Addr_EDI_disp32(OPTYPE*, PDISASM);
 
-void __bea_callspec__ _rEAX(ARGTYPE*, PDISASM);
-void __bea_callspec__ _rECX(ARGTYPE*, PDISASM);
-void __bea_callspec__ _rEDX(ARGTYPE*, PDISASM);
-void __bea_callspec__ _rEBX(ARGTYPE*, PDISASM);
-void __bea_callspec__ _rESP(ARGTYPE*, PDISASM);
-void __bea_callspec__ _rEBP(ARGTYPE*, PDISASM);
-void __bea_callspec__ _rESI(ARGTYPE*, PDISASM);
-void __bea_callspec__ _rEDI(ARGTYPE*, PDISASM);
+void __bea_callspec__ _rEAX(OPTYPE*, PDISASM);
+void __bea_callspec__ _rECX(OPTYPE*, PDISASM);
+void __bea_callspec__ _rEDX(OPTYPE*, PDISASM);
+void __bea_callspec__ _rEBX(OPTYPE*, PDISASM);
+void __bea_callspec__ _rESP(OPTYPE*, PDISASM);
+void __bea_callspec__ _rEBP(OPTYPE*, PDISASM);
+void __bea_callspec__ _rESI(OPTYPE*, PDISASM);
+void __bea_callspec__ _rEDI(OPTYPE*, PDISASM);
 
-size_t __bea_callspec__ interpretBase(ARGTYPE*, size_t, PDISASM);
-size_t __bea_callspec__ interpretIndex(ARGTYPE*, size_t, PDISASM, UInt8);
-size_t __bea_callspec__ printSIBScale(ARGTYPE*, PDISASM, size_t, UInt8);
-size_t __bea_callspec__ printVSIBRegisters(ARGTYPE*, PDISASM, size_t, Int32);
-size_t __bea_callspec__ printSeparator(ARGTYPE*, size_t, PDISASM);
-size_t __bea_callspec__ printDisp8(ARGTYPE*, size_t, PDISASM, long);
-size_t __bea_callspec__ SIB_0(ARGTYPE*, size_t, PDISASM);
-size_t __bea_callspec__ SIB_1(ARGTYPE*, size_t, PDISASM);
-size_t __bea_callspec__ SIB_2(ARGTYPE*, size_t, PDISASM);
-size_t __bea_callspec__ SIB_3(ARGTYPE*, size_t, PDISASM);
-void __bea_callspec__ OperandSize8Reg(ARGTYPE*, PDISASM, size_t, int);
-void __bea_callspec__ OperandSize8RM(ARGTYPE*, PDISASM, size_t, int);
+size_t __bea_callspec__ interpretBase(OPTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ interpretIndex(OPTYPE*, size_t, PDISASM, UInt8);
+size_t __bea_callspec__ printSIBScale(OPTYPE*, PDISASM, size_t, UInt8);
+size_t __bea_callspec__ printVSIBRegisters(OPTYPE*, PDISASM, size_t, Int32);
+size_t __bea_callspec__ printSeparator(OPTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ printDisp8(OPTYPE*, size_t, PDISASM, long);
+size_t __bea_callspec__ SIB_0(OPTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ SIB_1(OPTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ SIB_2(OPTYPE*, size_t, PDISASM);
+size_t __bea_callspec__ SIB_3(OPTYPE*, size_t, PDISASM);
+void __bea_callspec__ OperandSize8Reg(OPTYPE*, PDISASM, size_t, int);
+void __bea_callspec__ OperandSize8RM(OPTYPE*, PDISASM, size_t, int);
 
 /* ====================================== Routines_Disasm */
 void __bea_callspec__ CompleteInstructionFields (PDISASM);
@@ -109,9 +109,9 @@ void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM);
 int __bea_callspec__ InitVariables (PDISASM);
 void __bea_callspec__ FillFlags(PDISASM, int);
 void __bea_callspec__ FillSegmentsRegisters (PDISASM);
-void __bea_callspec__ FixArgSizeForMemoryOperand (PDISASM);
+void __bea_callspec__ FixOpSizeForMemoryOperand (PDISASM);
 void __bea_callspec__ FixREXPrefixes (PDISASM);
-void __bea_callspec__ getImmediat8(ARGTYPE*,PDISASM);
+void __bea_callspec__ getImmediat8(OPTYPE*,PDISASM);
 void __bea_callspec__ verifyVEXvvvv(PDISASM);
 
 /* ====================================== opcodes_prefix */

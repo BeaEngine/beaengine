@@ -954,7 +954,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, myDisasm.infos.SecurityBlock)
-        assert_equal(myDisasm.infos.Argument1.Memory.Displacement, 0)
+        assert_equal(myDisasm.infos.Operand1.Memory.Displacement, 0)
 
         myVEX = VEX('VEX.128.66.0F38.WIG')
         myVEX.vvvv = 0b1111

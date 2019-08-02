@@ -86,16 +86,16 @@ INSTRTYPE STRUCT
     ImplicitModifiedRegs    DWORD   0
 INSTRTYPE ENDS
 
-ARGTYPE STRUCT
-    ArgMnemonic     BYTE    24 dup(0)
-    ArgType         QWORD   0
-    ArgSize         DWORD   0
-    ArgPosition     DWORD	0
+OPTYPE STRUCT
+    OpMnemonic     BYTE    24 dup(0)
+    OpType         QWORD   0
+    OpSize         DWORD   0
+    OpPosition     DWORD	0
     AccessMode      DWORD   0
     Memory          MEMORYTYPE <0>
     Registers       REGISTERTYPE <0>
     SegmentReg      DWORD   0
-ARGTYPE ENDS
+OPTYPE ENDS
 
 ; ************************************** Define structure
 _Disasm STRUCT
@@ -106,10 +106,10 @@ _Disasm STRUCT
     Archi           DWORD   0
     Options         QWORD   0
     Instruction     INSTRTYPE <0>
-    Argument1       ARGTYPE <>
-    Argument2       ARGTYPE <>
-    Argument3       ARGTYPE <>
-    Argument4       ARGTYPE <>
+    Operand1       OPTYPE <>
+    Operand2       OPTYPE <>
+    Operand3       OPTYPE <>
+    Operand4       OPTYPE <>
     Prefix          PREFIXINFO <>
     Error          DWORD   0
     Reserved_       DWORD   48 dup(0)

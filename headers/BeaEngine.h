@@ -110,15 +110,15 @@ typedef struct  {
 
 #pragma pack(1)
 typedef struct  {
-   char ArgMnemonic[24];
-   UInt64 ArgType;
-   Int32 ArgSize;
-   Int32 ArgPosition;
+   char OpMnemonic[24];
+   UInt64 OpType;
+   Int32 OpSize;
+   Int32 OpPosition;
    UInt32 AccessMode;
    MEMORYTYPE Memory;
    REGISTERTYPE Registers;
    UInt32 SegmentReg;
-} ARGTYPE;
+} OPTYPE;
 #pragma pack()
 
 
@@ -132,10 +132,10 @@ typedef struct _Disasm {
    UInt32 Archi;
    UInt64 Options;
    INSTRTYPE Instruction;
-   ARGTYPE Argument1;
-   ARGTYPE Argument2;
-   ARGTYPE Argument3;
-   ARGTYPE Argument4;
+   OPTYPE Operand1;
+   OPTYPE Operand2;
+   OPTYPE Operand3;
+   OPTYPE Operand4;
    PREFIXINFO Prefix;
    Int32 Error;
    UInt32 Reserved_[48];

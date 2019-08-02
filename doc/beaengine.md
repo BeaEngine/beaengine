@@ -7,7 +7,7 @@
 1. [Disasm function](#1-disasm-function)
 2. [Disasm structure explained](#2-disasm-infos)
 3. [get global informations on the instruction](#3-instruction-infos)
-4. [get informations about operands](#4-argument-infos)
+4. [get informations about operands](#4-operand-infos)
 5. [get informations about prefixes used](#5-prefixes-infos)
 6. [flags of eflags register](#6-eflags-infos)
 7. [Memory type explained](#7-memory-infos)
@@ -49,10 +49,10 @@ struct PDISASM {
   UInt32 Archi;
   UInt64 Options;
   INSTRTYPE Instruction;
-  ARGTYPE Argument1;
-  ARGTYPE Argument2;
-  ARGTYPE Argument3;
-  ARGTYPE Argument4;
+  OPTYPE Operand1;
+  OPTYPE Operand2;
+  OPTYPE Operand3;
+  OPTYPE Operand4;
   PREFIXINFO Prefix;
   Int32 Error;
   UInt32 Reserved_[48];
@@ -73,10 +73,10 @@ struct PDISASM {
    - **ShowSegmentRegs** : show segment registers used (default is hidden)
    - **ShowEVEXMasking** : show opmask and merging/zeroing applyed on first operand for AVX512 instructions (default is hidden)
  - **Instruction** : *[out]* Structure **[INSTRTYPE](#3-instruction-infos)**.
- - **Argument1** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the first operand.
- - **Argument2** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the second operand.
- - **Argument3** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the third operand.
- - **Argument4** : *[out]* Structure **[ARGTYPE](#4-argument-infos)** that concerns the fourth operand.  
+ - **Operand1** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the first operand.
+ - **Operand2** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the second operand.
+ - **Operand3** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the third operand.
+ - **Operand4** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the fourth operand.  
  - **Prefix** : *[out]* Structure **[PREFIXINFO](#5-prefixes-infos)** containing an exhaustive list of used prefixes.
  - **Error** : *[out]* This field returns the status of the disassemble process :
    - **Success** : (0) instruction has been recognized by the engine
@@ -113,16 +113,16 @@ struct INSTRTYPE {
  - **ImplicitModifiedRegs** : *[out]* Some instructions modify registers implicitly. For example, "push 0" modifies the register ESP. In that case, infos.Instruction.ImplicitModifiedRegs == REGISTER_TYPE + GENERAL_REG + REG4.
 
 
-# 4. Argument infos
+# 4. Operand infos
 
 This structure gives informations about the operand analyzed.
 
 ```
-struct ARGTYPE {
-  char ArgMnemonic[24];
-  UInt64 ArgType;
-  Int32 ArgSize;
-  Int32 ArgPosition;
+struct OPTYPE {
+  char OpMnemonic[24];
+  UInt64 OpType;
+  Int32 OpSize;
+  Int32 OpPosition;
   UInt32 AccessMode;
   MEMORYTYPE Memory;
   REGISTERTYPE Registers;
@@ -132,16 +132,16 @@ struct ARGTYPE {
 
 **Members**
 
- - **ArgMnemonic** : *[out]* This field sends back, when it is possible, the argument in ASCII format.
- - **ArgType** : *[out]* This field specifies the argument type. infos.Argumentxx.ArgType indicates if it is one of the following :
+ - **OpMnemonic** : *[out]* This field sends back, when it is possible, the operand in ASCII format.
+ - **OpType** : *[out]* This field specifies the operand type. infos.Operandxx.OpType indicates if it is one of the following :
     - REGISTER_TYPE
     - MEMORY_TYPE
     - CONSTANT_TYPE+ABSOLUTE_
     - CONSTANT_TYPE+RELATIVE_
- - **ArgSize** : *[out]* This field sends back the size of the argument.
- - **AccessMode** : *[out]* This field indicates if the argument is modified or not (READ=0x1) or (WRITE=0x2).
- - **Memory** : *[out]* Structure [MEMORYTYPE](#7-memory-infos) , filled only if infos.Argumentxx.ArgType == MEMORY_TYPE.
- - **Registers** : *[out]* Structure [REGISTERTYPE](#8-registers-infos) , filled only if infos.Argumentxx.ArgType == REGISTER_TYPE.
+ - **OpSize** : *[out]* This field sends back the size of the operand.
+ - **AccessMode** : *[out]* This field indicates if the operand is modified or not (READ=0x1) or (WRITE=0x2).
+ - **Memory** : *[out]* Structure [MEMORYTYPE](#7-memory-infos) , filled only if infos.Operandxx.OpType == MEMORY_TYPE.
+ - **Registers** : *[out]* Structure [REGISTERTYPE](#8-registers-infos) , filled only if infos.Operandxx.OpType == REGISTER_TYPE.
  - **SegmentReg** : *[out]* This field indicates, in the case of memory addressing mode, the segment register used :
    - ESReg
    - DSReg
@@ -247,7 +247,7 @@ Except for the field "alignment" that is only present for alignment purpose, all
 
 # 7. Memory infos
 
-This structure gives informations if `infos.Argumentxx.ArgType == MEMORY_TYPE`.
+This structure gives informations if `infos.Operandxx.OpType == MEMORY_TYPE`.
 
 ```
 struct MEMORYTYPE {
@@ -267,7 +267,7 @@ struct MEMORYTYPE {
 
 # 8. Registers infos
 
-This structure gives informations if `infos.Argumentxx.ArgType == REGISTER_TYPE`.
+This structure gives informations if `infos.Operandxx.OpType == REGISTER_TYPE`.
 
 
 ```
@@ -291,25 +291,25 @@ struct REGISTERTYPE{
 
 **Members**
 
-- **type** : *[out]* set of flags to define which type of registers are used. For instance, to test if operand1 is a general purpose register, use `infos.Argument1.Registers.type & GENERAL_REG`.
-- **gpr** : *[out]* set of flags to define which general purpose register is used. For instance, to test if operand 1 uses RAX, test `infos.Argument1.Registers.gpr & REG0`
-- **mmx** : *[out]* set of flags to define which MMX register is used. For instance, to test if operand 1 uses MM0, test `infos.Argument1.Registers.mmx & REG0`
-- **xmm** : *[out]* set of flags to define which XMM register is used. For instance, to test if operand 1 uses XMM0, test `infos.Argument1.Registers.xmm & REG0`
-- **ymm** : *[out]* set of flags to define which YMM register is used. For instance, to test if operand 1 uses YMM0, test `infos.Argument1.Registers.ymm & REG0`
-- **zmm** : *[out]* set of flags to define which ZMM register is used. For instance, to test if operand 1 uses ZMM0, test `infos.Argument1.Registers.zmm & REG0`.
+- **type** : *[out]* set of flags to define which type of registers are used. For instance, to test if operand1 is a general purpose register, use `infos.Operand1.Registers.type & GENERAL_REG`.
+- **gpr** : *[out]* set of flags to define which general purpose register is used. For instance, to test if operand 1 uses RAX, test `infos.Operand1.Registers.gpr & REG0`
+- **mmx** : *[out]* set of flags to define which MMX register is used. For instance, to test if operand 1 uses MM0, test `infos.Operand1.Registers.mmx & REG0`
+- **xmm** : *[out]* set of flags to define which XMM register is used. For instance, to test if operand 1 uses XMM0, test `infos.Operand1.Registers.xmm & REG0`
+- **ymm** : *[out]* set of flags to define which YMM register is used. For instance, to test if operand 1 uses YMM0, test `infos.Operand1.Registers.ymm & REG0`
+- **zmm** : *[out]* set of flags to define which ZMM register is used. For instance, to test if operand 1 uses ZMM0, test `infos.Operand1.Registers.zmm & REG0`.
 - **special** : *[out]* set of flags to define which special register is used. Special Registers are following :
    - EFLAGS (REG0)
    - MXCSR (REG1)
    - SSP (REG2)
-- **cr** : *[out]* set of flags to define which CR register is used. For instance, to test if operand 1 uses CR0, test `infos.Argument1.Registers.cr & REG0`.
-- **dr** : *[out]* set of flags to define which DR register is used. For instance, to test if operand 1 uses DR0, test `infos.Argument1.Registers.dr & REG0`.
+- **cr** : *[out]* set of flags to define which CR register is used. For instance, to test if operand 1 uses CR0, test `infos.Operand1.Registers.cr & REG0`.
+- **dr** : *[out]* set of flags to define which DR register is used. For instance, to test if operand 1 uses DR0, test `infos.Operand1.Registers.dr & REG0`.
 - **mem_management** : *[out]* set of flags to define which memory management register is used.
    - GDTR (REG0)
    - LDTR (REG1)
    - IDTR (REG2)
    - TR (REG3)
-- **mpx** : *[out]* set of flags to define which bound register is used. For instance, to test if operand 1 uses *BND0*, test `infos.Argument1.Registers.mpx & REG0`.
-- **opmask** : *[out]* set of flags to define which opmask register is used. For instance, to test if operand 1 uses *k0*, test `infos.Argument1.Registers.opmask & REG0`.
+- **mpx** : *[out]* set of flags to define which bound register is used. For instance, to test if operand 1 uses *BND0*, test `infos.Operand1.Registers.mpx & REG0`.
+- **opmask** : *[out]* set of flags to define which opmask register is used. For instance, to test if operand 1 uses *k0*, test `infos.Operand1.Registers.opmask & REG0`.
 - **segment** : *[out]* set of flags to define which segment register is used.
    - ES (REG0)
    - CS (REG1)
@@ -317,7 +317,7 @@ struct REGISTERTYPE{
    - DS (REG3)
    - FS (REG4)
    - GS (REG5)
-- **fpu** : *[out]* set of flags to define which FPU register is used. For instance, to test if operand 1 uses *st(0)*, test `infos.Argument1.Registers.fpu & REG0`.
+- **fpu** : *[out]* set of flags to define which FPU register is used. For instance, to test if operand 1 uses *st(0)*, test `infos.Operand1.Registers.fpu & REG0`.
 
 
 # 9. Constants
@@ -436,7 +436,7 @@ Values taken by infos.Instruction.BranchType
   JNB = -9
 ```
 
-Values taken by infos.Argumentxx.ArgType
+Values taken by infos.Operandxx.OpType
 
 ```
 NO_ARGUMENT =               0x10000,
@@ -463,7 +463,7 @@ Values taken by infos.Options
   ShowEVEXMasking = 0x02000000,
 ```
 
-Values taken by infos.Argumentxx.SegmentReg
+Values taken by infos.Operandxx.SegmentReg
 
 ```
 	ESReg 1

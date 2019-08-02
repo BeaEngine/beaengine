@@ -100,10 +100,10 @@ namespace Bea
   public class ArgumentType
   {
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
-    public string ArgMnemonic;
-    public Int32 ArgType;
-    public Int32 ArgSize;
-    public Int32 ArgPosition;
+    public string OpMnemonic;
+    public Int32 OpType;
+    public Int32 OpSize;
+    public Int32 OpPosition;
     public UInt32 AccessMode;
     public MemoryType Memory;
     public RegisterType Registers;
@@ -121,10 +121,10 @@ namespace Bea
     public UInt32 Archi;
     public UInt64 Options;
     public InstructionType Instruction;
-    public ArgumentType Argument1;
-    public ArgumentType Argument2;
-    public ArgumentType Argument3;
-    public ArgumentType Argument4;
+    public ArgumentType Operand1;
+    public ArgumentType Operand2;
+    public ArgumentType Operand3;
+    public ArgumentType Operand4;
     public PrefixInfo Prefix;
     public Int32 Error;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 48, ArraySubType = UnmanagedType.U4)]

@@ -23,6 +23,22 @@ Doing it with Python is the simplest way because of its specific wrapper used to
 ```
 # Python example
 
+from BeaEnginePython import *
+buffer = '6202054000443322'.decode('hex')
+target = Disasm(buffer)
+target.read()
+print(target.repr())
+```
+Output is :
+
+```
+vpshufb zmm0, zmm15, zmmword ptr [rbx+rsi+22h]
+```
+
+You can even do a disasm loop on a binary file :
+```
+# Python example
+
 with open("target.bin", 'rb') as f:
   buffer = f.read()
   disasm = Disasm(buffer)
@@ -30,6 +46,7 @@ with open("target.bin", 'rb') as f:
     disasm.read()
     print(disasm.repr())
 ```
+**Note :** In Python, *infos* structure is reachable with *disasm.infos*.
 
 Let's see how to do it in C :
 
@@ -41,22 +58,17 @@ Let's see how to do it in C :
 int main(void)
 {
   DISASM infos;
-  int false = 0, true = 1;  
   int len, i = 0;
-  _Bool Error = false;
 
   (void) memset (&infos, 0, sizeof(DISASM)); /* init structure (important !) */
   infos.EIP = &main; /* init offset */
 
-  while ((!Error) && (i < 100)){
+  while ((infos.Error == 0) && (i < 100)){
     len = Disasm(&infos);
-    if (len != UNKNOWN_OPCODE) {
+    if (infos.Error != UNKNOWN_OPCODE) {
       (void) puts(infos.CompleteInstr);
       infos.EIP = infos.EIP + len;
       i++;
-    }
-    else {
-      Error = true;
     }
   }
   return 0;
@@ -76,34 +88,29 @@ It is possible to ask to BeaEngine to decode a limited block of bytes. This smal
 int main(void)
 {
   DISASM infos;
-  int false = 0, true = 1;
   int len;
-  _Bool Error = false;
   int EndCodeSection = 0x401020;
 
   (void) memset (&infos, 0, sizeof(DISASM));
   infos.EIP = 0x401000;
 
-  while (!Error){
+  while (infos.Error == 0){
     infos.SecurityBlock = EndCodeSection - infos.EIP;
-
     len = Disasm(&infos);
-    if (len == OUT_OF_BLOCK) {
-      (void) printf("disasm engine is not allowed to read more memory \n");
-      Error = true;
-    }
-    else if (len == UNKNOWN_OPCODE) {
-      (void) printf("unknown opcode");
-      Error = true;
-    }
-    else {
-      (void) puts(infos.CompleteInstr);
-      infos.EIP = infos.EIP + len;
-      if (infos.EIP >= EndCodeSection) {
-        (void) printf("End of buffer reached ! \n");
-        Error = true;
+    switch(infos.Error)
+      {
+        case OUT_OF_BLOCK:
+          (void) printf("disasm engine is not allowed to read more memory \n");
+          break;
+        case UNKNOWN_OPCODE:
+          (void) printf("unknown opcode");
+          infos.EIP++;
+          infos.Error = 0;
+          break;
+        default:
+          (void) puts(infos.CompleteInstr);
+          infos.EIP += len;
       }
-    }
   }
   return 0;
 }
@@ -136,28 +143,24 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
   (void) memset (&infos, 0, sizeof(DISASM));
   infos.EIP = (int) StartCodeSection;
   infos.VirtualAddr = (long long) Virtual_Address;
-  infos.Archi = 0;
+  infos.Archi = 64;
 
-  while (!Error){
+  while (infos.Error == 0){
     infos.SecurityBlock = (int) EndCodeSection - infos.EIP;
     len = Disasm(&infos);
-    if (len == OUT_OF_BLOCK) {
-      (void) printf("disasm engine is not allowed to read more memory \n");
-      Error = 1;
-    }
-    else if (len == UNKNOWN_OPCODE) {
-      (void) printf("unknown opcode");
-      Error = 1;
-    }
-    else {
-      (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
-      infos.EIP = infos.EIP + len;
-      infos.VirtualAddr = infos.VirtualAddr + len;
-      if (infos.EIP >= (int) EndCodeSection) {
-        (void) printf("End of buffer reached ! \n");
-        Error = 1;
+    switch(infos.Error)
+      {
+        case OUT_OF_BLOCK:
+          (void) printf("disasm engine is not allowed to read more memory \n");
+          break;
+        case UNKNOWN_OPCODE:
+          (void) printf("unknown opcode");
+          break;
+        default:
+          (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
+          infos.EIP = infos.EIP + len;
+          infos.VirtualAddr = infos.VirtualAddr + len;
       }
-    }
   }
   return;
 }
@@ -201,7 +204,6 @@ int main(void)
 {
 
   (void) memset (&infos, 0, sizeof(DISASM));
-
   pSourceCode =  &main;
   pBuffer = malloc(100);
   (void) memset (pBuffer, 0x90, 100);
@@ -230,7 +232,7 @@ with open("target.bin", 'rb') as f:
 
 # 6- How to retrieve only instructions that modify the register eax ?
 
-This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Argument1.AccessMode and infos.Argument1.ArgType , you can determine for example if the register eax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. ArgType allows us to know if the register is eax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
+This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.OpType , you can determine for example if the register eax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. OpType allows us to know if the register is eax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
 
 ```
 #include <windows.h>
@@ -244,11 +246,11 @@ _Bool Error = 0;
 void *pBuffer;
 int  (*pSourceCode) (void);   /* function pointer */
 
-/* ================================================================================= */
-/*                                */
-/*            Disassemble code in the specified buffer using the correct VA      */
-/*                                */
-/*==================================================================================*/
+/* ================================================================ */
+/*                                                                  */
+/*            Disasm code in a buffer using the correct VA          */
+/*                                                                  */
+/*================================================================= */
 
 void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual_Address)(void))
 {
@@ -260,40 +262,36 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
 
   while (!Error){
     len = Disasm(&infos);
-    if (len == OUT_OF_BLOCK) {
-      (void) printf("disasm engine is not allowed to read more memory \n");
-      Error = 1;
-    }
-    else if (len == UNKNOWN_OPCODE) {
-      (void) printf("unknown opcode");
-      Error = 1;
-    }
-    else {
-      /*  Make a filter on Instruction */
-      if (
-        (infos.Argument1.AccessMode == WRITE) &&
-        (infos.Argument1.ArgType == REGISTER_TYPE) &&
-        (infos.Argument1.Registers.gpr & REG0)
-        ) {
-        (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
+    switch(infos.Error)
+      {
+        case OUT_OF_BLOCK:
+          (void) printf("disasm engine is not allowed to read more memory \n");
+          break;
+        case UNKNOWN_OPCODE:
+          (void) printf("unknown opcode");
+          break;
+        default:
+          /*  Make a filter on Instruction */
+          if (
+            (infos.Operand1.AccessMode == WRITE) &&
+            (infos.Operand1.OpType == REGISTER_TYPE) &&
+            (infos.Operand1.Registers.gpr & REG0)
+            ) {
+            (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
+          }
+          else if (
+            (infos.Operand2.AccessMode == WRITE) &&
+            (infos.Operand2.OpType == REGISTER_TYPE) &&
+            (infos.Operand2.Registers.gpr & REG0)
+            ) {
+            (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
+          }
+          else if (infos.Instruction.ImplicitModifiedRegs & REG0) {
+            (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
+          }
+          infos.EIP += len;
+          infos.VirtualAddr += len;
       }
-      else if (
-        (infos.Argument2.AccessMode == WRITE) &&
-        (infos.Argument2.ArgType == REGISTER_TYPE) &&
-        (infos.Argument2.Registers.gpr & REG0)
-        ) {
-        (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
-      }
-      else if (infos.Instruction.ImplicitModifiedRegs & REG0) {
-        (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
-      }
-      infos.EIP = infos.EIP + len;
-      infos.VirtualAddr = infos.VirtualAddr + len;
-      if (infos.EIP >= (long) EndCodeSection) {
-        (void) printf("End of buffer reached ! \n");
-        Error = 1;
-      }
-    }
   };
   return;
 }
@@ -352,26 +350,24 @@ void DisassembleCodeFilter(unsigned char *StartCodeSection, unsigned char *EndCo
   Error = 0;
   infos.EIP = (int) StartCodeSection;
   infos.VirtualAddr = (long long) Virtual_Address;
-  infos.Archi = 0;
+  infos.Archi = 64;
 
   /* ============================= Loop for Disasm */
   while (!Error){
     infos.SecurityBlock = (int) EndCodeSection - infos.EIP;
     len = Disasm(&infos);
-    if ((len != OUT_OF_BLOCK) && (len != UNKNOWN_OPCODE)) {
+    if (infos.Error >= 0) {
       if (
         (infos.Instruction.BranchType == JmpType) &&
-        (infos.Instruction.AddrValue != 0)) {
+        (infos.Instruction.AddrValue != 0))
+      {
         infos.EIP = RVA2OFFSET((int) infos.Instruction.AddrValue - 0x400000,pBuffer);
         infos.VirtualAddr = infos.Instruction.AddrValue;
       }
       else {
         (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
-        infos.EIP = infos.EIP+len;
-        infos.VirtualAddr = infos.VirtualAddr+len;
-      }
-      if (infos.EIP >= (long) EndCodeSection)  {
-        Error = 1;
+        infos.EIP += len;
+        infos.VirtualAddr += len;
       }
     }
     else {
@@ -380,13 +376,13 @@ void DisassembleCodeFilter(unsigned char *StartCodeSection, unsigned char *EndCo
   }
   return;
 }
-/* =================================================================================*/
-/*                            */
-/*          Convert Relative Virtual Address to offset in the file                */
-/*          works fine even in naughty binaries              */
-/*      BeatriX manufacture :)                */
-/*                            */
-/*==================================================================================*/
+/* =======================================================================*/
+/*                                                                        */
+/*          Convert Relative Virtual Address to offset in the file        */
+/*          works fine even in naughty binaries                           */
+/*      BeatriX manufacture :)                                            */
+/*                                                                        */
+/*========================================================================*/
 
 int RVA2OFFSET(int RVA, unsigned char *pBuff)
 {
@@ -416,11 +412,11 @@ if (RawBorneInf & 1) RawBorneInf--;
 RawBorneInf = RawBorneInf << 8;
 return RVA - VirtualBorneInf + RawBorneInf + (int) pBuff;
 }
-/* ========================================================================*/
-/*                            */
-/*                        MAIN    */
-/*                            */
-/*============================================================== ==========*/
+/* =======================================================================*/
+/*                                                                        */
+/*                              MAIN                                      */
+/*                                                                        */
+/*========================================================================*/
 int main(void)
 {
 
@@ -471,41 +467,41 @@ puts PROTO:DWORD
 
 start:
 
-    ; *********************** Init EIP
-    mov eax, start
-    mov infos.EIP, eax
+  ; *********************** Init EIP
+  mov eax, start
+  mov infos.EIP, eax
 
-    ; *********************** Just for fun : init VirtualAddr with funky value :)
-    mov eax, 0bea2008h
-    movd mm0, eax
-    movq infos.VirtualAddr, mm0
+  ; *********************** Just for fun : init VirtualAddr with funky value :)
+  mov eax, 0bea2008h
+  movd mm0, eax
+  movq infos.VirtualAddr, mm0
 
-    ; *********************** loop for disasm
-    MakeDisasm:
-        push offset infos
-        call Disasm
-        .if (eax == OUT_OF_BLOCK)
-            push offset szoutofblock
-            call puts
-            add esp, 4
-            push 0
-            call ExitProcess
-        .elseif (eax == UNKNOWN_OPCODE)
-            push offset infos.CompleteInstr
-            call puts
-            add esp, 4
-            push 0
-            call ExitProcess
-        .endif
-        add infos.EIP, eax
-        push offset infos.CompleteInstr
-        call puts
-        add esp, 4
-        dec i
-        jne MakeDisasm
+  ; *********************** loop for disasm
+  MakeDisasm:
+    push offset infos
+    call Disasm
+    .if (infos.Error == OUT_OF_BLOCK)
+      push offset szoutofblock
+      call puts
+      add esp, 4
+      push 0
+      call ExitProcess
+    .elseif (infos.Error == UNKNOWN_OPCODE)
+      push offset infos.CompleteInstr
+      call puts
+      add esp, 4
+      push 0
+      call ExitProcess
+    .endif
+    add infos.EIP, eax
+    push offset infos.CompleteInstr
+    call puts
+    add esp, 4
+    dec i
+    jne MakeDisasm
 
-    push 0
-    call ExitProcess
+  push 0
+  call ExitProcess
 End start
 ```
 
@@ -530,35 +526,35 @@ section .text use32
 
 start:
 
-    ; ***************************** Init EIP
-    mov eax, start
-    mov [infos+EIP], eax
+  ; ***************************** Init EIP
+  mov eax, start
+  mov [infos+EIP], eax
 
-    ; ***************************** just for fun : init VirtualAddr with weird address :)
-    mov eax, 0xbea2008
-    movd mm0, eax
-    movq [infos+VirtualAddr], mm0
+  ; ***************************** just for fun : init VirtualAddr with weird address :)
+  mov eax, 0xbea2008
+  movd mm0, eax
+  movq [infos+VirtualAddr], mm0
 
     ; ***************************** loop for disasm
 MakeDisasm:
-    push infos
-    call _Disasm@4
-    cmp eax, UNKNOWN_OPCODE
-    je IncreaseEIP
-        add [infos+EIP], eax
-        jmp DisplayInstruction
+  push infos
+  call _Disasm@4
+  cmp eax, UNKNOWN_OPCODE
+  je IncreaseEIP
+    add [infos+EIP], eax
+    jmp DisplayInstruction
 
-    IncreaseEIP:
-        inc dword [infos+EIP]
+  IncreaseEIP:
+    inc dword [infos+EIP]
 
-    DisplayInstruction:
-        push infos+CompleteInstr
-        call _puts@4
-        add esp, 4
-        dec byte [i]
-        jne MakeDisasm
-    push 0
-    call _ExitProcess@4
+  DisplayInstruction:
+    push infos+CompleteInstr
+    call _puts@4
+    add esp, 4
+    dec byte [i]
+    jne MakeDisasm
+  push 0
+  call _ExitProcess@4
 ```
 
 Using BeaEngine with fasm
@@ -579,10 +575,9 @@ include 'BeaEngineFasm.inc'
 
 section '.data' data readable writeable
 
-
-    infos       _Disasm       <>
-    i               db            100
-    szoutofblock    db            "Security alert. Disasm tries to read unreadable memory",0
+  infos       _Disasm       <>
+  i               db            100
+  szoutofblock    db            "Security alert. Disasm tries to read unreadable memory",0
 
 
 section '.text' code readable executable
@@ -591,32 +586,32 @@ section '.text' code readable executable
 
  start:
 
-    ; *********************** Init EIP
-    mov eax, start
-    mov [infos.EIP], eax
+  ; *********************** Init EIP
+  mov eax, start
+  mov [infos.EIP], eax
 
-    ; *********************** loop for disasm
-    MakeDisasm:
-        push infos
-        call Disasm
-        .if eax = OUT_OF_BLOCK
-            push szoutofblock
-            call puts
-            add esp, 4
-            push 0
-            call ExitProcess
-        .elseif eax = UNKNOWN_OPCODE
-            inc [infos.EIP]
-        .else
-            add [infos.EIP], eax
-        .endif
-        push infos.CompleteInstr
-        call puts                           
-        add esp, 4
-        dec byte [i]
-        jne MakeDisasm
-    push 0
-    call ExitProcess
+  ; *********************** loop for disasm
+  MakeDisasm:
+    push infos
+    call Disasm
+    .if eax = OUT_OF_BLOCK
+      push szoutofblock
+      call puts
+      add esp, 4
+      push 0
+      call ExitProcess
+    .elseif eax = UNKNOWN_OPCODE
+      inc [infos.EIP]
+    .else
+      add [infos.EIP], eax
+    .endif
+    push infos.CompleteInstr
+    call puts
+    add esp, 4
+    dec byte [i]
+    jne MakeDisasm
+  push 0
+  call ExitProcess
 ```
 
 Using BeaEngine with GoAsm
@@ -627,9 +622,9 @@ Disasm = BeaEngine.lib:Disasm
 
 .data
 
-    infos       _Disasm      <>
-    szoutofblock    db           "Security alert. Disasm tries to read unreadable memory",0
-    i               db            100
+  infos       _Disasm      <>
+  szoutofblock    db           "Security alert. Disasm tries to read unreadable memory",0
+  i               db            100
 .code
 
 start:
@@ -679,51 +674,51 @@ extrn ExitProcess: PROC
 
 .data
 
-    infos        _Disasm         <>
-    szoutofblock    BYTE            "Security alert. Disasm tries to read unreadable memory",0
-    i               DWORD           100
+  infos        _Disasm         <>
+  szoutofblock    BYTE            "Security alert. Disasm tries to read unreadable memory",0
+  i               DWORD           100
 
 
 .code
 
 main proc
 
-    ; *********************** Init EIP
-    mov rax, main
-    mov infos.EIP, rax
+  ; *********************** Init EIP
+  mov rax, main
+  mov infos.EIP, rax
 
-    ; *********************** Init Architecture
-    mov infos.Archi, 64
+  ; *********************** Init Architecture
+  mov infos.Archi, 64
 
-    ; *********************** loop for disasm
-    MakeDisasm:
-        mov rcx, offset infos
-        call Disasm
-        cmp eax, OUT_OF_BLOCK
-        jne @F
-            mov rcx, offset szoutofblock
-            sub rsp, 20h
-            call puts
-            add rsp, 20h
-            mov rcx, 0
-            call ExitProcess
-        @@:
-        cmp eax, UNKNOWN_OPCODE
-        jne @F
-            inc infos.EIP
-            jmp Display
-        @@:
-            add infos.EIP, rax
-    Display:
-        mov rcx, offset infos.CompleteInstr
+  ; *********************** loop for disasm
+  MakeDisasm:
+    mov rcx, offset infos
+    call Disasm
+    cmp eax, OUT_OF_BLOCK
+    jne @F
+        mov rcx, offset szoutofblock
         sub rsp, 20h
-        call puts                           
+        call puts
         add rsp, 20h
-        dec i
-        jne MakeDisasm
+        mov rcx, 0
+        call ExitProcess
+    @@:
+    cmp eax, UNKNOWN_OPCODE
+    jne @F
+        inc infos.EIP
+        jmp Display
+    @@:
+        add infos.EIP, rax
+  Display:
+    mov rcx, offset infos.CompleteInstr
+    sub rsp, 20h
+    call puts                           
+    add rsp, 20h
+    dec i
+    jne MakeDisasm
 
-    mov rcx, 0
-    call ExitProcess
+  mov rcx, 0
+  call ExitProcess
 main endp
 
 end
@@ -864,10 +859,10 @@ INSTRTYPE est une structure
   nImplicitModifiedRegs est un entier sur 4 octets
 FIN
 
-ARGTYPE est une structure
-  ArgMnemonic est une chaîne fixe sur 32
-  nArgType est un entier sur 4 octets
-  nArgSize est un entier sur 4 octets
+OPTYPE est une structure
+  OpMnemonic est une chaîne fixe sur 32
+  nOpType est un entier sur 4 octets
+  nOpSize est un entier sur 4 octets
   nAccessMode est un entier sur 4 octets
   stMemory est un MEMORYTYPE
       nSegmentReg est un entier sur 4 octets
@@ -881,9 +876,9 @@ _Disasm est une structure
   Archi est un entier sur 4 octets
   nOptions est un entier sur 4 octets
   stInstruction est un INSTRTYPE
-  stArgument1 est un ARGTYPE
-  stArgument2 est un ARGTYPE
-  stArgument3 est un ARGTYPE
+  stOperand1 est un OPTYPE
+  stOperand2 est un OPTYPE
+  stOperand3 est un OPTYPE
   Prefix est un PREFIXINFO
 FIN
 

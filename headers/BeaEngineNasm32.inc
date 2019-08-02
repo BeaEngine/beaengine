@@ -91,11 +91,11 @@ STRUC INSTRTYPE
     ImplicitModifiedRegs:    resd   1
 ENDSTRUC
 
-STRUC ARGTYPE
-    ArgMnemonic:     resb   24
-    ArgType:         resq   1
-    ArgSize:         resd   1
-    ArgPosition:     resd   1
+STRUC OPTYPE
+    OpMnemonic:     resb   24
+    OpType:         resq   1
+    OpSize:         resd   1
+    OpPosition:     resd   1
     AccessMode:      resd   1
     Memory:          resb   MEMORYTYPE_size
     Registers:       resb   REGISTERTYPE_size
@@ -112,10 +112,10 @@ STRUC _Disasm
     Archi:           resd   1
     Options:         resq   1
     Instruction:     resb   INSTRTYPE_size
-    Argument1:       resb   ARGTYPE_size
-    Argument2:       resb   ARGTYPE_size
-    Argument3:       resb   ARGTYPE_size
-    Argument4:       resb   ARGTYPE_size
+    Operand1:       resb   OPTYPE_size
+    Operand2:       resb   OPTYPE_size
+    Operand3:       resb   OPTYPE_size
+    Operand4:       resb   OPTYPE_size
     Prefix:          resb   PREFIXINFO_size
     Error:          resd   1
     Reserved_:       resd   48

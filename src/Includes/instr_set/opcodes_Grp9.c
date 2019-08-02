@@ -27,16 +27,16 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
 
     if (GV.REGOPCODE == 1) {
         GV.MemDecoration = Arg2qword;
-        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         if (GV.REX.W_ == 1) {
             GV.MemDecoration = Arg2dqword;
             (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpxchg16b ");
             #endif
-            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
-            (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
-            (*pMyDisasm).Argument1.ArgSize = 128;
+            (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;(*pMyDisasm).Operand1.Registers.type = GENERAL_REG;
+            (*pMyDisasm).Operand1.Registers.gpr = REG0+REG2;
+            (*pMyDisasm).Operand1.OpSize = 128;
 
             FillFlags(pMyDisasm, 23);
             GV.EIP_ += GV.DECALAGE_EIP+2;
@@ -46,9 +46,9 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmpxchg8b ");
             #endif
-            (*pMyDisasm).Argument1.ArgType = REGISTER_TYPE;(*pMyDisasm).Argument1.Registers.type = GENERAL_REG;
-            (*pMyDisasm).Argument1.Registers.gpr = REG0+REG2;
-            (*pMyDisasm).Argument1.ArgSize = 64;
+            (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;(*pMyDisasm).Operand1.Registers.type = GENERAL_REG;
+            (*pMyDisasm).Operand1.Registers.gpr = REG0+REG2;
+            (*pMyDisasm).Operand1.OpSize = 64;
 
             FillFlags(pMyDisasm, 23);
             GV.EIP_ += GV.DECALAGE_EIP+2;
@@ -56,7 +56,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 6) {
         GV.MemDecoration = Arg2qword;
-        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
         if (GV.OperandSize == 16) {
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -78,7 +78,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 7) {
         GV.MemDecoration = Arg2qword;
-        MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+        MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vmptrst ");

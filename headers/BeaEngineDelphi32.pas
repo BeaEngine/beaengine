@@ -135,11 +135,11 @@ uses Windows,SysUtils;
 
   type
 
-     TARGTYPE = packed record
-          ArgMnemonic : array[0..23] of AnsiChar;
-          ArgType : int64;
-          ArgSize : longint;
-		  ArgPosition : longint;
+     TOPTYPE = packed record
+          OpMnemonic : array[0..23] of AnsiChar;
+          OpType : int64;
+          OpSize : longint;
+		  OpPosition : longint;
           AccessMode : longint;
           Memory : TMEMORYTYPE;
           Registers : TREGISTERTYPE;
@@ -156,10 +156,10 @@ uses Windows,SysUtils;
           Archi : longint;
           Options : int64;
           Instruction : TINSTRTYPE;
-          Argument1 : TARGTYPE;
-          Argument2 : TARGTYPE;
-          Argument3 : TARGTYPE;
-          Argument4 : TARGTYPE;
+          Operand1 : TOPTYPE;
+          Operand2 : TOPTYPE;
+          Operand3 : TOPTYPE;
+          Operand4 : TOPTYPE;
           Prefix : TPREFIXINFO;
           Error : longint;
           Reserved_ : array[0..48] of longint;

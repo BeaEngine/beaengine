@@ -51,10 +51,10 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rdsspd ')
         assert_equal(myDisasm.infos.repr, 'rdsspd eax')
-        assert_equal(myDisasm.infos.Argument2.ArgType, REGISTER_TYPE)
-        assert_equal(myDisasm.infos.Argument2.ArgSize, 64)
-        assert_equal(myDisasm.infos.Argument2.Registers.type, SPECIAL_REG)
-        assert_equal(myDisasm.infos.Argument2.Registers.special, REG2)
+        assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand2.OpSize, 64)
+        assert_equal(myDisasm.infos.Operand2.Registers.type, SPECIAL_REG)
+        assert_equal(myDisasm.infos.Operand2.Registers.special, REG2)
 
         # F3 REX.W 0F 1E /1
         # RDSSPQ R64
@@ -67,7 +67,7 @@ class TestSuite:
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf1e')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rdsspq ')
         assert_equal(myDisasm.infos.repr, 'rdsspq rax')
-        assert_equal(myDisasm.infos.Argument2.ArgType, REGISTER_TYPE)
-        assert_equal(myDisasm.infos.Argument2.ArgSize, 64)
-        assert_equal(myDisasm.infos.Argument2.Registers.type, SPECIAL_REG)
-        assert_equal(myDisasm.infos.Argument2.Registers.special, REG2)
+        assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand2.OpSize, 64)
+        assert_equal(myDisasm.infos.Operand2.Registers.type, SPECIAL_REG)
+        assert_equal(myDisasm.infos.Operand2.Registers.special, REG2)

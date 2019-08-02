@@ -25,7 +25,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
   if (!Security(1, pMyDisasm)) return;
   GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
   if (GV.REGOPCODE == 0) {
-    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
     if (GV.MOD_!= 0x3) {
       GV.MemDecoration = Arg2byte;
       (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
@@ -38,7 +38,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
   }
   else if (GV.REGOPCODE == 1) {
-    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
     if (GV.MOD_!= 0x3) {
       GV.MemDecoration = Arg2byte;
       (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
@@ -51,7 +51,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
   }
   else if (GV.REGOPCODE == 2) {
-    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
     if (GV.MOD_!= 0x3) {
       GV.MemDecoration = Arg2byte;
       (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
@@ -64,7 +64,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
   }
   else if (GV.REGOPCODE == 3) {
-    MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+    MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
     if (GV.MOD_!= 0x3) {
       GV.MemDecoration = Arg2byte;
       (*pMyDisasm).Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;

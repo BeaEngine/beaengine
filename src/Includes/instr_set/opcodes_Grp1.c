@@ -102,7 +102,7 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
         #endif
         FillFlags(pMyDisasm, 20);
-        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Operand1.AccessMode = READ;
     }
 }
 
@@ -205,7 +205,7 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
         #endif
         FillFlags(pMyDisasm, 20);
-        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Operand1.AccessMode = READ;
     }
 }
 
@@ -295,6 +295,6 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "cmp ");
         #endif
         FillFlags(pMyDisasm, 20);
-        (*pMyDisasm).Argument1.AccessMode = READ;
+        (*pMyDisasm).Operand1.AccessMode = READ;
     }
 }

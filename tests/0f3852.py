@@ -67,5 +67,5 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x52)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vp4dpwssd ')
-        assert_equal(myDisasm.infos.Argument2.Registers.zmm, REG4+REG5+REG6+REG7)
+        assert_equal(myDisasm.infos.Operand2.Registers.zmm, REG4+REG5+REG6+REG7)
         assert_equal(myDisasm.infos.repr, 'vp4dpwssd zmm1, zmm4...zmm7, xmmword ptr [rsi]')

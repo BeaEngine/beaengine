@@ -92,11 +92,11 @@ struct INSTRTYPE
 ends
 
 
-struct ARGTYPE
-    ArgMnemonic     db   24 dup(0)
-    ArgType         dq   0
-    ArgSize         dd   0
-    ArgPosition     dd   0
+struct OPTYPE
+    OpMnemonic     db   24 dup(0)
+    OpType         dq   0
+    OpSize         dd   0
+    OpPosition     dd   0
     AccessMode      dd   0
     Memory          MEMORYTYPE
     Registers       REGISTERTYPE
@@ -113,10 +113,10 @@ struct _Disasm
     Archi           dd   0
     Options         dq   0
     Instruction     INSTRTYPE
-    Argument1       ARGTYPE
-    Argument2       ARGTYPE
-    Argument3       ARGTYPE
-    Argument4       ARGTYPE
+    Operand1       OPTYPE
+    Operand2       OPTYPE
+    Operand3       OPTYPE
+    Operand4       OPTYPE
     Prefix          PREFIXINFO
     Error          dd   0
     Reserved_       dd   48 dup(0)

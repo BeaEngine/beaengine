@@ -90,12 +90,12 @@ class INSTRTYPE(Structure):
               ("Immediat", c_int64),
               ("ImplicitModifiedRegs", c_uint32)]
 
-class ARGTYPE(Structure):
+class OPTYPE(Structure):
    _pack_= 1
-   _fields_= [("ArgMnemonic", c_char * 24),
-              ("ArgType", c_int64),
-              ("ArgSize", c_int32),
-              ("ArgPosition", c_int32),
+   _fields_= [("OpMnemonic", c_char * 24),
+              ("OpType", c_int64),
+              ("OpSize", c_int32),
+              ("OpPosition", c_int32),
               ("AccessMode", c_uint32),
               ("Memory", MEMORYTYPE),
               ("Registers", REGISTERTYPE),
@@ -179,10 +179,10 @@ class INSTRUCTION(Structure):
                ("Archi", c_uint32),
                ("Options", c_uint64),
                ("Instruction", INSTRTYPE),
-               ("Argument1", ARGTYPE),
-               ("Argument2", ARGTYPE),
-               ("Argument3", ARGTYPE),
-               ("Argument4", ARGTYPE),
+               ("Operand1", OPTYPE),
+               ("Operand2", OPTYPE),
+               ("Operand3", OPTYPE),
+               ("Operand4", OPTYPE),
                ("Prefix", PREFIXINFO),
                ("Error", c_int32),
                ("Reserved_", InternalDatas)]

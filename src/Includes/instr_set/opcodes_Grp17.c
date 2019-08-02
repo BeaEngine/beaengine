@@ -36,13 +36,13 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
         if (GV.REX.W_ == 0x1) {
           GV.OperandSize = 64;
           GV.MemDecoration = Arg2qword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         }
         else {
           GV.MemDecoration = Arg2dword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         }
       }
     }
@@ -61,13 +61,13 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
         if (GV.REX.W_ == 0x1) {
             GV.OperandSize = 64;
             GV.MemDecoration = Arg2qword;
-            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument1, pMyDisasm);
-            MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
+            MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         }
         else {
             GV.MemDecoration = Arg2dword;
-            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument1, pMyDisasm);
-            MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
+            MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         }
       }
     }
@@ -86,13 +86,13 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
         if (GV.REX.W_ == 0x1) {
           GV.OperandSize = 64;
           GV.MemDecoration = Arg2qword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         }
         else {
           GV.MemDecoration = Arg2dword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Argument1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Argument2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
+          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
         }
       }
 

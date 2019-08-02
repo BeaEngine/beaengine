@@ -87,16 +87,16 @@ INSTRTYPE STRUCT
     ImplicitModifiedRegs    dd   0
 INSTRTYPE ENDS
 
-ARGTYPE STRUCT
-    ArgMnemonic     db   24 dup 0
-    ArgType         dq   0
-    ArgSize         dd   0
-    ArgPosition     dd   0
+OPTYPE STRUCT
+    OpMnemonic     db   24 dup 0
+    OpType         dq   0
+    OpSize         dd   0
+    OpPosition     dd   0
     AccessMode      dd   0
     Memory          MEMORYTYPE <0>
     Registers       REGISTERTYPE <0>
     SegmentReg      dd   0
-ARGTYPE ENDS
+OPTYPE ENDS
 
 ; ************************************** Define structure
 _Disasm STRUCT
@@ -107,10 +107,10 @@ _Disasm STRUCT
     Archi           dd   0
     Options         dq   0
     Instruction     INSTRTYPE <0>
-    Argument1       ARGTYPE <>
-    Argument2       ARGTYPE <>
-    Argument3       ARGTYPE <>
-    Argument4       ARGTYPE <>
+    Operand1       OPTYPE <>
+    Operand2       OPTYPE <>
+    Operand3       OPTYPE <>
+    Operand4       OPTYPE <>
     Prefix          PREFIXINFO <>
     Error          dd   0
     Reserved_       dd   48 dup 0

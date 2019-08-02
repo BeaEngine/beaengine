@@ -32,7 +32,7 @@ class TestSuite:
                 myDisasm.read()
                 #print(myDisasm.repr())
                 #print(myDisasm.infos.Reserved_.Register_)
-                assert_equal(myDisasm.infos.Argument2.ArgMnemonic, registers[REGOPCODE])
+                assert_equal(myDisasm.infos.Operand2.OpMnemonic, registers[REGOPCODE])
 
     def verifyRegopcodeArg1ForMod(self, MOD, registers, instr, archi):
 
@@ -44,7 +44,7 @@ class TestSuite:
                 myDisasm.infos.Archi = archi
                 myDisasm.read()
                 print(myDisasm.repr())
-                assert_equal(myDisasm.infos.Argument1.ArgMnemonic, registers[REGOPCODE])
+                assert_equal(myDisasm.infos.Operand1.OpMnemonic, registers[REGOPCODE])
 
     def test_RegOpcode(self):
 

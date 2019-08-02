@@ -45,7 +45,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5c)
         assert_equal(myDisasm.infos.Reserved_.NB_PREFIX, 1)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vsubpd ')
-        assert_equal(myDisasm.infos.Argument3.Memory.Displacement, 0x11111100)
+        assert_equal(myDisasm.infos.Operand3.Memory.Displacement, 0x11111100)
         assert_equal(myDisasm.infos.repr, 'vsubpd ymm8, ymm15, ymmword ptr [0000000022222209h]')
 
 
@@ -73,7 +73,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38df)
         assert_equal(myDisasm.infos.Instruction.AddrValue, 0x22222209)
         assert_equal(myDisasm.infos.Reserved_.NB_PREFIX, 1)
-        assert_equal(myDisasm.infos.Argument2.Memory.Displacement, 0x11111100)
+        assert_equal(myDisasm.infos.Operand2.Memory.Displacement, 0x11111100)
         assert_equal(myDisasm.infos.repr, 'aesdeclast xmm0, xmmword ptr [0000000022222209h]')
 
 
