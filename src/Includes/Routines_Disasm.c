@@ -75,6 +75,10 @@ void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
   #ifndef BEA_LIGHT_DISASSEMBLY
    (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "??? ");
   #endif
+  (*pMyDisasm).Operand1.AccessMode = 0;
+  (*pMyDisasm).Operand2.AccessMode = 0;
+  (*pMyDisasm).Operand3.AccessMode = 0;
+  (*pMyDisasm).Operand4.AccessMode = 0;
   GV.ERROR_OPCODE = UNKNOWN_OPCODE;
 }
 
