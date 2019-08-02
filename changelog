@@ -7,7 +7,7 @@
 - fix issues on prefixes (precedences and conflicts)
 - fix SecurityBlock issues
 - add #UD Exception
-- new structures REGISTER_TYPE
+- new structure REGISTER_TYPE for Operands and ImplicitModifiedRegs
 - Renaming Arguments fields to Operands fields
 - new infos.Error field to check the state of the output
 - new option to show/hide EVEX merging/zeroing applyied on first operand

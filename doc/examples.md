@@ -231,32 +231,26 @@ with open("target.bin", 'rb') as f:
 This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.OpType , you can determine for example if the register eax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. OpType allows us to know if the register is eax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
 
 ```
-#include <windows.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "BeaEngine.h"
-/* ============================= Init datas */
-DISASM infos;
-int len;
-_Bool Error = 0;
-void *pBuffer;
-int  (*pSourceCode) (void);   /* function pointer */
 
-/* ================================================================ */
-/*                                                                  */
-/*            Disasm code in a buffer using the correct VA          */
-/*                                                                  */
-/*================================================================= */
+/*
+ * disasm function to analyze instructions
+ */
 
-void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual_Address)(void))
+void DisassembleCode(char *start_offset, char *end_offset, int (*virtual_address)(void))
 {
+  DISASM infos;
+  int len;
 
-  Error = 0;
+  (void) memset (&infos, 0, sizeof(DISASM));
+  infos.EIP = (UInt64) start_offset;
+  infos.VirtualAddr = (UInt64) virtual_address;
 
-  infos.EIP = (int) StartCodeSection;
-  infos.VirtualAddr = (long long) Virtual_Address;
-
-  while (!Error){
+  while (!infos.Error){
+    infos.SecurityBlock = (int) end_offset - infos.EIP;
     len = Disasm(&infos);
     switch(infos.Error)
       {
@@ -264,26 +258,18 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
           (void) printf("disasm engine is not allowed to read more memory \n");
           break;
         case UNKNOWN_OPCODE:
-          (void) printf("unknown opcode");
+          (void) printf("unknown opcode\n");
+          infos.EIP += 1;
+          infos.VirtualAddr += 1;
+          infos.Error = 0;
           break;
         default:
-          /*  Make a filter on Instruction */
           if (
-            (infos.Operand1.AccessMode == WRITE) &&
-            (infos.Operand1.OpType == REGISTER_TYPE) &&
-            (infos.Operand1.Registers.gpr & REG0)
+            ((infos.Operand1.AccessMode == WRITE) && (infos.Operand1.Registers.gpr & REG0)) ||
+            ((infos.Operand2.AccessMode == WRITE) && (infos.Operand2.Registers.gpr & REG0)) ||
+            (infos.Instruction.ImplicitModifiedRegs.gpr & REG0)
             ) {
-            (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
-          }
-          else if (
-            (infos.Operand2.AccessMode == WRITE) &&
-            (infos.Operand2.OpType == REGISTER_TYPE) &&
-            (infos.Operand2.Registers.gpr & REG0)
-            ) {
-            (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
-          }
-          else if (infos.Instruction.ImplicitModifiedRegs & REG0) {
-            (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
+            (void) printf("%.16llx %s\n", infos.VirtualAddr, &infos.CompleteInstr);
           }
           infos.EIP += len;
           infos.VirtualAddr += len;
@@ -291,27 +277,18 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
   };
   return;
 }
-/* ======================================================================== */
-/*                                                                          */
-/*                        MAIN                                              */
-/*                                                                          */
-/*==========================================================================*/
+
+/*
+ *  main
+ */
+
 int main(void)
 {
-
-  (void) memset (&infos, 0, sizeof(DISASM));
-
-  pSourceCode =  &main;
-  pBuffer = malloc(0x600);
-  (void) memset (pBuffer, 0x90, 0x600);
-  (void) memcpy (pBuffer,(void*)(int) pSourceCode, 0x600);
-
-  (void) printf("******************************************************* \n");
-  (void) printf("Display only Instructions modifying EAX. \n");
-  (void) printf("******************************************************* \n");
-
-  DisassembleCode (pBuffer, (char*) pBuffer + 0x600, pSourceCode);
-
+  void *pBuffer;
+  pBuffer = malloc(300);
+  (void) memcpy (pBuffer, main, 300);
+  (void) printf("Display only Instructions modifying RAX. \n");
+  DisassembleCode (pBuffer, (char*) pBuffer + 299, main);
   return 0;
 }
 ```
@@ -325,10 +302,9 @@ In some cases, unconditional jumps are used in obfuscation mechanisms. This prog
 #include <stdlib.h>
 #include <stdio.h>
 #include "BeaEngine.h"
-/* ============================= Init datas */
+
 DISASM infos;
 int len,i,FileSize;
-_Bool Error = 0;
 unsigned char *pBuffer;
 int  (*pSourceCode) (void);   /* function pointer */
 FILE *FileHandle;
@@ -343,13 +319,12 @@ int RVA2OFFSET(int Address, unsigned char *pBuff);
 
 void DisassembleCodeFilter(unsigned char *StartCodeSection, unsigned char *EndCodeSection, int (Virtual_Address))
 {
-  Error = 0;
-  infos.EIP = (int) StartCodeSection;
-  infos.VirtualAddr = (long long) Virtual_Address;
-  infos.Archi = 64;
+  (void) memset (&infos, 0, sizeof(DISASM));
+  infos.EIP = (UInt64) StartCodeSection;
+  infos.VirtualAddr = (UInt64) Virtual_Address;
 
   /* ============================= Loop for Disasm */
-  while (!Error){
+  while (!infos.Error){
     infos.SecurityBlock = (int) EndCodeSection - infos.EIP;
     len = Disasm(&infos);
     if (infos.Error >= 0) {
@@ -365,9 +340,6 @@ void DisassembleCodeFilter(unsigned char *StartCodeSection, unsigned char *EndCo
         infos.EIP += len;
         infos.VirtualAddr += len;
       }
-    }
-    else {
-      Error = 1;
     }
   }
   return;
@@ -424,11 +396,8 @@ int main(void)
 
   (void)fread(pBuffer,1,FileSize, FileHandle);
   (void)fclose(FileHandle);
-  (void) memset (&infos, 0, sizeof(DISASM));
 
-  (void) printf("******************************************************* \n");
   (void) printf("Disassemble code by following jumps\n");
-  (void) printf("******************************************************* \n");
 
   DisassembleCodeFilter ((unsigned char*) pBuffer + 0x400, (unsigned char*) pBuffer + 0x430, 0x401000);
   return 0;
