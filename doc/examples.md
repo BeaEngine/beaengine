@@ -51,8 +51,8 @@ with open("target.bin", 'rb') as f:
 Let's see how to do it in C :
 
 ```
-#include <windows.h>
 #include <stdio.h>
+#include <string.h>
 #include "BeaEngine.h"
 
 int main(void)
@@ -60,8 +60,8 @@ int main(void)
   DISASM infos;
   int len, i = 0;
 
-  (void) memset (&infos, 0, sizeof(DISASM)); /* init structure (important !) */
-  infos.EIP = &main; /* init offset */
+  (void) memset (&infos, 0, sizeof(DISASM));
+  infos.EIP = (UInt64) &main;
 
   while ((infos.Error == 0) && (i < 100)){
     len = Disasm(&infos);
@@ -81,21 +81,22 @@ int main(void)
 It is possible to ask to BeaEngine to decode a limited block of bytes. This small program decodes instructions of its own code located between 2 virtual addresses (0x401000 and 0x401020, arbitrary choice). That means BeaEngine won't read any bytes outside these limits even if it tries to decode an instruction starting just before the upper bound. To realize this restriction, BeaEngine uses the field **infos.SecurityBlock** that contains the number of bytes we want to read. By default, an intel instruction never exceeds 15 bytes. Thus, only SecurityBlock values below this limit are used. In all cases, BeaEngine stops decoding an instruction if it exceeds 15 bytes.
 
 ```
-#include <windows.h>
 #include <stdio.h>
+#include <string.h>
 #include "BeaEngine.h"
 
 int main(void)
 {
   DISASM infos;
   int len;
-  int EndCodeSection = 0x401020;
+  UInt64 endCodeSection;
 
   (void) memset (&infos, 0, sizeof(DISASM));
-  infos.EIP = 0x401000;
+  infos.EIP = (UInt64) &main;
+  endCodeSection = infos.EIP + 0x20;
 
   while (infos.Error == 0){
-    infos.SecurityBlock = EndCodeSection - infos.EIP;
+    infos.SecurityBlock = endCodeSection - infos.EIP;
     len = Disasm(&infos);
     switch(infos.Error)
       {
@@ -118,35 +119,30 @@ int main(void)
 
 # 3- How to decode bytes in an allocated buffer while keeping original virtual addresses ?
 
-This time, we are in a real and usual situation. We want to decode bytes copied in an allocated buffer. However, you want to see original virtual addresses. The following program allocates a buffer with the function malloc , copies in it 100 bytes from the address &main and decodes the buffer :
+This time, we are in a real and usual situation. We want to decode bytes copied in an allocated buffer. However, you want to see original virtual addresses. The following program allocates a buffer with the function malloc , copies in it 200 bytes from the address &main and decodes the buffer :
 
 ```
-#include <windows.h>
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "BeaEngine.h"
 
-DISASM infos;
-int len;
-_Bool Error = 0;
-void *pBuffer;
-int  (*pSourceCode) (void);   /* function pointer */
+#define BUFFER_SIZE 200
 
-/* =========================================================================*/
-/*                                                                          */
-/*    Disassemble code in the specified buffer using the correct VA         */
-/*                                                                          */
-/*==========================================================================*/
+/*
+ * display instructions with correct VA
+ */
 
-void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual_Address)(void))
+void DisplayInstr(char *start_offset, char *end_offset, int (*virtual_address)(void))
 {
+  int len;
+  DISASM infos;
   (void) memset (&infos, 0, sizeof(DISASM));
-  infos.EIP = (int) StartCodeSection;
-  infos.VirtualAddr = (long long) Virtual_Address;
-  infos.Archi = 64;
+  infos.EIP = (UInt64) start_offset;
+  infos.VirtualAddr = (UInt64) virtual_address;
 
   while (infos.Error == 0){
-    infos.SecurityBlock = (int) EndCodeSection - infos.EIP;
+    infos.SecurityBlock = (int) end_offset - infos.EIP;
     len = Disasm(&infos);
     switch(infos.Error)
       {
@@ -155,28 +151,28 @@ void DisassembleCode(char *StartCodeSection, char *EndCodeSection, int (*Virtual
           break;
         case UNKNOWN_OPCODE:
           (void) printf("unknown opcode");
+          infos.EIP += 1;
+          infos.VirtualAddr += 1;
           break;
         default:
-          (void) printf("%.8X %s\n",(int) infos.VirtualAddr, &infos.CompleteInstr);
-          infos.EIP = infos.EIP + len;
-          infos.VirtualAddr = infos.VirtualAddr + len;
+          (void) printf("%.16llx %s\n",infos.VirtualAddr, &infos.CompleteInstr);
+          infos.EIP += len;
+          infos.VirtualAddr += len;
       }
   }
   return;
 }
 
-/* =========================================================================*/
-/*                                                                          */
-/*                                  MAIN                                    */
-/*                                                                          */
-/*==========================================================================*/
+/*
+ * main
+ */
+
 int main(void)
 {
-  pSourceCode =  &main;
-  pBuffer = malloc(100);
-  (void) memset (pBuffer, 0x90, 100);
-  (void) memcpy (pBuffer,(void*)(int) pSourceCode, 100);
-  DisassembleCode (pBuffer, (char*) pBuffer + 100, pSourceCode);
+  void *pBuffer;
+  pBuffer = malloc(BUFFER_SIZE);
+  (void) memcpy (pBuffer, main, BUFFER_SIZE);
+  DisplayInstr(pBuffer, (char*) pBuffer + BUFFER_SIZE, main);
   return 0;
 }
 ```
