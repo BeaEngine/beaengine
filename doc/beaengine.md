@@ -1,4 +1,4 @@
-**BeaEngine documentation**
+operand**BeaEngine documentation**
 - BEAENGINE_VERSION : 5.0
 - DOC_RELEASE : 1.0
 
@@ -73,10 +73,10 @@ struct PDISASM {
    - **ShowSegmentRegs** : show segment registers used (default is hidden)
    - **ShowEVEXMasking** : show opmask and merging/zeroing applyed on first operand for AVX512 instructions (default is hidden)
  - **Instruction** : *[out]* Structure **[INSTRTYPE](#3-instruction-infos)**.
- - **Operand1** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the first operand.
- - **Operand2** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the second operand.
- - **Operand3** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the third operand.
- - **Operand4** : *[out]* Structure **[OPTYPE](#4-argument-infos)** that concerns the fourth operand.  
+ - **Operand1** : *[out]* Structure **[OPTYPE](#4-operand-infos)** that concerns the first operand.
+ - **Operand2** : *[out]* Structure **[OPTYPE](#4-operand-infos)** that concerns the second operand.
+ - **Operand3** : *[out]* Structure **[OPTYPE](#4-operand-infos)** that concerns the third operand.
+ - **Operand4** : *[out]* Structure **[OPTYPE](#4-operand-infos)** that concerns the fourth operand.  
  - **Prefix** : *[out]* Structure **[PREFIXINFO](#5-prefixes-infos)** containing an exhaustive list of used prefixes.
  - **Error** : *[out]* This field returns the status of the disassemble process :
    - **Success** : (0) instruction has been recognized by the engine
