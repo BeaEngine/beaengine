@@ -87,7 +87,7 @@ STRUC INSTRTYPE
     Flags:                   resb   EFLStruct_size
     AddrValue:               resq   1
     Immediat:                resq   1
-    ImplicitModifiedRegs:    resd   1
+    ImplicitModifiedRegs:    resb   REGISTERTYPE_size
 ENDSTRUC
 
 STRUC OPTYPE

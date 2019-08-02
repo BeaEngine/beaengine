@@ -1237,7 +1237,7 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+1))+5+GV.NB_PREFIX;
         CalculateRelativeAddress(&MyAddress,(Int64) MyNumber, pMyDisasm);
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         if (MyAddress >= 0x80000000) {
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Operand1.OpMnemonic, "%.16llX",(Int64) MyAddress);
@@ -1259,7 +1259,7 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
         CalculateRelativeAddress(&MyAddress,(Int64) MyNumber, pMyDisasm);
         MyAddress = MyAddress & 0xffff;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Operand1.OpMnemonic, "%.8X",(Int64) MyAddress);
         #endif
@@ -1339,7 +1339,7 @@ void __bea_callspec__ callf_(PDISASM pMyDisasm)
         }
         (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Operand1.AccessMode = READ;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         (*pMyDisasm).Instruction.AddrValue = MyAddress + MyNumber;
     }
 }
@@ -4078,7 +4078,7 @@ void __bea_callspec__ lodsb_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
     (*pMyDisasm).Operand2.OpSize = 8;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6;
     GV.EIP_++;
     FillFlags(pMyDisasm, 59);
 }
@@ -4106,7 +4106,7 @@ void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
         (*pMyDisasm).Operand2.OpSize = 64;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6;
         GV.EIP_++;
         FillFlags(pMyDisasm, 59);
     }
@@ -4121,7 +4121,7 @@ void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
         (*pMyDisasm).Operand2.OpSize = 32;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6;
         GV.EIP_++;
         FillFlags(pMyDisasm, 59);
     }
@@ -4136,7 +4136,7 @@ void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
         (*pMyDisasm).Operand2.OpSize = 16;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6;
         GV.EIP_++;
         FillFlags(pMyDisasm, 59);
     }
@@ -4171,7 +4171,7 @@ void __bea_callspec__ loop_(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.AccessMode = READ;
       (*pMyDisasm).Operand1.OpSize = 8;
       (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG1;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG1;
       (*pMyDisasm).Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 60);
@@ -4186,7 +4186,7 @@ void __bea_callspec__ loop_(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.AccessMode = READ;
       (*pMyDisasm).Operand1.OpSize = 8;
       (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG1;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG1;
       (*pMyDisasm).Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 60);
@@ -4222,7 +4222,7 @@ void __bea_callspec__ loopne_(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.AccessMode = READ;
       (*pMyDisasm).Operand1.OpSize = 8;
       (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG1;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG1;
       (*pMyDisasm).Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 61);
@@ -4237,7 +4237,7 @@ void __bea_callspec__ loopne_(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.AccessMode = READ;
       (*pMyDisasm).Operand1.OpSize = 8;
       (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG1;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG1;
       (*pMyDisasm).Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 61);
@@ -4273,7 +4273,7 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.AccessMode = READ;
         (*pMyDisasm).Operand1.OpSize = 8;
         (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG1;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG1;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
         GV.EIP_+=2;
         FillFlags(pMyDisasm, 61);
@@ -4288,7 +4288,7 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.AccessMode = READ;
         (*pMyDisasm).Operand1.OpSize = 8;
         (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG1;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG1;
         (*pMyDisasm).Instruction.AddrValue = MyAddress;
         GV.EIP_+=2;
         FillFlags(pMyDisasm, 61);
@@ -5129,7 +5129,7 @@ void __bea_callspec__ movs_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
     (*pMyDisasm).Operand2.OpSize = 8;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6+REG7;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
     GV.EIP_++;
     FillFlags(pMyDisasm, 68);
 }
@@ -5156,7 +5156,7 @@ void __bea_callspec__ movsw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
         (*pMyDisasm).Operand2.OpSize = 64;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6+REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 68);
     }
@@ -5170,7 +5170,7 @@ void __bea_callspec__ movsw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
         (*pMyDisasm).Operand2.OpSize = 32;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6+REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 68);
     }
@@ -5184,7 +5184,7 @@ void __bea_callspec__ movsw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG6;
         (*pMyDisasm).Operand2.OpSize = 16;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG6+REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 68);
     }
@@ -6623,7 +6623,7 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
       (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand2.OpSize = 64;
       (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else if (GV.OperandSize == 32) {
       GV.MemDecoration = Arg1dword;
@@ -6632,7 +6632,7 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
       (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand2.OpSize = 32;
       (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
       GV.MemDecoration = Arg1word;
@@ -6641,7 +6641,7 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
       (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand2.OpSize = 16;
       (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
   }
   else {
@@ -6703,7 +6703,7 @@ void __bea_callspec__ pop_eax(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -6760,7 +6760,7 @@ void __bea_callspec__ pop_ecx(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -6818,7 +6818,7 @@ void __bea_callspec__ pop_edx(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -6875,7 +6875,7 @@ void __bea_callspec__ pop_ebx(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -6932,7 +6932,7 @@ void __bea_callspec__ pop_esp(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -6989,7 +6989,7 @@ void __bea_callspec__ pop_ebp(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7046,7 +7046,7 @@ void __bea_callspec__ pop_esi(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7103,7 +7103,7 @@ void __bea_callspec__ pop_edi(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7130,7 +7130,7 @@ void __bea_callspec__ pop_es(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 16;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         GV.EIP_++;
     }
 }
@@ -7159,7 +7159,7 @@ void __bea_callspec__ pop_ss(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 16;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         GV.EIP_++;
     }
 }
@@ -7188,7 +7188,7 @@ void __bea_callspec__ pop_ds(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 16;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         GV.EIP_++;
     }
 }
@@ -7221,7 +7221,7 @@ void __bea_callspec__ pop_fs(PDISASM pMyDisasm)
       (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand2.OpSize = 16;
       (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
   }
@@ -7254,7 +7254,7 @@ void __bea_callspec__ pop_gs(PDISASM pMyDisasm)
       (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand2.OpSize = 16;
       (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
   }
@@ -7279,7 +7279,7 @@ void __bea_callspec__ popfd_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 64;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else if (GV.OperandSize == 32) {
@@ -7294,7 +7294,7 @@ void __bea_callspec__ popfd_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 32;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else {
@@ -7309,7 +7309,7 @@ void __bea_callspec__ popfd_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 16;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
 }
@@ -7337,7 +7337,7 @@ void __bea_callspec__ popad_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 32;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
       (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
@@ -7353,7 +7353,7 @@ void __bea_callspec__ popad_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.OpSize = 16;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
 }
 
@@ -7382,7 +7382,7 @@ void __bea_callspec__ push_es(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand1.OpSize = 16;
       (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
 }
@@ -7411,7 +7411,7 @@ void __bea_callspec__ push_ss(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand1.OpSize = 16;
       (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
 }
@@ -7440,7 +7440,7 @@ void __bea_callspec__ push_ds(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand1.OpSize = 16;
       (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
 }
@@ -7472,7 +7472,7 @@ void __bea_callspec__ push_fs(PDISASM pMyDisasm)
       (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
       (*pMyDisasm).Operand1.OpSize = 16;
       (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-      (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+      (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
   }
@@ -7501,7 +7501,7 @@ void __bea_callspec__ push_gs(PDISASM pMyDisasm)
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.OpSize = 16;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     GV.EIP_++;
   }
 }
@@ -7529,7 +7529,7 @@ void __bea_callspec__ push_cs(PDISASM pMyDisasm)
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.OpSize = 16;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     GV.EIP_++;
   }
 }
@@ -7590,7 +7590,7 @@ void __bea_callspec__ push_eax(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7647,7 +7647,7 @@ void __bea_callspec__ push_ecx(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7705,7 +7705,7 @@ void __bea_callspec__ push_edx(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7762,7 +7762,7 @@ void __bea_callspec__ push_ebx(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7819,7 +7819,7 @@ void __bea_callspec__ push_esp(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7876,7 +7876,7 @@ void __bea_callspec__ push_ebp(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7933,7 +7933,7 @@ void __bea_callspec__ push_esi(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7990,7 +7990,7 @@ void __bea_callspec__ push_edi(PDISASM pMyDisasm)
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 
@@ -8017,7 +8017,7 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
         (*pMyDisasm).Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Operand2.OpSize = 64;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else if (GV.OperandSize == 32) {
         if (!Security(4, pMyDisasm)) return;
@@ -8032,7 +8032,7 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
         (*pMyDisasm).Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Operand2.OpSize = 32;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
         if (!Security(2, pMyDisasm)) return;
@@ -8047,7 +8047,7 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
         (*pMyDisasm).Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
         (*pMyDisasm).Operand2.OpSize = 16;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
 }
 
@@ -8072,7 +8072,7 @@ void __bea_callspec__ push_Ib(PDISASM pMyDisasm)
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
     (*pMyDisasm).Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Operand2.OpSize = 8;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 
 }
 
@@ -8096,7 +8096,7 @@ void __bea_callspec__ pushfd_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.OpSize = 64;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else if (GV.OperandSize == 32) {
@@ -8111,7 +8111,7 @@ void __bea_callspec__ pushfd_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.OpSize = 32;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else {
@@ -8126,7 +8126,7 @@ void __bea_callspec__ pushfd_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.OpSize = 16;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
 }
@@ -8154,7 +8154,7 @@ void __bea_callspec__ pushad_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.OpSize = 32;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -8168,7 +8168,7 @@ void __bea_callspec__ pushad_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.OpSize = 16;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
 }
 
@@ -8192,7 +8192,7 @@ void __bea_callspec__ retn_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Operand1.OpSize = 16;
     (*pMyDisasm).Operand1.AccessMode = READ;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -8212,7 +8212,7 @@ void __bea_callspec__ ret_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.OpSize = 32;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -8239,7 +8239,7 @@ void __bea_callspec__ retf_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.OpSize = 32;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG4;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -8270,7 +8270,7 @@ void __bea_callspec__ retf_Iw(PDISASM pMyDisasm)
     (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Operand1.OpSize = 16;
     (*pMyDisasm).Operand1.AccessMode = READ;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -8450,7 +8450,7 @@ void __bea_callspec__ scasb_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand2.Memory.BaseRegister = REG7;
     (*pMyDisasm).Operand2.OpSize = 8;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
     GV.EIP_++;
     FillFlags(pMyDisasm, 94);
 }
@@ -8479,7 +8479,7 @@ void __bea_callspec__ scas_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG7;
         (*pMyDisasm).Operand2.OpSize = 64;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 94);
     }
@@ -8495,7 +8495,7 @@ void __bea_callspec__ scas_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG7;
         (*pMyDisasm).Operand2.OpSize = 32;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 94);
     }
@@ -8511,7 +8511,7 @@ void __bea_callspec__ scas_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand2.Memory.BaseRegister = REG7;
         (*pMyDisasm).Operand2.OpSize = 16;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 94);
     }
@@ -8574,7 +8574,7 @@ void __bea_callspec__ stos_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
     (*pMyDisasm).Operand1.Memory.BaseRegister = REG7;
     (*pMyDisasm).Operand1.OpSize = 8;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
     GV.EIP_++;
     FillFlags(pMyDisasm, 101);
 }
@@ -8602,7 +8602,7 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG7;
         (*pMyDisasm).Operand1.OpSize = 64;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 101);
     }
@@ -8617,7 +8617,7 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG7;
         (*pMyDisasm).Operand1.OpSize = 32;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 101);
     }
@@ -8632,7 +8632,7 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG7;
         (*pMyDisasm).Operand1.OpSize = 16;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG7;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 101);
     }
@@ -24922,9 +24922,10 @@ void __bea_callspec__ emms_(PDISASM pMyDisasm)
        #endif
        GV.EIP_++;
      }
-     (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0 + REG1
+     (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = AVX_REG;
+     (*pMyDisasm).Instruction.ImplicitModifiedRegs.ymm = REG0 + REG1
       + REG2 + REG3 + REG4 + REG5 + REG6 + REG7 + REG8 + REG9 + REG10 + REG11
-       + REG12 + REG13 + REG14 + REG15;
+      + REG12 + REG13 + REG14 + REG15;
 
    }
    else {

@@ -84,7 +84,7 @@ Structure INSTRTYPE
   Flags.EFLStruct
   AddrValue.q
   Immediat.q
-  ImplicitModifiedRegs.l
+  ImplicitModifiedRegs.REGISTERTYPE
 EndStructure
 Global Instrtype.INSTRTYPE
 

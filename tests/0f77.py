@@ -21,23 +21,6 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
-        YMM0 = REG0
-        YMM1 = REG1
-        YMM2 = REG2
-        YMM3 = REG3
-        YMM4 = REG4
-        YMM5 = REG5
-        YMM6 = REG6
-        YMM7 = REG7
-        YMM8 = REG8
-        YMM9 = REG9
-        YMM10 = REG10
-        YMM11 = REG11
-        YMM12 = REG12
-        YMM13 = REG13
-        YMM14 = REG14
-        YMM15 = REG15
-
         # NP 0F 77
         # EMMS
 
@@ -56,9 +39,9 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vzeroall ')
-        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs, YMM1|YMM0
-         |YMM2 |YMM3 |YMM4 |YMM5 |YMM6 |YMM7 |YMM8 |YMM9
-         |YMM10 |YMM11 |YMM12 |YMM13 |YMM14 |YMM15)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.ymm, REG1|REG0
+         |REG2 |REG3 |REG4 |REG5 |REG6 |REG7 |REG8 |REG9
+         |REG10 |REG11 |REG12 |REG13 |REG14 |REG15)
 
         # VEX.128.0F.WIG 77
         # VZEROUPPER
@@ -69,9 +52,9 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vzeroupper ')
-        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs, YMM1|YMM0
-         |YMM2 |YMM3 |YMM4 |YMM5 |YMM6 |YMM7 |YMM8 |YMM9
-         |YMM10 |YMM11 |YMM12 |YMM13 |YMM14 |YMM15)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.ymm, REG1|REG0
+         |REG2 |REG3 |REG4 |REG5 |REG6 |REG7 |REG8 |REG9
+         |REG10 |REG11 |REG12 |REG13 |REG14 |REG15)
 
 
         # VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD.

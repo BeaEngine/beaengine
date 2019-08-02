@@ -83,7 +83,7 @@ INSTRTYPE STRUCT
     Flags                   EFLStruct <>
     AddrValue               QWORD   0
     Immediat                QWORD   0
-    ImplicitModifiedRegs    DWORD   0
+    ImplicitModifiedRegs    REGISTERTYPE <0>
 INSTRTYPE ENDS
 
 OPTYPE STRUCT

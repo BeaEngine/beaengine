@@ -71,7 +71,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         }
         MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else if (GV.REGOPCODE == 3) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
@@ -89,7 +89,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         GV.MemDecoration = Arg1fword;
         MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else if (GV.REGOPCODE == 4) {
         (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
@@ -151,7 +151,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
         (*pMyDisasm).Operand1.OpSize = GV.OperandSize;
         (*pMyDisasm).Operand1.Memory.BaseRegister = REG4;
-        (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG4;
+        (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
         FailDecode(pMyDisasm);

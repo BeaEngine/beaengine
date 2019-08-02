@@ -88,7 +88,7 @@ struct INSTRTYPE
     Flags                   EFLStruct
     AddrValue               dq   0
     Immediat                dq   0
-    ImplicitModifiedRegs    dd   0
+    ImplicitModifiedRegs    REGISTERTYPE
 ends
 
 

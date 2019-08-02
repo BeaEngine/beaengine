@@ -48,7 +48,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
           (*pMyDisasm).Operand3.Registers.type = GENERAL_REG;
           (*pMyDisasm).Operand3.Registers.gpr = REG0;
 
-          (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0;
+          (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG0;
 
           FillFlags(pMyDisasm,130);
           GV.EIP_+= GV.DECALAGE_EIP+2;
@@ -197,7 +197,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
             (*pMyDisasm).Operand3.Registers.type = GENERAL_REG;
             (*pMyDisasm).Operand3.Registers.gpr = REG0;
 
-            (*pMyDisasm).Instruction.ImplicitModifiedRegs = REG0;
+            (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG0;
             /*
             Flags Affected
             RFLAGS.ZF,PF,AF,OF,SF = 0

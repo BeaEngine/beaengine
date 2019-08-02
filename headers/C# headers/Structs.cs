@@ -93,7 +93,7 @@ namespace Bea
     public EFLStruct Flags;
     public UInt64 AddrValue;
     public Int64 Immediat;
-    public UInt32 ImplicitModifiedRegs;
+    public RegisterType ImplicitModifiedRegs;
   }
 
   [StructLayout(LayoutKind.Sequential, Pack = 1)]

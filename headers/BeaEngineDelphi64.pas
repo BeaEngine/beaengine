@@ -130,7 +130,7 @@ uses Windows,SysUtils;
           Flags : TEFLStruct;
           AddrValue : int64;
           Immediat : int64;
-          ImplicitModifiedRegs : longint;
+          ImplicitModifiedRegs : TREGISTERTYPE;
        end;
 
   type

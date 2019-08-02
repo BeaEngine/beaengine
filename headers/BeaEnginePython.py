@@ -88,7 +88,7 @@ class INSTRTYPE(Structure):
               ("Flags", EFLStruct),
               ("AddrValue", c_uint64),
               ("Immediat", c_int64),
-              ("ImplicitModifiedRegs", c_uint32)]
+              ("ImplicitModifiedRegs", REGISTERTYPE)]
 
 class OPTYPE(Structure):
    _pack_= 1
