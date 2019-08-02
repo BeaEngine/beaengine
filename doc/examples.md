@@ -228,7 +228,7 @@ with open("target.bin", 'rb') as f:
 
 # 6- How to retrieve only instructions that modify the register eax ?
 
-This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.OpType , you can determine for example if the register eax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. OpType allows us to know if the register is eax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
+This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.Registers , you can determine for example if the register rax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. Registers let us know if the register is rax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
 
 ```
 #include <stdio.h>
@@ -264,6 +264,10 @@ void DisassembleCode(char *start_offset, char *end_offset, int (*virtual_address
           infos.Error = 0;
           break;
         default:
+          /*
+            gpr means General Purpose Register
+            xxxxx.gpr & REG0 means RAX is used
+          */
           if (
             ((infos.Operand1.AccessMode == WRITE) && (infos.Operand1.Registers.gpr & REG0)) ||
             ((infos.Operand2.AccessMode == WRITE) && (infos.Operand2.Registers.gpr & REG0)) ||
