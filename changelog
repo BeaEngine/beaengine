@@ -1,0 +1,9 @@
+# BeaEngine 5
+
+- new instructions sets : AVX512, CET, SGX, BMI1, BMI2, SHA
+- more than 10k assertions to test the lib
+- new python wrapper to hide ctypes complexity
+- fix issues on prefixes (precedences and conflicts)
+- new structures REGISTER_TYPE
+- Renaming Arguments fields to Operands fields
+- fix SecurityBlock issues
