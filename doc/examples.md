@@ -1,3 +1,5 @@
+ ![beaengine](./beaengine-logo.png)
+
 # Examples - Tutorial
 
 Each example you can see here is using one feature of the disassemble library. At first, you can see how to use the library in the simplest manner (to retrieve a simple instructions list). Then, you can see how to use specific options to make special tasks like data-flow analysis or control-flow analysis.
@@ -223,7 +225,9 @@ with open("target.bin", 'rb') as f:
   disasm = Disasm(buffer)
   for i in range(20):
     disasm.read()
-    print(disasm.repr())
+    if not disasm.infos.Error:
+      if disasm.gpr(REG0).is_modified():
+        print(disasm.repr())
 ```
 
 # 6- How to retrieve only instructions that modify the register eax ?

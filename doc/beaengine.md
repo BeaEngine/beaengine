@@ -1,3 +1,5 @@
+ ![beaengine](./beaengine-logo.png) 
+
 **BeaEngine documentation**
 - BEAENGINE_VERSION : 5.0
 - DOC_RELEASE : 1.0

@@ -1,3 +1,4 @@
+ ![beaengine](./doc/beaengine-logo.png) 
 # BeaEngine 5
 
 BeaEngine is a library coded in C respecting ISO C99 norm. It has been designed to decode instructions from 16 bits, 32 bits and 64 bits intel architectures. Actually, the main function available is called Disasm. It includes standard instruction set and instruction set from FPU, MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX, CLMUL, AES, MPX, AVX, AVX2, AVX512 (VEX & EVEX prefixes), CET, BMI1, BMI2, SGX technologies. For those who like analyzing malicious codes and more generally obfuscated codes, BeaEngine even decodes undocumented instructions called "alias" on the web site sandpile. In all scenarios, it sends back a complex structure that describes precisely the analyzed instructions.
