@@ -16,7 +16,7 @@ Each example you can see here is using one feature of the disassemble library. A
 10. [How to use BeaEngine with WinDev (by Vincent Roy) ?](#10-how-to-use-beaengine-with-windev)
 
 
-# 1. How to decode ?
+# 1. How to decode
 
 BeaEngine does not need special initialization. The Disasm function do it for you. The only task you have to perform is setting to zero the **_Disasm** structure and filling the field **infos.EIP** (offset where you want to disassemble).
 
@@ -78,7 +78,7 @@ int main(void)
 ```
 
 
-# 2. How to decode a limited block of bytes ?
+# 2. How to decode a limited block of bytes
 
 It is possible to ask to BeaEngine to decode a limited block of bytes. This small program decodes instructions of its own code located between 2 virtual addresses (0x401000 and 0x401020, arbitrary choice). That means BeaEngine won't read any bytes outside these limits even if it tries to decode an instruction starting just before the upper bound. To realize this restriction, BeaEngine uses the field **infos.SecurityBlock** that contains the number of bytes we want to read. By default, an intel instruction never exceeds 15 bytes. Thus, only SecurityBlock values below this limit are used. In all cases, BeaEngine stops decoding an instruction if it exceeds 15 bytes.
 
@@ -129,7 +129,7 @@ int main(void)
 
 ```
 
-# 3. How to decode bytes in an allocated buffer while keeping original virtual addresses ?
+# 3. How to decode bytes in an allocated buffer while keeping original virtual addresses
 
 This time, we are in a real and usual situation. We want to decode bytes copied in an allocated buffer. However, you want to see original virtual addresses. The following program allocates a buffer with the function malloc , copies in it 200 bytes from the address &main and decodes the buffer :
 
@@ -189,7 +189,7 @@ int main(void)
 }
 ```
 
-# 4. How to use nasm syntax with prefixed numbers ?
+# 4. How to use nasm syntax with prefixed numbers
 
 BeaEngine is able to use a set of syntaxes : masm, nasm, GoAsm. You can display numbers under two formats : suffixed numbers and prefixed numbers. You can display or not the segment registers used in memory addressing. You can even use a tabulation between mnemonic and first operand.
 
@@ -223,7 +223,7 @@ int main(void)
 }
 ```
 
-# 5. How to use the library with Python ?
+# 5. How to use the library with Python
 
 BeaEngine can be used under Python thanks to its special wrapper.
 
@@ -240,7 +240,7 @@ with open("target.bin", 'rb') as f:
         print(disasm.repr())
 ```
 
-# 6. How to retrieve only instructions that modify the register eax ?
+# 6. How to retrieve only instructions that modify the register eax
 
 This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.Registers , you can determine for example if the register rax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. Registers let us know if the register is rax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
 
@@ -311,7 +311,7 @@ int main(void)
 }
 ```
 
-# 7. How to decode instructions and 'follow' unconditional branch instructions ?
+# 7. How to decode instructions and 'follow' unconditional branch instructions
 
 In some cases, unconditional jumps are used in obfuscation mechanisms. This program shows how to eliminate these naugthy jumps by "following" them. To realize that task, we have to use the fields infos.Instruction.BranchType and infos.Instruction.AddrValue. In the next program, I have coded the function RVA2OFFSET just to convert the virtual address pointed by the unconditional jump in a "real" address that can be used by infos.EIP.
 
@@ -422,7 +422,7 @@ int main(void)
 }
 ```
 
-# 8. How to use BeaEngine with masm32, nasm, fasm or GoAsm ?
+# 8. How to use BeaEngine with masm32, nasm, fasm or GoAsm
 
 BeaEngine is distributed with headers for nasm, GoAsm, fasm , masm.
 
@@ -644,7 +644,7 @@ Display:
   call ExitProcess
 ```
 
-## 9. How to use BeaEngine with masm64 or GoAsm64 ?
+## 9. How to use BeaEngine with masm64 or GoAsm64
 
 Using BeaEngine with masm64
 
@@ -760,7 +760,7 @@ Display:
 ```
 
 
-# 10. How to use BeaEngine with WinDev ?
+# 10. How to use BeaEngine with WinDev
 
 Here is an example coded by a friend, Vincent Roy, specialized in WinDev language.
 
