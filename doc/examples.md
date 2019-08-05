@@ -231,6 +231,10 @@ void DisassembleCode(char *start_offset, char *end_offset, int (*virtual_address
 
   while (!infos.Error){
     infos.SecurityBlock = (int) end_offset - infos.EIP;
+    if (infos.SecurityBlock <= 0 ){
+      (void) printf("buffer end reached \n");
+      break;
+    }
     len = Disasm(&infos);
     switch(infos.Error)
       {
@@ -272,9 +276,10 @@ int main(void)
   pBuffer = malloc(300);
   (void) memcpy (pBuffer, main, 300);
   (void) printf("Display only Instructions modifying RAX. \n");
-  DisassembleCode (pBuffer, (char*) pBuffer + 299, main);
+  DisassembleCode (pBuffer, (char*) pBuffer + 300, main);
   return 0;
 }
+
 ```
 
 # 6. How to decode instructions and 'follow' unconditional branch instructions
