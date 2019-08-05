@@ -85,20 +85,21 @@ It is possible to ask to BeaEngine to decode a limited block of bytes. This smal
 ```
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "BeaEngine.h"
 
-int main(void)
+void DisassembleCode(char *start_offset, int size)
 {
   DISASM infos;
   int len;
-  UInt64 endCodeSection;
+  char *end_offset = (char*) start_offset + size;
 
   (void) memset (&infos, 0, sizeof(DISASM));
-  infos.EIP = (UInt64) &main;
-  endCodeSection = infos.EIP + 0x20;
+  infos.EIP = (UInt64) start_offset;
 
-  while (infos.Error == 0){
-    infos.SecurityBlock = endCodeSection - infos.EIP;
+  while (!infos.Error){
+    infos.SecurityBlock = (int) end_offset - infos.EIP;
+    if (infos.SecurityBlock <= 0 ) break;
     len = Disasm(&infos);
     switch(infos.Error)
       {
@@ -106,17 +107,26 @@ int main(void)
           (void) printf("disasm engine is not allowed to read more memory \n");
           break;
         case UNKNOWN_OPCODE:
-          (void) printf("unknown opcode");
-          infos.EIP++;
+          (void) printf("%s\n", &infos.CompleteInstr);
+          infos.EIP += 1;
           infos.Error = 0;
           break;
         default:
-          (void) puts(infos.CompleteInstr);
+          (void) printf("%s\n", &infos.CompleteInstr);
           infos.EIP += len;
       }
-  }
+  };
+  return;
+}
+
+int main(void)
+{
+  /* 1 byte is missing at the end of this buffer */
+  char *buffer = "\x90\x90\x90\x90\x90\x0f\x2b";
+  DisassembleCode (buffer, strlen(buffer));
   return 0;
 }
+
 ```
 
 # 3- How to decode bytes in an allocated buffer while keeping original virtual addresses ?
