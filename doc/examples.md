@@ -8,12 +8,11 @@ Each example you can see here is using one feature of the disassemble library. A
 2. [How to decode a limited block of bytes ?](#2-how-to-decode-a-limited-block-of-bytes)
 3. [How to decode bytes in an allocated buffer while keeping original virtual addresses ?](#3-how-to-decode-bytes-in-an-allocated-buffer-while-keeping-original-virtual-addresses)
 4. [How to use nasm syntax with prefixed numbers ?](#4-how-to-use-nasm-syntax-with-prefixed-numbers)
-5. [How to use the library with Python ?](#5-how-to-use-the-library-with-python)
-6. [How to retrieve only instructions that modify the register eax ?](#6-how-to-retrieve-only-instructions-that-modify-the-register-eax)
-7. [How to decode instructions and 'follow' unconditional branch instructions ?](#7-how-to-decode-instructions-and-follow-unconditional-branch-instructions)
-8. [How to use BeaEngine with masm32, nasm, fasm or GoAsm ?](#8-how-to-use-beaengine-with-masm32-nasm-fasm-or-goasm)
-9. [How to use BeaEngine with masm64 ou GoAsm64 ?](#9-how-to-use-beaengine-with-masm64-or-goasm64)
-10. [How to use BeaEngine with WinDev (by Vincent Roy) ?](#10-how-to-use-beaengine-with-windev)
+5. [How to retrieve only instructions that modify the register eax ?](#5-how-to-retrieve-only-instructions-that-modify-the-register-eax)
+6. [How to decode instructions and 'follow' unconditional branch instructions ?](#6-how-to-decode-instructions-and-follow-unconditional-branch-instructions)
+7. [How to use BeaEngine with masm32, nasm, fasm or GoAsm ?](#7-how-to-use-beaengine-with-masm32-nasm-fasm-or-goasm)
+8. [How to use BeaEngine with masm64 ou GoAsm64 ?](#8-how-to-use-beaengine-with-masm64-or-goasm64)
+9. [How to use BeaEngine with WinDev (by Vincent Roy) ?](#9-how-to-use-beaengine-with-windev)
 
 
 # 1. How to decode
@@ -80,7 +79,7 @@ int main(void)
 
 # 2. How to decode a limited block of bytes
 
-It is possible to ask to BeaEngine to decode a limited block of bytes. This small program decodes instructions of its own code located between 2 virtual addresses (0x401000 and 0x401020, arbitrary choice). That means BeaEngine won't read any bytes outside these limits even if it tries to decode an instruction starting just before the upper bound. To realize this restriction, BeaEngine uses the field **infos.SecurityBlock** that contains the number of bytes we want to read. By default, an intel instruction never exceeds 15 bytes. Thus, only SecurityBlock values below this limit are used. In all cases, BeaEngine stops decoding an instruction if it exceeds 15 bytes.
+It is possible to ask to BeaEngine to decode a limited block of bytes. This small program decodes instructions of its own code located between 2 virtual addresses. That means BeaEngine won't read any bytes outside these limits even if it tries to decode an instruction starting just before the upper bound. To realize this restriction, BeaEngine uses the field **infos.SecurityBlock** which defines the number of bytes we want to read. By default, an intel instruction never exceeds 15 bytes. Thus, only SecurityBlock values below this limit are used. In all cases, BeaEngine stops decoding an instruction if it exceeds 15 bytes.
 
 ```
 #include <stdio.h>
@@ -155,6 +154,7 @@ void DisplayInstr(char *start_offset, char *end_offset, int (*virtual_address)(v
 
   while (infos.Error == 0){
     infos.SecurityBlock = (int) end_offset - infos.EIP;
+    if (infos.SecurityBlock <= 0 ) break;
     len = Disasm(&infos);
     switch(infos.Error)
       {
@@ -191,56 +191,22 @@ int main(void)
 
 # 4. How to use nasm syntax with prefixed numbers
 
-BeaEngine is able to use a set of syntaxes : masm, nasm, GoAsm. You can display numbers under two formats : suffixed numbers and prefixed numbers. You can display or not the segment registers used in memory addressing. You can even use a tabulation between mnemonic and first operand.
+BeaEngine is able to use a set of syntaxes : masm, nasm, GoAsm. You can display numbers under two formats : suffixed numbers and prefixed numbers. You can display or not the segment registers used in memory addressing. You can even use a tabulation between mnemonic and first operand. Let's modify previous **DisplayInstr** function :
 
 ```
-#include <windows.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "BeaEngine.h"
-
-/* ============================= Init datas */
-DISASM infos;
-int len;
-_Bool Error = 0;
-void *pBuffer;
-int  (*pSourceCode) (void);   /* function pointer */
-
-/* DisassembleCode function is documented in previous examples */
-
-int main(void)
+void DisplayInstr(char *start_offset, char *end_offset, int (*virtual_address)(void))
 {
-
+  int len;
+  DISASM infos;
   (void) memset (&infos, 0, sizeof(DISASM));
-  pSourceCode =  &main;
-  pBuffer = malloc(100);
-  (void) memset (pBuffer, 0x90, 100);
-  (void) memcpy (pBuffer,(void*)(int) pSourceCode, 100);
-
+  infos.EIP = (UInt64) start_offset;
+  infos.VirtualAddr = (UInt64) virtual_address;
   infos.Options = Tabulation + NasmSyntax + PrefixedNumeral + ShowSegmentRegs;
-  DisassembleCode (pBuffer, (char*) pBuffer + 100, pSourceCode);
-  return 0;
+  [...]
 }
 ```
 
-# 5. How to use the library with Python
-
-BeaEngine can be used under Python thanks to its special wrapper.
-
-```
-# Python example
-
-with open("target.bin", 'rb') as f:
-  buffer = f.read()
-  disasm = Disasm(buffer)
-  for i in range(20):
-    disasm.read()
-    if not disasm.infos.Error:
-      if disasm.gpr(REG0).is_modified():
-        print(disasm.repr())
-```
-
-# 6. How to retrieve only instructions that modify the register eax
+# 5. How to retrieve only instructions that modify the register eax
 
 This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.Registers , you can determine for example if the register rax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. Registers let us know if the register is rax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
 
@@ -311,7 +277,7 @@ int main(void)
 }
 ```
 
-# 7. How to decode instructions and 'follow' unconditional branch instructions
+# 6. How to decode instructions and 'follow' unconditional branch instructions
 
 In some cases, unconditional jumps are used in obfuscation mechanisms. This program shows how to eliminate these naugthy jumps by "following" them. To realize that task, we have to use the fields infos.Instruction.BranchType and infos.Instruction.AddrValue. In the next program, I have coded the function RVA2OFFSET just to convert the virtual address pointed by the unconditional jump in a "real" address that can be used by infos.EIP.
 
@@ -422,7 +388,7 @@ int main(void)
 }
 ```
 
-# 8. How to use BeaEngine with masm32, nasm, fasm or GoAsm
+# 7. How to use BeaEngine with masm32, nasm, fasm or GoAsm
 
 BeaEngine is distributed with headers for nasm, GoAsm, fasm , masm.
 
@@ -644,7 +610,7 @@ Display:
   call ExitProcess
 ```
 
-## 9. How to use BeaEngine with masm64 or GoAsm64
+## 8. How to use BeaEngine with masm64 or GoAsm64
 
 Using BeaEngine with masm64
 
@@ -760,7 +726,7 @@ Display:
 ```
 
 
-# 10. How to use BeaEngine with WinDev
+# 9. How to use BeaEngine with WinDev ?
 
 Here is an example coded by a friend, Vincent Roy, specialized in WinDev language.
 
