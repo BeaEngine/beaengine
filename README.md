@@ -67,4 +67,4 @@ Some basic examples to show how BeaEngine is working [HERE](./doc/examples.md)
 ### 7. Dev corner
 
 If you want to improve BeaEngine or just add some private features, here are some links :
- - [Adding new instructions](./doc/dev_corner.pdf)
+ - [Adding new instructions](./doc/dev_corner.md)
