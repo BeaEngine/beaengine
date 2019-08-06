@@ -53,4 +53,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x15)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrw ')
-        assert_equal(myDisasm.infos.repr, 'vpextrw word ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vpextrw word ptr [r8], xmm28, 11h')

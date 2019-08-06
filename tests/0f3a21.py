@@ -69,7 +69,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertps ')
-        assert_equal(myDisasm.infos.repr, 'vinsertps xmm4, xmm0, dword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vinsertps xmm28, xmm16, dword ptr [r8], 11h')
 
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W0')
@@ -78,4 +78,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertps ')
-        assert_equal(myDisasm.infos.repr, 'vinsertps xmm0, xmm0, xmm0, 11h')
+        assert_equal(myDisasm.infos.repr, 'vinsertps xmm24, xmm16, xmm24, 11h')

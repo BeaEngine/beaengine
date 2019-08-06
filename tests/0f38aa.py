@@ -50,7 +50,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xaa')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfmsub213ps ')
-        assert_equal(myDisasm.infos.repr, 'vfmsub213ps xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfmsub213ps xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.W0 aa /r
         # vfmsub213ps ymm1 {k1}{z}, ymm2, ymm3/m256
@@ -64,7 +64,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xaa')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfmsub213ps ')
-        assert_equal(myDisasm.infos.repr, 'vfmsub213ps ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfmsub213ps ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.W0 aa /r
         # vfmsub213ps zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -78,7 +78,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xaa')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfmsub213ps ')
-        assert_equal(myDisasm.infos.repr, 'vfmsub213ps zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfmsub213ps zmm25, zmm31, zmmword ptr [r14]')
 
 
         # VEX.NDS.128.66.0F38.W1 aa /r
@@ -107,5 +107,5 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xaa)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'v4fnmaddps ')
-        assert_equal(myDisasm.infos.Operand2.Registers.zmm, REG4+REG5+REG6+REG7)
-        assert_equal(myDisasm.infos.repr, 'v4fnmaddps zmm1, zmm4...zmm7, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.Operand2.Registers.zmm, REG20+REG21+REG22+REG23)
+        assert_equal(myDisasm.infos.repr, 'v4fnmaddps zmm25, zmm20...zmm23, xmmword ptr [r14]')

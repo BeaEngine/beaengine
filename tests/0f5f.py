@@ -62,7 +62,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxpd xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.66.0F.W1 5f /r
         # Vmaxpd ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst
@@ -73,7 +73,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxpd ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.66.0F.W1 5f /r
         # Vmaxpd zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxpd zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # NP 0F 5f /r
         # maxps xmm1, xmm2/m128
@@ -127,7 +127,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxps xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.0F.W0 5f /r
         # Vmaxps ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
@@ -138,7 +138,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxps ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.0F.W0 5f /r
         # Vmaxps zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst {er}
@@ -149,7 +149,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxps zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # F2 0F 5f /r
         # maxsd xmm1, xmm2/m64
@@ -181,7 +181,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxsd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxsd xmm2, xmm15, qword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxsd xmm26, xmm31, qword ptr [r8+00000000h]')
 
         # F3 0F 5f /r
         # maxss xmm1, xmm2/m32
@@ -213,4 +213,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxss ')
-        assert_equal(myDisasm.infos.repr, 'vmaxss xmm2, xmm15, dword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmaxss xmm26, xmm31, dword ptr [r8+00000000h]')

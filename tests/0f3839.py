@@ -57,7 +57,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x39')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpminsd ')
-        assert_equal(myDisasm.infos.repr, 'vpminsd xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpminsd xmm25, xmm31, xmmword ptr [r14]')
 
 
         # EVEX.NDS.128.66.0F38.W1 39 /r
@@ -68,7 +68,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x39')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpminsq ')
-        assert_equal(myDisasm.infos.repr, 'vpminsq xmm0, xmm15, xmm1')
+        assert_equal(myDisasm.infos.repr, 'vpminsq xmm24, xmm31, xmm25')
 
 
         # EVEX.NDS.256.66.0F38.W0 39 /r
@@ -83,7 +83,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x39')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpminsd ')
-        assert_equal(myDisasm.infos.repr, 'vpminsd ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpminsd ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.W0 39 /r
         # vpminsd zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -97,7 +97,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x39')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpminsd ')
-        assert_equal(myDisasm.infos.repr, 'vpminsd zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpminsd zmm25, zmm31, zmmword ptr [r14]')
 
         # EVEX.128.F3.0F38.W0 39 /r
         # vpmovd2m k1, xmm1
@@ -108,7 +108,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x39)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovd2m ')
-        assert_equal(myDisasm.infos.repr, 'vpmovd2m k0, xmm1')
+        assert_equal(myDisasm.infos.repr, 'vpmovd2m k?, xmm25')
 
         # EVEX.256.F3.0F38.W0 39 /r
         # vpmovd2m k1, ymm1
@@ -119,7 +119,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x39)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovd2m ')
-        assert_equal(myDisasm.infos.repr, 'vpmovd2m k0, ymm1')
+        assert_equal(myDisasm.infos.repr, 'vpmovd2m k?, ymm25')
 
         # EVEX.512.F3.0F38.W0 39 /r
         # vpmovd2m k1, zmm1
@@ -130,7 +130,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x39)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovd2m ')
-        assert_equal(myDisasm.infos.repr, 'vpmovd2m k0, zmm1')
+        assert_equal(myDisasm.infos.repr, 'vpmovd2m k?, zmm25')
 
         # EVEX.128.F3.0F38.W1 39 /r
         # vpmovq2m k1, xmm1
@@ -141,7 +141,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x39)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovq2m ')
-        assert_equal(myDisasm.infos.repr, 'vpmovq2m k0, xmm1')
+        assert_equal(myDisasm.infos.repr, 'vpmovq2m k?, xmm25')
 
         # EVEX.256.F3.0F38.W1 39 /r
         # vpmovq2m k1, ymm1
@@ -152,7 +152,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x39)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovq2m ')
-        assert_equal(myDisasm.infos.repr, 'vpmovq2m k0, ymm1')
+        assert_equal(myDisasm.infos.repr, 'vpmovq2m k?, ymm25')
 
         # EVEX.512.F3.0F38.W1 39 /r
         # vpmovq2m k1, zmm1
@@ -163,4 +163,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x39)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmovq2m ')
-        assert_equal(myDisasm.infos.repr, 'vpmovq2m k0, zmm1')
+        assert_equal(myDisasm.infos.repr, 'vpmovq2m k?, zmm25')

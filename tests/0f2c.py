@@ -102,7 +102,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvttsd2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvttsd2si edx, qword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vcvttsd2si r10w, qword ptr [r14]')
 
         # EVEX.LIG.F2.0F.W1 2C /r
         # VCVTTSD2SI r64, xmm1/m64{sae}
@@ -113,7 +113,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvttsd2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvttsd2si rdx, qword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vcvttsd2si ebp, qword ptr [r14]')
 
         # F3 0F 2C /r
         # CVTTSS2SI r32, xmm1/m32
@@ -168,7 +168,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvttss2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvttss2si edx, dword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vcvttss2si r10w, dword ptr [r14]')
 
         # EVEX.LIG.F3.0F.W1 2C /r
         # VCVTTSS2SI r64, xmm1/m32{sae}
@@ -179,7 +179,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvttss2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvttss2si rdx, dword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vcvttss2si ebp, dword ptr [r14]')
 
         # VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD.
 

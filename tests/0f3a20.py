@@ -69,4 +69,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x20)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpinsrb ')
-        assert_equal(myDisasm.infos.repr, 'vpinsrb xmm4, xmm0, byte ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vpinsrb xmm28, xmm16, byte ptr [r8], 11h')

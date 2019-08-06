@@ -40,7 +40,7 @@ class TestSuite:
         Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpsrlvw xmm4, xmm15, xmmword ptr [rdi]')
+        assert_equal(myDisasm.infos.repr, 'vpsrlvw xmm28, xmm31, xmmword ptr [r15]')
 
 
         #EVEX.NDS.256.66.0F38.W1 10 /r
@@ -49,7 +49,7 @@ class TestSuite:
         Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpsrlvw ymm4, ymm15, ymmword ptr [rdi]')
+        assert_equal(myDisasm.infos.repr, 'vpsrlvw ymm28, ymm31, ymmword ptr [r15]')
 
         #EVEX.NDS.512.66.0F38.W1 10 /r
         #VPSRLVW zmm1 {k1}{z}, zmm2,zmm3/m512
@@ -57,7 +57,7 @@ class TestSuite:
         Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpsrlvw zmm4, zmm15, zmmword ptr [rdi]')
+        assert_equal(myDisasm.infos.repr, 'vpsrlvw zmm28, zmm31, zmmword ptr [r15]')
 
         #EVEX.128.F3.0F38.W0 10 /r
         #VPMOVUSWB xmm1/m64 {k1}{z},xmm2
@@ -65,7 +65,7 @@ class TestSuite:
         Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb qword ptr [rdi], xmm4')
+        assert_equal(myDisasm.infos.repr, 'vpmovuswb qword ptr [r15], xmm28')
 
 
         #EVEX.256.F3.0F38.W0 10 /r
@@ -74,7 +74,7 @@ class TestSuite:
         Buffer = '{}10e0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb xmm0, ymm4')
+        assert_equal(myDisasm.infos.repr, 'vpmovuswb xmm24, ymm28')
 
 
         #EVEX.512.F3.0F38.W0 10 /r
@@ -83,7 +83,7 @@ class TestSuite:
         Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb xmmword ptr [rdi], zmm4')
+        assert_equal(myDisasm.infos.repr, 'vpmovuswb xmmword ptr [r15], zmm28')
 
         #EVEX.512.F3.0F38.W0 10 /r
         #VPMOVUSWB ymm1/m256 {k1}{z},zmm2
@@ -91,4 +91,4 @@ class TestSuite:
         Buffer = '{}10e0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb ymm0, zmm4')
+        assert_equal(myDisasm.infos.repr, 'vpmovuswb ymm24, zmm28')

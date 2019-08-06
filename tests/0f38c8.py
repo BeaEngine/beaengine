@@ -36,7 +36,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc8)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vexp2pd ')
-        assert_equal(myDisasm.infos.repr, 'vexp2pd zmm0, zmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vexp2pd zmm24, zmmword ptr [r8]')
 
         # EVEX.512.66.0F38.W0 C8 /r
         # VEXP2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}
@@ -47,7 +47,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc8)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vexp2ps ')
-        assert_equal(myDisasm.infos.repr, 'vexp2ps zmm0, zmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vexp2ps zmm24, zmmword ptr [r8]')
 
         # NP 0F 38 C8 /r
         # SHA1NEXTE xmm1, xmm2/m128

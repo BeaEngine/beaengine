@@ -76,7 +76,7 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}pd '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}pd k4, xmm15, xmmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}pd k?, xmm31, xmmword ptr [r8], {:02X}h'.format(compare[i], i))
 
         # EVEX.NDS.256.66.0F.W1 C2 /r ib
         # VCMPPD k1 {k2}, ymm2, ymm3/m256/m64bcst, imm8
@@ -88,7 +88,7 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}pd '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}pd k4, ymm15, ymmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}pd k?, ymm31, ymmword ptr [r8], {:02X}h'.format(compare[i], i))
 
         # EVEX.NDS.512.66.0F.W1 C2 /r ib
         # VCMPPD k1 {k2}, zmm2, zmm3/m512/m64bcst{sae}, imm8
@@ -100,7 +100,7 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}pd '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}pd k4, zmm15, zmmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}pd k?, zmm31, zmmword ptr [r8], {:02X}h'.format(compare[i], i))
 
         # NP 0F C2 /r ib
         # CMPPS xmm1, xmm2/m128, imm8
@@ -149,7 +149,7 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}ps '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}ps k4, xmm15, xmmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}ps k?, xmm31, xmmword ptr [r8], {:02X}h'.format(compare[i], i))
 
         # EVEX.NDS.256.0F.W0 C2 /r ib
         # VCMPPS k1 {k2}, ymm2, ymm3/m256/m32bcst, imm8
@@ -161,7 +161,7 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}ps '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}ps k4, ymm15, ymmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}ps k?, ymm31, ymmword ptr [r8], {:02X}h'.format(compare[i], i))
 
         # EVEX.NDS.512.0F.W0 C2 /r ib
         # VCMPPS k1 {k2}, zmm2, zmm3/m512/m32bcst{sae}, imm8
@@ -173,7 +173,7 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}ps '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}ps k4, zmm15, zmmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}ps k?, zmm31, zmmword ptr [r8], {:02X}h'.format(compare[i], i))
 
         # F2 0F C2 /r ib
         # CMPSD xmm1, xmm2/m64, imm8
@@ -209,7 +209,7 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}sd '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}sd k4, xmm15, xmmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}sd k?, xmm31, xmmword ptr [r8], {:02X}h'.format(compare[i], i))
 
         # F3 0F C2 /r ib
         # CMPSS xmm1, xmm2/m32, imm8
@@ -244,4 +244,4 @@ class TestSuite:
             myDisasm.read()
             assert_equal(myDisasm.infos.Instruction.Opcode, 0xc2)
             assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcmp{}ss '.format(compare[i]))
-            assert_equal(myDisasm.infos.repr, 'vcmp{}ss k4, xmm15, xmmword ptr [rax], {:02X}h'.format(compare[i], i))
+            assert_equal(myDisasm.infos.repr, 'vcmp{}ss k?, xmm31, xmmword ptr [r8], {:02X}h'.format(compare[i], i))

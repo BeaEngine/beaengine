@@ -43,7 +43,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x18)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertf32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vinsertf32x4 ymm4, ymm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vinsertf32x4 ymm28, ymm16, xmmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 18 /r ib
         # VINSERTF32X4 zmm1 {k1}{z}, zmm2, xmm3/m128, imm8
@@ -54,7 +54,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x18)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertf32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vinsertf32x4 zmm4, zmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vinsertf32x4 zmm28, zmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 18 /r ib
         # VINSERTF64X2 ymm1 {k1}{z}, ymm2, xmm3/m128, imm8
@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x18)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertf64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vinsertf64x2 ymm4, ymm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vinsertf64x2 ymm28, ymm16, xmmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 18 /r ib
         # VINSERTF64X2 zmm1 {k1}{z}, zmm2, xmm3/m128, imm8
@@ -76,4 +76,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x18)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertf64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vinsertf64x2 zmm4, zmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vinsertf64x2 zmm28, zmm16, xmmword ptr [r8], 11h')

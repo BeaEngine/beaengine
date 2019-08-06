@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.infos.repr, 'vpclmulqdq xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.WIG 44 /r /ib
         # VPCLMULQDQ ymm1, ymm2, ymm3/m256, imm8
@@ -76,7 +76,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.infos.repr, 'vpclmulqdq ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.WIG 44 /r /ib
         # VPCLMULQDQ zmm1, zmm2, zmm3/m512, imm8
@@ -87,4 +87,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x44)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpclmulqdq ')
-        assert_equal(myDisasm.infos.repr, 'vpclmulqdq zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vpclmulqdq zmm28, zmm16, zmmword ptr [r8], 11h')

@@ -62,7 +62,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vxorps ')
-        assert_equal(myDisasm.infos.repr, 'vxorps xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vxorps xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.0F.W0 57 /r
         # VxorpS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
@@ -73,7 +73,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vxorps ')
-        assert_equal(myDisasm.infos.repr, 'vxorps ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vxorps ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.0F.W0 57 /r
         # VxorpS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vxorps ')
-        assert_equal(myDisasm.infos.repr, 'vxorps zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vxorps zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # 66 0F 57 /r
         # xorpD xmm1, xmm2/m128
@@ -127,7 +127,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vxorpd ')
-        assert_equal(myDisasm.infos.repr, 'vxorpd xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vxorpd xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.66.0F.W1 57 /r
         # VxorpD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst
@@ -138,7 +138,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vxorpd ')
-        assert_equal(myDisasm.infos.repr, 'vxorpd ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vxorpd ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.66.0F.W1 57 /r
         # VxorpD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
@@ -149,4 +149,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vxorpd ')
-        assert_equal(myDisasm.infos.repr, 'vxorpd zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vxorpd zmm26, zmm31, zmmword ptr [r8+00000000h]')

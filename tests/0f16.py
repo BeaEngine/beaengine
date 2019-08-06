@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovhpd ')
-        assert_equal(myDisasm.infos.repr, 'vmovhpd xmm2, xmm15, qword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmovhpd xmm26, xmm31, qword ptr [r8+00000000h]')
 
         # NP 0F 16 /r
         # MOVHPS xmm1, m64
@@ -83,7 +83,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovhps ')
-        assert_equal(myDisasm.infos.repr, 'vmovhps xmm2, xmm15, qword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmovhps xmm26, xmm31, qword ptr [r8+00000000h]')
 
         # NP 0F 16 /r
         # MOVLHPS xmm1, xmm2
@@ -115,7 +115,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovlhps ')
-        assert_equal(myDisasm.infos.repr, 'vmovlhps xmm4, xmm15, xmm0')
+        assert_equal(myDisasm.infos.repr, 'vmovlhps xmm28, xmm31, xmm24')
 
         # F3 0F 16 /r
         # MOVSHDUP xmm1, xmm2/m128
@@ -158,7 +158,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovshdup ')
-        assert_equal(myDisasm.infos.repr, 'vmovshdup xmm2, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmovshdup xmm26, xmmword ptr [r8+00000000h]')
 
         # EVEX.256.F3.0F.W0 16 /r
         # VMOVSHDUP ymm1 {k1}{z}, ymm2/m256
@@ -169,7 +169,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovshdup ')
-        assert_equal(myDisasm.infos.repr, 'vmovshdup ymm2, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmovshdup ymm26, ymmword ptr [r8+00000000h]')
 
         # EVEX.512.F3.0F.W0 16 /r
         # VMOVSHDUP zmm1 {k1}{z}, zmm2/m512
@@ -180,4 +180,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovshdup ')
-        assert_equal(myDisasm.infos.repr, 'vmovshdup zmm2, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vmovshdup zmm26, zmmword ptr [r8+00000000h]')

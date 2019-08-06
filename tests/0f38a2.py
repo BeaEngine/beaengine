@@ -33,7 +33,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa2)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscatterdps ')
-        assert_equal(myDisasm.infos.repr, 'vscatterdps dword ptr [rbx+xmm6+0088h] {k1}, xmm0')
+        assert_equal(myDisasm.infos.repr, 'vscatterdps dword ptr [r11+xmm30+0088h] {k1}, xmm24')
 
         # EVEX.256.66.0F38.W0 a2 /vsib
         # vscatterdps vm32y {k1}, ymm1
@@ -46,7 +46,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa2)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscatterdps ')
-        assert_equal(myDisasm.infos.repr, 'vscatterdps dword ptr [rbx+ymm6+0088h] {k1}, ymm0')
+        assert_equal(myDisasm.infos.repr, 'vscatterdps dword ptr [r11+ymm30+0088h] {k1}, ymm24')
 
         # EVEX.512.66.0F38.W0 a2 /vsib
         # vscatterdps vm32z {k1}, zmm1
@@ -59,7 +59,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa2)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscatterdps ')
-        assert_equal(myDisasm.infos.repr, 'vscatterdps dword ptr [rbx+zmm6+0088h] {k1}, zmm0')
+        assert_equal(myDisasm.infos.repr, 'vscatterdps dword ptr [r11+zmm30+0088h] {k1}, zmm24')
 
         # EVEX.128.66.0F38.W1 a2 /vsib
         # vscatterdpd vm32x {k1}, xmm1
@@ -72,7 +72,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa2)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscatterdpd ')
-        assert_equal(myDisasm.infos.repr, 'vscatterdpd dword ptr [rbx+xmm6+0110h] {k1}, xmm0')
+        assert_equal(myDisasm.infos.repr, 'vscatterdpd dword ptr [r11+xmm30+0110h] {k1}, xmm24')
 
         # EVEX.256.66.0F38.W1 a2 /vsib
         # vscatterdpd vm32x {k1}, ymm1
@@ -85,7 +85,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa2)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscatterdpd ')
-        assert_equal(myDisasm.infos.repr, 'vscatterdpd dword ptr [rbx+xmm6+0110h] {k1}, ymm0')
+        assert_equal(myDisasm.infos.repr, 'vscatterdpd dword ptr [r11+xmm30+0110h] {k1}, ymm24')
 
         # EVEX.512.66.0F38.W1 a2 /vsib
         # vscatterdpd vm32y {k1}, zmm1
@@ -98,4 +98,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa2)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscatterdpd ')
-        assert_equal(myDisasm.infos.repr, 'vscatterdpd dword ptr [rbx+ymm6+0110h] {k1}, zmm0')
+        assert_equal(myDisasm.infos.repr, 'vscatterdpd dword ptr [r11+ymm30+0110h] {k1}, zmm24')

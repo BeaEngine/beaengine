@@ -55,7 +55,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastb ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastb xmm1, byte ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastb xmm25, byte ptr [r14]')
 
         # EVEX.256.66.0F38.W0 78 /r
         # VPBROADCASTB ymm1{k1}{z}, xmm2/m8
@@ -66,7 +66,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastb ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastb ymm1, byte ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastb ymm25, byte ptr [r14]')
 
         # EVEX.512.66.0F38.W0 78 /r
         # VPBROADCASTB zmm1{k1}{z}, xmm2/m8
@@ -77,4 +77,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastb ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastb zmm1, byte ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastb zmm25, byte ptr [r14]')

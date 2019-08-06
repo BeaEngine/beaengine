@@ -57,7 +57,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpermilps ')
-        assert_equal(myDisasm.infos.repr, 'vpermilps xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpermilps xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.W0 0C /r
         # VPERMILPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
@@ -72,7 +72,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpermilps ')
-        assert_equal(myDisasm.infos.repr, 'vpermilps ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpermilps ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.W0 0C /r
         # VPERMILPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
@@ -87,7 +87,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpermilps ')
-        assert_equal(myDisasm.infos.repr, 'vpermilps zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpermilps zmm25, zmm31, zmmword ptr [r14]')
 
         # No VEX.66 prefix
 

@@ -53,4 +53,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractps ')
-        assert_equal(myDisasm.infos.repr, 'vextractps dword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractps dword ptr [r8], xmm28, 11h')

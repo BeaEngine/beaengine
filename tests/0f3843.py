@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetexpss ')
-        assert_equal(myDisasm.infos.repr, 'vgetexpss xmm1, xmm15, dword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vgetexpss xmm25, xmm31, dword ptr [r14]')
 
         # EVEX.NDS.LIG.66.0F38.W1 43 /r
         # VGETEXPSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}
@@ -41,4 +41,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetexpsd ')
-        assert_equal(myDisasm.infos.repr, 'vgetexpsd xmm1, xmm15, qword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vgetexpsd xmm25, xmm31, qword ptr [r14]')

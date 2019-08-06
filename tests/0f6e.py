@@ -96,7 +96,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x6e)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovd ')
-        assert_equal(myDisasm.infos.repr, 'vmovd xmm4, dword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vmovd xmm28, dword ptr [r8]')
 
         # EVEX.128.66.0F.W1 6E /r
         # VMOVQ xmm1, r64/m64
@@ -107,4 +107,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x6e)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovq ')
-        assert_equal(myDisasm.infos.repr, 'vmovq xmm4, qword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vmovq xmm28, qword ptr [r8]')

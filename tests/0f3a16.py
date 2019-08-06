@@ -77,7 +77,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrd ')
-        assert_equal(myDisasm.infos.repr, 'vpextrd dword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vpextrd dword ptr [r8], xmm28, 11h')
 
         # EVEX.128.66.0F3A.W1 16 /r ib
         # VPEXTRQ r64/m64, xmm2, imm8
@@ -88,4 +88,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrq ')
-        assert_equal(myDisasm.infos.repr, 'vpextrq qword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vpextrq qword ptr [r8], xmm28, 11h')

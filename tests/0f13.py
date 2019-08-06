@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x13)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovlps ')
-        assert_equal(myDisasm.infos.repr, 'vmovlps qword ptr [rax+00000000h], xmm2')
+        assert_equal(myDisasm.infos.repr, 'vmovlps qword ptr [r8+00000000h], xmm26')
 
         # 66 0F 13/r
         # MOVLPD m64, xmm1
@@ -83,4 +83,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x13)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovlpd ')
-        assert_equal(myDisasm.infos.repr, 'vmovlpd qword ptr [rax+00000000h], xmm2')
+        assert_equal(myDisasm.infos.repr, 'vmovlpd qword ptr [r8+00000000h], xmm26')

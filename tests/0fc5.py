@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrw ')
-        assert_equal(myDisasm.infos.repr, 'vpextrw ax, xmm0, BBh')
+        assert_equal(myDisasm.infos.repr, 'vpextrw al, xmm24, BBh')
 
 
         # If VEX.L = 1 or EVEX.L’L > 0.

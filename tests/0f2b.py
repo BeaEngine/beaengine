@@ -63,7 +63,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntps ')
-        assert_equal(myDisasm.infos.repr, 'vmovntps xmmword ptr [rsi], xmm2')
+        assert_equal(myDisasm.infos.repr, 'vmovntps xmmword ptr [r14], xmm26')
 
         # EVEX.256.0F.W0 2B /r
         # VMOVNTPS m256, ymm1
@@ -74,7 +74,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntps ')
-        assert_equal(myDisasm.infos.repr, 'vmovntps ymmword ptr [rsi], ymm2')
+        assert_equal(myDisasm.infos.repr, 'vmovntps ymmword ptr [r14], ymm26')
 
         # EVEX.512.0F.W0 2B /r
         # VMOVNTPS m512, zmm1
@@ -85,7 +85,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntps ')
-        assert_equal(myDisasm.infos.repr, 'vmovntps zmmword ptr [rsi], zmm2')
+        assert_equal(myDisasm.infos.repr, 'vmovntps zmmword ptr [r14], zmm26')
 
         # 66 0F 2B /r
         # MOVNTPD m128, xmm1
@@ -128,7 +128,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntpd ')
-        assert_equal(myDisasm.infos.repr, 'vmovntpd xmmword ptr [rsi], xmm2')
+        assert_equal(myDisasm.infos.repr, 'vmovntpd xmmword ptr [r14], xmm26')
 
         # EVEX.256.66.0F.W1 2B /r
         # VMOVNTPD m256, ymm1
@@ -139,7 +139,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntpd ')
-        assert_equal(myDisasm.infos.repr, 'vmovntpd ymmword ptr [rsi], ymm2')
+        assert_equal(myDisasm.infos.repr, 'vmovntpd ymmword ptr [r14], ymm26')
 
         # EVEX.512.66.0F.W1 2B /r
         # VMOVNTPD m512, zmm1
@@ -150,4 +150,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntpd ')
-        assert_equal(myDisasm.infos.repr, 'vmovntpd zmmword ptr [rsi], zmm2')
+        assert_equal(myDisasm.infos.repr, 'vmovntpd zmmword ptr [r14], zmm26')

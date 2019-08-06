@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcompressps ')
-        assert_equal(myDisasm.infos.repr, 'vcompressps xmmword ptr [rsi], xmm1')
+        assert_equal(myDisasm.infos.repr, 'vcompressps xmmword ptr [r14], xmm25')
 
         # EVEX.256.66.0F38.W0 8a /r
         # vcompressps ymm2/m256 {k1}{z}, ymm1
@@ -41,7 +41,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcompressps ')
-        assert_equal(myDisasm.infos.repr, 'vcompressps ymmword ptr [rsi], ymm1')
+        assert_equal(myDisasm.infos.repr, 'vcompressps ymmword ptr [r14], ymm25')
 
         # EVEX.512.66.0F38.W0 8a /r
         # vcompressps zmm2/m512 {k1}{z}, zmm1
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcompressps ')
-        assert_equal(myDisasm.infos.repr, 'vcompressps zmmword ptr [rsi], zmm1')
+        assert_equal(myDisasm.infos.repr, 'vcompressps zmmword ptr [r14], zmm25')
 
         # EVEX.128.66.0F38.W1 8a /r
         # vcompresspd  xmm2/m128 {k1}{z},xmm1
@@ -63,7 +63,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcompresspd ')
-        assert_equal(myDisasm.infos.repr, 'vcompresspd xmmword ptr [rsi], xmm1')
+        assert_equal(myDisasm.infos.repr, 'vcompresspd xmmword ptr [r14], xmm25')
 
         # EVEX.256.66.0F38.W1 8a /r
         # vcompresspd ymm2/m256 {k1}{z},ymm1
@@ -74,7 +74,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcompresspd ')
-        assert_equal(myDisasm.infos.repr, 'vcompresspd ymmword ptr [rsi], ymm1')
+        assert_equal(myDisasm.infos.repr, 'vcompresspd ymmword ptr [r14], ymm25')
 
         # EVEX.512.66.0F38.W1 8a /r
         # vcompresspd zmm2/m512 {k1}{z}, zmm1
@@ -85,4 +85,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcompresspd ')
-        assert_equal(myDisasm.infos.repr, 'vcompresspd zmmword ptr [rsi], zmm1')
+        assert_equal(myDisasm.infos.repr, 'vcompresspd zmmword ptr [r14], zmm25')

@@ -33,7 +33,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangeps ')
-        assert_equal(myDisasm.infos.repr, 'vrangeps xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrangeps xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 50 /r ib
         # VRANGEPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst, imm8
@@ -44,7 +44,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangeps ')
-        assert_equal(myDisasm.infos.repr, 'vrangeps ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrangeps ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 50 /r ib
         # VRANGEPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8
@@ -55,7 +55,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangeps ')
-        assert_equal(myDisasm.infos.repr, 'vrangeps zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrangeps zmm28, zmm16, zmmword ptr [r8], 11h')
 
         # EVEX.128.66.0F3A.W1 50 /r ib
         # VRANGEPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8
@@ -66,7 +66,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangepd ')
-        assert_equal(myDisasm.infos.repr, 'vrangepd xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrangepd xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 50 /r ib
         # VRANGEPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8
@@ -77,7 +77,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangepd ')
-        assert_equal(myDisasm.infos.repr, 'vrangepd ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrangepd ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 50 /r ib
         # VRANGEPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8
@@ -88,4 +88,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x50)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrangepd ')
-        assert_equal(myDisasm.infos.repr, 'vrangepd zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrangepd zmm28, zmm16, zmmword ptr [r8], 11h')

@@ -57,7 +57,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x63')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpacksswb ')
-        assert_equal(myDisasm.infos.repr, 'vpacksswb xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpacksswb xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F.WIG 63 /r
         # vpacksswb ymm1 {k1}{z}, ymm2, ymm3/m256
@@ -71,7 +71,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x63')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpacksswb ')
-        assert_equal(myDisasm.infos.repr, 'vpacksswb ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpacksswb ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F.WIG 63 /r
         # vpacksswb zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -85,4 +85,4 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x63')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpacksswb ')
-        assert_equal(myDisasm.infos.repr, 'vpacksswb zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpacksswb zmm25, zmm31, zmmword ptr [r14]')

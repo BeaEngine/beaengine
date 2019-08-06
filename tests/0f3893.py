@@ -32,7 +32,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqps ')
         #assert_equal(myDisasm.infos.Reserved_.EVEX.X, 1)
-        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm0, qword ptr [rbx+xmm6+22h]')
+        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm24, qword ptr [r11+xmm30+22h]')
 
         # EVEX.256.66.0F38.W0 93 /vsib
         # VGATHERQPS xmm1 {k1}, vm64y
@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqps ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm0, qword ptr [rbx+ymm6+22h]')
+        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm24, qword ptr [r11+ymm30+22h]')
 
         # EVEX.512.66.0F38.W0 93 /vsib
         # VGATHERQPS ymm1 {k1}, vm64z
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqps ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqps ymm0, qword ptr [rbx+zmm6+0088h]')
+        assert_equal(myDisasm.infos.repr, 'vgatherqps ymm24, qword ptr [r11+zmm30+0088h]')
 
         # EVEX.128.66.0F38.W1 93 /vsib
         # VGATHERQPD xmm1 {k1}, vm64x
@@ -62,7 +62,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqpd ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqpd xmm0, qword ptr [rbx+xmm6+22h]')
+        assert_equal(myDisasm.infos.repr, 'vgatherqpd xmm24, qword ptr [r11+xmm30+22h]')
 
         # EVEX.256.66.0F38.W1 93 /vsib
         # VGATHERQPD ymm1 {k1}, vm64y
@@ -72,7 +72,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqpd ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqpd ymm0, qword ptr [rbx+ymm6+22h]')
+        assert_equal(myDisasm.infos.repr, 'vgatherqpd ymm24, qword ptr [r11+ymm30+22h]')
 
         # EVEX.512.66.0F38.W1 93 /vsib
         # VGATHERQPD zmm1 {k1}, vm64z
@@ -82,7 +82,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqpd ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqpd zmm0, qword ptr [rbx+zmm6+0110h]')
+        assert_equal(myDisasm.infos.repr, 'vgatherqpd zmm24, qword ptr [r11+zmm30+0110h]')
 
         # VEX.DDS.128.66.0F38.W1 93 /r
         # VGATHERQPD xmm1, vm64x, xmm2
@@ -102,7 +102,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqpd ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqpd ymm8, dword ptr [r11+ymm6+22h], ymm15')
+        assert_equal(myDisasm.infos.repr, 'vgatherqpd ymm8, dword ptr [r11+ymm14+22h], ymm15')
 
         # VEX.DDS.128.66.0F38.W0 93 /r
         # VGATHERQPS xmm1, vm64x, xmm2
@@ -112,7 +112,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqps ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm8, qword ptr [r11+xmm6+22h], xmm15')
+        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm8, qword ptr [r11+xmm14+22h], xmm15')
 
         # VEX.DDS.256.66.0F38.W0 93 /r
         # VGATHERQPS xmm1, vm64y, xmm2
@@ -122,4 +122,4 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgatherqps ')
-        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm8, qword ptr [r11+ymm6+22h], xmm15')
+        assert_equal(myDisasm.infos.repr, 'vgatherqps xmm8, qword ptr [r11+ymm14+22h], xmm15')

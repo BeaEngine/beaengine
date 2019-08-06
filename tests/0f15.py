@@ -63,7 +63,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x15')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vunpckhps ')
-        assert_equal(myDisasm.infos.repr, 'vunpckhps xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vunpckhps xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.0F.W0 15 /r
         # VUNPckhpS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
@@ -74,7 +74,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x15')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vunpckhps ')
-        assert_equal(myDisasm.infos.repr, 'vunpckhps ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vunpckhps ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.0F.W0 15 /r
         # VUNPckhpS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
@@ -85,7 +85,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x15')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vunpckhps ')
-        assert_equal(myDisasm.infos.repr, 'vunpckhps zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vunpckhps zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # 66 0F 15 /r
         # UNPckhpD xmm1, xmm2/m128
@@ -128,7 +128,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x15')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vunpckhpd ')
-        assert_equal(myDisasm.infos.repr, 'vunpckhpd xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vunpckhpd xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.66.0F.W1 15 /r
         # VUNPckhpD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst
@@ -139,7 +139,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x15')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vunpckhpd ')
-        assert_equal(myDisasm.infos.repr, 'vunpckhpd ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vunpckhpd ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.66.0F.W1 15 /r
         # VUNPckhpD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
@@ -150,4 +150,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x15')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vunpckhpd ')
-        assert_equal(myDisasm.infos.repr, 'vunpckhpd zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vunpckhpd zmm26, zmm31, zmmword ptr [r8+00000000h]')

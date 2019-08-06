@@ -60,4 +60,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscaless ')
-        assert_equal(myDisasm.infos.repr, 'vrndscaless xmm4, xmm0, dword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrndscaless xmm28, xmm16, dword ptr [r8], 11h')

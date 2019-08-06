@@ -62,7 +62,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddpd ')
-        assert_equal(myDisasm.infos.repr, 'vaddpd xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddpd xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.66.0F.W1 58 /r
         # VADDPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst
@@ -73,7 +73,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddpd ')
-        assert_equal(myDisasm.infos.repr, 'vaddpd ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddpd ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.66.0F.W1 58 /r
         # VADDPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddpd ')
-        assert_equal(myDisasm.infos.repr, 'vaddpd zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddpd zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # NP 0F 58 /r
         # ADDPS xmm1, xmm2/m128
@@ -127,7 +127,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddps ')
-        assert_equal(myDisasm.infos.repr, 'vaddps xmm2, xmm15, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddps xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.0F.W0 58 /r
         # VADDPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
@@ -138,7 +138,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddps ')
-        assert_equal(myDisasm.infos.repr, 'vaddps ymm2, ymm15, ymmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddps ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.0F.W0 58 /r
         # VADDPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst {er}
@@ -149,7 +149,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddps ')
-        assert_equal(myDisasm.infos.repr, 'vaddps zmm2, zmm15, zmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddps zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # F2 0F 58 /r
         # ADDSD xmm1, xmm2/m64
@@ -181,7 +181,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddsd ')
-        assert_equal(myDisasm.infos.repr, 'vaddsd xmm2, xmm15, qword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddsd xmm26, xmm31, qword ptr [r8+00000000h]')
 
         # F3 0F 58 /r
         # ADDSS xmm1, xmm2/m32
@@ -213,4 +213,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddss ')
-        assert_equal(myDisasm.infos.repr, 'vaddss xmm2, xmm15, dword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.repr, 'vaddss xmm26, xmm31, dword ptr [r8+00000000h]')

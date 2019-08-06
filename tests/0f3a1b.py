@@ -32,7 +32,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf32x8 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf32x8 zmm4, zmm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf32x8 zmm28, zmm16, ymmword ptr [r8], 11h')
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
         Buffer = '{}1bc011'.format(myEVEX.prefix()).decode('hex')
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf32x8 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf32x8 zmm0, zmm0, ymm0, 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf32x8 zmm24, zmm16, ymm24, 11h')
 
         # EVEX.512.66.0F3A.W1 1b /r ib
         # VextractF64X4 zmm1 {k1}{z}, zmm2, ymm3/m256, imm8
@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf64x4 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf64x4 zmm4, zmm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf64x4 zmm28, zmm16, ymmword ptr [r8], 11h')
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
         Buffer = '{}1bc011'.format(myEVEX.prefix()).decode('hex')
@@ -59,4 +59,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1b)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf64x4 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf64x4 zmm0, zmm0, ymm0, 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf64x4 zmm24, zmm16, ymm24, 11h')

@@ -637,12 +637,12 @@ void __bea_callspec__ bound_(PDISASM pMyDisasm)
       GV.EVEX.state = InUsePrefix;
       GV.EVEX.mm = GV.EVEX.P0 & 0x3;           /* P[1:0] */
       GV.EVEX.pp = GV.EVEX.P1 & 0x3;           /* P[9:8] */
-      GV.EVEX.R1 = (GV.EVEX.P0 >> 4) & 0x1;      /* P[4] */
-      GV.EVEX.X = (GV.EVEX.P0 >> 6) & 0x1;      /* P[6] */
-      GV.EVEX.B = (GV.EVEX.P0 >> 5) & 0x1;      /* P[5] */
-      GV.EVEX.R = (GV.EVEX.P0 >> 7) & 0x1;      /* P[5] */
+      GV.EVEX.R1 = ~(GV.EVEX.P0 >> 4) & 0x1;      /* P[4] */
+      GV.EVEX.X = ~(GV.EVEX.P0 >> 6) & 0x1;      /* P[6] */
+      GV.EVEX.B = ~(GV.EVEX.P0 >> 5) & 0x1;      /* P[5] */
+      GV.EVEX.R = ~(GV.EVEX.P0 >> 7) & 0x1;      /* P[5] */
       GV.EVEX.vvvv = (GV.EVEX.P1 >> 3) & 0xF; /* P[14:11] */
-      GV.EVEX.V = (GV.EVEX.P2 >> 3) & 0x1;      /* P[19] */
+      GV.EVEX.V = ~(GV.EVEX.P2 >> 3) & 0x1;      /* P[19] */
       GV.EVEX.aaa = (GV.EVEX.P2) & 0x7;       /* P[18:16] */
       GV.EVEX.W = (GV.EVEX.P1 >> 7) & 0x1;      /* P[15] */
       GV.EVEX.z = (GV.EVEX.P2 >> 7) & 0x1;      /* P[23] */

@@ -32,7 +32,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefss ')
-        assert_equal(myDisasm.infos.repr, 'vscalefss xmm4, xmm0, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefss xmm28, xmm16, xmmword ptr [r8]')
 
         # EVEX.LIG.66.0F38.W1 2D /r
         # VSCALEFSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}
@@ -44,7 +44,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefsd ')
-        assert_equal(myDisasm.infos.repr, 'vscalefsd xmm4, xmm0, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefsd xmm28, xmm16, xmmword ptr [r8]')
 
         # VEX.128.66.0F38.W0 2D /r
         # VMASKMOVPD xmm1, xmm2, m128

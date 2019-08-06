@@ -1733,7 +1733,10 @@ size_t __bea_callspec__ interpretVSIBIndex(OPTYPE* pMyOperand, size_t i, PDISASM
   i = printSeparator(pMyOperand, i, pMyDisasm);
 
   if (GV.AddressSize >= 32) {
-    if (GV.EVEX.X == 0) {
+    if (
+        ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.X == 0)) ||
+        ((GV.EVEX.state != InUsePrefix) && (GV.REX.X_ == 0)) 
+      ) {
       index_final = (GV.EVEX.V == 0) ? GV.INDEX_ : GV.INDEX_ + 16;
     }
     else {

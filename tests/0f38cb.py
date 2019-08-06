@@ -45,7 +45,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcb)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrcp28sd ')
-        assert_equal(myDisasm.infos.repr, 'vrcp28sd xmm0, xmm15, qword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vrcp28sd xmm24, xmm31, qword ptr [r8]')
 
         # EVEX.NDS.LIG.66.0F38.W0 CB /r
         # VRCP28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}
@@ -56,4 +56,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcb)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrcp28ss ')
-        assert_equal(myDisasm.infos.repr, 'vrcp28ss xmm0, xmm15, dword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vrcp28ss xmm24, xmm31, dword ptr [r8]')

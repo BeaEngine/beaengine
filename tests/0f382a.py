@@ -62,7 +62,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntdqa ')
-        assert_equal(myDisasm.infos.repr, 'vmovntdqa xmm4, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vmovntdqa xmm28, xmmword ptr [r8]')
 
         # EVEX.256.66.0F38.W0 2A /r
         # VMOVNTDQA ymm1, m256
@@ -73,7 +73,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntdqa ')
-        assert_equal(myDisasm.infos.repr, 'vmovntdqa ymm4, ymmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vmovntdqa ymm28, ymmword ptr [r8]')
 
         # EVEX.512.66.0F38.W0 2A /r
         # VMOVNTDQA zmm1, m512
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovntdqa ')
-        assert_equal(myDisasm.infos.repr, 'vmovntdqa zmm4, zmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vmovntdqa zmm28, zmmword ptr [r8]')
 
         # EVEX.128.F3.0F38.W1 2A /r
         # VPBROADCASTMB2Q xmm1, k1
@@ -95,7 +95,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastmb2q ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastmb2q xmm0, k0')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastmb2q xmm24, k0')
 
 
         # EVEX.256.F3.0F38.W1 2A /r
@@ -107,7 +107,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastmb2q ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastmb2q ymm0, k0')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastmb2q ymm24, k0')
 
         # EVEX.512.F3.0F38.W1 2A /r
         # VPBROADCASTMB2Q zmm1, k1
@@ -118,4 +118,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastmb2q ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastmb2q zmm0, k0')
+        assert_equal(myDisasm.infos.repr, 'vpbroadcastmb2q zmm24, k0')

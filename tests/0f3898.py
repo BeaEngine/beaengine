@@ -50,7 +50,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x98')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfmadd132ps ')
-        assert_equal(myDisasm.infos.repr, 'vfmadd132ps xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfmadd132ps xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.W0 98 /r
         # vfmadd132ps ymm1 {k1}{z}, ymm2, ymm3/m256
@@ -64,7 +64,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x98')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfmadd132ps ')
-        assert_equal(myDisasm.infos.repr, 'vfmadd132ps ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfmadd132ps ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.W1 98 /r
         # vfmadd132ps zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -76,4 +76,4 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.state, InUsePrefix)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x98')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfmadd132pd ')
-        assert_equal(myDisasm.infos.repr, 'vfmadd132pd zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfmadd132pd zmm25, zmm31, zmmword ptr [r14]')

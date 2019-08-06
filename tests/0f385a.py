@@ -43,7 +43,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x4 ymm1, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x4 ymm25, xmmword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 5A /r
         # VBROADCASTI32X4 zmm1 {k1}{z}, m128
@@ -55,7 +55,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x4 zmm1, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x4 zmm25, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W1 5A /r
         # VBROADCASTI64X2 ymm1 {k1}{z}, m128
@@ -67,7 +67,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti64x2 ymm1, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vbroadcasti64x2 ymm25, xmmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 5A /r
         # VBROADCASTI64X2 zmm1 {k1}{z}, m128
@@ -79,4 +79,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti64x2 zmm1, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vbroadcasti64x2 zmm25, xmmword ptr [r14]')

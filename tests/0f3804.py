@@ -90,7 +90,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x4)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaddubsw ')
-        assert_equal(myDisasm.infos.repr, 'vpmaddubsw xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpmaddubsw xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.WIG 04 /r
         # Vpmaddubsw ymm1 {k1}{z}, ymm2, ymm3/m256
@@ -104,7 +104,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x4)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaddubsw ')
-        assert_equal(myDisasm.infos.repr, 'vpmaddubsw ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpmaddubsw ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.WIG 04 /r
         # Vpmaddubsw zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -118,4 +118,4 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x4)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaddubsw ')
-        assert_equal(myDisasm.infos.repr, 'vpmaddubsw zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpmaddubsw zmm25, zmm31, zmmword ptr [r14]')

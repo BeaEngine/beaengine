@@ -70,7 +70,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc6)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufps ')
-        assert_equal(myDisasm.infos.repr, 'vshufps xmm0, xmm15, xmm0, BBh')
+        assert_equal(myDisasm.infos.repr, 'vshufps xmm24, xmm31, xmm24, BBh')
 
         # EVEX.NDS.256.0F.W0 C6 /r ib
         # VSHUFPS ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst, imm8
@@ -81,7 +81,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc6)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufps ')
-        assert_equal(myDisasm.infos.repr, 'vshufps ymm0, ymm15, ymm0, BBh')
+        assert_equal(myDisasm.infos.repr, 'vshufps ymm24, ymm31, ymm24, BBh')
 
         # EVEX.NDS.512.0F.W0 C6 /r ib
         # VSHUFPS zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst, imm8
@@ -92,7 +92,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc6)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufps ')
-        assert_equal(myDisasm.infos.repr, 'vshufps zmm0, zmm15, zmm0, BBh')
+        assert_equal(myDisasm.infos.repr, 'vshufps zmm24, zmm31, zmm24, BBh')
 
         # 66 0F C6 /r ib
         # SHUFPD xmm1, xmm2/m128, imm8
@@ -135,7 +135,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc6)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufpd ')
-        assert_equal(myDisasm.infos.repr, 'vshufpd xmm0, xmm15, xmm0, BBh')
+        assert_equal(myDisasm.infos.repr, 'vshufpd xmm24, xmm31, xmm24, BBh')
 
         # EVEX.NDS.256.66.0F.W1 C6 /r ib
         # VSHUFPD ymm1{k1}{z}, ymm2, ymm3/m256/m64bcst, imm8
@@ -146,7 +146,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc6)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufpd ')
-        assert_equal(myDisasm.infos.repr, 'vshufpd ymm0, ymm15, ymm0, BBh')
+        assert_equal(myDisasm.infos.repr, 'vshufpd ymm24, ymm31, ymm24, BBh')
 
         # EVEX.NDS.512.66.0F.W1 C6 /r ib
         # VSHUFPD zmm1{k1}{z}, zmm2, zmm3/m512/m64bcst, imm8
@@ -157,4 +157,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc6)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vshufpd ')
-        assert_equal(myDisasm.infos.repr, 'vshufpd zmm0, zmm15, zmm0, BBh')
+        assert_equal(myDisasm.infos.repr, 'vshufpd zmm24, zmm31, zmm24, BBh')

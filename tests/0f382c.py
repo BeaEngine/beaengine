@@ -56,7 +56,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefps ')
-        assert_equal(myDisasm.infos.repr, 'vscalefps xmm4, xmm0, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefps xmm28, xmm16, xmmword ptr [r8]')
 
         # EVEX.256.66.0F38.W0 2C /r
         # VSCALEFPS ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
@@ -68,7 +68,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefps ')
-        assert_equal(myDisasm.infos.repr, 'vscalefps ymm4, ymm0, ymmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefps ymm28, ymm16, ymmword ptr [r8]')
 
         # EVEX.512.66.0F38.W0 2C /r
         # VSCALEFPS zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{er}
@@ -80,7 +80,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefps ')
-        assert_equal(myDisasm.infos.repr, 'vscalefps zmm4, zmm0, zmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefps zmm28, zmm16, zmmword ptr [r8]')
 
         # EVEX.128.66.0F38.W1 2C /r
         # VSCALEFPD xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst
@@ -92,7 +92,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefpd ')
-        assert_equal(myDisasm.infos.repr, 'vscalefpd xmm4, xmm0, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefpd xmm28, xmm16, xmmword ptr [r8]')
 
         # EVEX.256.66.0F38.W1 2C /r
         # VSCALEFPD ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst
@@ -104,7 +104,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefpd ')
-        assert_equal(myDisasm.infos.repr, 'vscalefpd ymm4, ymm0, ymmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefpd ymm28, ymm16, ymmword ptr [r8]')
 
         # EVEX.512.66.0F38.W1 2C /r
         # VSCALEFPD zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}
@@ -116,4 +116,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2c)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefpd ')
-        assert_equal(myDisasm.infos.repr, 'vscalefpd zmm4, zmm0, zmmword ptr [rax]')
+        assert_equal(myDisasm.infos.repr, 'vscalefpd zmm28, zmm16, zmmword ptr [r8]')

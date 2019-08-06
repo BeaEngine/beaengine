@@ -64,7 +64,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscaleps ')
-        assert_equal(myDisasm.infos.repr, 'vrndscaleps xmm4, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrndscaleps xmm28, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 08 /r ib
         # VRNDSCALEPS ymm1 {k1}{z}, ymm2/m256/m32bcst, imm8
@@ -75,7 +75,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscaleps ')
-        assert_equal(myDisasm.infos.repr, 'vrndscaleps ymm4, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrndscaleps ymm28, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 08 /r ib
         # VRNDSCALEPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8
@@ -86,4 +86,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscaleps ')
-        assert_equal(myDisasm.infos.repr, 'vrndscaleps zmm4, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vrndscaleps zmm28, zmmword ptr [r8], 11h')

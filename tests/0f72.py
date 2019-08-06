@@ -74,7 +74,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x72)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpslld ')
-        assert_equal(myDisasm.infos.repr, 'vpslld xmm15, xmmword ptr [rdx], 11h')
+        assert_equal(myDisasm.infos.repr, 'vpslld xmm31, xmmword ptr [r10], 11h')
 
         # EVEX.NDD.256.66.0F.WIG 72 /6 ib
         # Vpslld ymm1 {k1}{z}, ymm2/m256, imm8
@@ -85,7 +85,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x72)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpslld ')
-        assert_equal(myDisasm.infos.repr, 'vpslld ymm15, ymmword ptr [rdx], 11h')
+        assert_equal(myDisasm.infos.repr, 'vpslld ymm31, ymmword ptr [r10], 11h')
 
         # EVEX.NDD.512.66.0F.WIG 72 /6 ib
         # Vpslld zmm1 {k1}{z}, zmm2/m512, imm8
@@ -96,4 +96,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x72)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpslld ')
-        assert_equal(myDisasm.infos.repr, 'vpslld zmm15, zmmword ptr [rdx], 11h')
+        assert_equal(myDisasm.infos.repr, 'vpslld zmm31, zmmword ptr [r10], 11h')

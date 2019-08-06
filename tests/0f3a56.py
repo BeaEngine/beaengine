@@ -32,7 +32,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x56)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreduceps ')
-        assert_equal(myDisasm.infos.repr, 'vreduceps xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vreduceps xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 56 /r ib
         # vreduceps ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst, imm8
@@ -43,7 +43,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x56)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreduceps ')
-        assert_equal(myDisasm.infos.repr, 'vreduceps ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vreduceps ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 56 /r ib
         # vreduceps zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8
@@ -54,7 +54,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x56)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreduceps ')
-        assert_equal(myDisasm.infos.repr, 'vreduceps zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vreduceps zmm28, zmm16, zmmword ptr [r8], 11h')
 
         # EVEX.128.66.0F3A.W1 56 /r ib
         # vreducepd xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8
@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x56)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreducepd ')
-        assert_equal(myDisasm.infos.repr, 'vreducepd xmm4, xmm0, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vreducepd xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 56 /r ib
         # vreducepd ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8
@@ -76,7 +76,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x56)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreducepd ')
-        assert_equal(myDisasm.infos.repr, 'vreducepd ymm4, ymm0, ymmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vreducepd ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 56 /r ib
         # vreducepd zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8
@@ -87,4 +87,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x56)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreducepd ')
-        assert_equal(myDisasm.infos.repr, 'vreducepd zmm4, zmm0, zmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.repr, 'vreducepd zmm28, zmm16, zmmword ptr [r8], 11h')

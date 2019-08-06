@@ -71,7 +71,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtps2ph ')
-        assert_equal(myDisasm.infos.repr, 'vcvtps2ph qword ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vcvtps2ph qword ptr [r8], xmm28, 11h')
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W0')
         Buffer = '{}1de011'.format(myEVEX.prefix()).decode('hex')
@@ -79,7 +79,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtps2ph ')
-        assert_equal(myDisasm.infos.repr, 'vcvtps2ph xmm0, xmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vcvtps2ph xmm24, xmm28, 11h')
 
         # EVEX.256.66.0F3A.W0 1D /r ib
         # VCVTPS2PH xmm1/m128 {k1}{z}, ymm2, imm8
@@ -90,7 +90,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtps2ph ')
-        assert_equal(myDisasm.infos.repr, 'vcvtps2ph xmmword ptr [rax], ymm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vcvtps2ph xmmword ptr [r8], ymm28, 11h')
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
         Buffer = '{}1de011'.format(myEVEX.prefix()).decode('hex')
@@ -98,7 +98,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtps2ph ')
-        assert_equal(myDisasm.infos.repr, 'vcvtps2ph xmm0, ymm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vcvtps2ph xmm24, ymm28, 11h')
 
         # EVEX.512.66.0F3A.W0 1D /r ib
         # VCVTPS2PH ymm1/m256 {k1}{z}, zmm2{sae}, imm8
@@ -109,7 +109,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtps2ph ')
-        assert_equal(myDisasm.infos.repr, 'vcvtps2ph ymmword ptr [rax], zmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vcvtps2ph ymmword ptr [r8], zmm28, 11h')
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
         Buffer = '{}1de011'.format(myEVEX.prefix()).decode('hex')
@@ -117,4 +117,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtps2ph ')
-        assert_equal(myDisasm.infos.repr, 'vcvtps2ph ymm0, zmm4, 11h')
+        assert_equal(myDisasm.infos.repr, 'vcvtps2ph ymm24, zmm28, 11h')

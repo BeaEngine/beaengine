@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x64)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendmd ')
-        assert_equal(myDisasm.infos.repr, 'vpblendmd xmm1, xmm0, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpblendmd xmm25, xmm16, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W0 64 /r
         # VPBLENDMD ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
@@ -41,7 +41,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x64)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendmd ')
-        assert_equal(myDisasm.infos.repr, 'vpblendmd ymm1, ymm0, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpblendmd ymm25, ymm16, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 64 /r
         # VPBLENDMD zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x64)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendmd ')
-        assert_equal(myDisasm.infos.repr, 'vpblendmd zmm1, zmm0, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpblendmd zmm25, zmm16, zmmword ptr [r14]')
 
         # EVEX.128.66.0F38.W1 64 /r
         # VPBLENDMQ xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst
@@ -63,7 +63,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x64)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendmq ')
-        assert_equal(myDisasm.infos.repr, 'vpblendmq xmm1, xmm0, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpblendmq xmm25, xmm16, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W1 64 /r
         # VPBLENDMQ ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst
@@ -74,7 +74,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x64)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendmq ')
-        assert_equal(myDisasm.infos.repr, 'vpblendmq ymm1, ymm0, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpblendmq ymm25, ymm16, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 64 /r
         # VPBLENDMQ zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst
@@ -85,4 +85,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x64)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendmq ')
-        assert_equal(myDisasm.infos.repr, 'vpblendmq zmm1, zmm0, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpblendmq zmm25, zmm16, zmmword ptr [r14]')

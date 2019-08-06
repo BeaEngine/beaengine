@@ -57,7 +57,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2e)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vucomiss ')
-        assert_equal(myDisasm.infos.repr, 'vucomiss xmm2, dword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vucomiss xmm26, dword ptr [r14]')
 
         # 66 0F 2E /r
         # UCOMISD xmm1, xmm2/m64
@@ -91,7 +91,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2e)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vucomisd ')
-        assert_equal(myDisasm.infos.repr, 'vucomisd xmm2, qword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vucomisd xmm26, qword ptr [r14]')
 
         # VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD.
 

@@ -72,4 +72,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd6)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmovq ')
-        assert_equal(myDisasm.infos.repr, 'vmovq dword ptr [rax], xmm4')
+        assert_equal(myDisasm.infos.repr, 'vmovq dword ptr [r8], xmm28')

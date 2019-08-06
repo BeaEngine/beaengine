@@ -50,7 +50,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xbe')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub231ps ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub231ps xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfnmsub231ps xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.W0 be /r
         # vfnmsub231ps ymm1 {k1}{z}, ymm2, ymm3/m256
@@ -64,7 +64,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xbe')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub231ps ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub231ps ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfnmsub231ps ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.W0 be /r
         # vfnmsub231ps zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -78,7 +78,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xbe')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub231ps ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub231ps zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vfnmsub231ps zmm25, zmm31, zmmword ptr [r14]')
 
 
         # VEX.NDS.128.66.0F38.W1 be /r

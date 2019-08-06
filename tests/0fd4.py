@@ -57,7 +57,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xd4')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpaddq ')
-        assert_equal(myDisasm.infos.repr, 'vpaddq xmm1, xmm15, xmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpaddq xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F.WIG d4 /r
         # vpaddq ymm1 {k1}{z}, ymm2, ymm3/m256
@@ -71,7 +71,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xd4')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpaddq ')
-        assert_equal(myDisasm.infos.repr, 'vpaddq ymm1, ymm15, ymmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpaddq ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F.WIG d4 /r
         # vpaddq zmm1 {k1}{z}, zmm2, zmm3/m512
@@ -85,4 +85,4 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xd4')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpaddq ')
-        assert_equal(myDisasm.infos.repr, 'vpaddq zmm1, zmm15, zmmword ptr [rsi]')
+        assert_equal(myDisasm.infos.repr, 'vpaddq zmm25, zmm31, zmmword ptr [r14]')
