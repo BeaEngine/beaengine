@@ -31,7 +31,7 @@ print(target.repr())
 Output is :
 
 ```
-vpshufb zmm24 {k0}{0}, zmm31, zmmword ptr [r11+r14+0880h]
+vpshufb zmm24, zmm31, zmmword ptr [r11+r14+0880h]
 ```
 
 ### 2. Releases
