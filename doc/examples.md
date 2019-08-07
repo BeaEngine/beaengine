@@ -33,7 +33,7 @@ print(target.repr())
 Output is :
 
 ```
-vpshufb zmm0, zmm15, zmmword ptr [rbx+rsi+22h]
+vpshufb zmm24, zmm31, zmmword ptr [r11+r14+0880h]
 ```
 
 You can even do a disasm loop on a binary file :
