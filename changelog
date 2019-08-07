@@ -2,7 +2,7 @@
 
 - new instructions sets : AVX512, CET, SGX, BMI1, BMI2, SHA
 - more than 10k assertions to test the lib (BeaEngine is now implemented in some TDD style)
-- more than 20k instructions encoding listed
+- more than 20k instructions encoding listed (not yet released)
 - new python wrapper to hide ctypes complexity
 - fix issues on prefixes (precedences and conflicts)
 - fix SecurityBlock issues

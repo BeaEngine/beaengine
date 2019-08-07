@@ -12736,6 +12736,7 @@ void __bea_callspec__ cvtdq2ps_(PDISASM pMyDisasm)
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtps2dq ");
       #endif
       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
+      verifyVEXvvvv(pMyDisasm);
       ArgsVEX_GxEx(pMyDisasm);
     }
     else if (GV.VEX.pp == 2) {
@@ -12747,6 +12748,7 @@ void __bea_callspec__ cvtdq2ps_(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvttps2dq ");
       #endif
+      verifyVEXvvvv(pMyDisasm);
       ArgsVEX_GxEx(pMyDisasm);
     }
     else if (GV.VEX.pp == 0) {
@@ -12758,6 +12760,7 @@ void __bea_callspec__ cvtdq2ps_(PDISASM pMyDisasm)
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvtdq2ps ");
       #endif
       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
+      verifyVEXvvvv(pMyDisasm);
       ArgsVEX_GxEx(pMyDisasm);
     }
     else {

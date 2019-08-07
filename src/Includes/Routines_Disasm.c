@@ -1333,6 +1333,7 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
   }
   i = printArg1(pMyDisasm, i);
   if (
+    (GV.ERROR_OPCODE != UNKNOWN_OPCODE) &&
     (GV.EVEX.state == InUsePrefix) &&
     (GV.EVEX.masking != NO_MASK) &&
     ((GV.OPTIONS & ShowEVEXMasking))
