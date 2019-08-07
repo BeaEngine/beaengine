@@ -20,8 +20,27 @@ from nose.tools import *
 
 class TestSuite:
     def test(self):
+
+        # NP 0F FD /r1
+        # PADDW mm, mm/m64
+
+        Buffer = '0ffd9011223344'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xffd')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'paddw ')
+        assert_equal(myDisasm.infos.repr, 'paddw mm2, qword ptr [rax+44332211h]')
+
+        Buffer = '0ffdc9'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xffd')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'paddw ')
+        assert_equal(myDisasm.infos.repr, 'paddw mm1, mm1')
+
         # 66 0F fd /r
-        # paddw mm1, mm2/m64
+        # paddw xmm1, xmm2/m128
+
         Buffer = '660ffd9011223344'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
