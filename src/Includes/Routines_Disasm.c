@@ -83,6 +83,7 @@ void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
 }
 void __bea_callspec__ ResetREX(PDISASM pMyDisasm)
 {
+  if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1)) GV.OperandSize = GV.OriginalOperandSize;
   GV.REX.W_ = 0;
   GV.REX.R_ = 0;
   GV.REX.X_ = 0;
