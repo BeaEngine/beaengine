@@ -6669,6 +6669,8 @@ void __bea_callspec__ pop_reg(PDISASM pMyDisasm, int index)
     if (GV.Architecture == 64) {
       switch(GV.OperandSize) {
         case 64:
+
+        case 32:
           if (GV.REX.B_ == 0) {
               #ifndef BEA_LIGHT_DISASSEMBLY
                  (void) strcpy((char*) &(*pMyDisasm).Operand1.OpMnemonic, Registers64Bits[index]);
@@ -6688,15 +6690,6 @@ void __bea_callspec__ pop_reg(PDISASM pMyDisasm, int index)
           (*pMyDisasm).Operand1.OpSize = 64;
           (*pMyDisasm).Operand2.OpSize = 64;
           break;
-        case 32:
-          #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy((char*) &(*pMyDisasm).Operand1.OpMnemonic, Registers32Bits[index]);
-          #endif
-          (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
-          (*pMyDisasm).Operand1.Registers.type = GENERAL_REG;
-          (*pMyDisasm).Operand1.Registers.gpr = REGS[index];
-          (*pMyDisasm).Operand1.OpSize = 32;
-          (*pMyDisasm).Operand2.OpSize = 32;
 
         case 16:
           #ifndef BEA_LIGHT_DISASSEMBLY
@@ -7239,6 +7232,7 @@ void __bea_callspec__ push_reg(PDISASM pMyDisasm, int index)
   if (GV.Architecture == 64) {
       switch(GV.OperandSize) {
         case 64:
+        case 32:
           if (GV.REX.B_ == 0) {
               #ifndef BEA_LIGHT_DISASSEMBLY
                  (void) strcpy((char*) &(*pMyDisasm).Operand2.OpMnemonic, Registers64Bits[index]);
@@ -7258,17 +7252,6 @@ void __bea_callspec__ push_reg(PDISASM pMyDisasm, int index)
           (*pMyDisasm).Operand2.OpSize = 64;
           (*pMyDisasm).Operand1.OpSize = 64;
           break;
-        case 32:
-          #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy((char*) &(*pMyDisasm).Operand2.OpMnemonic, Registers32Bits[index]);
-          #endif
-          (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;
-          (*pMyDisasm).Operand2.Registers.type = GENERAL_REG;
-          (*pMyDisasm).Operand2.Registers.gpr = REGS[index];
-          (*pMyDisasm).Operand2.OpSize = 32;
-          (*pMyDisasm).Operand1.OpSize = 32;
-          break;
-
         case 16:
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy((char*) &(*pMyDisasm).Operand2.OpMnemonic, Registers16Bits[index]);
@@ -24355,8 +24338,10 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
         #endif
         GV.MemDecoration = Arg1qword;
       }
+      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.Register_ = SSE_REG;
-      ExGx(pMyDisasm);
+      Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
     }
     else {
       FailDecode(pMyDisasm);
@@ -24372,8 +24357,10 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movq ");
       #endif
+      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.Register_ = SSE_REG;
-      ExGx(pMyDisasm);
+      Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
     }
     /* ========== 0x66 */
     else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
@@ -24391,8 +24378,10 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movd ");
         #endif
       }
+      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.Register_ = SSE_REG;
-      ExGx(pMyDisasm);
+      Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
     }
     else {
       if (GV.REX.W_ == 1) {
@@ -24407,8 +24396,10 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "movd ");
         #endif
       }
+      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.Register_ = MMX_REG;
-      ExGx(pMyDisasm);
+      Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
     }
   }
 }
