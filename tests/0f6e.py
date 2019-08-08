@@ -58,7 +58,7 @@ class TestSuite:
 
         myREX = REX()
         myREX.W = 1
-        Buffer = '{:02x}660f6e20'.format(myREX.byte()).decode('hex')
+        Buffer = '66{:02x}0f6e20'.format(myREX.byte()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf6e')

@@ -2274,6 +2274,7 @@ void __bea_callspec__ inc_eax(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.W_ == 1) GV.OperandSize = 32;
         GV.REX.W_ = 0;
         GV.REX.R_ = 0;
         GV.REX.X_ = 0;
@@ -2327,6 +2328,7 @@ void __bea_callspec__ inc_ecx(PDISASM pMyDisasm)
 {
   if (GV.Architecture == 64) {
     if (!Security(1, pMyDisasm)) return;
+    if (GV.REX.W_ == 1) GV.OperandSize = 32;
     GV.REX.W_ = 0;
     GV.REX.R_ = 0;
     GV.REX.X_ = 0;
@@ -2380,6 +2382,7 @@ void __bea_callspec__ inc_edx(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.W_ == 1) GV.OperandSize = 32;
         GV.REX.W_ = 0;
         GV.REX.R_ = 0;
         GV.REX.X_ = 1;
@@ -2434,6 +2437,7 @@ void __bea_callspec__ inc_ebx(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.W_ == 1) GV.OperandSize = 32;
         GV.REX.W_ = 0;
         GV.REX.R_ = 0;
         GV.REX.X_ = 1;
@@ -2488,6 +2492,7 @@ void __bea_callspec__ inc_esp(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.W_ == 1) GV.OperandSize = 32;
         GV.REX.W_ = 0;
         GV.REX.R_ = 1;
         GV.REX.X_ = 0;
@@ -2542,6 +2547,7 @@ void __bea_callspec__ inc_ebp(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.W_ == 1) GV.OperandSize = 32;
         GV.REX.W_ = 0;
         GV.REX.R_ = 1;
         GV.REX.X_ = 0;
@@ -2596,6 +2602,7 @@ void __bea_callspec__ inc_esi(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.W_ == 1) GV.OperandSize = 32;
         GV.REX.W_ = 0;
         GV.REX.R_ = 1;
         GV.REX.X_ = 1;
@@ -2650,6 +2657,7 @@ void __bea_callspec__ inc_edi(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
         if (!Security(1, pMyDisasm)) return;
+        if (GV.REX.W_ == 1) GV.OperandSize = 32;
         GV.REX.W_ = 0;
         GV.REX.R_ = 1;
         GV.REX.X_ = 1;

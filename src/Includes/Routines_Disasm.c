@@ -81,6 +81,14 @@ void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
   (*pMyDisasm).Operand4.AccessMode = 0;
   GV.ERROR_OPCODE = UNKNOWN_OPCODE;
 }
+void __bea_callspec__ ResetREX(PDISASM pMyDisasm)
+{
+  GV.REX.W_ = 0;
+  GV.REX.R_ = 0;
+  GV.REX.X_ = 0;
+  GV.REX.B_ = 0;
+  GV.REX.state = 0;
+}
 
 /* ====================================================================
  *

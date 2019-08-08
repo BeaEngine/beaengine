@@ -104,7 +104,7 @@ class TestSuite:
 
     def test_addpd(self):
         # using REX.R to access extended xmm registers
-        Buffer = b'\x44\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        Buffer = '44660F58909090909090909090909090'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE) #SSE_REG) # REG10)
@@ -113,14 +113,14 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 128)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'addpd xmm10, xmmword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.infos.repr, 'addpd xmm2, xmmword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\x44\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = Disasm(Buffer)
 
         myDisasm.infos.Options = IntrinsicMemSyntax
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'addpd xmm10, m128d [rax-6F6F6F70h]')
+        assert_equal(myDisasm.infos.repr, 'addpd xmm2, m128d [rax-6F6F6F70h]')
 
 
         Buffer = b'\x66\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -216,7 +216,7 @@ class TestSuite:
 
     def test_addsd(self):
         # using REX.R to access extended xmm registers
-        Buffer = b'\x44\xF2\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
+        Buffer = b'44F20F589090909090'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE) #SSE_REG) # REG10)
@@ -225,7 +225,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 64)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'addsd xmm10, qword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.infos.repr, 'addsd xmm2, qword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xF2\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = Disasm(Buffer)
@@ -265,7 +265,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 32)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'addss xmm10, dword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.infos.repr, 'addss xmm2, dword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\xF3\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = Disasm(Buffer)
@@ -731,14 +731,14 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 128)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'andpd xmm10, xmmword ptr [rax-6F6F6F70h]')
+        assert_equal(myDisasm.infos.repr, 'andpd xmm2, xmmword ptr [rax-6F6F6F70h]')
 
         Buffer = b'\x44\x66\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = Disasm(Buffer)
 
         myDisasm.infos.Options = IntrinsicMemSyntax
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'andpd xmm10, m128d [rax-6F6F6F70h]')
+        assert_equal(myDisasm.infos.repr, 'andpd xmm2, m128d [rax-6F6F6F70h]')
 
 
         Buffer = b'\x66\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -791,14 +791,14 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 128)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'blendpd xmm10, xmmword ptr [rax+11111111h], 11h')
+        assert_equal(myDisasm.infos.repr, 'blendpd xmm2, xmmword ptr [rax+11111111h], 11h')
 
         Buffer = b'\x44\x66\x0F\x3A\x0D\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
 
         myDisasm.infos.Options = IntrinsicMemSyntax
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'blendpd xmm10, m128 [rax+11111111h], 11h')
+        assert_equal(myDisasm.infos.repr, 'blendpd xmm2, m128 [rax+11111111h], 11h')
 
 
         Buffer = b'\x66\x0F\x3A\x0D\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -844,7 +844,7 @@ class TestSuite:
 
     def test_blendps(self):
         # using REX.R to access extended xmm registers
-        Buffer = b'\x44\x66\x0F\x3A\x0C\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        Buffer = b'44660F3A0C9011111111111111111111'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE) #SSE_REG) # REG10)
@@ -853,14 +853,14 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 128)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'blendps xmm10, xmmword ptr [rax+11111111h], 11h')
+        assert_equal(myDisasm.infos.repr, 'blendps xmm2, xmmword ptr [rax+11111111h], 11h')
 
         Buffer = b'\x44\x66\x0F\x3A\x0C\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
 
         myDisasm.infos.Options = IntrinsicMemSyntax
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'blendps xmm10, m128 [rax+11111111h], 11h')
+        assert_equal(myDisasm.infos.repr, 'blendps xmm2, m128 [rax+11111111h], 11h')
 
 
         Buffer = b'\x66\x0F\x3A\x0C\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -948,7 +948,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand3.OpType, REGISTER_TYPE) #SSE_REG) # REG0)
         assert_equal(myDisasm.infos.Operand3.OpSize, 128)
         assert_equal(myDisasm.infos.Operand3.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'blendvpd xmm10, xmmword ptr [rax+11111111h], xmm0')
+        assert_equal(myDisasm.infos.repr, 'blendvpd xmm2, xmmword ptr [rax+11111111h], xmm0')
 
         Buffer = b'\xc4\x02\x85\x15\x90\x11\x11\x11\x11\x00\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
@@ -993,7 +993,7 @@ class TestSuite:
 
     def test_blendvps(self):
 
-        Buffer = b'\x44\x66\x0F\x38\x14\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+        Buffer = b'44660F38149011111111111111111111'.decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE) #SSE_REG) # REG10)
@@ -1005,7 +1005,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand3.OpType, REGISTER_TYPE) #SSE_REG) # REG0)
         assert_equal(myDisasm.infos.Operand3.OpSize, 128)
         assert_equal(myDisasm.infos.Operand3.AccessMode, READ)
-        assert_equal(myDisasm.infos.repr, 'blendvps xmm10, xmmword ptr [rax+11111111h], xmm0')
+        assert_equal(myDisasm.infos.repr, 'blendvps xmm2, xmmword ptr [rax+11111111h], xmm0')
 
         Buffer = b'\xc4\x02\x85\x14\x90\x11\x11\x11\x11\x00\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
