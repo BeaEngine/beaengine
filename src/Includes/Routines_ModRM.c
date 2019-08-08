@@ -60,6 +60,7 @@ void __bea_callspec__ fillRegister(int index, OPTYPE* pMyOperand, PDISASM pMyDis
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersOpmask[index]);
       #endif
+      if (index > 8) GV.ERROR_OPCODE = UD_;
       (*pMyOperand).OpType = REGISTER_TYPE;
       (*pMyOperand).Registers.type = OPMASK_REG;
       (*pMyOperand).Registers.opmask = REGS[index];
@@ -1310,6 +1311,7 @@ void __bea_callspec__ fillModrm3Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, 
     #ifndef BEA_LIGHT_DISASSEMBLY
       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersOpmask[index]);
     #endif
+    if (index > 8) GV.ERROR_OPCODE = UD_;
     (*pMyOperand).OpType = REGISTER_TYPE;
     (*pMyOperand).Registers.type = OPMASK_REG;
     (*pMyOperand).Registers.opmask = REGS[index];
@@ -1735,7 +1737,7 @@ size_t __bea_callspec__ interpretVSIBIndex(OPTYPE* pMyOperand, size_t i, PDISASM
   if (GV.AddressSize >= 32) {
     if (
         ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.X == 0)) ||
-        ((GV.EVEX.state != InUsePrefix) && (GV.REX.X_ == 0)) 
+        ((GV.EVEX.state != InUsePrefix) && (GV.REX.X_ == 0))
       ) {
       index_final = (GV.EVEX.V == 0) ? GV.INDEX_ : GV.INDEX_ + 16;
     }

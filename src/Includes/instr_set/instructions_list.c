@@ -4404,6 +4404,13 @@ void __bea_callspec__ mov_RdCd(PDISASM pMyDisasm)
   ModRM_3[GV.RM_](&(*pMyDisasm).Operand1, pMyDisasm);
   GV.Register_ = CR_REG;
   Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+  if (
+    (GV.REGOPCODE == 1) ||
+    (GV.REGOPCODE == 5) ||
+    (GV.REGOPCODE == 6) ||
+    (GV.REGOPCODE == 7) ||
+    (GV.REGOPCODE >= 8)
+  ) GV.ERROR_OPCODE = UD_;
 
   FillFlags(pMyDisasm,67);
   GV.EIP_ += 2;
@@ -4455,6 +4462,13 @@ void __bea_callspec__ mov_CdRd(PDISASM pMyDisasm)
   ModRM_3[GV.RM_](&(*pMyDisasm).Operand2, pMyDisasm);
   GV.Register_ = CR_REG;
   Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
+  if (
+    (GV.REGOPCODE == 1) ||
+    (GV.REGOPCODE == 5) ||
+    (GV.REGOPCODE == 6) ||
+    (GV.REGOPCODE == 7) ||
+    (GV.REGOPCODE >= 8)
+  ) GV.ERROR_OPCODE = UD_;
 
   FillFlags(pMyDisasm,67);
   GV.EIP_ += 2;
@@ -19542,6 +19556,7 @@ void __bea_callspec__ pmuldq_(PDISASM pMyDisasm)
       Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.Register_ = OPMASK_REG;
       MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
+      GV.MemDecoration = Arg2multibytes;
       if (GV.MOD_ != 3) GV.ERROR_OPCODE = UD_;
       GV.EIP_ += GV.DECALAGE_EIP+2;
     }
