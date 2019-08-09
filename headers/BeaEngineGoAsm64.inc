@@ -184,6 +184,7 @@ _Disasm ENDS
     FXSR_INSTRUCTION              equ          1d0000h
     XSAVE_INSTRUCTION             equ          1e0000h
     SGX_INSTRUCTION               equ          1f0000h
+    PCONFIG_INSTRUCTION           equ          200000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
