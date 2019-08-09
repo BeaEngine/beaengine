@@ -176,13 +176,28 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
               FailDecode(pMyDisasm);
               return;
             }
-
             (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
             (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
             (*pMyDisasm).Operand1.Registers.type = SPECIAL_REG;
             (*pMyDisasm).Operand1.Registers.special = REG0;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "clac ");
+            #endif
+            FillFlags(pMyDisasm,129);
+            GV.EIP_+= GV.DECALAGE_EIP+2;
+          }
+          else if (GV.RM_ == 0x3) {
+            if (GV.VEX.state == InUsePrefix) {
+              FailDecode(pMyDisasm);
+              return;
+            }
+            (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
+            (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
+            (*pMyDisasm).Operand1.AccessMode = WRITE;
+            (*pMyDisasm).Operand1.Registers.type = SPECIAL_REG;
+            (*pMyDisasm).Operand1.Registers.special = REG0;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "stac ");
             #endif
             FillFlags(pMyDisasm,129);
             GV.EIP_+= GV.DECALAGE_EIP+2;

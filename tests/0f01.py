@@ -21,6 +21,24 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
+        # NP 0F 01 CA
+        # CLAC
+
+        Buffer = '0f01ca'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'clac ')
+
+        # NP 0F 01 CB
+        # STAC
+
+        Buffer = '0f01cb'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'stac ')
+
         # NP 0F 01 C5
         # PCONFIG
         # #UD If any of the LOCK/REP/OSIZE/VEX prefixes are used.
