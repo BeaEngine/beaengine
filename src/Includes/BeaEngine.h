@@ -298,7 +298,8 @@ enum INSTRUCTION_TYPE
   FXSR_INSTRUCTION              =          0x1d0000,
   XSAVE_INSTRUCTION             =          0x1e0000,
   SGX_INSTRUCTION               =          0x1f0000,
-
+  PCONFIG_INSTRUCTION           =          0x200000,
+	
   DATA_TRANSFER = 0x1,
   ARITHMETIC_INSTRUCTION,
   LOGICAL_INSTRUCTION,

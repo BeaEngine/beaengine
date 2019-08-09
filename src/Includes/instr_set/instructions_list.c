@@ -19556,8 +19556,11 @@ void __bea_callspec__ pmuldq_(PDISASM pMyDisasm)
       Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.Register_ = OPMASK_REG;
       MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
-      GV.MemDecoration = Arg2multibytes;
-      if (GV.MOD_ != 3) GV.ERROR_OPCODE = UD_;
+
+      if (GV.MOD_ != 3) {
+        GV.MemDecoration = Arg2multibytes;
+        GV.ERROR_OPCODE = UD_;
+      }
       GV.EIP_ += GV.DECALAGE_EIP+2;
     }
     else if (GV.VEX.pp == 1) {

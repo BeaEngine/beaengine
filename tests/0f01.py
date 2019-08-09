@@ -21,6 +21,37 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
+        # NP 0F 01 C5
+        # PCONFIG
+        # #UD If any of the LOCK/REP/OSIZE/VEX prefixes are used.
+
+        Buffer = '0f01c5'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+
+        Buffer = 'f00f01c5'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
+
+        Buffer = 'f20f01c5'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
+
+        Buffer = 'f30f01c5'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
+
         # NP 0F 01 C0
         # ENCLV
 
