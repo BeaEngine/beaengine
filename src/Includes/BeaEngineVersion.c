@@ -19,5 +19,5 @@ const__ char* __bea_callspec__ BeaEngineVersion(void) {
 	return "5.0";
 }
 const__ char* __bea_callspec__ BeaEngineRevision(void) {
-	return "dev";
+	return "beta 3";
 }
