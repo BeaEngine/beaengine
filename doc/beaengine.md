@@ -1,4 +1,4 @@
- ![beaengine](./beaengine-logo.png) 
+ ![beaengine](./beaengine-logo.png)
 
 **BeaEngine documentation**
 - BEAENGINE_VERSION : 5.0
@@ -303,6 +303,7 @@ struct REGISTERTYPE{
    - EFLAGS (REG0)
    - MXCSR (REG1)
    - SSP (REG2)
+   - PKRU (REG3)
 - **cr** : *[out]* set of flags to define which CR register is used. For instance, to test if operand 1 uses CR0, test `infos.Operand1.Registers.cr & REG0`.
 - **dr** : *[out]* set of flags to define which DR register is used. For instance, to test if operand 1 uses DR0, test `infos.Operand1.Registers.dr & REG0`.
 - **mem_management** : *[out]* set of flags to define which memory management register is used.
@@ -360,6 +361,7 @@ CLFLUSHOPT_INSTRUCTION        =          0x1c0000,
 FXSR_INSTRUCTION              =          0x1d0000,
 XSAVE_INSTRUCTION             =          0x1e0000,
 SGX_INSTRUCTION               =          0x1f0000,
+PCONFIG_INSTRUCTION           =          0x200000,
 
 ```
 
