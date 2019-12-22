@@ -3734,7 +3734,13 @@ void __bea_callspec__ lds_GvM(PDISASM pMyDisasm)
 {
     /* if MOD == 11b, invalid instruction */
 
-    if (GV.Architecture == 64) {
+    if (!Security(1, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+
+    if (
+        (GV.Architecture == 64) ||
+        ((GV.Architecture == 32) && (GV.MOD_ == 0x3))
+      ) {
 
         /* VEX2Bytes prefix */
 
@@ -4322,7 +4328,8 @@ void __bea_callspec__ lsl_GvEw(PDISASM pMyDisasm)
 
     GV.MemDecoration = Arg2word;
     i = GV.OperandSize;
-    if (!Security(1, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(1, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if ((GV.MOD_ == 0x3) && (GV.OperandSize == 64)){
       GV.OperandSize = 32;
     }
