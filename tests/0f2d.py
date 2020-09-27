@@ -97,23 +97,27 @@ class TestSuite:
         # VcvtSD2SI r32, xmm1/m64{sae}
 
         myEVEX = EVEX('EVEX.LIG.F2.0F.W0')
+        myEVEX.Rprime = 1
+        myEVEX.R = 0
         Buffer = '{}2d16'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtsd2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvtsd2si r10w, qword ptr [r14]')
+        assert_equal(myDisasm.infos.repr, 'vcvtsd2si r10d, qword ptr [r14]')
 
         # EVEX.LIG.F2.0F.W1 2d /r
         # VcvtSD2SI r64, xmm1/m64{sae}
 
         myEVEX = EVEX('EVEX.LIG.F2.0F.W1')
+        myEVEX.Rprime = 1
+        myEVEX.R = 0
         Buffer = '{}2d16'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtsd2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvtsd2si ebp, qword ptr [r14]')
+        assert_equal(myDisasm.infos.repr, 'vcvtsd2si r10, qword ptr [r14]')
 
         # F3 0F 2d /r
         # cvtSS2SI r32, xmm1/m32
@@ -163,23 +167,27 @@ class TestSuite:
         # VcvtSS2SI r32, xmm1/m32{sae}
 
         myEVEX = EVEX('EVEX.LIG.F3.0F.W0')
+        myEVEX.Rprime = 1
+        myEVEX.R = 0
         Buffer = '{}2d16'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtss2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvtss2si r10w, dword ptr [r14]')
+        assert_equal(myDisasm.infos.repr, 'vcvtss2si r10d, dword ptr [r14]')
 
         # EVEX.LIG.F3.0F.W1 2d /r
         # VcvtSS2SI r64, xmm1/m32{sae}
 
         myEVEX = EVEX('EVEX.LIG.F3.0F.W1')
+        myEVEX.Rprime = 1
+        myEVEX.R = 0
         Buffer = '{}2d16'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtss2si ')
-        assert_equal(myDisasm.infos.repr, 'vcvtss2si ebp, dword ptr [r14]')
+        assert_equal(myDisasm.infos.repr, 'vcvtss2si r10, dword ptr [r14]')
 
         # VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD.
 

@@ -167,62 +167,68 @@ class TestSuite:
         # VCVTSS2USI r32, xmm1/m32{er}
 
         myEVEX = EVEX('EVEX.LIG.F3.0F.W0')
+        myEVEX.Rprime = 1
         Buffer = '{}7920'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtss2usi ')
-        assert_equal(myDisasm.infos.repr, 'vcvtss2usi r12w, dword ptr [r8]')
+        assert_equal(myDisasm.infos.repr, 'vcvtss2usi r12d, dword ptr [r8]')
 
         myEVEX = EVEX('EVEX.LIG.F3.0F.W0')
+        myEVEX.Rprime = 1
         Buffer = '{}79c0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtss2usi ')
-        assert_equal(myDisasm.infos.repr, 'vcvtss2usi r8w, xmm24')
+        assert_equal(myDisasm.infos.repr, 'vcvtss2usi r8d, xmm24')
 
         # EVEX.LIG.F3.0F.W1 79 /r
         # VCVTSS2USI r64, xmm1/m32{er}
 
         myEVEX = EVEX('EVEX.LIG.F3.0F.W1')
+        myEVEX.Rprime = 1
         Buffer = '{}7920'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
         assert_equal(myDisasm.infos.Reserved_.EVEX.W, 1)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtss2usi ')
-        assert_equal(myDisasm.infos.repr, 'vcvtss2usi esi, dword ptr [r8]')
+        assert_equal(myDisasm.infos.repr, 'vcvtss2usi r12, dword ptr [r8]')
 
         # EVEX.LIG.F2.0F.W0 79 /r
         # VCVTSD2USI r32, xmm1/m64{er}
 
-        myEVEX = EVEX('EVEX.LIG.F3.0F.W1')
+        myEVEX = EVEX('EVEX.LIG.F2.0F.W0')
+        myEVEX.Rprime = 1
         Buffer = '{}7920'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
-        assert_equal(myDisasm.infos.Reserved_.EVEX.W, 1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtss2usi ')
-        assert_equal(myDisasm.infos.repr, 'vcvtss2usi esi, dword ptr [r8]')
+        assert_equal(myDisasm.infos.Reserved_.EVEX.W, 0)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtsd2usi ')
+        assert_equal(myDisasm.infos.repr, 'vcvtsd2usi r12d, dword ptr [r8]')
 
         # EVEX.LIG.F2.0F.W1 79 /r
         # VCVTSD2USI r64, xmm1/m64{er}
 
         myEVEX = EVEX('EVEX.LIG.F2.0F.W1')
+        myEVEX.Rprime = 1
         Buffer = '{}7920'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
         assert_equal(myDisasm.infos.Reserved_.EVEX.W, 1)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtsd2usi ')
-        assert_equal(myDisasm.infos.repr, 'vcvtsd2usi esi, qword ptr [r8]')
+        assert_equal(myDisasm.infos.repr, 'vcvtsd2usi r12, qword ptr [r8]')
 
         myEVEX = EVEX('EVEX.LIG.F2.0F.W1')
+        myEVEX.Rprime = 1
         Buffer = '{}79c0'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
         assert_equal(myDisasm.infos.Reserved_.EVEX.W, 1)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vcvtsd2usi ')
-        assert_equal(myDisasm.infos.repr, 'vcvtsd2usi esp, xmm24')
+        assert_equal(myDisasm.infos.repr, 'vcvtsd2usi r8, xmm24')

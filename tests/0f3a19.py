@@ -24,7 +24,7 @@ class TestSuite:
     def test(self):
 
         # VEX.256.66.0F3A.W0 19 /r ib
-        # vextractF128 ymm1, ymm2, xmm3/m128, imm8
+        # VEXTRACTF128 xmm1/m128, ymm2, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.W0')
         Buffer = '{}191033'.format(myVEX.c4()).decode('hex')
@@ -32,10 +32,31 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf128 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf128 ymm10, ymm0, xmmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.repr, 'vextractf128 xmmword ptr [r8], ymm10, 33h')
+
+        # VEX.256.66.0F3A.W0 19 /r ib
+        # VEXTRACTF128 xmm1/m128, ymm2, imm8
+
+        myVEX = VEX('VEX.256.66.0F3A.W0')
+        Buffer = '{}19c001'.format(myVEX.c4()).decode('hex')
+
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf128 ')
+        assert_equal(myDisasm.infos.repr, 'vextractf128 xmm8, ymm8, 01h')
+
+        # fix issue #6
+        Buffer = 'c4c37d19c001'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf128 ')
+        assert_equal(myDisasm.infos.repr, 'vextractf128 xmm8, ymm0, 01h')
+
 
         # EVEX.256.66.0F3A.W0 19 /r ib
-        # vextractF32X4 ymm1 {k1}{z}, ymm2, xmm3/m128, imm8
+        # VEXTRACTF32X4 xmm1/m128 {k1}{z}, ymm2, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
         Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
@@ -43,10 +64,10 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf32x4 ymm28, ymm16, xmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf32x4 xmmword ptr [r8], ymm28, 11h')
 
         # EVEX.512.66.0F3A.W0 19 /r ib
-        # vextractF32X4 zmm1 {k1}{z}, zmm2, xmm3/m128, imm8
+        # VEXTRACTF32x4 xmm1/m128 {k1}{z}, zmm2, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
         Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
@@ -54,10 +75,11 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf32x4 zmm28, zmm16, xmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf32x4 xmmword ptr [r8], zmm28, 11h')
+
 
         # EVEX.256.66.0F3A.W1 19 /r ib
-        # vextractF64X2 ymm1 {k1}{z}, ymm2, xmm3/m128, imm8
+        # VEXTRACTF64X2 xmm1/m128 {k1}{z}, ymm2, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W1')
         Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
@@ -65,10 +87,10 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf64x2 ymm28, ymm16, xmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf64x2 xmmword ptr [r8], ymm28, 11h')
 
         # EVEX.512.66.0F3A.W1 19 /r ib
-        # vextractF64X2 zmm1 {k1}{z}, zmm2, xmm3/m128, imm8
+        # VEXTRACTF64X2 xmm1/m128 {k1}{z}, zmm2, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
         Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
@@ -76,4 +98,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf64x2 zmm28, zmm16, xmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.repr, 'vextractf64x2 xmmword ptr [r8], zmm28, 11h')

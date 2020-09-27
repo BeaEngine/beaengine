@@ -472,7 +472,7 @@ class EVEX:
         self.pp = 0
         self.R = 0
         self.B = 0
-        self.R1 = 0
+        self.Rprime = 0
         self.X = 0
         self.vvvv = 0b1111
         self.V = 0
@@ -486,7 +486,7 @@ class EVEX:
         return '62{:02x}{:02x}{:02x}'.format(self.p0(),self.p1(),self.p2())
 
     def p0(self):
-        return self.mm + (self.R1 << 4) + (self.B << 5) + (self.X << 6)+ (self.R << 7)
+        return self.mm + (self.Rprime << 4) + (self.B << 5) + (self.X << 6)+ (self.R << 7)
 
     def p1(self):
         return self.pp + 0b100 + (self.vvvv << 3) + (self.W << 7)

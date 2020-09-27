@@ -95,7 +95,7 @@ class TestSuite:
         myEVEX = EVEX('EVEX.NDS.128.66.0F.W1')
         myEVEX.B = 1
         myEVEX.R = 1
-        myEVEX.R1 = 1
+        myEVEX.Rprime = 1
         myEVEX.X = 1
         myEVEX.V = 1
         Buffer = '{}5cca'.format(myEVEX.prefix()).decode('hex')

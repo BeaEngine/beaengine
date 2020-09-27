@@ -12545,6 +12545,8 @@ void __bea_callspec__ cvttps2pi_(PDISASM pMyDisasm)
      }
    }
    else {
+    /* EVEX.LIG.F2.0F.W0 2C /r */
+    /* VCVTTSD2SI r32, xmm1/m64{sae} */
      (*pMyDisasm).Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vcvttsd2si ");
@@ -12577,7 +12579,6 @@ void __bea_callspec__ cvttps2pi_(PDISASM pMyDisasm)
        GV.OperandSize = 64;
        Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
        GV.EIP_+= GV.DECALAGE_EIP+2;
-
      }
    }
  }
@@ -14765,6 +14766,9 @@ void __bea_callspec__ palignr_(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ vextractf128(PDISASM pMyDisasm)
 {
+  /* EVEX.256.66.0F3A.W0 19 /r ib */
+  /* VEXTRACTF32X4 xmm1/m128 {k1}{z}, ymm2, imm8 */
+
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.VEX.pp == 1) {
       if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
@@ -14781,7 +14785,7 @@ void __bea_callspec__ vextractf128(PDISASM pMyDisasm)
         GV.EVEX.tupletype = TUPLE2;
       }
       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
-      GV.MemDecoration = Arg3_m128_xmm;
+      GV.MemDecoration = Arg1_m128_xmm;
       if (GV.VEX.L == 0) {
         GV.Register_ = SSE_REG;
       }
@@ -14791,12 +14795,12 @@ void __bea_callspec__ vextractf128(PDISASM pMyDisasm)
       else if (GV.EVEX.LL == 0x2) {
         GV.Register_ = AVX512_REG;
       }
-      Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
-      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand2, pMyDisasm);
+      Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+      /*fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand2, pMyDisasm);*/
       GV.Register_ = SSE_REG;
-      MOD_RM(&(*pMyDisasm).Operand3, pMyDisasm);
+      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.EIP_ += GV.DECALAGE_EIP+2;
-      getImmediat8(&(*pMyDisasm).Operand4, pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Operand3, pMyDisasm);
     }
     else {
       FailDecode(pMyDisasm);
@@ -14810,19 +14814,19 @@ void __bea_callspec__ vextractf128(PDISASM pMyDisasm)
          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "vextractf128 ");
         #endif
         (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION;
-        GV.MemDecoration = Arg3_m128_xmm;
+        GV.MemDecoration = Arg1_m128_xmm;
         if (GV.VEX.L == 0) {
           GV.Register_ = SSE_REG;
         }
         else {
           GV.Register_ = AVX_REG;
         }
-        Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
-        fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand2, pMyDisasm);
+        Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+        /*fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);*/
         GV.Register_ = SSE_REG;
-        MOD_RM(&(*pMyDisasm).Operand3, pMyDisasm);
+        MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        getImmediat8(&(*pMyDisasm).Operand4, pMyDisasm);
+        getImmediat8(&(*pMyDisasm).Operand3, pMyDisasm);
       }
       else {
         FailDecode(pMyDisasm);
@@ -14976,6 +14980,9 @@ void __bea_callspec__ vcvtps2ph(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ vextractf32x8(PDISASM pMyDisasm)
 {
+  /* # EVEX.512.66.0F3A.W0 1B /r ib */
+  /* VEXTRACTF32X8 ymm1/m256 {k1}{z}, zmm2, imm8 */
+
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.VEX.pp == 1) {
       if (GV.VEX.L == 0) GV.ERROR_OPCODE = UD_;
@@ -14992,7 +14999,7 @@ void __bea_callspec__ vextractf32x8(PDISASM pMyDisasm)
         GV.EVEX.tupletype = TUPLE4;
       }
       (*pMyDisasm).Instruction.Category = AVX512_INSTRUCTION;
-      GV.MemDecoration = Arg3_m256_ymm;
+      GV.MemDecoration = Arg1_m256_ymm;
       if (GV.VEX.L == 0) {
         GV.Register_ = SSE_REG;
       }
@@ -15002,12 +15009,12 @@ void __bea_callspec__ vextractf32x8(PDISASM pMyDisasm)
       else if (GV.EVEX.LL == 0x2) {
         GV.Register_ = AVX512_REG;
       }
-      Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
-      fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand2, pMyDisasm);
+      Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+      /*fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand2, pMyDisasm);*/
       GV.Register_ = AVX_REG;
-      MOD_RM(&(*pMyDisasm).Operand3, pMyDisasm);
+      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
       GV.EIP_ += GV.DECALAGE_EIP+2;
-      getImmediat8(&(*pMyDisasm).Operand4, pMyDisasm);
+      getImmediat8(&(*pMyDisasm).Operand3, pMyDisasm);
     }
     else {
       FailDecode(pMyDisasm);

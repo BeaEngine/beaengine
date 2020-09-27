@@ -60,12 +60,13 @@ class TestSuite:
         # VPEXTRW reg, xmm1, imm8
 
         myEVEX = EVEX('EVEX.128.66.0F.WIG')
+        myEVEX.Rprime = 1
         Buffer = '{}c5c0bb'.format(myEVEX.prefix()).decode('hex')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrw ')
-        assert_equal(myDisasm.infos.repr, 'vpextrw al, xmm24, BBh')
+        assert_equal(myDisasm.infos.repr, 'vpextrw r8w, xmm24, BBh')
 
 
         # If VEX.L = 1 or EVEX.L’L > 0.
