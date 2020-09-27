@@ -10221,8 +10221,8 @@ void __bea_callspec__ addps_VW(PDISASM pMyDisasm)
       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
       if (GV.REX.W_ == 0x1) GV.OperandSize = 64;
       GV.Register_ = SSE_REG;
-      GyEy(pMyDisasm);
       GV.MemDecoration = Arg3dword;
+      GyEy(pMyDisasm);
     }
     else {
       (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
@@ -10305,13 +10305,15 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
            }
            if (GV.VEX.L == 0) {
             GV.Register_ = SSE_REG;
-            GyEy(pMyDisasm);
             GV.MemDecoration = Arg3_m128_xmm;
+            GyEy(pMyDisasm);
+
            }
            else {
                GV.Register_ = AVX_REG;
-               GyEy(pMyDisasm);
                GV.MemDecoration = Arg3_m256_ymm;
+               GyEy(pMyDisasm);
+
            }
        }
       else {
@@ -10342,13 +10344,15 @@ void __bea_callspec__ addsubpd_(PDISASM pMyDisasm)
           }
           if (GV.VEX.L == 0) {
             GV.Register_ = SSE_REG;
-            GyEy(pMyDisasm);
             GV.MemDecoration = Arg3_m128d_xmm;
+            GyEy(pMyDisasm);
+
           }
           else {
             GV.Register_ = AVX_REG;
-            GyEy(pMyDisasm);
             GV.MemDecoration = Arg3_m256d_ymm;
+            GyEy(pMyDisasm);
+
           }
            /* FillFlags(pMyDisasm,125); */
        }
@@ -22547,8 +22551,9 @@ void __bea_callspec__ maxps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
            GV.MemDecoration = Arg3qword;
+           GyEy(pMyDisasm);
+
        }
        else {
            (*pMyDisasm).Prefix.RepnePrefix = MandatoryPrefix;
@@ -22572,8 +22577,9 @@ void __bea_callspec__ maxps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
            GV.MemDecoration = Arg3dword;
+           GyEy(pMyDisasm);
+
        }
        else {
            (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
@@ -22650,9 +22656,8 @@ void __bea_callspec__ minps_VW(PDISASM pMyDisasm)
 
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
-
            GV.MemDecoration = Arg3qword;
+           GyEy(pMyDisasm);
 
        }
        else {
@@ -22678,8 +22683,9 @@ void __bea_callspec__ minps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
            GV.MemDecoration = Arg3dword;
+           GyEy(pMyDisasm);
+
        }
        else {
            (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
@@ -22762,9 +22768,8 @@ void __bea_callspec__ mulps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
-
            GV.MemDecoration = Arg3qword;
+           GyEy(pMyDisasm);
 
        }
        else {
@@ -22790,8 +22795,9 @@ void __bea_callspec__ mulps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
            GV.MemDecoration = Arg3dword;
+           GyEy(pMyDisasm);
+
        }
        else {
            (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;
@@ -22872,9 +22878,8 @@ void __bea_callspec__ divps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
-
            GV.MemDecoration = Arg3qword;
+           GyEy(pMyDisasm);
 
        }
        else {
@@ -22900,8 +22905,9 @@ void __bea_callspec__ divps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
            if ((GV.VEX.opcode == 0xc4) && (GV.REX.W_ == 0x1)) GV.OperandSize = 64;
            GV.Register_ = SSE_REG;
-           GyEy(pMyDisasm);
            GV.MemDecoration = Arg3dword;
+           GyEy(pMyDisasm);
+
        }
        else {
            (*pMyDisasm).Prefix.RepPrefix = MandatoryPrefix;

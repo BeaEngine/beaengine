@@ -204,6 +204,14 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddss ')
         assert_equal(myDisasm.infos.repr, 'vaddss xmm10, xmm15, dword ptr [r8+00000000h]')
 
+        Buffer = 'c5fa58c4'.decode('hex')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddss ')
+        assert_equal(myDisasm.infos.repr, 'vaddss xmm0, xmm0, xmm4')
+
+
         # EVEX.NDS.LIG.F3.0F.W0 58 /r
         # VADDSS xmm1{k1}{z}, xmm2, xmm3/m32{er}
 
