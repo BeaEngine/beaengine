@@ -28,21 +28,21 @@ class TestSuite:
 
         myVEX = VEX('VEX.L0.66.0F3A.W1')
         myVEX.R = 1
-        Buffer = '{}31c911'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}31c911'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kshiftrq ')
-        assert_equal(myDisasm.infos.repr, 'kshiftrq k1, k1, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kshiftrq ')
+        assert_equal(myDisasm.repr(), 'kshiftrq k1, k1, 11h')
 
         # VEX.L0.66.0F3A.W0 31 /r
         # KSHIFTRD k1, k2, imm8
 
         myVEX = VEX('VEX.L0.66.0F3A.W0')
         myVEX.R = 1
-        Buffer = '{}31e011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}31e011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kshiftrd ')
-        assert_equal(myDisasm.infos.repr, 'kshiftrd k4, k0, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kshiftrd ')
+        assert_equal(myDisasm.repr(), 'kshiftrd k4, k0, 11h')

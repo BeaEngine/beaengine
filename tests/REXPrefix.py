@@ -28,41 +28,41 @@ class TestSuite:
 
         # test REX prefix
 
-        Buffer = '4088ec'.decode('hex')
+        Buffer = bytes.fromhex('4088ec')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'mov spl, bpl')
+        assert_equal(myDisasm.repr(), 'mov spl, bpl')
 
-        Buffer = '4f89d8'.decode('hex')
+        Buffer = bytes.fromhex('4f89d8')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'mov r8, r11')
+        assert_equal(myDisasm.repr(), 'mov r8, r11')
 
 
-        Buffer = '2e00f7'.decode('hex')
+        Buffer = bytes.fromhex('2e00f7')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'add bh, dh')
+        assert_equal(myDisasm.repr(), 'add bh, dh')
 
-        Buffer = '402e00f7'.decode('hex')
+        Buffer = bytes.fromhex('402e00f7')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'add bh, dh')
+        assert_equal(myDisasm.repr(), 'add bh, dh')
 
-        Buffer = '4000f7'.decode('hex')
+        Buffer = bytes.fromhex('4000f7')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'add dil, sil')
+        assert_equal(myDisasm.repr(), 'add dil, sil')
 
-        Buffer = '402e00f7'.decode('hex')
+        Buffer = bytes.fromhex('402e00f7')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'add bh, dh')
+        assert_equal(myDisasm.repr(), 'add bh, dh')
 
         # multiple REX prefixes
-        Buffer = '48438911'.decode('hex')
+        Buffer = bytes.fromhex('48438911')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x89')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'mov ')
-        assert_equal(myDisasm.infos.repr, 'mov dword ptr [r9], edx')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mov ')
+        assert_equal(myDisasm.repr(), 'mov dword ptr [r9], edx')

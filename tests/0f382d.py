@@ -27,45 +27,45 @@ class TestSuite:
 
         myEVEX = EVEX('EVEX.LIG.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}2d20'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}2d20'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefss ')
-        assert_equal(myDisasm.infos.repr, 'vscalefss xmm28, xmm16, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vscalefss ')
+        assert_equal(myDisasm.repr(), 'vscalefss xmm28, xmm16, xmmword ptr [r8]')
 
         # EVEX.LIG.66.0F38.W1 2D /r
         # VSCALEFSD xmm1 {k1}{z}, xmm2, xmm3/m64{er}
 
         myEVEX = EVEX('EVEX.LIG.66.0F38.W1')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}2d20'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}2d20'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vscalefsd ')
-        assert_equal(myDisasm.infos.repr, 'vscalefsd xmm28, xmm16, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vscalefsd ')
+        assert_equal(myDisasm.repr(), 'vscalefsd xmm28, xmm16, xmmword ptr [r8]')
 
         # VEX.128.66.0F38.W0 2D /r
         # VMASKMOVPD xmm1, xmm2, m128
 
         myVEX = VEX('VEX.128.66.0F38.W0')
         myVEX.vvvv = 0b1111
-        Buffer = '{}2d10'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}2d10'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaskmovpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaskmovpd xmm10, xmm0, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaskmovpd ')
+        assert_equal(myDisasm.repr(), 'vmaskmovpd xmm10, xmm0, xmmword ptr [r8]')
 
         # VEX.256.66.0F38.W0 2D /r
         # VMASKMOVPD ymm1, ymm2, m256
 
         myVEX = VEX('VEX.256.66.0F38.W0')
         myVEX.vvvv = 0b1111
-        Buffer = '{}2d10'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}2d10'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaskmovpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaskmovpd ymm10, ymm0, ymmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaskmovpd ')
+        assert_equal(myDisasm.repr(), 'vmaskmovpd ymm10, ymm0, ymmword ptr [r8]')

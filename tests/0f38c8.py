@@ -31,30 +31,30 @@ class TestSuite:
         # VEXP2PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}
 
         myEVEX = EVEX('EVEX.512.66.0F38.W1')
-        Buffer = '{}c800'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}c800'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc8)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vexp2pd ')
-        assert_equal(myDisasm.infos.repr, 'vexp2pd zmm24, zmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vexp2pd ')
+        assert_equal(myDisasm.repr(), 'vexp2pd zmm24, zmmword ptr [r8]')
 
         # EVEX.512.66.0F38.W0 C8 /r
         # VEXP2PS zmm1 {k1}{z}, zmm2/m512/m32bcst {sae}
 
         myEVEX = EVEX('EVEX.512.66.0F38.W0')
-        Buffer = '{}c800'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}c800'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc8)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vexp2ps ')
-        assert_equal(myDisasm.infos.repr, 'vexp2ps zmm24, zmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vexp2ps ')
+        assert_equal(myDisasm.repr(), 'vexp2ps zmm24, zmmword ptr [r8]')
 
         # NP 0F 38 C8 /r
         # SHA1NEXTE xmm1, xmm2/m128
 
-        Buffer = '0f38c86b11'.decode('hex')
+        Buffer = bytes.fromhex('0f38c86b11')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38c8')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'sha1nexte ')
-        assert_equal(myDisasm.infos.repr, 'sha1nexte xmm5, xmmword ptr [rbx+11h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1nexte ')
+        assert_equal(myDisasm.repr(), 'sha1nexte xmm5, xmmword ptr [rbx+11h]')

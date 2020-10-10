@@ -27,20 +27,20 @@ class TestSuite:
         # VPBLENDD xmm1, xmm2, xmm3/m128, imm8
 
         myVEX = VEX('VEX.128.66.0F3A.W0')
-        Buffer = '{}02e011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}02e011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendd ')
-        assert_equal(myDisasm.infos.repr, 'vpblendd xmm12, xmm0, xmm8, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpblendd ')
+        assert_equal(myDisasm.repr(), 'vpblendd xmm12, xmm0, xmm8, 11h')
 
         # VEX.256.66.0F3A.W0 02 /r ib
         # VPBLENDD ymm1, ymm2, ymm3/m256, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.W0')
-        Buffer = '{}02e011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}02e011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpblendd ')
-        assert_equal(myDisasm.infos.repr, 'vpblendd ymm12, ymm0, ymm8, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpblendd ')
+        assert_equal(myDisasm.repr(), 'vpblendd ymm12, ymm0, ymm8, 11h')

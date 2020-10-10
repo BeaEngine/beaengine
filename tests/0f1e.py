@@ -25,32 +25,32 @@ class TestSuite:
         # F3 0F 1E FA
         # ENDBR64
 
-        Buffer = 'f30f1efa'.decode('hex')
+        Buffer = bytes.fromhex('f30f1efa')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'endbr64 ')
-        assert_equal(myDisasm.infos.repr, 'endbr64 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr64 ')
+        assert_equal(myDisasm.repr(), 'endbr64 ')
 
         # F3 0F 1E FB
         # ENDBR32
 
-        Buffer = 'f30f1efb'.decode('hex')
+        Buffer = bytes.fromhex('f30f1efb')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'endbr32 ')
-        assert_equal(myDisasm.infos.repr, 'endbr32 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr32 ')
+        assert_equal(myDisasm.repr(), 'endbr32 ')
 
         # F3 0F 1E /1
         # RDSSPD R32
 
-        Buffer = 'f30f1ec8'.decode('hex')
+        Buffer = bytes.fromhex('f30f1ec8')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rdsspd ')
-        assert_equal(myDisasm.infos.repr, 'rdsspd eax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdsspd ')
+        assert_equal(myDisasm.repr(), 'rdsspd eax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 64)
         assert_equal(myDisasm.infos.Operand2.Registers.type, SPECIAL_REG)
@@ -61,12 +61,12 @@ class TestSuite:
 
         myREX = REX()
         myREX.W = 1
-        Buffer = 'f3{:02x}0f1ec8'.format(myREX.byte()).decode('hex')
+        Buffer = bytes.fromhex('f3{:02x}0f1ec8'.format(myREX.byte()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf1e')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rdsspq ')
-        assert_equal(myDisasm.infos.repr, 'rdsspq rax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdsspq ')
+        assert_equal(myDisasm.repr(), 'rdsspq rax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 64)
         assert_equal(myDisasm.infos.Operand2.Registers.type, SPECIAL_REG)

@@ -23,33 +23,33 @@ class TestSuite:
         # 0F c1 /r
         # XADD r/m32, r32
 
-        Buffer = '0fc19011223344'.decode('hex')
+        Buffer = bytes.fromhex('0fc19011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfc1')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'xadd ')
-        assert_equal(myDisasm.infos.repr, 'xadd dword ptr [rax+44332211h], edx')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xadd ')
+        assert_equal(myDisasm.repr(), 'xadd dword ptr [rax+44332211h], edx')
         assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
         assert_equal(myDisasm.infos.Operand2.AccessMode, WRITE)
 
         # REX + 0F C1 /r
         # XADD r/m32*, r32*
 
-        Buffer = '410fc19011223344'.decode('hex')
+        Buffer = bytes.fromhex('410fc19011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfc1')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'xadd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xadd ')
         assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
         assert_equal(myDisasm.infos.Operand2.AccessMode, WRITE)
-        assert_equal(myDisasm.infos.repr, 'xadd dword ptr [r8+44332211h], edx')
+        assert_equal(myDisasm.repr(), 'xadd dword ptr [r8+44332211h], edx')
 
         # if LOCK and destination is not memory
 
-        Buffer = 'f00fc1c011223344'.decode('hex')
+        Buffer = bytes.fromhex('f00fc1c011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfc1')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'xadd ')
-        assert_equal(myDisasm.infos.repr, 'lock xadd eax, eax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xadd ')
+        assert_equal(myDisasm.repr(), 'lock xadd eax, eax')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

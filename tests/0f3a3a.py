@@ -27,36 +27,36 @@ class TestSuite:
         # Vinserti32X8 zmm1 {k1}{z}, zmm2, ymm3/m256, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
-        Buffer = '{}3a2011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}3a2011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x3a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinserti32x8 ')
-        assert_equal(myDisasm.infos.repr, 'vinserti32x8 zmm28, zmm16, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti32x8 ')
+        assert_equal(myDisasm.repr(), 'vinserti32x8 zmm28, zmm16, ymmword ptr [r8], 11h')
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
-        Buffer = '{}3ac011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}3ac011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x3a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinserti32x8 ')
-        assert_equal(myDisasm.infos.repr, 'vinserti32x8 zmm24, zmm16, ymm24, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti32x8 ')
+        assert_equal(myDisasm.repr(), 'vinserti32x8 zmm24, zmm16, ymm24, 11h')
 
         # EVEX.512.66.0F3A.W1 3a /r ib
         # Vinserti64X4 zmm1 {k1}{z}, zmm2, ymm3/m256, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
-        Buffer = '{}3a2011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}3a2011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x3a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinserti64x4 ')
-        assert_equal(myDisasm.infos.repr, 'vinserti64x4 zmm28, zmm16, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti64x4 ')
+        assert_equal(myDisasm.repr(), 'vinserti64x4 zmm28, zmm16, ymmword ptr [r8], 11h')
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
-        Buffer = '{}3ac011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}3ac011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x3a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinserti64x4 ')
-        assert_equal(myDisasm.infos.repr, 'vinserti64x4 zmm24, zmm16, ymm24, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti64x4 ')
+        assert_equal(myDisasm.repr(), 'vinserti64x4 zmm24, zmm16, ymm24, 11h')

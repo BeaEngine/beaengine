@@ -26,31 +26,31 @@ class TestSuite:
         # VPSHUFBITQMB k1{k2}, xmm2, xmm3/m128
 
         myEVEX = EVEX('EVEX.128.66.0F38.W0')
-        Buffer = '{}8f0e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}8f0e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpshufbitqmb ')
-        assert_equal(myDisasm.infos.repr, 'vpshufbitqmb k?, xmm16, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpshufbitqmb ')
+        assert_equal(myDisasm.repr(), 'vpshufbitqmb k?, xmm16, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W0 8F /r
         # VPSHUFBITQMB k1{k2}, ymm2, ymm3/m256
 
         myEVEX = EVEX('EVEX.256.66.0F38.W0')
-        Buffer = '{}8f0e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}8f0e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpshufbitqmb ')
-        assert_equal(myDisasm.infos.repr, 'vpshufbitqmb k?, ymm16, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpshufbitqmb ')
+        assert_equal(myDisasm.repr(), 'vpshufbitqmb k?, ymm16, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 8F /r
         # VPSHUFBITQMB k1{k2}, zmm2, zmm3/m512
 
         myEVEX = EVEX('EVEX.512.66.0F38.W0')
-        Buffer = '{}8f0e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}8f0e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpshufbitqmb ')
-        assert_equal(myDisasm.infos.repr, 'vpshufbitqmb k?, zmm16, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpshufbitqmb ')
+        assert_equal(myDisasm.repr(), 'vpshufbitqmb k?, zmm16, zmmword ptr [r14]')

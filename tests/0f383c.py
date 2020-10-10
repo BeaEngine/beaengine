@@ -22,32 +22,32 @@ class TestSuite:
     def test(self):
         # 66 0F 38 3c /r
         # pmaxsb mm1, mm2/m64
-        Buffer = '660f383c9011223344'.decode('hex')
+        Buffer = bytes.fromhex('660f383c9011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf383c')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pmaxsb ')
-        assert_equal(myDisasm.infos.repr, 'pmaxsb xmm2, xmmword ptr [rax+44332211h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmaxsb ')
+        assert_equal(myDisasm.repr(), 'pmaxsb xmm2, xmmword ptr [rax+44332211h]')
 
         # VEX.NDS.128.66.0F38.WIG 3c /r
         # vpmaxsb xmm1, xmm2, xmm3/m128
-        Buffer = 'c402013c0e'.decode('hex')
+        Buffer = bytes.fromhex('c402013c0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaxsb ')
-        assert_equal(myDisasm.infos.repr, 'vpmaxsb xmm9, xmm15, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmaxsb ')
+        assert_equal(myDisasm.repr(), 'vpmaxsb xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F38.WIG 3c /r
         # vpmaxsb ymm1, ymm2, ymm3/m256
-        Buffer = 'c402053c0e'.decode('hex')
+        Buffer = bytes.fromhex('c402053c0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaxsb ')
-        assert_equal(myDisasm.infos.repr, 'vpmaxsb ymm9, ymm15, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmaxsb ')
+        assert_equal(myDisasm.repr(), 'vpmaxsb ymm9, ymm15, ymmword ptr [r14]')
 
         # EVEX.NDS.128.66.0F38.WIG 3c /r
         # vpmaxsb xmm1 {k1}{z}, xmm2, xmm3/m128
-        Buffer = '620205063c0e'.decode('hex')
+        Buffer = bytes.fromhex('620205063c0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.EVEX.P0, 0x2)
@@ -56,12 +56,12 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x3c')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaxsb ')
-        assert_equal(myDisasm.infos.repr, 'vpmaxsb xmm25, xmm31, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmaxsb ')
+        assert_equal(myDisasm.repr(), 'vpmaxsb xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.WIG 3c /r
         # vpmaxsb ymm1 {k1}{z}, ymm2, ymm3/m256
-        Buffer = '620205203c0e'.decode('hex')
+        Buffer = bytes.fromhex('620205203c0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.EVEX.P0, 0x2)
@@ -70,12 +70,12 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x3c')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaxsb ')
-        assert_equal(myDisasm.infos.repr, 'vpmaxsb ymm25, ymm31, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmaxsb ')
+        assert_equal(myDisasm.repr(), 'vpmaxsb ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.WIG 3c /r
         # vpmaxsb zmm1 {k1}{z}, zmm2, zmm3/m512
-        Buffer = '620205403c0e'.decode('hex')
+        Buffer = bytes.fromhex('620205403c0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.EVEX.P0, 0x2)
@@ -84,5 +84,5 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x3c')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmaxsb ')
-        assert_equal(myDisasm.infos.repr, 'vpmaxsb zmm25, zmm31, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmaxsb ')
+        assert_equal(myDisasm.repr(), 'vpmaxsb zmm25, zmm31, zmmword ptr [r14]')

@@ -29,66 +29,66 @@ class TestSuite:
         # 66 0F 38 10 /r
         # PBLENDVB xmm1, xmm2/m128, <XMM0>
 
-        Buffer = '660f381027'.decode('hex')
+        Buffer = bytes.fromhex('660f381027')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'pblendvb xmm4, xmmword ptr [rdi], xmm0')
+        assert_equal(myDisasm.repr(), 'pblendvb xmm4, xmmword ptr [rdi], xmm0')
 
         #EVEX.NDS.128.66.0F38.W1 10 /r
         #VPSRLVW xmm1 {k1}{z}, xmm2,xmm3/m128
         myEVEX = EVEX('EVEX.NDS.128.66.0F38.W1')
-        Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1027'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpsrlvw xmm28, xmm31, xmmword ptr [r15]')
+        assert_equal(myDisasm.repr(), 'vpsrlvw xmm28, xmm31, xmmword ptr [r15]')
 
 
         #EVEX.NDS.256.66.0F38.W1 10 /r
         #VPSRLVW ymm1 {k1}{z}, ymm2,ymm3/m256
         myEVEX = EVEX('EVEX.NDS.256.66.0F38.W1')
-        Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1027'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpsrlvw ymm28, ymm31, ymmword ptr [r15]')
+        assert_equal(myDisasm.repr(), 'vpsrlvw ymm28, ymm31, ymmword ptr [r15]')
 
         #EVEX.NDS.512.66.0F38.W1 10 /r
         #VPSRLVW zmm1 {k1}{z}, zmm2,zmm3/m512
         myEVEX = EVEX('EVEX.NDS.512.66.0F38.W1')
-        Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1027'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpsrlvw zmm28, zmm31, zmmword ptr [r15]')
+        assert_equal(myDisasm.repr(), 'vpsrlvw zmm28, zmm31, zmmword ptr [r15]')
 
         #EVEX.128.F3.0F38.W0 10 /r
         #VPMOVUSWB xmm1/m64 {k1}{z},xmm2
         myEVEX = EVEX('EVEX.128.F3.0F38.W0')
-        Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1027'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb qword ptr [r15], xmm28')
+        assert_equal(myDisasm.repr(), 'vpmovuswb qword ptr [r15], xmm28')
 
 
         #EVEX.256.F3.0F38.W0 10 /r
         #VPMOVUSWB xmm1/m128 {k1}{z},ymm2
         myEVEX = EVEX('EVEX.256.F3.0F38.W0')
-        Buffer = '{}10e0'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}10e0'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb xmm24, ymm28')
+        assert_equal(myDisasm.repr(), 'vpmovuswb xmm24, ymm28')
 
 
         #EVEX.512.F3.0F38.W0 10 /r
         #VPMOVUSWB ymm1/m256 {k1}{z},zmm2
         myEVEX = EVEX('EVEX.512.F3.0F38.W0')
-        Buffer = '{}1027'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1027'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb xmmword ptr [r15], zmm28')
+        assert_equal(myDisasm.repr(), 'vpmovuswb xmmword ptr [r15], zmm28')
 
         #EVEX.512.F3.0F38.W0 10 /r
         #VPMOVUSWB ymm1/m256 {k1}{z},zmm2
         myEVEX = EVEX('EVEX.512.F3.0F38.W0')
-        Buffer = '{}10e0'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}10e0'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vpmovuswb ymm24, zmm28')
+        assert_equal(myDisasm.repr(), 'vpmovuswb ymm24, zmm28')

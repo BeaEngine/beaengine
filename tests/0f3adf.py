@@ -26,20 +26,20 @@ class TestSuite:
         # 66 0F 3A DF /r ib
         # AESKEYGENASSIST xmm1, xmm2/m128, imm8
 
-        Buffer = '660f3adf2033'.decode('hex')
+        Buffer = bytes.fromhex('660f3adf2033')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3adf)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'aeskeygenassist ')
-        assert_equal(myDisasm.infos.repr, 'aeskeygenassist xmm4, xmmword ptr [rax], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aeskeygenassist ')
+        assert_equal(myDisasm.repr(), 'aeskeygenassist xmm4, xmmword ptr [rax], 33h')
 
         # VEX.128.66.0F3A.WIG DF /r ib
         # VAESKEYGENASSIST xmm1, xmm2/m128, imm8
 
         myVEX = VEX('VEX.128.66.0F3A.WIG')
-        Buffer = '{}df1033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}df1033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xdf)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaeskeygenassist ')
-        assert_equal(myDisasm.infos.repr, 'vaeskeygenassist xmm10, xmmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaeskeygenassist ')
+        assert_equal(myDisasm.repr(), 'vaeskeygenassist xmm10, xmmword ptr [r8], 33h')

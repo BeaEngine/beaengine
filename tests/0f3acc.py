@@ -26,9 +26,9 @@ class TestSuite:
         # NP 0F 3A CC /r ib
         # SHA1RNDS4 xmm1, xmm2/m128, imm8
 
-        Buffer = '0f3acc2033'.decode('hex')
+        Buffer = bytes.fromhex('0f3acc2033')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3acc)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'sha1rnds4 ')
-        assert_equal(myDisasm.infos.repr, 'sha1rnds4 xmm4, xmmword ptr [rax], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1rnds4 ')
+        assert_equal(myDisasm.repr(), 'sha1rnds4 xmm4, xmmword ptr [rax], 33h')

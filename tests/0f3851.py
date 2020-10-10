@@ -26,33 +26,33 @@ class TestSuite:
 
         myEVEX = EVEX('EVEX.128.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}510e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}510e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x51)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpdpbusds ')
-        assert_equal(myDisasm.infos.repr, 'vpdpbusds xmm25, xmm16, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpdpbusds ')
+        assert_equal(myDisasm.repr(), 'vpdpbusds xmm25, xmm16, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W0 51 /r
         # vpdpbusds ymm1{k1}{z}, ymm2,  ymm3/m256/m32bcst
 
         myEVEX = EVEX('EVEX.256.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}510e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}510e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x51)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpdpbusds ')
-        assert_equal(myDisasm.infos.repr, 'vpdpbusds ymm25, ymm16, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpdpbusds ')
+        assert_equal(myDisasm.repr(), 'vpdpbusds ymm25, ymm16, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 51 /r
         # vpdpbusds zmm1{k1}{z}, zmm2,  zmm3/m512/m32bcst
 
         myEVEX = EVEX('EVEX.512.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}510e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}510e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x51)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpdpbusds ')
-        assert_equal(myDisasm.infos.repr, 'vpdpbusds zmm25, zmm16, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpdpbusds ')
+        assert_equal(myDisasm.repr(), 'vpdpbusds zmm25, zmm16, zmmword ptr [r14]')

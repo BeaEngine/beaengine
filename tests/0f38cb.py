@@ -29,31 +29,31 @@ class TestSuite:
         # NP 0F 38 CB /r
         # SHA256RNDS2 xmm1, xmm2/m128, <XMM0>
 
-        Buffer = '0f38cb6b11'.decode('hex')
+        Buffer = bytes.fromhex('0f38cb6b11')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38cb')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'sha256rnds2 ')
-        assert_equal(myDisasm.infos.repr, 'sha256rnds2 xmm5, xmmword ptr [rbx+11h], xmm0')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha256rnds2 ')
+        assert_equal(myDisasm.repr(), 'sha256rnds2 xmm5, xmmword ptr [rbx+11h], xmm0')
 
         # EVEX.NDS.LIG.66.0F38.W1 CB /r
         # VRCP28SD xmm1 {k1}{z}, xmm2, xmm3/m64 {sae}
 
         myEVEX = EVEX('EVEX.NDS.LIG.66.0F38.W1')
-        Buffer = '{}cb00'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}cb00'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcb)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrcp28sd ')
-        assert_equal(myDisasm.infos.repr, 'vrcp28sd xmm24, xmm31, qword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrcp28sd ')
+        assert_equal(myDisasm.repr(), 'vrcp28sd xmm24, xmm31, qword ptr [r8]')
 
         # EVEX.NDS.LIG.66.0F38.W0 CB /r
         # VRCP28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}
 
         myEVEX = EVEX('EVEX.NDS.LIG.66.0F38.W0')
-        Buffer = '{}cb00'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}cb00'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcb)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrcp28ss ')
-        assert_equal(myDisasm.infos.repr, 'vrcp28ss xmm24, xmm31, dword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrcp28ss ')
+        assert_equal(myDisasm.repr(), 'vrcp28ss xmm24, xmm31, dword ptr [r8]')

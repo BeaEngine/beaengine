@@ -26,10 +26,10 @@ class TestExample:
     #def setUp(self):
 
     def test_SimpleUseCase(self):
-        Buffer = '4889ce'.decode('hex')
+        Buffer = bytes.fromhex('4889ce')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'mov rsi, rcx')
+        assert_equal(myDisasm.repr(), 'mov rsi, rcx')
 
     def test_VirtualAddrUseCase(self):
         Buffer = b'\xe9\x00\x00\x00\x00'
@@ -43,4 +43,4 @@ class TestExample:
         myDisasm = Disasm(Buffer)
         myDisasm.infos.Options = NasmSyntax + PrefixedNumeral + ShowSegmentRegs
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'mov  [ds:rax+rcx*4+0x00402000], edx')
+        assert_equal(myDisasm.repr(), 'mov  [ds:rax+rcx*4+0x00402000], edx')

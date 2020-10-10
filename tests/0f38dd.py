@@ -29,12 +29,12 @@ class TestSuite:
         # 66 0F 38 DD /r
         # AESENCLAST xmm1, xmm2/m128
 
-        Buffer = '660f38dd6bA2'.decode('hex')
+        Buffer = bytes.fromhex('660f38dd6bA2')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38dd')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'aesenclast ')
-        assert_equal(myDisasm.infos.repr, 'aesenclast xmm5, xmmword ptr [rbx-5Eh]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesenclast ')
+        assert_equal(myDisasm.repr(), 'aesenclast xmm5, xmmword ptr [rbx-5Eh]')
 
 
         # VEX.NDS.128.66.0F38.WIG DD /r
@@ -48,10 +48,10 @@ class TestSuite:
         myVEX.R = 1
         myVEX.B = 1
 
-        Buffer = 'c4{:02x}{:02x}dd6ba2'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
+        Buffer = bytes.fromhex('c4{:02x}{:02x}dd6ba2'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vaesenclast xmm5, xmm0, xmmword ptr [rbx-5Eh]')
+        assert_equal(myDisasm.repr(), 'vaesenclast xmm5, xmm0, xmmword ptr [rbx-5Eh]')
 
         # if VEX.vvvv != 0b1111 #UD
 
@@ -63,8 +63,8 @@ class TestSuite:
         myVEX.R = 1
         myVEX.B = 1
 
-        Buffer = 'c4{:02x}{:02x}dd6ba2'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
+        Buffer = bytes.fromhex('c4{:02x}{:02x}dd6ba2'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaesenclast ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaesenclast ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

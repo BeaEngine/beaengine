@@ -25,7 +25,7 @@ Doing it with Python is the simplest way because of its specific wrapper used to
 # Python example
 
 from BeaEnginePython import *
-buffer = '6202054000443322'.decode('hex')
+buffer = '6202054000443322')
 target = Disasm(buffer)
 target.read()
 print(target.repr())
@@ -82,6 +82,21 @@ int main(void)
 It is possible to ask to BeaEngine to decode a limited block of bytes. This small program decodes instructions of its own code located between 2 virtual addresses. That means BeaEngine won't read any bytes outside these limits even if it tries to decode an instruction starting just before the upper bound. To realize this restriction, BeaEngine uses the field **infos.SecurityBlock** which defines the number of bytes we want to read. By default, an intel instruction never exceeds 15 bytes. Thus, only SecurityBlock values below this limit are used. In all cases, BeaEngine stops decoding an instruction if it exceeds 15 bytes.
 
 ```
+# Python example
+
+from BeaEnginePython import *
+buffer = '6202054000443322')
+instr = Disasm(buffer)
+go = True
+while go:
+  instr.read()
+  print(instr.repr())
+  go = True if instr.length > 0 else False
+```
+
+Let's see how to do it in C :
+
+```
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -131,6 +146,21 @@ int main(void)
 # 3. How to decode bytes in an allocated buffer while keeping original virtual addresses
 
 This time, we are in a real and usual situation. We want to decode bytes copied in an allocated buffer. However, you want to see original virtual addresses. The following program allocates a buffer with the function malloc , copies in it 200 bytes from the address &main and decodes the buffer :
+
+```
+# Python example
+
+from BeaEnginePython import *
+buffer = '6202054000443322')
+instr = Disasm(buffer)
+instr.infos.VirtualAddr = 0x401000
+go = True
+while go:
+  instr.read()
+  print(instr.repr())
+  go = True if instr.length > 0 else False
+```
+
 
 ```
 #include <string.h>
@@ -191,7 +221,23 @@ int main(void)
 
 # 4. How to use nasm syntax with prefixed numbers
 
-BeaEngine is able to use a set of syntaxes : masm, nasm, GoAsm. You can display numbers under two formats : suffixed numbers and prefixed numbers. You can display or not the segment registers used in memory addressing. You can even use a tabulation between mnemonic and first operand. Let's modify previous **DisplayInstr** function :
+BeaEngine is able to use a set of syntaxes : masm, nasm, GoAsm. You can display numbers under two formats : suffixed numbers and prefixed numbers. You can display or not the segment registers used in memory addressing. You can even use a tabulation between mnemonic and first operand.
+
+```
+# Python example
+
+from BeaEnginePython import *
+buffer = '6202054000443322')
+instr = Disasm(buffer)
+instr.infos.Options = NasmSyntax + PrefixedNumeral
+go = True
+while go:
+  instr.read()
+  print(instr.repr())
+  go = True if instr.length > 0 else False
+```
+
+In C:
 
 ```
 void DisplayInstr(char *start_offset, char *end_offset, int (*virtual_address)(void))
@@ -209,6 +255,23 @@ void DisplayInstr(char *start_offset, char *end_offset, int (*virtual_address)(v
 # 5. How to retrieve only instructions that modify the register eax
 
 This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.Registers , you can determine for example if the register rax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. Registers let us know if the register is rax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
+
+
+```
+# Python example
+
+from BeaEnginePython import *
+buffer = '6202054000443322')
+instr = Disasm(buffer)
+go = True
+while go:
+  instr.read()
+  if instr.modifies("rax"):
+    print(instr.repr())
+  go = True if instr.length > 0 else False
+```
+
+
 
 ```
 #include <stdio.h>

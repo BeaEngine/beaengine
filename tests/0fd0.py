@@ -25,63 +25,63 @@ class TestSuite:
         # 66 0F D0 /r
         # ADDSUBPD xmm1, xmm2/m128
 
-        Buffer = '660fd020'.decode('hex')
+        Buffer = bytes.fromhex('660fd020')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsubpd ')
-        assert_equal(myDisasm.infos.repr, 'addsubpd xmm4, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubpd ')
+        assert_equal(myDisasm.repr(), 'addsubpd xmm4, xmmword ptr [rax]')
 
         # VEX.NDS.128.66.0F.WIG D0 /r
         # VADDSUBPD xmm1, xmm2, xmm3/m128
 
         myVEX = VEX('VEX.NDS.128.66.0F.WIG')
-        Buffer = '{}d020'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}d020'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddsubpd ')
-        assert_equal(myDisasm.infos.repr, 'vaddsubpd xmm12, xmm15, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubpd ')
+        assert_equal(myDisasm.repr(), 'vaddsubpd xmm12, xmm15, xmmword ptr [r8]')
 
         # VEX.NDS.256.66.0F.WIG D0 /r
         # VADDSUBPD ymm1, ymm2, ymm3/m256
 
         myVEX = VEX('VEX.NDS.256.66.0F.WIG')
-        Buffer = '{}d020'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}d020'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddsubpd ')
-        assert_equal(myDisasm.infos.repr, 'vaddsubpd ymm12, ymm15, ymmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubpd ')
+        assert_equal(myDisasm.repr(), 'vaddsubpd ymm12, ymm15, ymmword ptr [r8]')
 
         # F2 0F D0 /r
         # ADDSUBPS xmm1, xmm2/m128
 
-        Buffer = 'f20fd020'.decode('hex')
+        Buffer = bytes.fromhex('f20fd020')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'addsubps ')
-        assert_equal(myDisasm.infos.repr, 'addsubps xmm4, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubps ')
+        assert_equal(myDisasm.repr(), 'addsubps xmm4, xmmword ptr [rax]')
 
         # VEX.NDS.128.F2.0F.WIG D0 /r
         # VADDSUBPS xmm1, xmm2, xmm3/m128
 
         myVEX = VEX('VEX.NDS.128.F2.0F.WIG')
-        Buffer = '{}d020'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}d020'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddsubps ')
-        assert_equal(myDisasm.infos.repr, 'vaddsubps xmm12, xmm15, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubps ')
+        assert_equal(myDisasm.repr(), 'vaddsubps xmm12, xmm15, xmmword ptr [r8]')
 
         # VEX.NDS.256.F2.0F.WIG D0 /r
         # VADDSUBPS ymm1, ymm2, ymm3/m256
 
         myVEX = VEX('VEX.NDS.256.F2.0F.WIG')
-        Buffer = '{}d020'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}d020'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vaddsubps ')
-        assert_equal(myDisasm.infos.repr, 'vaddsubps ymm12, ymm15, ymmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubps ')
+        assert_equal(myDisasm.repr(), 'vaddsubps ymm12, ymm15, ymmword ptr [r8]')

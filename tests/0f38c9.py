@@ -30,9 +30,9 @@ class TestSuite:
         # NP 0F 38 C8 /r
         # SHA1NEXTE xmm1, xmm2/m128
 
-        Buffer = '0f38c96b11'.decode('hex')
+        Buffer = bytes.fromhex('0f38c96b11')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38c9')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'sha1msg1 ')
-        assert_equal(myDisasm.infos.repr, 'sha1msg1 xmm5, xmmword ptr [rbx+11h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1msg1 ')
+        assert_equal(myDisasm.repr(), 'sha1msg1 xmm5, xmmword ptr [rbx+11h]')

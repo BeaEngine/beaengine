@@ -418,6 +418,279 @@ SuffixedNumeral   = 0x00000000
 
 ShowSegmentRegs   = 0x01000000
 
+REGSTYPE = {
+    # es ds fs gs cs ss                                   Registers.segment
+    'es': {'type': 'segment','reg': REG0,'size': 16},
+    'ds': {'type': 'segment','reg': REG1,'size': 16},
+    'fs': {'type': 'segment','reg': REG2,'size': 16},
+    'gs': {'type': 'segment','reg': REG3,'size': 16},
+    'cs': {'type': 'segment','reg': REG4,'size': 16},
+    'ss': {'type': 'segment','reg': REG5,'size': 16},
+
+    # bnd0-bnd3                                           Registers.mpx
+    'bnd0': {'type': 'mpx','reg': REG0,'size': 128},
+    'bnd1': {'type': 'mpx','reg': REG1,'size': 128},
+    'bnd2': {'type': 'mpx','reg': REG2,'size': 128},
+    'bnd3': {'type': 'mpx','reg': REG3,'size': 128},
+
+    # st0-st7                                             Registers.fpu
+    'st0': {'type': 'fpu','reg': REG0,'size': 80},
+    'st1': {'type': 'fpu','reg': REG1,'size': 80},
+    'st2': {'type': 'fpu','reg': REG2,'size': 80},
+    'st3': {'type': 'fpu','reg': REG3,'size': 80},
+    'st4': {'type': 'fpu','reg': REG4,'size': 80},
+    'st5': {'type': 'fpu','reg': REG5,'size': 80},
+    'st6': {'type': 'fpu','reg': REG6,'size': 80},
+    'st7': {'type': 'fpu','reg': REG7,'size': 80},
+
+    # dr0-dr15                                            Registers.dr
+    'dr0': {'type': 'dr','reg': REG0,'size': 32},
+    'dr1': {'type': 'dr','reg': REG1,'size': 32},
+    'dr2': {'type': 'dr','reg': REG2,'size': 32},
+    'dr3': {'type': 'dr','reg': REG3,'size': 32},
+    'dr4': {'type': 'dr','reg': REG4,'size': 32},
+    'dr5': {'type': 'dr','reg': REG5,'size': 32},
+    'dr6': {'type': 'dr','reg': REG6,'size': 32},
+    'dr7': {'type': 'dr','reg': REG7,'size': 32},
+    'dr8': {'type': 'dr','reg': REG8,'size': 32},
+    'dr9': {'type': 'dr','reg': REG9,'size': 32},
+    'dr10': {'type': 'dr','reg': REG10,'size': 32},
+    'dr11': {'type': 'dr','reg': REG11,'size': 32},
+    'dr12': {'type': 'dr','reg': REG12,'size': 32},
+    'dr13': {'type': 'dr','reg': REG13,'size': 32},
+    'dr14': {'type': 'dr','reg': REG14,'size': 32},
+    'dr15': {'type': 'dr','reg': REG15,'size': 32},
+
+    # cr0-cr15                                            Registers.cr
+    'cr0': {'type': 'cr','reg': REG0,'size': 32},
+    'cr1': {'type': 'cr','reg': REG1,'size': 32},
+    'cr2': {'type': 'cr','reg': REG2,'size': 32},
+    'cr3': {'type': 'cr','reg': REG3,'size': 32},
+    'cr4': {'type': 'cr','reg': REG4,'size': 32},
+    'cr5': {'type': 'cr','reg': REG5,'size': 32},
+    'cr6': {'type': 'cr','reg': REG6,'size': 32},
+    'cr7': {'type': 'cr','reg': REG7,'size': 32},
+    'cr8': {'type': 'cr','reg': REG8,'size': 32},
+    'cr9': {'type': 'cr','reg': REG9,'size': 32},
+    'cr10': {'type': 'cr','reg': REG10,'size': 32},
+    'cr11': {'type': 'cr','reg': REG11,'size': 32},
+    'cr12': {'type': 'cr','reg': REG12,'size': 32},
+    'cr13': {'type': 'cr','reg': REG13,'size': 32},
+    'cr14': {'type': 'cr','reg': REG14,'size': 32},
+    'cr15': {'type': 'cr','reg': REG15,'size': 32},
+
+    # rax rcx rdx rbx rsp rbp rsi rdi r8-r15              Registers.gpr
+    'rax': {'type': 'gpr','reg': REG0,'size': 64},
+    'rcx': {'type': 'gpr','reg': REG1,'size': 64},
+    'rdx': {'type': 'gpr','reg': REG2,'size': 64},
+    'rbx': {'type': 'gpr','reg': REG3,'size': 64},
+    'rsp': {'type': 'gpr','reg': REG4,'size': 64},
+    'rbp': {'type': 'gpr','reg': REG5,'size': 64},
+    'rsi': {'type': 'gpr','reg': REG6,'size': 64},
+    'rdi': {'type': 'gpr','reg': REG7,'size': 64},
+    'r8': {'type': 'gpr','reg': REG8,'size': 64},
+    'r9': {'type': 'gpr','reg': REG9,'size': 64},
+    'r10': {'type': 'gpr','reg': REG10,'size': 64},
+    'r11': {'type': 'gpr','reg': REG11,'size': 64},
+    'r12': {'type': 'gpr','reg': REG12,'size': 64},
+    'r13': {'type': 'gpr','reg': REG13,'size': 64},
+    'r14': {'type': 'gpr','reg': REG14,'size': 64},
+    'r15': {'type': 'gpr','reg': REG15,'size': 64},
+
+    # eax ecx edx ebx esp ebp esi edi r8d-r15d            Registers.gpr
+    'eax': {'type': 'gpr','reg': REG0,'size': 32},
+    'ecx': {'type': 'gpr','reg': REG1,'size': 32},
+    'edx': {'type': 'gpr','reg': REG2,'size': 32},
+    'ebx': {'type': 'gpr','reg': REG3,'size': 32},
+    'esp': {'type': 'gpr','reg': REG4,'size': 32},
+    'ebp': {'type': 'gpr','reg': REG5,'size': 32},
+    'esi': {'type': 'gpr','reg': REG6,'size': 32},
+    'edi': {'type': 'gpr','reg': REG7,'size': 32},
+    'r8d': {'type': 'gpr','reg': REG8,'size': 32},
+    'r9d': {'type': 'gpr','reg': REG9,'size': 32},
+    'r10d': {'type': 'gpr','reg': REG10,'size': 32},
+    'r11d': {'type': 'gpr','reg': REG11,'size': 32},
+    'r12d': {'type': 'gpr','reg': REG12,'size': 32},
+    'r13d': {'type': 'gpr','reg': REG13,'size': 32},
+    'r14d': {'type': 'gpr','reg': REG14,'size': 32},
+    'r15d': {'type': 'gpr','reg': REG15,'size': 32},
+
+    # ax cx dx bx sp bp si di r8w-r15w                    Registers.gpr
+    'ax': {'type': 'gpr','reg': REG0,'size': 16},
+    'cx': {'type': 'gpr','reg': REG1,'size': 16},
+    'dx': {'type': 'gpr','reg': REG2,'size': 16},
+    'bx': {'type': 'gpr','reg': REG3,'size': 16},
+    'sp': {'type': 'gpr','reg': REG4,'size': 16},
+    'bp': {'type': 'gpr','reg': REG5,'size': 16},
+    'si': {'type': 'gpr','reg': REG6,'size': 16},
+    'di': {'type': 'gpr','reg': REG7,'size': 16},
+    'r8w': {'type': 'gpr','reg': REG8,'size': 16},
+    'r9w': {'type': 'gpr','reg': REG9,'size': 16},
+    'r10w': {'type': 'gpr','reg': REG10,'size': 16},
+    'r11w': {'type': 'gpr','reg': REG11,'size': 16},
+    'r12w': {'type': 'gpr','reg': REG12,'size': 16},
+    'r13w': {'type': 'gpr','reg': REG13,'size': 16},
+    'r14w': {'type': 'gpr','reg': REG14,'size': 16},
+    'r15w': {'type': 'gpr','reg': REG15,'size': 16},
+
+    # al cl dl bl ah ch dh bh spl bpl sil dil r8L-r15L    Registers.gpr
+    'al': {'type': 'gpr','reg': REG0,'size': 8},
+    'cl': {'type': 'gpr','reg': REG1,'size': 8},
+    'dl': {'type': 'gpr','reg': REG2,'size': 8},
+    'bl': {'type': 'gpr','reg': REG3,'size': 8},
+    'ah': {'type': 'gpr','reg': REG0,'size': 8},
+    'ch': {'type': 'gpr','reg': REG1,'size': 8},
+    'dh': {'type': 'gpr','reg': REG2,'size': 8},
+    'bh': {'type': 'gpr','reg': REG3,'size': 8},
+    'spl': {'type': 'gpr','reg': REG4,'size': 8},
+    'bpl': {'type': 'gpr','reg': REG5,'size': 8},
+    'sil': {'type': 'gpr','reg': REG6,'size': 8},
+    'dil': {'type': 'gpr','reg': REG7,'size': 8},
+    'r8l': {'type': 'gpr','reg': REG8,'size': 8},
+    'r9l': {'type': 'gpr','reg': REG9,'size': 8},
+    'r10l': {'type': 'gpr','reg': REG10,'size': 8},
+    'r11l': {'type': 'gpr','reg': REG11,'size': 8},
+    'r12l': {'type': 'gpr','reg': REG12,'size': 8},
+    'r13l': {'type': 'gpr','reg': REG13,'size': 8},
+    'r14l': {'type': 'gpr','reg': REG14,'size': 8},
+    'r15l': {'type': 'gpr','reg': REG12,'size': 8},
+
+    # mm0-mm7                                             Registers.mmx
+    'mm0': {'type': 'mmx','reg': REG0,'size': 64},
+    'mm1': {'type': 'mmx','reg': REG1,'size': 64},
+    'mm2': {'type': 'mmx','reg': REG2,'size': 64},
+    'mm3': {'type': 'mmx','reg': REG3,'size': 64},
+    'mm4': {'type': 'mmx','reg': REG4,'size': 64},
+    'mm5': {'type': 'mmx','reg': REG5,'size': 64},
+    'mm6': {'type': 'mmx','reg': REG6,'size': 64},
+    'mm7': {'type': 'mmx','reg': REG7,'size': 64},
+
+    # xmm0-xmm31                                          Registers.xmm
+    'xmm0': {'type': 'xmm','reg': REG0,'size': 128},
+    'xmm1': {'type': 'xmm','reg': REG1,'size': 128},
+    'xmm2': {'type': 'xmm','reg': REG2,'size': 128},
+    'xmm3': {'type': 'xmm','reg': REG3,'size': 128},
+    'xmm4': {'type': 'xmm','reg': REG4,'size': 128},
+    'xmm5': {'type': 'xmm','reg': REG5,'size': 128},
+    'xmm6': {'type': 'xmm','reg': REG6,'size': 128},
+    'xmm7': {'type': 'xmm','reg': REG7,'size': 128},
+    'xmm8': {'type': 'xmm','reg': REG8,'size': 128},
+    'xmm9': {'type': 'xmm','reg': REG9,'size': 128},
+    'xmm10': {'type': 'xmm','reg': REG10,'size': 128},
+    'xmm11': {'type': 'xmm','reg': REG11,'size': 128},
+    'xmm12': {'type': 'xmm','reg': REG12,'size': 128},
+    'xmm13': {'type': 'xmm','reg': REG13,'size': 128},
+    'xmm14': {'type': 'xmm','reg': REG14,'size': 128},
+    'xmm15': {'type': 'xmm','reg': REG15,'size': 128},
+    'xmm16': {'type': 'xmm','reg': REG16,'size': 128},
+    'xmm17': {'type': 'xmm','reg': REG17,'size': 128},
+    'xmm18': {'type': 'xmm','reg': REG18,'size': 128},
+    'xmm19': {'type': 'xmm','reg': REG19,'size': 128},
+    'xmm20': {'type': 'xmm','reg': REG20,'size': 128},
+    'xmm21': {'type': 'xmm','reg': REG21,'size': 128},
+    'xmm22': {'type': 'xmm','reg': REG22,'size': 128},
+    'xmm23': {'type': 'xmm','reg': REG23,'size': 128},
+    'xmm24': {'type': 'xmm','reg': REG24,'size': 128},
+    'xmm25': {'type': 'xmm','reg': REG25,'size': 128},
+    'xmm26': {'type': 'xmm','reg': REG26,'size': 128},
+    'xmm27': {'type': 'xmm','reg': REG27,'size': 128},
+    'xmm28': {'type': 'xmm','reg': REG28,'size': 128},
+    'xmm29': {'type': 'xmm','reg': REG29,'size': 128},
+    'xmm30': {'type': 'xmm','reg': REG30,'size': 128},
+    'xmm31': {'type': 'xmm','reg': REG31,'size': 128},
+
+    # ymm0-ymm31                                          Registers.ymm
+    'ymm0': {'type': 'ymm','reg': REG0,'size': 256},
+    'ymm1': {'type': 'ymm','reg': REG1,'size': 256},
+    'ymm2': {'type': 'ymm','reg': REG2,'size': 256},
+    'ymm3': {'type': 'ymm','reg': REG3,'size': 256},
+    'ymm4': {'type': 'ymm','reg': REG4,'size': 256},
+    'ymm5': {'type': 'ymm','reg': REG5,'size': 256},
+    'ymm6': {'type': 'ymm','reg': REG6,'size': 256},
+    'ymm7': {'type': 'ymm','reg': REG7,'size': 256},
+    'ymm8': {'type': 'ymm','reg': REG8,'size': 256},
+    'ymm9': {'type': 'ymm','reg': REG9,'size': 256},
+    'ymm10': {'type': 'ymm','reg': REG10,'size': 256},
+    'ymm11': {'type': 'ymm','reg': REG11,'size': 256},
+    'ymm12': {'type': 'ymm','reg': REG12,'size': 256},
+    'ymm13': {'type': 'ymm','reg': REG13,'size': 256},
+    'ymm14': {'type': 'ymm','reg': REG14,'size': 256},
+    'ymm15': {'type': 'ymm','reg': REG15,'size': 256},
+    'ymm16': {'type': 'ymm','reg': REG16,'size': 256},
+    'ymm17': {'type': 'ymm','reg': REG17,'size': 256},
+    'ymm18': {'type': 'ymm','reg': REG18,'size': 256},
+    'ymm19': {'type': 'ymm','reg': REG19,'size': 256},
+    'ymm20': {'type': 'ymm','reg': REG20,'size': 256},
+    'ymm21': {'type': 'ymm','reg': REG21,'size': 256},
+    'ymm22': {'type': 'ymm','reg': REG22,'size': 256},
+    'ymm23': {'type': 'ymm','reg': REG23,'size': 256},
+    'ymm24': {'type': 'ymm','reg': REG24,'size': 256},
+    'ymm25': {'type': 'ymm','reg': REG25,'size': 256},
+    'ymm26': {'type': 'ymm','reg': REG26,'size': 256},
+    'ymm27': {'type': 'ymm','reg': REG27,'size': 256},
+    'ymm28': {'type': 'ymm','reg': REG28,'size': 256},
+    'ymm29': {'type': 'ymm','reg': REG29,'size': 256},
+    'ymm30': {'type': 'ymm','reg': REG30,'size': 256},
+    'ymm31': {'type': 'ymm','reg': REG31,'size': 256},
+
+    # zmm0-zmm31                                          Registers.zmm
+    'zmm0': {'type': 'zmm','reg': REG0,'size': 512},
+    'zmm1': {'type': 'zmm','reg': REG1,'size': 512},
+    'zmm2': {'type': 'zmm','reg': REG2,'size': 512},
+    'zmm3': {'type': 'zmm','reg': REG3,'size': 512},
+    'zmm4': {'type': 'zmm','reg': REG4,'size': 512},
+    'zmm5': {'type': 'zmm','reg': REG5,'size': 512},
+    'zmm6': {'type': 'zmm','reg': REG6,'size': 512},
+    'zmm7': {'type': 'zmm','reg': REG7,'size': 512},
+    'zmm8': {'type': 'zmm','reg': REG8,'size': 512},
+    'zmm9': {'type': 'zmm','reg': REG9,'size': 512},
+    'zmm10': {'type': 'zmm','reg': REG10,'size': 512},
+    'zmm11': {'type': 'zmm','reg': REG11,'size': 512},
+    'zmm12': {'type': 'zmm','reg': REG12,'size': 512},
+    'zmm13': {'type': 'zmm','reg': REG13,'size': 512},
+    'zmm14': {'type': 'zmm','reg': REG14,'size': 512},
+    'zmm15': {'type': 'zmm','reg': REG15,'size': 512},
+    'zmm16': {'type': 'zmm','reg': REG16,'size': 512},
+    'zmm17': {'type': 'zmm','reg': REG17,'size': 512},
+    'zmm18': {'type': 'zmm','reg': REG18,'size': 512},
+    'zmm19': {'type': 'zmm','reg': REG19,'size': 512},
+    'zmm20': {'type': 'zmm','reg': REG20,'size': 512},
+    'zmm21': {'type': 'zmm','reg': REG21,'size': 512},
+    'zmm22': {'type': 'zmm','reg': REG22,'size': 512},
+    'zmm23': {'type': 'zmm','reg': REG23,'size': 512},
+    'zmm24': {'type': 'zmm','reg': REG24,'size': 512},
+    'zmm25': {'type': 'zmm','reg': REG25,'size': 512},
+    'zmm26': {'type': 'zmm','reg': REG26,'size': 512},
+    'zmm27': {'type': 'zmm','reg': REG27,'size': 512},
+    'zmm28': {'type': 'zmm','reg': REG28,'size': 512},
+    'zmm29': {'type': 'zmm','reg': REG29,'size': 512},
+    'zmm30': {'type': 'zmm','reg': REG30,'size': 512},
+    'zmm31': {'type': 'zmm','reg': REG31,'size': 512},
+
+    # k0-k7                                               Registers.opmask
+    'k0': {'type': 'opmask','reg': REG0,'size': 16},
+    'k1': {'type': 'opmask','reg': REG1,'size': 16},
+    'k2': {'type': 'opmask','reg': REG2,'size': 16},
+    'k3': {'type': 'opmask','reg': REG3,'size': 16},
+    'k4': {'type': 'opmask','reg': REG4,'size': 16},
+    'k5': {'type': 'opmask','reg': REG5,'size': 16},
+    'k6': {'type': 'opmask','reg': REG6,'size': 16},
+    'k7': {'type': 'opmask','reg': REG7,'size': 16},
+
+    # EFLAGS  MXCSR  SSP  PKRU                            Registers.special
+    'rflags': {'type': 'special','reg': REG0,'size': 64},
+    'eflags': {'type': 'special','reg': REG0,'size': 32},
+    'mxcsr': {'type': 'special','reg': REG1,'size': 32},
+    'ssp': {'type': 'special','reg': REG2,'size': 64},
+    'pkru': {'type': 'special','reg': REG3,'size': 32},
+
+    # GDTR LDTR IDTR TR                                   Registers.mem_management
+    'gdtr': {'type': 'mem_management','reg': REG0,'size': 48},
+    'ldtr': {'type': 'mem_management','reg': REG0,'size': 16},
+    'idtr': {'type': 'mem_management','reg': REG1,'size': 64},
+    'tr': {'type': 'mem_management','reg': REG2,'size': 16},
+
+}
 
 # ====================================== Import Disasm function
 import os
@@ -581,10 +854,68 @@ class Disasm():
         self.infos = INSTRUCTION()
         #self.infos.Options = PrefixedNumeral
         self.infos.offset = addressof(self.target) + offset
+        self.end_block = self.infos.offset + len(buffer)
         self.infos.VirtualAddr = virtualAddr
         self.infos.Archi = 64
         self.length = 0
         self.bytes = bytearray()
+
+    def analyze(self, registers: str)->REGISTERTYPE():
+        result = REGISTERTYPE()
+        regs = re.sub(' +', ' ', registers.strip().lower()).split(" ")
+        for reg in regs:
+            current_reg = REGSTYPE.get(reg)
+            if current_reg:
+                val = getattr(result, current_reg.get('type'))
+                val = val | current_reg.get('reg')
+                setattr(result, current_reg.get('type'), val)
+        return result
+
+    def match_registers(self, registers1, registers2):
+        status = 0
+        if registers1.gpr & registers2.gpr or \
+            registers1.segment & registers2.segment or \
+            registers1.mpx & registers2.mpx or \
+            registers1.fpu & registers2.fpu or \
+            registers1.dr & registers2.dr or \
+            registers1.cr & registers2.cr or \
+            registers1.mmx & registers2.mmx or \
+            registers1.xmm & registers2.xmm or \
+            registers1.ymm & registers2.ymm or \
+            registers1.zmm & registers2.zmm or \
+            registers1.opmask & registers2.opmask or \
+            registers1.special & registers2.special or \
+            registers1.mem_management & registers2.mem_management:
+            status = 1
+        return status
+
+    def uses(self, registers):
+        status = 0
+        registers_type = self.analyze(registers)
+        if  self.infos.Operand1.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand1.Registers, registers_type)
+        if  self.infos.Operand2.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand2.Registers, registers_type)
+        if  self.infos.Operand3.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand3.Registers, registers_type)
+        if  self.infos.Operand4.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand4.Registers, registers_type)
+        return True if status > 0 else False
+
+    def modifies(self, registers):
+        status = 0
+        registers_type = self.analyze(registers)
+        if  self.infos.Operand1.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand1.Registers, registers_type)
+        if  self.infos.Operand2.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand2.Registers, registers_type)
+        if  self.infos.Operand3.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand3.Registers, registers_type)
+        if  self.infos.Operand4.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand4.Registers, registers_type)
+        status += self.match_registers(self.infos.Instruction.ImplicitModifiedRegs, registers_type)
+
+        return True if status > 0 else False
 
     def seek(self, offset = -1):
         """
@@ -633,6 +964,7 @@ class Disasm():
                 disasm.read()
         """
         self.getNextOffset()
+        self.infos.SecurityBlock = self.end_block - self.infos.offset + 1
         self.length = BeaDisasm(c_void_p(addressof(self.infos)))
         self.getBytes()
 
@@ -648,7 +980,7 @@ class Disasm():
                 disasm.read()
                 print(disasm.repr())
         """
-        return "{}".format(self.infos.repr.decode("utf-8"))
+        return f"{self.infos.repr.decode()}"
 
         # return "{} {:<30} {}".format(
         #    "0x%08x" %(self.seek()),

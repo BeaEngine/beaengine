@@ -26,25 +26,25 @@ class TestSuite:
         for REGOPCODE in range(0, 8):
             for RM in range(0, 8):
                 MODRM = (MOD << 6) + (REGOPCODE << 3) + RM
-                Buffer = instr.format(MODRM).decode('hex')
+                Buffer = bytes.fromhex(instr.format(MODRM))
                 myDisasm = Disasm(Buffer)
                 myDisasm.infos.Archi = archi
                 myDisasm.read()
                 #print(myDisasm.repr())
                 #print(myDisasm.infos.Reserved_.Register_)
-                assert_equal(myDisasm.infos.Operand2.OpMnemonic, registers[REGOPCODE])
+                assert_equal(myDisasm.infos.Operand2.OpMnemonic, registers[REGOPCODE].encode())
 
     def verifyRegopcodeArg1ForMod(self, MOD, registers, instr, archi):
 
         for REGOPCODE in range(0, 8):
             for RM in range(0, 8):
                 MODRM = (MOD << 6) + (REGOPCODE << 3) + RM
-                Buffer = instr.format(MODRM).decode('hex')
+                Buffer = bytes.fromhex(instr.format(MODRM))
                 myDisasm = Disasm(Buffer)
                 myDisasm.infos.Archi = archi
                 myDisasm.read()
                 print(myDisasm.repr())
-                assert_equal(myDisasm.infos.Operand1.OpMnemonic, registers[REGOPCODE])
+                assert_equal(myDisasm.infos.Operand1.OpMnemonic, registers[REGOPCODE].encode())
 
     def test_RegOpcode(self):
 

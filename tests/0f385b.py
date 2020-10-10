@@ -26,21 +26,21 @@ class TestSuite:
 
         myEVEX = EVEX('EVEX.512.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}5b0e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5b0e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5b)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti32x8 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x8 zmm25, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x8 ')
+        assert_equal(myDisasm.repr(), 'vbroadcasti32x8 zmm25, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 5B /r
         # VBROADCASTI64X4 zmm1 {k1}{z}, m256
 
         myEVEX = EVEX('EVEX.512.66.0F38.W1')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}5b0e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5b0e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5b)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti64x4 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti64x4 zmm25, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti64x4 ')
+        assert_equal(myDisasm.repr(), 'vbroadcasti64x4 zmm25, ymmword ptr [r14]')

@@ -27,58 +27,58 @@ class TestSuite:
 
         myVEX = VEX('VEX.L0.0F.W0')
         myVEX.R = 1
-        Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}92db'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovw ')
-        assert_equal(myDisasm.infos.repr, 'kmovw k3, r11d')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovw ')
+        assert_equal(myDisasm.repr(), 'kmovw k3, r11d')
 
         # VEX.L0.66.0F.W0 92 /r
         # KMOVB k1, r32
 
         myVEX = VEX('VEX.L0.66.0F.W0')
         myVEX.R = 1
-        Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}92db'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovb ')
-        assert_equal(myDisasm.infos.repr, 'kmovb k3, r11d')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovb ')
+        assert_equal(myDisasm.repr(), 'kmovb k3, r11d')
 
         # VEX.L0.F2.0F.W0 92 /r
         # KMOVD k1, r32
 
         myVEX = VEX('VEX.L0.F2.0F.W0')
         myVEX.R = 1
-        Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}92db'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovd ')
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
         assert_equal(myDisasm.infos.Reserved_.VEX.pp, 3)
-        assert_equal(myDisasm.infos.repr, 'kmovd k3, r11d')
+        assert_equal(myDisasm.repr(), 'kmovd k3, r11d')
 
         # VEX.L0.F2.0F.W1 92 /r
         # KMOVQ k1, r64
 
         myVEX = VEX('VEX.L0.F2.0F.W1')
         myVEX.R = 1
-        Buffer = '{}92db'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}92db'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x92)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'kmovq ')
-        assert_equal(myDisasm.infos.repr, 'kmovq k3, r11')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovq ')
+        assert_equal(myDisasm.repr(), 'kmovq k3, r11')
 
         # 0F 92
         # REX + 0F 92
         # SETB r/m8
 
-        Buffer = '0f9200'.decode('hex')
+        Buffer = bytes.fromhex('0f9200')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f92)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'setb ')
-        assert_equal(myDisasm.infos.repr, 'setb byte ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'setb ')
+        assert_equal(myDisasm.repr(), 'setb byte ptr [rax]')

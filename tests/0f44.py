@@ -27,15 +27,15 @@ class TestSuite:
         myVEX = VEX('VEX.L0.0F.W0')
         myVEX.vvvv = 0b1101
         myVEX.R = 1
-        Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}44cb'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x44')
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'knotw ')
-        assert_equal(myDisasm.infos.repr, 'knotw k1, k3')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotw ')
+        assert_equal(myDisasm.repr(), 'knotw k1, k3')
 
         # VEX.L0.66.0F.W0 44 /r
         # KNOTB k1, k2
@@ -43,15 +43,15 @@ class TestSuite:
         myVEX = VEX('VEX.L0.66.0F.W0')
         myVEX.vvvv = 0b1101
         myVEX.R = 1
-        Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}44cb'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x44')
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'knotb ')
-        assert_equal(myDisasm.infos.repr, 'knotb k1, k3')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotb ')
+        assert_equal(myDisasm.repr(), 'knotb k1, k3')
 
         # VEX.L0.0F.W1 44 /r
         # KNOTQ k1, k2
@@ -59,15 +59,15 @@ class TestSuite:
         myVEX = VEX('VEX.L0.0F.W1')
         myVEX.vvvv = 0b1101
         myVEX.R = 1
-        Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}44cb'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x44')
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 1)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'knotq ')
-        assert_equal(myDisasm.infos.repr, 'knotq k1, k3')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotq ')
+        assert_equal(myDisasm.repr(), 'knotq k1, k3')
 
         # VEX.L0.66.0F.W1 44 /r
         # KNOTD k1, k2
@@ -75,12 +75,12 @@ class TestSuite:
         myVEX = VEX('VEX.L0.66.0F.W1')
         myVEX.vvvv = 0b1101
         myVEX.R = 1
-        Buffer = '{}44cb'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}44cb'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x44')
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 1)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'knotd ')
-        assert_equal(myDisasm.infos.repr, 'knotd k1, k3')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotd ')
+        assert_equal(myDisasm.repr(), 'knotd k1, k3')

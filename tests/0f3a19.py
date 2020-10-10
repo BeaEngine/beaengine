@@ -27,75 +27,75 @@ class TestSuite:
         # VEXTRACTF128 xmm1/m128, ymm2, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.W0')
-        Buffer = '{}191033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}191033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf128 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf128 xmmword ptr [r8], ymm10, 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractf128 ')
+        assert_equal(myDisasm.repr(), 'vextractf128 xmmword ptr [r8], ymm10, 33h')
 
         # VEX.256.66.0F3A.W0 19 /r ib
         # VEXTRACTF128 xmm1/m128, ymm2, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.W0')
-        Buffer = '{}19c001'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}19c001'.format(myVEX.c4()))
 
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf128 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf128 xmm8, ymm8, 01h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractf128 ')
+        assert_equal(myDisasm.repr(), 'vextractf128 xmm8, ymm8, 01h')
 
         # fix issue #6
-        Buffer = 'c4c37d19c001'.decode('hex')
+        Buffer = bytes.fromhex('c4c37d19c001')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf128 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf128 xmm8, ymm0, 01h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractf128 ')
+        assert_equal(myDisasm.repr(), 'vextractf128 xmm8, ymm0, 01h')
 
 
         # EVEX.256.66.0F3A.W0 19 /r ib
         # VEXTRACTF32X4 xmm1/m128 {k1}{z}, ymm2, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
-        Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}192011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf32x4 xmmword ptr [r8], ymm28, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractf32x4 ')
+        assert_equal(myDisasm.repr(), 'vextractf32x4 xmmword ptr [r8], ymm28, 11h')
 
         # EVEX.512.66.0F3A.W0 19 /r ib
         # VEXTRACTF32x4 xmm1/m128 {k1}{z}, zmm2, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
-        Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}192011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf32x4 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf32x4 xmmword ptr [r8], zmm28, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractf32x4 ')
+        assert_equal(myDisasm.repr(), 'vextractf32x4 xmmword ptr [r8], zmm28, 11h')
 
 
         # EVEX.256.66.0F3A.W1 19 /r ib
         # VEXTRACTF64X2 xmm1/m128 {k1}{z}, ymm2, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W1')
-        Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}192011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf64x2 xmmword ptr [r8], ymm28, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractf64x2 ')
+        assert_equal(myDisasm.repr(), 'vextractf64x2 xmmword ptr [r8], ymm28, 11h')
 
         # EVEX.512.66.0F3A.W1 19 /r ib
         # VEXTRACTF64X2 xmm1/m128 {k1}{z}, zmm2, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
-        Buffer = '{}192011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}192011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x19)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vextractf64x2 ')
-        assert_equal(myDisasm.infos.repr, 'vextractf64x2 xmmword ptr [r8], zmm28, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractf64x2 ')
+        assert_equal(myDisasm.repr(), 'vextractf64x2 xmmword ptr [r8], zmm28, 11h')

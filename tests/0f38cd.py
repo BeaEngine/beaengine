@@ -26,31 +26,31 @@ class TestSuite:
         # NP 0F 38 CD /r
         # SHA256MSG2 xmm1, xmm2/m128
 
-        Buffer = '0f38cd6b11'.decode('hex')
+        Buffer = bytes.fromhex('0f38cd6b11')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38cd')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'sha256msg2 ')
-        assert_equal(myDisasm.infos.repr, 'sha256msg2 xmm5, xmmword ptr [rbx+11h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha256msg2 ')
+        assert_equal(myDisasm.repr(), 'sha256msg2 xmm5, xmmword ptr [rbx+11h]')
 
         # EVEX.NDS.LIG.66.0F38.W0 CD /r
         # VRSQRT28SS xmm1 {k1}{z}, xmm2, xmm3/m32 {sae}
 
         myEVEX = EVEX('EVEX.NDS.LIG.66.0F38.W0')
-        Buffer = '{}cd00'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}cd00'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcd)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrsqrt28ss ')
-        assert_equal(myDisasm.infos.repr, 'vrsqrt28ss xmm24, xmm31, dword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28ss ')
+        assert_equal(myDisasm.repr(), 'vrsqrt28ss xmm24, xmm31, dword ptr [r8]')
 
         # EVEX.NDS.LIG.66.0F38.W1 CD /r
         # VRSQRT28SD xmm1 {k1}{z}, xmm2, xmm3/m64 {sae}
 
         myEVEX = EVEX('EVEX.NDS.LIG.66.0F38.W1')
-        Buffer = '{}cd00'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}cd00'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcd)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrsqrt28sd ')
-        assert_equal(myDisasm.infos.repr, 'vrsqrt28sd xmm24, xmm31, qword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28sd ')
+        assert_equal(myDisasm.repr(), 'vrsqrt28sd xmm24, xmm31, qword ptr [r8]')

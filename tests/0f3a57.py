@@ -27,42 +27,42 @@ class TestSuite:
         # vreducess ymm1{k1}{z}, ymm2, ymm3/m32, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
-        Buffer = '{}572011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}572011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreducess ')
-        assert_equal(myDisasm.infos.repr, 'vreducess ymm28, ymm16, dword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vreducess ')
+        assert_equal(myDisasm.repr(), 'vreducess ymm28, ymm16, dword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 57 /r ib
         # vreducess zmm1{k1}{z}, zmm2, zmm3/m32, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
-        Buffer = '{}572011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}572011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreducess ')
-        assert_equal(myDisasm.infos.repr, 'vreducess zmm28, zmm16, dword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vreducess ')
+        assert_equal(myDisasm.repr(), 'vreducess zmm28, zmm16, dword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 57 /r ib
         # vreducesd ymm1{k1}{z}, ymm2, ymm3/m64, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W1')
-        Buffer = '{}572011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}572011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreducesd ')
-        assert_equal(myDisasm.infos.repr, 'vreducesd ymm28, ymm16, qword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vreducesd ')
+        assert_equal(myDisasm.repr(), 'vreducesd ymm28, ymm16, qword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 57 /r ib
         # vreducesd zmm1{k1}{z}, zmm2, zmm3/m64, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
-        Buffer = '{}572011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}572011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x57)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vreducesd ')
-        assert_equal(myDisasm.infos.repr, 'vreducesd zmm28, zmm16, qword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vreducesd ')
+        assert_equal(myDisasm.repr(), 'vreducesd zmm28, zmm16, qword ptr [r8], 11h')

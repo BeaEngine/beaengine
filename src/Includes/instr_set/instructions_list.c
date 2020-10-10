@@ -3063,7 +3063,7 @@ void __bea_callspec__ imul_GvEvIb(PDISASM pMyDisasm)
         Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
 
         GV.EIP_+= GV.DECALAGE_EIP+2;
-        if (!Security(0, pMyDisasm)) return;
+        if (!Security(1, pMyDisasm)) return;
         (*pMyDisasm).Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 0));
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyDisasm).Operand3.OpMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 0)));

@@ -23,75 +23,75 @@ class TestSuite:
 
         # MOD == 1
 
-        Buffer = '8f442401'.decode('hex')
+        Buffer = bytes.fromhex('8f442401')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop qword ptr [rsp+09h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop qword ptr [rsp+09h]')
 
-        Buffer = '8f442401'.decode('hex')
+        Buffer = bytes.fromhex('8f442401')
         myDisasm = Disasm(Buffer)
         myDisasm.infos.Archi = 32
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop dword ptr [esp+05h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop dword ptr [esp+05h]')
 
-        Buffer = '8f4301'.decode('hex')
+        Buffer = bytes.fromhex('8f4301')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop qword ptr [rbx+01h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop qword ptr [rbx+01h]')
 
 
         # MOD == 00
 
-        Buffer = '8f042400'.decode('hex')
+        Buffer = bytes.fromhex('8f042400')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop qword ptr [rsp+08h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop qword ptr [rsp+08h]')
 
-        Buffer = '8f042400'.decode('hex')
+        Buffer = bytes.fromhex('8f042400')
         myDisasm = Disasm(Buffer)
         myDisasm.infos.Archi = 32
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop dword ptr [esp+04h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop dword ptr [esp+04h]')
 
 
-        Buffer = '8f03'.decode('hex')
+        Buffer = bytes.fromhex('8f03')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop qword ptr [rbx]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop qword ptr [rbx]')
 
         # MOD == 2
 
-        Buffer = '8f842401000000'.decode('hex')
+        Buffer = bytes.fromhex('8f842401000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop qword ptr [rsp+00000009h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop qword ptr [rsp+00000009h]')
 
-        Buffer = '8f8301000000'.decode('hex')
+        Buffer = bytes.fromhex('8f8301000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop qword ptr [rbx+00000001h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop qword ptr [rbx+00000001h]')
 
         # MOD == 3
 
-        Buffer = '8fc4'.decode('hex')
+        Buffer = bytes.fromhex('8fc4')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x8f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pop ')
-        assert_equal(myDisasm.infos.repr, 'pop rsp')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pop ')
+        assert_equal(myDisasm.repr(), 'pop rsp')

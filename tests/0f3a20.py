@@ -27,46 +27,46 @@ class TestSuite:
         # 66 0F 3A 20 /r ib
         # PINSRB xmm1, r32/m8, imm8
 
-        Buffer = '660f3a202011'.decode('hex')
+        Buffer = bytes.fromhex('660f3a202011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a20)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pinsrb ')
-        assert_equal(myDisasm.infos.repr, 'pinsrb xmm4, byte ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pinsrb ')
+        assert_equal(myDisasm.repr(), 'pinsrb xmm4, byte ptr [rax], 11h')
 
-        Buffer = '660f3a20c011'.decode('hex')
+        Buffer = bytes.fromhex('660f3a20c011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a20)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pinsrb ')
-        assert_equal(myDisasm.infos.repr, 'pinsrb xmm0, eax, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pinsrb ')
+        assert_equal(myDisasm.repr(), 'pinsrb xmm0, eax, 11h')
 
         # VEX.128.66.0F3A.W0 20 /r ib
         # VPINSRB xmm1, xmm2, r32/m8, imm8
 
         myVEX = VEX('VEX.128.66.0F3A.W0')
-        Buffer = '{}20e011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}20e011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x20)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpinsrb ')
-        assert_equal(myDisasm.infos.repr, 'vpinsrb xmm12, xmm0, r8d, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpinsrb ')
+        assert_equal(myDisasm.repr(), 'vpinsrb xmm12, xmm0, r8d, 11h')
 
         myVEX = VEX('VEX.128.66.0F3A.W0')
-        Buffer = '{}202011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}202011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x20)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpinsrb ')
-        assert_equal(myDisasm.infos.repr, 'vpinsrb xmm12, xmm0, byte ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpinsrb ')
+        assert_equal(myDisasm.repr(), 'vpinsrb xmm12, xmm0, byte ptr [r8], 11h')
 
         # EVEX.128.66.0F3A.WIG 20 /r ib
         # VPINSRB xmm1, xmm2, r32/m8, imm8
 
         myEVEX = EVEX('EVEX.128.66.0F3A.WIG')
-        Buffer = '{}202011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}202011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x20)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpinsrb ')
-        assert_equal(myDisasm.infos.repr, 'vpinsrb xmm28, xmm16, byte ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpinsrb ')
+        assert_equal(myDisasm.repr(), 'vpinsrb xmm28, xmm16, byte ptr [r8], 11h')

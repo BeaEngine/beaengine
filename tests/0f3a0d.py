@@ -26,31 +26,31 @@ class TestSuite:
         # 66 0F 3A 0d /r ib
         # blendpd xmm1, xmm2/m128, imm8
 
-        Buffer = '660f3a0d2011'.decode('hex')
+        Buffer = bytes.fromhex('660f3a0d2011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a0d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'blendpd ')
-        assert_equal(myDisasm.infos.repr, 'blendpd xmm4, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'blendpd ')
+        assert_equal(myDisasm.repr(), 'blendpd xmm4, xmmword ptr [rax], 11h')
 
         # VEX.128.66.0F3A.WIG 0d /r ib
         # Vblendpd xmm1, xmm2, xmm3/m128, imm8
 
         myVEX = VEX('VEX.128.66.0F3A.WIG')
-        Buffer = '{}0d1033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}0d1033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vblendpd ')
-        assert_equal(myDisasm.infos.repr, 'vblendpd xmm10, xmmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vblendpd ')
+        assert_equal(myDisasm.repr(), 'vblendpd xmm10, xmmword ptr [r8], 33h')
 
         # VEX.256.66.0F3A.WIG 0d /r ib
         # Vblendpd ymm1, ymm2, ymm3/m256, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.WIG')
-        Buffer = '{}0d1033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}0d1033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vblendpd ')
-        assert_equal(myDisasm.infos.repr, 'vblendpd ymm10, ymmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vblendpd ')
+        assert_equal(myDisasm.repr(), 'vblendpd ymm10, ymmword ptr [r8], 33h')

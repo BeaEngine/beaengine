@@ -25,31 +25,31 @@ class TestSuite:
         # vpmultishiftqb xmm1{k1}{z}, xmm2, xmm3/m128
 
         myEVEX = EVEX('EVEX.128.66.0F38.W1')
-        Buffer = '{}830e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}830e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x83)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmultishiftqb ')
-        assert_equal(myDisasm.infos.repr, 'vpmultishiftqb xmm25, xmm16, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmultishiftqb ')
+        assert_equal(myDisasm.repr(), 'vpmultishiftqb xmm25, xmm16, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W1 83 /r
         # vpmultishiftqb ymm1{k1}{z}, ymm2, ymm3/m256
 
         myEVEX = EVEX('EVEX.256.66.0F38.W1')
-        Buffer = '{}830e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}830e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x83)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmultishiftqb ')
-        assert_equal(myDisasm.infos.repr, 'vpmultishiftqb ymm25, ymm16, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmultishiftqb ')
+        assert_equal(myDisasm.repr(), 'vpmultishiftqb ymm25, ymm16, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 83 /r
         # vpmultishiftqb zmm1{k1}{z}, zmm2, zmm3/m512
 
         myEVEX = EVEX('EVEX.512.66.0F38.W1')
-        Buffer = '{}830e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}830e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x83)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpmultishiftqb ')
-        assert_equal(myDisasm.infos.repr, 'vpmultishiftqb zmm25, zmm16, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmultishiftqb ')
+        assert_equal(myDisasm.repr(), 'vpmultishiftqb zmm25, zmm16, zmmword ptr [r14]')

@@ -38,10 +38,10 @@ class TestSuite:
         myVEX.R = 1
         myVEX.B = 1
 
-        Buffer = 'c4{:02x}{:02x}4b2700'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
+        Buffer = bytes.fromhex('c4{:02x}{:02x}4b2700'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vblendvpd xmm4, xmm15, xmmword ptr [rdi], xmm0')
+        assert_equal(myDisasm.repr(), 'vblendvpd xmm4, xmm15, xmmword ptr [rdi], xmm0')
 
         # VEX.256.66.0F3A.W0 4B /r /is4
         # VPBLENDVPS ymm1, ymm2, ymm3/m256, ymm4
@@ -54,10 +54,10 @@ class TestSuite:
         myVEX.R = 1
         myVEX.B = 1
 
-        Buffer = 'c4{:02x}{:02x}4b0e50'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
+        Buffer = bytes.fromhex('c4{:02x}{:02x}4b0e50'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'vblendvpd ymm1, ymm15, ymmword ptr [rsi], ymm5')
+        assert_equal(myDisasm.repr(), 'vblendvpd ymm1, ymm15, ymmword ptr [rsi], ymm5')
 
 
         # if VEX.W = 1 #UD
@@ -68,8 +68,8 @@ class TestSuite:
         myVEX.pp = 0b1
         myVEX.mmmm = 0b11
 
-        Buffer = 'c4{:02x}{:02x}4b0000'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
+        Buffer = bytes.fromhex('c4{:02x}{:02x}4b0000'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vblendvpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vblendvpd ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

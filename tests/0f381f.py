@@ -27,33 +27,33 @@ class TestSuite:
 
         myEVEX = EVEX('EVEX.128.66.0F38.WIG')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}1f20'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1f20'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpabsq ')
-        assert_equal(myDisasm.infos.repr, 'vpabsq xmm28, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsq ')
+        assert_equal(myDisasm.repr(), 'vpabsq xmm28, xmmword ptr [r8]')
 
         # EVEX.256.66.0F38.WIG 1f /r
         # vpabsq ymm1 {k1}{z}, ymm2/m256
 
         myEVEX = EVEX('EVEX.256.66.0F38.WIG')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}1f20'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1f20'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpabsq ')
-        assert_equal(myDisasm.infos.repr, 'vpabsq ymm28, ymmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsq ')
+        assert_equal(myDisasm.repr(), 'vpabsq ymm28, ymmword ptr [r8]')
 
         # EVEX.512.66.0F38.WIG 1f /r
         # vpabsq zmm1 {k1}{z}, zmm2/m512
 
         myEVEX = EVEX('EVEX.512.66.0F38.WIG')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}1f20'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}1f20'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpabsq ')
-        assert_equal(myDisasm.infos.repr, 'vpabsq zmm28, zmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsq ')
+        assert_equal(myDisasm.repr(), 'vpabsq zmm28, zmmword ptr [r8]')

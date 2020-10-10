@@ -22,10 +22,10 @@ class TestSuite:
     def test(self):
         # 0F ff /r
         # ud0 r32, r/m32
-        Buffer = '0fff9011223344'.decode('hex')
+        Buffer = bytes.fromhex('0fff9011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfff)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'ud0 ')
-        assert_equal(myDisasm.infos.repr, 'ud0 edx, dword ptr [rax+44332211h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ud0 ')
+        assert_equal(myDisasm.repr(), 'ud0 edx, dword ptr [rax+44332211h]')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

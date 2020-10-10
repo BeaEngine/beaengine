@@ -26,31 +26,31 @@ class TestSuite:
         # 66 0F 3A 15 /r ib
         # pextrw reg/m16, xmm2, imm8
 
-        Buffer = '660f3a152011'.decode('hex')
+        Buffer = bytes.fromhex('660f3a152011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a15)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pextrw ')
-        assert_equal(myDisasm.infos.repr, 'pextrw word ptr [rax], xmm4, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pextrw ')
+        assert_equal(myDisasm.repr(), 'pextrw word ptr [rax], xmm4, 11h')
 
         # VEX.128.66.0F3A.W0 15 /r ib
         # Vpextrw reg/m16, xmm2, imm8
 
         myVEX = VEX('VEX.128.66.0F3A.W0')
-        Buffer = '{}15e011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}15e011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x15)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrw ')
-        assert_equal(myDisasm.infos.repr, 'vpextrw r8w, xmm12, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.repr(), 'vpextrw r8w, xmm12, 11h')
 
         # EVEX.128.66.0F3A.WIG 15 /r ib
         # Vpextrw reg/m16, xmm2, imm8
 
         myEVEX = EVEX('EVEX.128.66.0F3A.WIG')
-        Buffer = '{}152011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}152011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x15)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpextrw ')
-        assert_equal(myDisasm.infos.repr, 'vpextrw word ptr [r8], xmm28, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.repr(), 'vpextrw word ptr [r8], xmm28, 11h')

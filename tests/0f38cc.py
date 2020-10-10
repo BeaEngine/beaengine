@@ -26,32 +26,32 @@ class TestSuite:
         # NP 0F 38 CC /r
         # SHA256MSG1 xmm1, xmm2/m128
 
-        Buffer = '0f38cc6b11'.decode('hex')
+        Buffer = bytes.fromhex('0f38cc6b11')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38cc')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'sha256msg1 ')
-        assert_equal(myDisasm.infos.repr, 'sha256msg1 xmm5, xmmword ptr [rbx+11h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha256msg1 ')
+        assert_equal(myDisasm.repr(), 'sha256msg1 xmm5, xmmword ptr [rbx+11h]')
 
         # EVEX.512.66.0F38.W0 CC /r
         # VRSQRT28PS zmm1 {k1}{z},zmm2/m512/m32bcst {sae}
 
         myEVEX = EVEX('EVEX.512.66.0F38.W0')
-        Buffer = '{}cc00'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}cc00'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcc)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrsqrt28ps ')
-        assert_equal(myDisasm.infos.repr, 'vrsqrt28ps zmm24, zmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28ps ')
+        assert_equal(myDisasm.repr(), 'vrsqrt28ps zmm24, zmmword ptr [r8]')
 
 
         # EVEX.512.66.0F38.W1 CC /r
         # VRSQRT28PD zmm1 {k1}{z}, zmm2/m512/m64bcst {sae}
 
         myEVEX = EVEX('EVEX.512.66.0F38.W1')
-        Buffer = '{}cc00'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}cc00'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcc)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrsqrt28pd ')
-        assert_equal(myDisasm.infos.repr, 'vrsqrt28pd zmm24, zmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28pd ')
+        assert_equal(myDisasm.repr(), 'vrsqrt28pd zmm24, zmmword ptr [r8]')

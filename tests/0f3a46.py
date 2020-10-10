@@ -27,9 +27,9 @@ class TestSuite:
         # VPERM2I128 ymm1, ymm2, ymm3/m256, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.W0')
-        Buffer = '{}461033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}461033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x46)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vperm2i128 ')
-        assert_equal(myDisasm.infos.repr, 'vperm2i128 ymm10, ymm0, ymmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vperm2i128 ')
+        assert_equal(myDisasm.repr(), 'vperm2i128 ymm10, ymm0, ymmword ptr [r8], 33h')

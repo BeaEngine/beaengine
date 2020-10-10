@@ -24,193 +24,193 @@ class TestSuite:
         # 66 0F 5f /r
         # maxpd xmm1, xmm2/m128
 
-        Buffer = '660f5f90'.decode('hex')
+        Buffer = bytes.fromhex('660f5f9000000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'maxpd ')
-        assert_equal(myDisasm.infos.repr, 'maxpd xmm2, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'maxpd ')
+        assert_equal(myDisasm.repr(), 'maxpd xmm2, xmmword ptr [rax+00000000h]')
 
         # VEX.NDS.128.66.0F.WIG 5f /r
         # Vmaxpd xmm1,xmm2, xmm3/m128
 
         myVEX = VEX('VEX.NDS.128.66.0F.WIG')
-        Buffer = '{}5f90'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd xmm10, xmm15, xmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxpd ')
+        assert_equal(myDisasm.repr(), 'vmaxpd xmm10, xmm15, xmmword ptr [r8+00000000h]')
 
         # VEX.NDS.256.66.0F.WIG 5f /r
         # Vmaxpd ymm1, ymm2, ymm3/m256
 
         myVEX = VEX('VEX.NDS.256.66.0F.WIG')
-        Buffer = '{}5f90'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd ymm10, ymm15, ymmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxpd ')
+        assert_equal(myDisasm.repr(), 'vmaxpd ymm10, ymm15, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.128.66.0F.W1 5f /r
         # Vmaxpd xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst
 
         myEVEX = EVEX('EVEX.NDS.128.66.0F.W1')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd xmm26, xmm31, xmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxpd ')
+        assert_equal(myDisasm.repr(), 'vmaxpd xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.66.0F.W1 5f /r
         # Vmaxpd ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst
 
         myEVEX = EVEX('EVEX.NDS.256.66.0F.W1')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd ymm26, ymm31, ymmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxpd ')
+        assert_equal(myDisasm.repr(), 'vmaxpd ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.66.0F.W1 5f /r
         # Vmaxpd zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{er}
 
         myEVEX = EVEX('EVEX.NDS.512.66.0F.W1')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxpd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxpd zmm26, zmm31, zmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxpd ')
+        assert_equal(myDisasm.repr(), 'vmaxpd zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # NP 0F 5f /r
         # maxps xmm1, xmm2/m128
 
-        Buffer = '0f5f90'.decode('hex')
+        Buffer = bytes.fromhex('0f5f9000000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'maxps ')
-        assert_equal(myDisasm.infos.repr, 'maxps xmm2, xmmword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'maxps ')
+        assert_equal(myDisasm.repr(), 'maxps xmm2, xmmword ptr [rax+00000000h]')
 
         # VEX.NDS.128.0F.WIG 5f /r
         # Vmaxps xmm1,xmm2, xmm3/m128
 
         myVEX = VEX('VEX.NDS.128.0F.WIG')
-        Buffer = '{}5f90'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps xmm10, xmm15, xmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxps ')
+        assert_equal(myDisasm.repr(), 'vmaxps xmm10, xmm15, xmmword ptr [r8+00000000h]')
 
         # VEX.NDS.256.0F.WIG 5f /r
         # Vmaxps ymm1, ymm2, ymm3/m256
 
         myVEX = VEX('VEX.NDS.256.0F.WIG')
-        Buffer = '{}5f90'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps ymm10, ymm15, ymmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxps ')
+        assert_equal(myDisasm.repr(), 'vmaxps ymm10, ymm15, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.128.0F.W0 5f /r
         # Vmaxps xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst
 
         myEVEX = EVEX('EVEX.NDS.128.0F.W0')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps xmm26, xmm31, xmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxps ')
+        assert_equal(myDisasm.repr(), 'vmaxps xmm26, xmm31, xmmword ptr [r8+00000000h]')
 
         # EVEX.NDS.256.0F.W0 5f /r
         # Vmaxps ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst
 
         myEVEX = EVEX('EVEX.NDS.256.0F.W0')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps ymm26, ymm31, ymmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxps ')
+        assert_equal(myDisasm.repr(), 'vmaxps ymm26, ymm31, ymmword ptr [r8+00000000h]')
 
         # EVEX.NDS.512.0F.W0 5f /r
         # Vmaxps zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst {er}
 
         myEVEX = EVEX('EVEX.NDS.512.0F.W0')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxps ')
-        assert_equal(myDisasm.infos.repr, 'vmaxps zmm26, zmm31, zmmword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxps ')
+        assert_equal(myDisasm.repr(), 'vmaxps zmm26, zmm31, zmmword ptr [r8+00000000h]')
 
         # F2 0F 5f /r
         # maxsd xmm1, xmm2/m64
 
-        Buffer = 'f20f5f90'.decode('hex')
+        Buffer = bytes.fromhex('f20f5f9000000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'maxsd ')
-        assert_equal(myDisasm.infos.repr, 'maxsd xmm2, qword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'maxsd ')
+        assert_equal(myDisasm.repr(), 'maxsd xmm2, qword ptr [rax+00000000h]')
 
         # VEX.NDS.LIG.F2.0F.WIG 5f /r
         # Vmaxsd xmm1, xmm2, xmm3/m64
 
         myVEX = VEX('VEX.NDS.LIG.F2.0F.WIG')
-        Buffer = '{}5f90'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxsd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxsd xmm10, xmm15, qword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxsd ')
+        assert_equal(myDisasm.repr(), 'vmaxsd xmm10, xmm15, qword ptr [r8+00000000h]')
 
         # EVEX.NDS.LIG.F2.0F.W1 5f /r
         # Vmaxsd xmm1 {k1}{z}, xmm2, xmm3/m64{er}
 
         myEVEX = EVEX('EVEX.NDS.LIG.F2.0F.W1')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxsd ')
-        assert_equal(myDisasm.infos.repr, 'vmaxsd xmm26, xmm31, qword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxsd ')
+        assert_equal(myDisasm.repr(), 'vmaxsd xmm26, xmm31, qword ptr [r8+00000000h]')
 
         # F3 0F 5f /r
         # maxss xmm1, xmm2/m32
 
-        Buffer = 'f30f5f90'.decode('hex')
+        Buffer = bytes.fromhex('f30f5f9000000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'maxss ')
-        assert_equal(myDisasm.infos.repr, 'maxss xmm2, dword ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'maxss ')
+        assert_equal(myDisasm.repr(), 'maxss xmm2, dword ptr [rax+00000000h]')
 
         # VEX.NDS.LIG.F3.0F.WIG 5f /r
         # Vmaxss xmm1,xmm2, xmm3/m32
 
         myVEX = VEX('VEX.NDS.LIG.F3.0F.WIG')
-        Buffer = '{}5f90'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxss ')
-        assert_equal(myDisasm.infos.repr, 'vmaxss xmm10, xmm15, dword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxss ')
+        assert_equal(myDisasm.repr(), 'vmaxss xmm10, xmm15, dword ptr [r8+00000000h]')
 
         # EVEX.NDS.LIG.F3.0F.W0 5f /r
         # Vmaxss xmm1{k1}{z}, xmm2, xmm3/m32{er}
 
         myEVEX = EVEX('EVEX.NDS.LIG.F3.0F.W0')
-        Buffer = '{}5f90'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}5f9000000000'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vmaxss ')
-        assert_equal(myDisasm.infos.repr, 'vmaxss xmm26, xmm31, dword ptr [r8+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmaxss ')
+        assert_equal(myDisasm.repr(), 'vmaxss xmm26, xmm31, dword ptr [r8+00000000h]')

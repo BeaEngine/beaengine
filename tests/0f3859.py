@@ -25,92 +25,92 @@ class TestSuite:
         # VPBROADCASTQ xmm1, xmm2/m64
 
         myVEX = VEX('VEX.128.66.0F38.W0')
-        Buffer = '{}5910'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5910'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastq xmm10, qword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastq ')
+        assert_equal(myDisasm.repr(), 'vpbroadcastq xmm10, qword ptr [r8]')
 
         # VEX.256.66.0F38.W0 59 /r
         # VPBROADCASTQ ymm1, xmm2/m64
 
         myVEX = VEX('VEX.256.66.0F38.W0')
-        Buffer = '{}5910'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}5910'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastq ymm10, qword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastq ')
+        assert_equal(myDisasm.repr(), 'vpbroadcastq ymm10, qword ptr [r8]')
 
         # EVEX.128.66.0F38.W1 59 /r
         # VPBROADCASTQ xmm1 {k1}{z}, xmm2/m64
 
         myEVEX = EVEX('EVEX.128.66.0F38.W1')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}590e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}590e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastq xmm25, qword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastq ')
+        assert_equal(myDisasm.repr(), 'vpbroadcastq xmm25, qword ptr [r14]')
 
         # EVEX.256.66.0F38.W1 59 /r
         # VPBROADCASTQ ymm1 {k1}{z}, xmm2/m64
 
         myEVEX = EVEX('EVEX.256.66.0F38.W1')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}590e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}590e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastq ymm25, qword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastq ')
+        assert_equal(myDisasm.repr(), 'vpbroadcastq ymm25, qword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 59 /r
         # VPBROADCASTQ zmm1 {k1}{z}, xmm2/m64
 
         myEVEX = EVEX('EVEX.512.66.0F38.W1')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}590e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}590e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpbroadcastq ')
-        assert_equal(myDisasm.infos.repr, 'vpbroadcastq zmm25, qword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastq ')
+        assert_equal(myDisasm.repr(), 'vpbroadcastq zmm25, qword ptr [r14]')
 
         # EVEX.128.66.0F38.W0 59 /r
         # VBROADCASTI32x2 xmm1 {k1}{z}, xmm2/m64
 
         myEVEX = EVEX('EVEX.128.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}590e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}590e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti32x2 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x2 xmm25, qword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x2 ')
+        assert_equal(myDisasm.repr(), 'vbroadcasti32x2 xmm25, qword ptr [r14]')
 
         # EVEX.256.66.0F38.W0 59 /r
         # VBROADCASTI32x2 ymm1 {k1}{z}, xmm2/m64
 
         myEVEX = EVEX('EVEX.256.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}590e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}590e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti32x2 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x2 ymm25, qword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x2 ')
+        assert_equal(myDisasm.repr(), 'vbroadcasti32x2 ymm25, qword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 59 /r
         # VBROADCASTI32x2 zmm1 {k1}{z}, xmm2/m64
 
         myEVEX = EVEX('EVEX.512.66.0F38.W0')
         myEVEX.vvvv = 0b1111
-        Buffer = '{}590e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}590e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x59)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vbroadcasti32x2 ')
-        assert_equal(myDisasm.infos.repr, 'vbroadcasti32x2 zmm25, qword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x2 ')
+        assert_equal(myDisasm.repr(), 'vbroadcasti32x2 zmm25, qword ptr [r14]')

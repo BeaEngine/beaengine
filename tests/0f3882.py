@@ -25,9 +25,9 @@ class TestSuite:
         # 66 0F 38 82
         # INVPCID r64, m128
 
-        Buffer = '660f388220'.decode('hex')
+        Buffer = bytes.fromhex('660f388220')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3882)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'invpcid ')
-        assert_equal(myDisasm.infos.repr, 'invpcid rsp, dqword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'invpcid ')
+        assert_equal(myDisasm.repr(), 'invpcid rsp, dqword ptr [rax]')

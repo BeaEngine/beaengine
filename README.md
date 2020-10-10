@@ -21,9 +21,14 @@ See the COPYING and COPYING.LESSER files for more details.
 ## quick start
 
 ### 1. How to use it with Python :
+
+#### 1.1. Very simple example to read one instruction:
 ```
+#!/usr/bin/python3
+
 from BeaEnginePython import *
-buffer = '6202054000443322'.decode('hex')
+
+buffer = bytes.fromhex('6202054000443322')
 target = Disasm(buffer)
 target.read()
 print(target.repr())
@@ -32,6 +37,38 @@ Output is :
 
 ```
 vpshufb zmm24, zmm31, zmmword ptr [r11+r14+0880h]
+```
+
+#### 1.2. Loop on *instructions flow* and extract instructions modifying `rax` register:  
+```
+#!/usr/bin/python3
+
+from BeaEnginePython import *
+
+buffer = bytes.fromhex('4831c04889fbffc04989c49031ed66586a005f80c40c')
+instr = Disasm(buffer)
+go = True
+while go:
+  instr.read()
+  if instr.modifies("rax"):
+    print(f"{instr.repr():20}rax register is modified")
+  else:
+    print(instr.repr())
+  go = True if instr.length > 0 else False
+```
+Output is:
+
+```
+xor rax, rax        rax register is modified
+mov rbx, rdi
+inc eax             rax register is modified
+mov r12, rax
+nop
+xor ebp, ebp
+pop ax              rax register is modified
+push 00000000h
+pop rdi
+pop rdi             rax register is modified
 ```
 
 ### 2. Releases

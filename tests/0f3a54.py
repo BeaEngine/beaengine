@@ -27,64 +27,64 @@ class TestSuite:
         # vfixupmmps xmm1 {k1}{z}, xmm2, xmm3/m128/m32bcst, imm8
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W0')
-        Buffer = '{}542011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}542011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x54)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfixupmmps ')
-        assert_equal(myDisasm.infos.repr, 'vfixupmmps xmm28, xmm16, xmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmps ')
+        assert_equal(myDisasm.repr(), 'vfixupmmps xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 54 /r ib
         # vfixupmmps ymm1 {k1}{z}, ymm2, ymm3/m256/m32bcst, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
-        Buffer = '{}542011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}542011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x54)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfixupmmps ')
-        assert_equal(myDisasm.infos.repr, 'vfixupmmps ymm28, ymm16, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmps ')
+        assert_equal(myDisasm.repr(), 'vfixupmmps ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 54 /r ib
         # vfixupmmps zmm1 {k1}{z}, zmm2, zmm3/m512/m32bcst{sae}, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
-        Buffer = '{}542011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}542011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x54)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfixupmmps ')
-        assert_equal(myDisasm.infos.repr, 'vfixupmmps zmm28, zmm16, zmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmps ')
+        assert_equal(myDisasm.repr(), 'vfixupmmps zmm28, zmm16, zmmword ptr [r8], 11h')
 
         # EVEX.128.66.0F3A.W1 54 /r ib
         # vfixupmmpd xmm1 {k1}{z}, xmm2, xmm3/m128/m64bcst, imm8
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W1')
-        Buffer = '{}542011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}542011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x54)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfixupmmpd ')
-        assert_equal(myDisasm.infos.repr, 'vfixupmmpd xmm28, xmm16, xmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmpd ')
+        assert_equal(myDisasm.repr(), 'vfixupmmpd xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 54 /r ib
         # vfixupmmpd ymm1 {k1}{z}, ymm2, ymm3/m256/m64bcst, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W1')
-        Buffer = '{}542011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}542011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x54)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfixupmmpd ')
-        assert_equal(myDisasm.infos.repr, 'vfixupmmpd ymm28, ymm16, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmpd ')
+        assert_equal(myDisasm.repr(), 'vfixupmmpd ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 54 /r ib
         # vfixupmmpd zmm1 {k1}{z}, zmm2, zmm3/m512/m64bcst{sae}, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
-        Buffer = '{}542011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}542011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x54)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfixupmmpd ')
-        assert_equal(myDisasm.infos.repr, 'vfixupmmpd zmm28, zmm16, zmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmpd ')
+        assert_equal(myDisasm.repr(), 'vfixupmmpd zmm28, zmm16, zmmword ptr [r8], 11h')

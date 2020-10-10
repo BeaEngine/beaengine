@@ -29,36 +29,36 @@ class TestSuite:
         # RORX r32, r/m32, imm8
 
         myVEX = VEX('VEX.LZ.F2.0F3A.W0')
-        Buffer = '{}f01033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}f01033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rorx ')
-        assert_equal(myDisasm.infos.repr, 'rorx r10d, dword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.repr(), 'rorx r10d, dword ptr [r8], 33h')
 
         myVEX = VEX('VEX.LZ.F2.0F3A.W0')
-        Buffer = '{}f0c033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}f0c033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rorx ')
-        assert_equal(myDisasm.infos.repr, 'rorx r8d, r8d, 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.repr(), 'rorx r8d, r8d, 33h')
 
         # VEX.LZ.F2.0F3A.W1 F0 /r ib
         # RORX r64, r/m64, imm8
 
         myVEX = VEX('VEX.LZ.F2.0F3A.W1')
-        Buffer = '{}f01033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}f01033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rorx ')
-        assert_equal(myDisasm.infos.repr, 'rorx r10, qword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.repr(), 'rorx r10, qword ptr [r8], 33h')
 
         myVEX = VEX('VEX.LZ.F2.0F3A.W1')
-        Buffer = '{}f0c033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}f0c033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rorx ')
-        assert_equal(myDisasm.infos.repr, 'rorx r8, r8, 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.repr(), 'rorx r8, r8, 33h')

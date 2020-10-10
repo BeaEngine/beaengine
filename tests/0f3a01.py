@@ -27,31 +27,31 @@ class TestSuite:
         # vpermpd ymm1, ymm2/m256, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.W1')
-        Buffer = '{}01e011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}01e011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpermpd ')
-        assert_equal(myDisasm.infos.repr, 'vpermpd ymm12, ymm8, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermpd ')
+        assert_equal(myDisasm.repr(), 'vpermpd ymm12, ymm8, 11h')
 
         # EVEX.256.66.0F3A.W1 01 /r ib
         # vpermpd ymm1 {k1}{z}, ymm2/m256/m64bcst, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W1')
-        Buffer = '{}012011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}012011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpermpd ')
-        assert_equal(myDisasm.infos.repr, 'vpermpd ymm28, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermpd ')
+        assert_equal(myDisasm.repr(), 'vpermpd ymm28, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 01 /r ib
         # vpermpd zmm1 {k1}{z}, zmm2/m512/m64bcst, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
-        Buffer = '{}012011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}012011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpermpd ')
-        assert_equal(myDisasm.infos.repr, 'vpermpd zmm28, zmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermpd ')
+        assert_equal(myDisasm.repr(), 'vpermpd zmm28, zmmword ptr [r8], 11h')

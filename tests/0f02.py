@@ -24,34 +24,34 @@ class TestSuite:
         # 0F 02 /r
         # LAR r16, r16/m16
 
-        Buffer = '660f02e0'.decode('hex')
+        Buffer = bytes.fromhex('660f02e0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
-        assert_equal(myDisasm.infos.repr, 'lar sp, ax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lar ')
+        assert_equal(myDisasm.repr(), 'lar sp, ax')
 
         # 0F 02 /r
         # LAR reg, r32/m16
 
-        Buffer = '0f02e0'.decode('hex')
+        Buffer = bytes.fromhex('0f02e0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
-        assert_equal(myDisasm.infos.repr, 'lar esp, eax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lar ')
+        assert_equal(myDisasm.repr(), 'lar esp, eax')
 
-        Buffer = '0f0290'.decode('hex')
+        Buffer = bytes.fromhex('0f029011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
-        assert_equal(myDisasm.infos.repr, 'lar edx, word ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lar ')
+        assert_equal(myDisasm.repr(), 'lar edx, word ptr [rax+44332211h]')
 
 
-        Buffer = 'f00f02e0'.decode('hex')
+        Buffer = bytes.fromhex('f00f02e0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lar ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lar ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

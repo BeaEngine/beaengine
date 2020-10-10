@@ -25,20 +25,20 @@ class TestSuite:
         # VGETEXPSS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}
 
         myEVEX = EVEX('EVEX.NDS.LIG.66.0F38.W0')
-        Buffer = '{}430e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}430e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetexpss ')
-        assert_equal(myDisasm.infos.repr, 'vgetexpss xmm25, xmm31, dword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vgetexpss ')
+        assert_equal(myDisasm.repr(), 'vgetexpss xmm25, xmm31, dword ptr [r14]')
 
         # EVEX.NDS.LIG.66.0F38.W1 43 /r
         # VGETEXPSD xmm1 {k1}{z}, xmm2, xmm3/m64{sae}
 
         myEVEX = EVEX('EVEX.NDS.LIG.66.0F38.W1')
-        Buffer = '{}430e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}430e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x43)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetexpsd ')
-        assert_equal(myDisasm.infos.repr, 'vgetexpsd xmm25, xmm31, qword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vgetexpsd ')
+        assert_equal(myDisasm.repr(), 'vgetexpsd xmm25, xmm31, qword ptr [r14]')

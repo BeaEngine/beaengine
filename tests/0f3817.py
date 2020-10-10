@@ -26,40 +26,40 @@ class TestSuite:
         # 66 0F 38 17 /r
         # PTEST xmm1, xmm2/m128
 
-        Buffer = '660f381727'.decode('hex')
+        Buffer = bytes.fromhex('660f381727')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.repr, 'ptest xmm4, xmmword ptr [rdi]')
+        assert_equal(myDisasm.repr(), 'ptest xmm4, xmmword ptr [rdi]')
 
         # VEX.128.66.0F38.WIG 17 /r
         # VPTEST xmm1, xmm2/m128
 
         myVEX = VEX('VEX.128.66.0F38.WIG')
         myVEX.vvvv = 0b1111
-        Buffer = '{}1720'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}1720'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vptest ')
-        assert_equal(myDisasm.infos.repr, 'vptest xmm12, xmmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vptest ')
+        assert_equal(myDisasm.repr(), 'vptest xmm12, xmmword ptr [r8]')
 
         # VEX.256.66.0F38.WIG 17 /r
         # VPTEST ymm1, ymm2/m256
 
         myVEX = VEX('VEX.256.66.0F38.WIG')
         myVEX.vvvv = 0b1111
-        Buffer = '{}1720'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}1720'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vptest ')
-        assert_equal(myDisasm.infos.repr, 'vptest ymm12, ymmword ptr [r8]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vptest ')
+        assert_equal(myDisasm.repr(), 'vptest ymm12, ymmword ptr [r8]')
 
         myVEX = VEX('VEX.256.66.0F38.WIG')
         myVEX.vvvv = 0b1110
-        Buffer = '{}1720'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}1720'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vptest ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vptest ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

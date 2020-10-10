@@ -24,23 +24,23 @@ class TestSuite:
 
         # VEX.NDS.128.66.0F38.W0 9f /r
         # vfnmsub132ss xmm1, xmm2, xmm3/m128
-        Buffer = 'c402019f0e'.decode('hex')
+        Buffer = bytes.fromhex('c402019f0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub132ss ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub132ss xmm9, xmm15, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfnmsub132ss ')
+        assert_equal(myDisasm.repr(), 'vfnmsub132ss xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F38.W0 9f /r
         # vfnmsub132ss ymm1, ymm2, ymm3/m256
-        Buffer = 'c402059f0e'.decode('hex')
+        Buffer = bytes.fromhex('c402059f0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub132ss ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub132ss ymm9, ymm15, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfnmsub132ss ')
+        assert_equal(myDisasm.repr(), 'vfnmsub132ss ymm9, ymm15, ymmword ptr [r14]')
 
         # EVEX.NDS.128.66.0F38.W0 9f /r
         # vfnmsub132ss xmm1 {k1}{z}, xmm2, xmm3/m128
-        Buffer = '620205069f0e'.decode('hex')
+        Buffer = bytes.fromhex('620205069f0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.EVEX.P0, 0x2)
@@ -49,12 +49,12 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x9f')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub132ss ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub132ss xmm25, xmm31, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfnmsub132ss ')
+        assert_equal(myDisasm.repr(), 'vfnmsub132ss xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.W0 9f /r
         # vfnmsub132ss ymm1 {k1}{z}, ymm2, ymm3/m256
-        Buffer = '620205209f0e'.decode('hex')
+        Buffer = bytes.fromhex('620205209f0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.EVEX.P0, 0x2)
@@ -63,12 +63,12 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x9f')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub132ss ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub132ss ymm25, ymm31, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfnmsub132ss ')
+        assert_equal(myDisasm.repr(), 'vfnmsub132ss ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.W0 9f /r
         # vfnmsub132ss zmm1 {k1}{z}, zmm2, zmm3/m512
-        Buffer = '620205409f0e'.decode('hex')
+        Buffer = bytes.fromhex('620205409f0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.EVEX.P0, 0x2)
@@ -77,8 +77,8 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x9f')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub132ss ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub132ss zmm25, zmm31, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfnmsub132ss ')
+        assert_equal(myDisasm.repr(), 'vfnmsub132ss zmm25, zmm31, zmmword ptr [r14]')
 
 
         # VEX.NDS.128.66.0F38.W1 9f /r
@@ -91,8 +91,8 @@ class TestSuite:
         myVEX.mmmm = 0b10
         myVEX.vvvv = 0b0
 
-        Buffer = 'c4{:02x}{:02x}9f0e'.format(myVEX.byte1(), myVEX.byte2()).decode('hex')
+        Buffer = bytes.fromhex('c4{:02x}{:02x}9f0e'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vfnmsub132sd ')
-        assert_equal(myDisasm.infos.repr, 'vfnmsub132sd xmm9, xmm15, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfnmsub132sd ')
+        assert_equal(myDisasm.repr(), 'vfnmsub132sd xmm9, xmm15, xmmword ptr [r14]')

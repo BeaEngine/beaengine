@@ -27,12 +27,12 @@ class TestSuite:
         # 0F 38 f1 /r
         # MOVBE m32, r32
 
-        Buffer = '0f38f120'.decode('hex')
+        Buffer = bytes.fromhex('0f38f120')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'movbe ')
-        assert_equal(myDisasm.infos.repr, 'movbe dword ptr [rax], esp')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movbe ')
+        assert_equal(myDisasm.repr(), 'movbe dword ptr [rax], esp')
 
         # REX.W + 0F 38 f1 /r
         # MOVBE m64, r64
@@ -40,31 +40,31 @@ class TestSuite:
         myREX = REX()
         myREX.W = 1
 
-        Buffer = '{:02x}0f38f127'.format(myREX.byte()).decode('hex')
+        Buffer = bytes.fromhex('{:02x}0f38f127'.format(myREX.byte()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'movbe ')
-        assert_equal(myDisasm.infos.repr, 'movbe qword ptr [rdi], rsp')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movbe ')
+        assert_equal(myDisasm.repr(), 'movbe qword ptr [rdi], rsp')
 
         # F2 0F 38 F1 /r
         # CRC32 r32, r/m32
 
-        Buffer = 'f20f38f120'.decode('hex')
+        Buffer = bytes.fromhex('f20f38f120')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'crc32 ')
-        assert_equal(myDisasm.infos.repr, 'crc32 esp, dword ptr [rax]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'crc32 ')
+        assert_equal(myDisasm.repr(), 'crc32 esp, dword ptr [rax]')
 
         # F2 REX.W 0F 38 F1 /r
         # CRC32 r64, r/m64
 
         myREX = REX()
         myREX.W = 1
-        Buffer = 'f2{:02x}0f38f127'.format(myREX.byte()).decode('hex')
+        Buffer = bytes.fromhex('f2{:02x}0f38f127'.format(myREX.byte()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'crc32 ')
-        assert_equal(myDisasm.infos.repr, 'crc32 rsp, qword ptr [rdi]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'crc32 ')
+        assert_equal(myDisasm.repr(), 'crc32 rsp, qword ptr [rdi]')

@@ -911,7 +911,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
  * ==================================================================== */
 int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
 {
-  if ((GV.EndOfBlock != 0) && (GV.EIP_+(UInt64)len >= GV.EndOfBlock)) {
+  if ((GV.EndOfBlock != 0) && (GV.EIP_+(UInt64)len > GV.EndOfBlock)) {
     GV.OutOfBlock = 1;
     GV.ERROR_OPCODE = OUT_OF_BLOCK;
     return 0;

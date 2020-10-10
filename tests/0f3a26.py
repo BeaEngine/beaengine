@@ -27,42 +27,42 @@ class TestSuite:
         # vgetmantps ymm1{k1}{z}, ymm2, ymm3/m256/m32bcst, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
-        Buffer = '{}262011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}262011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x26)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantps ')
-        assert_equal(myDisasm.infos.repr, 'vgetmantps ymm28, ymm16, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vgetmantps ')
+        assert_equal(myDisasm.repr(), 'vgetmantps ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 26 /r ib
         # vgetmantps zmm1{k1}{z}, zmm2, zmm3/m512/m32bcst, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
-        Buffer = '{}262011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}262011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x26)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantps ')
-        assert_equal(myDisasm.infos.repr, 'vgetmantps zmm28, zmm16, zmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vgetmantps ')
+        assert_equal(myDisasm.repr(), 'vgetmantps zmm28, zmm16, zmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 26 /r ib
         # vgetmantpd ymm1{k1}{z}, ymm2, ymm3/m256/m64bcst, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W1')
-        Buffer = '{}262011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}262011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x26)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantpd ')
-        assert_equal(myDisasm.infos.repr, 'vgetmantpd ymm28, ymm16, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vgetmantpd ')
+        assert_equal(myDisasm.repr(), 'vgetmantpd ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 26 /r ib
         # vgetmantpd zmm1{k1}{z}, zmm2, zmm3/m512/m64bcst, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W1')
-        Buffer = '{}262011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}262011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x26)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vgetmantpd ')
-        assert_equal(myDisasm.infos.repr, 'vgetmantpd zmm28, zmm16, zmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vgetmantpd ')
+        assert_equal(myDisasm.repr(), 'vgetmantpd zmm28, zmm16, zmmword ptr [r8], 11h')

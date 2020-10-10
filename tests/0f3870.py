@@ -25,31 +25,31 @@ class TestSuite:
         # VPSHLDVW xmm1{k1}{z}, xmm2, xmm3/m128
 
         myEVEX = EVEX('EVEX.128.66.0F38.W1')
-        Buffer = '{}700e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}700e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x70)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpshldvw ')
-        assert_equal(myDisasm.infos.repr, 'vpshldvw xmm25, xmm16, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpshldvw ')
+        assert_equal(myDisasm.repr(), 'vpshldvw xmm25, xmm16, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W1 70 /r
         # VPSHLDVW ymm1{k1}{z}, ymm2, ymm3/m256
 
         myEVEX = EVEX('EVEX.256.66.0F38.W1')
-        Buffer = '{}700e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}700e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x70)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpshldvw ')
-        assert_equal(myDisasm.infos.repr, 'vpshldvw ymm25, ymm16, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpshldvw ')
+        assert_equal(myDisasm.repr(), 'vpshldvw ymm25, ymm16, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 70 /r
         # VPSHLDVW zmm1{k1}{z}, zmm2, zmm3/m512
 
         myEVEX = EVEX('EVEX.512.66.0F38.W1')
-        Buffer = '{}700e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}700e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x70)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpshldvw ')
-        assert_equal(myDisasm.infos.repr, 'vpshldvw zmm25, zmm16, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpshldvw ')
+        assert_equal(myDisasm.repr(), 'vpshldvw zmm25, zmm16, zmmword ptr [r14]')

@@ -30,39 +30,39 @@ class TestSuite:
         # @TODO : Find examples
 
         # VEX precedeed by 66h
-        Buffer = '66c40201070e'.decode('hex')
+        Buffer = bytes.fromhex('66c40201070e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # VEX precedeed by F2h
-        Buffer = 'f2c40201070e'.decode('hex')
+        Buffer = bytes.fromhex('f2c40201070e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # VEX precedeed by F3h
-        Buffer = 'f3c40201070e'.decode('hex')
+        Buffer = bytes.fromhex('f3c40201070e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # VEX precedeed by F0h
-        Buffer = 'f0c40201070e'.decode('hex')
+        Buffer = bytes.fromhex('f0c40201070e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # VEX precedeed by REX
         for i in range(0x48, 0x4f):
-            Buffer = '{:2x}c40201070e'.format(i).decode('hex')
+            Buffer = bytes.fromhex('{:2x}c40201070e'.format(i))
             myDisasm = Disasm(Buffer)
             myDisasm.read()
             assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # VEX precedeed by REX
         for i in range(0x40, 0x47):
-            Buffer = '{:2x}c40201070e'.format(i).decode('hex')
+            Buffer = bytes.fromhex('{:2x}c40201070e'.format(i))
             print(Buffer)
             myDisasm = Disasm(Buffer)
             myDisasm.read()

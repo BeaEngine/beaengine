@@ -24,53 +24,53 @@ class TestSuite:
         # 0F 03 /r
         # LSL r16, r16/m16
 
-        Buffer = '660f03e0'.decode('hex')
+        Buffer = bytes.fromhex('660f03e0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lsl ')
-        assert_equal(myDisasm.infos.repr, 'lsl sp, ax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.repr(), 'lsl sp, ax')
 
         # 0F 03 /r
         # LSL reg, r32/m16
 
-        Buffer = '0f03e0'.decode('hex')
+        Buffer = bytes.fromhex('0f03e0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lsl ')
-        assert_equal(myDisasm.infos.repr, 'lsl esp, eax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.repr(), 'lsl esp, eax')
 
-        Buffer = '0f0390'.decode('hex')
+        Buffer = bytes.fromhex('0f039000000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lsl ')
-        assert_equal(myDisasm.infos.repr, 'lsl edx, word ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.repr(), 'lsl edx, word ptr [rax+00000000h]')
 
 
         myREX = REX()
         myREX.W = 1
-        Buffer = '{:02x}0f0390'.format(myREX.byte()).decode('hex')
+        Buffer = bytes.fromhex('{:02x}0f039000000000'.format(myREX.byte()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lsl ')
-        assert_equal(myDisasm.infos.repr, 'lsl rdx, word ptr [rax+00000000h]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.repr(), 'lsl rdx, word ptr [rax+00000000h]')
 
         myREX = REX()
         myREX.W = 1
-        Buffer = '{:02x}0f03e0'.format(myREX.byte()).decode('hex')
+        Buffer = bytes.fromhex('{:02x}0f03e0'.format(myREX.byte()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 0x3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lsl ')
-        assert_equal(myDisasm.infos.repr, 'lsl rsp, eax')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.repr(), 'lsl rsp, eax')
 
-        Buffer = 'f00f03e0'.decode('hex')
+        Buffer = bytes.fromhex('f00f03e0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'lsl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

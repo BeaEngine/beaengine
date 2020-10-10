@@ -27,55 +27,55 @@ class TestSuite:
         # 66 0F 3A 21 /r ib
         # INSERTPS xmm1, xmm2/m32, imm8
 
-        Buffer = '660f3a212011'.decode('hex')
+        Buffer = bytes.fromhex('660f3a212011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'insertps ')
-        assert_equal(myDisasm.infos.repr, 'insertps xmm4, dword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'insertps ')
+        assert_equal(myDisasm.repr(), 'insertps xmm4, dword ptr [rax], 11h')
 
-        Buffer = '660f3a21c011'.decode('hex')
+        Buffer = bytes.fromhex('660f3a21c011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'insertps ')
-        assert_equal(myDisasm.infos.repr, 'insertps xmm0, xmm0, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'insertps ')
+        assert_equal(myDisasm.repr(), 'insertps xmm0, xmm0, 11h')
 
         # VEX.128.66.0F3A.WIG 21 /r ib
         # VINSERTPS xmm1, xmm2, xmm3/m32, imm8
 
         myVEX = VEX('VEX.128.66.0F3A.WIG')
-        Buffer = '{}21e011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}21e011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertps ')
-        assert_equal(myDisasm.infos.repr, 'vinsertps xmm12, xmm0, xmm8, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.repr(), 'vinsertps xmm12, xmm0, xmm8, 11h')
 
         myVEX = VEX('VEX.128.66.0F3A.WIG')
-        Buffer = '{}212011'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}212011'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertps ')
-        assert_equal(myDisasm.infos.repr, 'vinsertps xmm12, xmm0, dword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.repr(), 'vinsertps xmm12, xmm0, dword ptr [r8], 11h')
 
         # EVEX.128.66.0F3A.W0 21 /r ib
         # VINSERTPS xmm1, xmm2, xmm3/m32, imm8
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W0')
-        Buffer = '{}212011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}212011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertps ')
-        assert_equal(myDisasm.infos.repr, 'vinsertps xmm28, xmm16, dword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.repr(), 'vinsertps xmm28, xmm16, dword ptr [r8], 11h')
 
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W0')
-        Buffer = '{}21c011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}21c011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vinsertps ')
-        assert_equal(myDisasm.infos.repr, 'vinsertps xmm24, xmm16, xmm24, 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.repr(), 'vinsertps xmm24, xmm16, xmm24, 11h')

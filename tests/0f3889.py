@@ -25,64 +25,64 @@ class TestSuite:
         # vpexpandd xmm1 {k1}{z}, xmm2/m128
 
         myEVEX = EVEX('EVEX.128.66.0F38.W0')
-        Buffer = '{}890e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}890e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x89)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpexpandd ')
-        assert_equal(myDisasm.infos.repr, 'vpexpandd xmm25, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpexpandd ')
+        assert_equal(myDisasm.repr(), 'vpexpandd xmm25, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W0 89 /r
         # vpexpandd ymm1 {k1}{z}, ymm2/m256
 
         myEVEX = EVEX('EVEX.256.66.0F38.W0')
-        Buffer = '{}890e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}890e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x89)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpexpandd ')
-        assert_equal(myDisasm.infos.repr, 'vpexpandd ymm25, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpexpandd ')
+        assert_equal(myDisasm.repr(), 'vpexpandd ymm25, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 89 /r
         # vpexpandd zmm1 {k1}{z}, zmm2/m512
 
         myEVEX = EVEX('EVEX.512.66.0F38.W0')
-        Buffer = '{}890e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}890e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x89)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpexpandd ')
-        assert_equal(myDisasm.infos.repr, 'vpexpandd zmm25, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpexpandd ')
+        assert_equal(myDisasm.repr(), 'vpexpandd zmm25, zmmword ptr [r14]')
 
         # EVEX.128.66.0F38.W1 89 /r
         # vpexpandq xmm1 {k1}{z}, xmm2/m128
 
         myEVEX = EVEX('EVEX.128.66.0F38.W1')
-        Buffer = '{}890e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}890e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x89)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpexpandq ')
-        assert_equal(myDisasm.infos.repr, 'vpexpandq xmm25, xmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpexpandq ')
+        assert_equal(myDisasm.repr(), 'vpexpandq xmm25, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W1 89 /r
         # vpexpandq ymm1 {k1}{z}, ymm2/m256
 
         myEVEX = EVEX('EVEX.256.66.0F38.W1')
-        Buffer = '{}890e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}890e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x89)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpexpandq ')
-        assert_equal(myDisasm.infos.repr, 'vpexpandq ymm25, ymmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpexpandq ')
+        assert_equal(myDisasm.repr(), 'vpexpandq ymm25, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 89 /r
         # vpexpandq zmm1 {k1}{z}, zmm2/m512
 
         myEVEX = EVEX('EVEX.512.66.0F38.W1')
-        Buffer = '{}890e'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}890e'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x89)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vpexpandq ')
-        assert_equal(myDisasm.infos.repr, 'vpexpandq zmm25, zmmword ptr [r14]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpexpandq ')
+        assert_equal(myDisasm.repr(), 'vpexpandq zmm25, zmmword ptr [r14]')

@@ -26,64 +26,64 @@ class TestSuite:
         # 66 0F 3A 08 /r ib
         # roundps xmm1, xmm2/m128, imm8
 
-        Buffer = '660f3a082011'.decode('hex')
+        Buffer = bytes.fromhex('660f3a082011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a08)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'roundps ')
-        assert_equal(myDisasm.infos.repr, 'roundps xmm4, xmmword ptr [rax], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'roundps ')
+        assert_equal(myDisasm.repr(), 'roundps xmm4, xmmword ptr [rax], 11h')
 
         # VEX.128.66.0F3A.WIG 08 /r ib
         # Vroundps xmm1, xmm2/m128, imm8
 
         myVEX = VEX('VEX.128.66.0F3A.WIG')
-        Buffer = '{}081033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}081033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vroundps ')
-        assert_equal(myDisasm.infos.repr, 'vroundps xmm10, xmmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vroundps ')
+        assert_equal(myDisasm.repr(), 'vroundps xmm10, xmmword ptr [r8], 33h')
 
         # VEX.256.66.0F3A.WIG 08 /r ib
         # Vroundps ymm1, ymm2/m256, imm8
 
         myVEX = VEX('VEX.256.66.0F3A.WIG')
-        Buffer = '{}081033'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}081033'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vroundps ')
-        assert_equal(myDisasm.infos.repr, 'vroundps ymm10, ymmword ptr [r8], 33h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vroundps ')
+        assert_equal(myDisasm.repr(), 'vroundps ymm10, ymmword ptr [r8], 33h')
 
         # EVEX.128.66.0F3A.W0 08 /r ib
         # VRNDSCALEPS xmm1 {k1}{z}, xmm2/m128/m32bcst, imm8
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W0')
-        Buffer = '{}082011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}082011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscaleps ')
-        assert_equal(myDisasm.infos.repr, 'vrndscaleps xmm28, xmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrndscaleps ')
+        assert_equal(myDisasm.repr(), 'vrndscaleps xmm28, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 08 /r ib
         # VRNDSCALEPS ymm1 {k1}{z}, ymm2/m256/m32bcst, imm8
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
-        Buffer = '{}082011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}082011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscaleps ')
-        assert_equal(myDisasm.infos.repr, 'vrndscaleps ymm28, ymmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrndscaleps ')
+        assert_equal(myDisasm.repr(), 'vrndscaleps ymm28, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 08 /r ib
         # VRNDSCALEPS zmm1 {k1}{z}, zmm2/m512/m32bcst{sae}, imm8
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
-        Buffer = '{}082011'.format(myEVEX.prefix()).decode('hex')
+        Buffer = bytes.fromhex('{}082011'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x08)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrndscaleps ')
-        assert_equal(myDisasm.infos.repr, 'vrndscaleps zmm28, zmmword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrndscaleps ')
+        assert_equal(myDisasm.repr(), 'vrndscaleps zmm28, zmmword ptr [r8], 11h')

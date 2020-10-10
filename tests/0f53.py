@@ -24,52 +24,52 @@ class TestSuite:
         # F3 0F 53 /r
         # RCPSS xmm1, xmm2/m32
 
-        Buffer = 'f30f5313'.decode('hex')
+        Buffer = bytes.fromhex('f30f5313')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf53)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rcpss ')
-        assert_equal(myDisasm.infos.repr, 'rcpss xmm2, dword ptr [rbx]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rcpss ')
+        assert_equal(myDisasm.repr(), 'rcpss xmm2, dword ptr [rbx]')
 
         # VEX.NDS.LIG.F3.0F.WIG 53 /r
         # VRCPSS xmm1, xmm2, xmm3/m32
 
         myVEX = VEX('VEX.NDS.LIG.F3.0F.WIG')
-        Buffer = '{}53e0'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}53e0'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x53)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrcpss ')
-        assert_equal(myDisasm.infos.repr, 'vrcpss xmm12, xmm8')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrcpss ')
+        assert_equal(myDisasm.repr(), 'vrcpss xmm12, xmm8')
 
         # NP 0F 53 /r
         # RCPPS xmm1, xmm2/m128
 
-        Buffer = '0f5313'.decode('hex')
+        Buffer = bytes.fromhex('0f5313')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf53)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'rcpps ')
-        assert_equal(myDisasm.infos.repr, 'rcpps xmm2, xmmword ptr [rbx]')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rcpps ')
+        assert_equal(myDisasm.repr(), 'rcpps xmm2, xmmword ptr [rbx]')
 
         # VEX.128.0F.WIG 53 /r
         # VRCPPS xmm1, xmm2/m128
 
         myVEX = VEX('VEX.128.0F.WIG')
-        Buffer = '{}53e0'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}53e0'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x53)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrcpps ')
-        assert_equal(myDisasm.infos.repr, 'vrcpps xmm12, xmm8')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrcpps ')
+        assert_equal(myDisasm.repr(), 'vrcpps xmm12, xmm8')
 
         # VEX.256.0F.WIG 53 /r
         # VRCPPS ymm1, ymm2/m256
 
         myVEX = VEX('VEX.256.0F.WIG')
-        Buffer = '{}53e0'.format(myVEX.c4()).decode('hex')
+        Buffer = bytes.fromhex('{}53e0'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x53)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'vrcpps ')
-        assert_equal(myDisasm.infos.repr, 'vrcpps ymm12, ymm8')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrcpps ')
+        assert_equal(myDisasm.repr(), 'vrcpps ymm12, ymm8')

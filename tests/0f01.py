@@ -24,85 +24,85 @@ class TestSuite:
         # NP 0F 01 CA
         # CLAC
 
-        Buffer = '0f01ca'.decode('hex')
+        Buffer = bytes.fromhex('0f01ca')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'clac ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clac ')
 
         # NP 0F 01 CB
         # STAC
 
-        Buffer = '0f01cb'.decode('hex')
+        Buffer = bytes.fromhex('0f01cb')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'stac ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'stac ')
 
         # NP 0F 01 C5
         # PCONFIG
         # #UD If any of the LOCK/REP/OSIZE/VEX prefixes are used.
 
-        Buffer = '0f01c5'.decode('hex')
+        Buffer = bytes.fromhex('0f01c5')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
 
-        Buffer = 'f00f01c5'.decode('hex')
+        Buffer = bytes.fromhex('f00f01c5')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
-        Buffer = 'f20f01c5'.decode('hex')
+        Buffer = bytes.fromhex('f20f01c5')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
-        Buffer = 'f30f01c5'.decode('hex')
+        Buffer = bytes.fromhex('f30f01c5')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # NP 0F 01 C0
         # ENCLV
 
-        Buffer = '0f01c0'.decode('hex')
+        Buffer = bytes.fromhex('0f01c0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'enclv ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclv ')
 
         # NP 0F 01 D7
         # ENCLU
 
-        Buffer = '0f01d7'.decode('hex')
+        Buffer = bytes.fromhex('0f01d7')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'enclu ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclu ')
 
         # NP 0F 01 CF
         # ENCLS
 
-        Buffer = '0f01cf'.decode('hex')
+        Buffer = bytes.fromhex('0f01cf')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'encls ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'encls ')
 
 
         # F3 0F 01 EA (mod=11, /5, RM=010)
         # SAVEPREVSSP
 
-        Buffer = 'f30f01ea'.decode('hex')
+        Buffer = bytes.fromhex('f30f01ea')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, 'saveprevssp ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'saveprevssp ')
