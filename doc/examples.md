@@ -1,6 +1,5 @@
- ![beaengine](./beaengine-logo.png)
-
-# Examples - Tutorial
+![beaengine](./beaengine-logo.png){ width=50px }
+**Examples - Tutorial**
 
 Each example you can see here is using one feature of the disassemble library. At first, you can see how to use the library in the simplest manner (to retrieve a simple instructions list). Then, you can see how to use specific options to make special tasks like data-flow analysis or control-flow analysis.
 
@@ -21,23 +20,25 @@ BeaEngine does not need special initialization. The Disasm function do it for yo
 
 Doing it with Python is the simplest way because of its specific wrapper used to hide ctypes complexity :
 
-```
+~~~~ { .python }
 # Python example
 
 from BeaEnginePython import *
-buffer = '6202054000443322')
+buffer = bytes.fromhex('6202054000443322')
 target = Disasm(buffer)
 target.read()
 print(target.repr())
-```
+~~~~
+
 Output is :
 
-```
+~~~~ {.bash}
 vpshufb zmm24, zmm31, zmmword ptr [r11+r14+0880h]
-```
+~~~~
 
 You can even do a disasm loop on a binary file :
-```
+
+~~~~ {.python}
 # Python example
 
 with open("target.bin", 'rb') as f:
@@ -45,12 +46,13 @@ with open("target.bin", 'rb') as f:
   instr = Disasm(buffer)
   while instr.read() > 0:
     print(instr.repr())
-```
+~~~~
+
 **Note :** In Python, *infos* structure is reachable with *disasm.infos*.
 
 Let's see how to do it in C :
 
-```
+~~~~ {.c}
 #include <stdio.h>
 #include <string.h>
 #include "BeaEngine.h"
@@ -73,14 +75,14 @@ int main(void)
   }
   return 0;
 }
-```
+~~~~
 
 
 # 2. How to decode a limited block of bytes
 
 It is possible to ask to BeaEngine to decode a limited block of bytes. This small program decodes instructions of its own code located between 2 virtual addresses. That means BeaEngine won't read any bytes outside these limits even if it tries to decode an instruction starting just before the upper bound. To realize this restriction, BeaEngine uses the field **infos.SecurityBlock** which defines the number of bytes we want to read. By default, an intel instruction never exceeds 15 bytes. Thus, only SecurityBlock values below this limit are used. In all cases, BeaEngine stops decoding an instruction if it exceeds 15 bytes.
 
-```
+~~~~ {.python}
 #!/usr/bin/python3
 
 # Python wrapper already handles this feature without any
@@ -92,11 +94,11 @@ buffer = bytes.fromhex('4831c04889fbffc04989c49031ed66586a005f80c40c')
 instr = Disasm(buffer)
 while instr.read() > 0:
   print(instr.repr())
-```
+~~~~
 
 Let's see how to do it in C :
 
-```
+~~~~ {.c}
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -141,25 +143,25 @@ int main(void)
   return 0;
 }
 
-```
+~~~~
 
 # 3. How to decode bytes in an allocated buffer while keeping original virtual addresses
 
 This time, we are in a real and usual situation. We want to decode bytes copied in an allocated buffer. However, you want to see original virtual addresses. The following program allocates a buffer with the function malloc , copies in it 200 bytes from the address &main and decodes the buffer :
 
-```
+~~~~ {.python}
 # Python example
 
 from BeaEnginePython import *
-buffer = '6202054000443322')
+buffer = bytes.fromhex('6202054000443322')
 instr = Disasm(buffer)
 instr.infos.VirtualAddr = 0x401000
 while instr.read() > 0:
   print(instr.repr())
-```
+~~~~
 
 
-```
+~~~~ {.c}
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -214,26 +216,26 @@ int main(void)
   DisplayInstr(pBuffer, (char*) pBuffer + BUFFER_SIZE, main);
   return 0;
 }
-```
+~~~~
 
 # 4. How to use nasm syntax with prefixed numbers
 
 BeaEngine is able to use a set of syntaxes : masm, nasm, GoAsm. You can display numbers under two formats : suffixed numbers and prefixed numbers. You can display or not the segment registers used in memory addressing. You can even use a tabulation between mnemonic and first operand.
 
-```
+~~~~ {.python}
 # Python example
 
 from BeaEnginePython import *
-buffer = '6202054000443322')
+buffer = bytes.fromhex('6202054000443322')
 instr = Disasm(buffer)
 instr.infos.Options = NasmSyntax + PrefixedNumeral
 while instr.read() > 0:
   print(instr.repr())
-```
+~~~~
 
 In C:
 
-```
+~~~~ {.c}
 void DisplayInstr(char *start_offset, char *end_offset, int (*virtual_address)(void))
 {
   int len;
@@ -244,27 +246,27 @@ void DisplayInstr(char *start_offset, char *end_offset, int (*virtual_address)(v
   infos.Options = Tabulation + NasmSyntax + PrefixedNumeral + ShowSegmentRegs;
   [...]
 }
-```
+~~~~
 
 # 5. How to retrieve only instructions that modify the register eax
 
 This is the first example of how to realize a data-flow analysis with BeaEngine. By using infos.Operand1.AccessMode and infos.Operand1.Registers , you can determine for example if the register rax is modified or not by the analyzed instruction. AccessMode allows us to know if the argument is written or only read. Registers let us know if the register is rax. We don't forget that some instructions can modify registers implicitly. We can control that by looking at the field infos.Instruction.ImplicitModifiedRegs .
 
 
-```
+~~~~ {.python}
 # Python example
 
 from BeaEnginePython import *
-buffer = '6202054000443322')
+buffer = bytes.fromhex('6202054000443322')
 instr = Disasm(buffer)
 while instr.read() > 0:
   if instr.modifies("rax"):
     print(instr.repr())
-```
+~~~~
 
 
 
-```
+~~~~ {.c}
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -334,13 +336,13 @@ int main(void)
   return 0;
 }
 
-```
+~~~~
 
 # 6. How to decode instructions and 'follow' unconditional branch instructions
 
 In some cases, unconditional jumps are used in obfuscation mechanisms. This program shows how to eliminate these naugthy jumps by "following" them. To realize that task, we have to use the fields infos.Instruction.BranchType and infos.Instruction.AddrValue. In the next program, I have coded the function RVA2OFFSET just to convert the virtual address pointed by the unconditional jump in a "real" address that can be used by infos.EIP.
 
-```
+~~~~ {.c}
 #include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -445,14 +447,15 @@ int main(void)
   DisassembleCodeFilter ((unsigned char*) pBuffer + 0x400, (unsigned char*) pBuffer + 0x430, 0x401000);
   return 0;
 }
-```
+~~~~
 
 # 7. How to use BeaEngine with masm32, nasm, fasm or GoAsm
 
 BeaEngine is distributed with headers for nasm, GoAsm, fasm , masm.
 
 Using BeaEngine with masm32
-```
+
+~~~~ {.asm}
 .386
 .MODEL flat,stdcall
 option casemap:none
@@ -511,11 +514,11 @@ start:
   push 0
   call ExitProcess
 End start
-```
+~~~~
 
 Using BeaEngine with nasm
 
-```
+~~~~ {.asm}
 extern _puts@4        ; define external symbols
 extern _ExitProcess@4
 extern _Disasm@4
@@ -563,11 +566,11 @@ MakeDisasm:
     jne MakeDisasm
   push 0
   call _ExitProcess@4
-```
+~~~~
 
 Using BeaEngine with fasm
 
-```
+~~~~ {.asm}
 format MS COFF
 
 ; ************************************** Define "prototype"
@@ -620,11 +623,11 @@ section '.text' code readable executable
     jne MakeDisasm
   push 0
   call ExitProcess
-```
+~~~~
 
 Using BeaEngine with GoAsm
 
-```
+~~~~ {.asm}
 #include BeaEngineGoAsm.inc
 Disasm = BeaEngine.lib:Disasm
 
@@ -667,13 +670,13 @@ Display:
   jne MakeDisasm
   push 0
   call ExitProcess
-```
+~~~~
 
 ## 8. How to use BeaEngine with masm64 or GoAsm64
 
 Using BeaEngine with masm64
 
-```
+~~~~ {.asm}
 include ..\..\HEADERS\BeaEngineMasm.inc
 
 extrn puts:PROC
@@ -730,11 +733,11 @@ main proc
 main endp
 
 end
-```
+~~~~
 
 Using BeaEngine with GoAsm64
 
-```
+~~~~ {.asm}
 #include BeaEngineGoAsm.inc
 Disasm = BeaEngine64.lib:Disasm
 
@@ -782,14 +785,14 @@ Display:
     jne MakeDisasm
     mov rcx, 0
     call ExitProcess
-```
+~~~~
 
 
 # 9. How to use BeaEngine with WinDev ?
 
 Here is an example coded by a friend, Vincent Roy, specialized in WinDev language.
 
-```
+~~~~ {.c}
 // Creation du Header beaEngine pour Windev
 
 // Creation des constantes
@@ -928,4 +931,4 @@ TANTQUE (i<=100 ET myError=0)
 FIN
 
 dechargeDLL (HandleDLL)
-```
+~~~~

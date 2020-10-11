@@ -1,20 +1,8 @@
- ![beaengine](./beaengine-logo.png)
-
+![beaengine](./beaengine-logo.png){ width=50px }
 **BeaEngine documentation**
-- BEAENGINE_VERSION : 5.0
-- DOC_RELEASE : 1.0
 
-# 0. Summary
-
-1. [Disasm function](#1-disasm-function)
-2. [Disasm structure explained](#2-disasm-infos)
-3. [get global informations on the instruction](#3-instruction-infos)
-4. [get informations about operands](#4-operand-infos)
-5. [get informations about prefixes used](#5-prefixes-infos)
-6. [flags of eflags register](#6-eflags-infos)
-7. [Memory type explained](#7-memory-infos)
-8. [Registers type explained](#8-registers-infos)
-9. [Constants used by BeaEngine](#9-constants)
+- BEAENGINE_VERSION : 5.1
+- DOC_RELEASE : 1.1
 
 # 1. Disasm function
 
@@ -22,11 +10,11 @@ The Disasm function allows to decode all instructions coded according to the rul
 
 **Syntax**
 
-```
+~~~~ {.c}
 int Disasm(
    PDISASM	&infos
 );
-```
+~~~~
 
 **Parameters**
 
@@ -42,7 +30,7 @@ The function may sends you back 3 values. if it has analyzed an invalid opcode, 
 
 This structure is used to store the mnemonic, source and destination operands. You just have to specify the address where the engine has to make the analysis.
 
-```
+~~~~ {.c}
 struct PDISASM {
   UIntPtr EIP;
   UInt64 VirtualAddr;
@@ -59,7 +47,7 @@ struct PDISASM {
   Int32 Error;
   UInt32 Reserved_[48];
 };
-```
+~~~~
 
 **Members**
 
@@ -90,7 +78,7 @@ struct PDISASM {
 # 3. Instruction infos
 this structure gives informations on the analyzed instruction.
 
-```
+~~~~ {.c}
 struct INSTRTYPE {
   Int32 Category;
   Int32 Opcode;
@@ -101,7 +89,7 @@ struct INSTRTYPE {
   Int64 Immediat;
   UInt32 ImplicitModifiedRegs;
 };
-```
+~~~~
 
 **Members**
 
@@ -119,7 +107,7 @@ struct INSTRTYPE {
 
 This structure gives informations about the operand analyzed.
 
-```
+~~~~ {.c}
 struct OPTYPE {
   char OpMnemonic[24];
   UInt64 OpType;
@@ -130,7 +118,7 @@ struct OPTYPE {
   REGISTERTYPE Registers;
   UInt32 SegmentReg;
 } ;
-```
+~~~~
 
 **Members**
 
@@ -156,7 +144,7 @@ struct OPTYPE {
 
 This structure gives informations on used prefixes. When can know if some prefixes are used properly or not.
 
-```
+~~~~ {.c}
 struct PREFIXINFO {
   int Number;
   int NbUndefined;
@@ -176,7 +164,7 @@ struct PREFIXINFO {
   REX_Struct REX;
   char alignment[2];
 };
-```
+~~~~
 
 **Membres**
 
@@ -202,7 +190,7 @@ struct PREFIXINFO {
  - **BranchNotTaken** : *[out]* Concerns branch hint prefix 0x2E (not taken).
  - **REX** : *[out]* Concerns the prefix used to define the REX in 64 bits mode. The structure sended back is :
 
-```
+~~~~ {.c}
 struct REX_Struct {
   BYTE W_;
   BYTE R_;
@@ -210,7 +198,7 @@ struct REX_Struct {
   BYTE B_;
   BYTE state;
 };
-```
+~~~~
 
 Fields W_, R_, X_, B_ are set to 1 if the field is used. The field state is set to *InUsePrefix* if a REX prefix is used.
 
@@ -219,7 +207,7 @@ Fields W_, R_, X_, B_ are set to 1 if the field is used. The field state is set 
 
 This structure gives informations on the register EFLAGS.
 
-```
+~~~~ {.c}
 struct EFLStruct {
   BYTE OF_;
   BYTE SF_;
@@ -234,7 +222,7 @@ struct EFLStruct {
   BYTE RF_;
   BYTE alignment;
 };
-```
+~~~~
 
 **Members**
 
@@ -251,14 +239,14 @@ Except for the field "alignment" that is only present for alignment purpose, all
 
 This structure gives informations if `infos.Operandxx.OpType == MEMORY_TYPE`.
 
-```
+~~~~ {.c}
 struct MEMORYTYPE {
   Int64 BaseRegister;
   Int64 IndexRegister;
   Int32 Scale;
   Int64 Displacement;
 };
-```
+~~~~
 
 **Members**
 
@@ -272,7 +260,7 @@ struct MEMORYTYPE {
 This structure gives informations on operands if `infos.Operandxx.OpType == REGISTER_TYPE` or on `infos.Instruction.ImplicitModifiedRegs`.
 
 
-```
+~~~~ {.c}
 struct REGISTERTYPE{
    Int64 type;
    Int64 gpr;
@@ -289,7 +277,7 @@ struct REGISTERTYPE{
    Int64 segment;
    Int64 fpu;
 };
-```
+~~~~
 
 **Members**
 
@@ -329,7 +317,7 @@ Here is an exhaustive list of constants used by fields sends back by BeaEngine.
 
 Values taken by (infos.Instruction.Category & 0xFFFF0000)
 
-```
+~~~~ {.c}
 GENERAL_PURPOSE_INSTRUCTION   =           0x10000,
 FPU_INSTRUCTION               =           0x20000,
 MMX_INSTRUCTION               =           0x30000,
@@ -363,11 +351,11 @@ XSAVE_INSTRUCTION             =          0x1e0000,
 SGX_INSTRUCTION               =          0x1f0000,
 PCONFIG_INSTRUCTION           =          0x200000,
 
-```
+~~~~
 
 Values taken by LOWORD(infos.Instruction.Category)
 
-```
+~~~~ {.c}
 DATA_TRANSFER = 0x1
 ARITHMETIC_INSTRUCTION = 2
 LOGICAL_INSTRUCTION = 3
@@ -411,11 +399,11 @@ DOT_PRODUCT = 40
 SAD_INSTRUCTION = 41
 ACCELERATOR_INSTRUCTION = 42  
 ROUND_INSTRUCTION = 43
-```
+~~~~
 
 Values taken by infos.Instruction.BranchType
 
-```
+~~~~ {.c}
   JO = 1,
   JC = 2,
   JE = 3,
@@ -438,21 +426,21 @@ Values taken by infos.Instruction.BranchType
   JNL = -7,
   JNG = -8,
   JNB = -9
-```
+~~~~
 
 Values taken by infos.Operandxx.OpType
 
-```
+~~~~ {.c}
 NO_ARGUMENT =               0x10000,
 REGISTER_TYPE =             0x20000,
 MEMORY_TYPE =               0x30000,
 CONSTANT_TYPE + RELATIVE_ = 0x4040000,
 CONSTANT_TYPE + ABSOLUTE_ = 0x8040000
-```
+~~~~
 
 Values taken by infos.Options
 
-```
+~~~~ {.c}
   NoTabulation = 0x0,
   Tabulation = 0x1,
 
@@ -465,26 +453,26 @@ Values taken by infos.Options
 
   ShowSegmentRegs = 0x01000000,
   ShowEVEXMasking = 0x02000000,
-```
+~~~~
 
 Values taken by infos.Operandxx.SegmentReg
 
-```
+~~~~ {.c}
 	ESReg 1
 	DSReg 2
 	FSReg 3
 	GSReg 4
 	CSReg 5
 	SSReg 6
-```
+~~~~
 
 Values taken by infos.Instruction.Flags.OF_ , .SF_ ...
 
-```
+~~~~ {.c}
 TE_      = 1   ; test
 MO_      = 2   ; modify
 RE_      = 4   ; reset
 SE_      = 8   ; set
 UN_      = 10h   ; undefined
 PR_      = 20h   ; restore prior value
-```
+~~~~
