@@ -1,3 +1,8 @@
+# BeaEngine 5.1.0
+- fix SecurityBlock issues
+- Python Wrapper improved
+- unit tests for python3
+
 # BeaEngine 5
 
 - new instructions sets : AVX512, CET, SGX, BMI1, BMI2, SHA
