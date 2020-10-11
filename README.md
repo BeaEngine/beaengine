@@ -40,6 +40,7 @@ vpshufb zmm24, zmm31, zmmword ptr [r11+r14+0880h]
 ```
 
 #### 1.2. Loop on *instructions flow* and extract instructions modifying `rax` register:  
+
 ```
 #!/usr/bin/python3
 
@@ -53,6 +54,7 @@ while instr.read() > 0:
   else:
     print(instr.repr())
 ```
+
 Output is:
 
 ```
@@ -67,6 +69,23 @@ push 00000000h
 pop rdi
 add ah, 0Ch         rax register is modified
 ```
+
+#### 1.3. Loop on *instructions flow* and follow jump instructions:
+
+```
+#!/usr/bin/python3
+
+from BeaEnginePython import *
+
+buffer = bytes.fromhex('e90000000090e901000000cc90')
+instr = Disasm(buffer)
+while instr.read() > 0:
+  print(instr.repr())
+  if instr.is_jump():
+    instr.follow()
+
+```
+
 
 ### 2. Releases
 

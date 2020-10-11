@@ -951,7 +951,8 @@ class Disasm():
             self.infos.VirtualAddr += 1
         else:
             self.infos.offset = self.infos.offset + self.length
-            self.infos.VirtualAddr= self.infos.VirtualAddr+ self.length
+            if self.infos.VirtualAddr != 0:
+                self.infos.VirtualAddr= self.infos.VirtualAddr+ self.length
         self.length = 0
 
     def read(self):
@@ -964,11 +965,58 @@ class Disasm():
                 disasm.read()
         """
         self.getNextOffset()
-        self.infos.SecurityBlock = self.end_block - self.infos.offset
-        self.length = BeaDisasm(c_void_p(addressof(self.infos)))
-        self.getBytes()
+        if self.infos.offset < self.end_block:
+            self.infos.SecurityBlock = self.end_block - self.infos.offset
+            self.length = BeaDisasm(c_void_p(addressof(self.infos)))
+            self.getBytes()
+        else:
+            self.length = OUT_OF_BLOCK
+            self.infos.Error = OUT_OF_BLOCK
 
         return self.length
+
+    def is_jump(self):
+        """
+        Example:
+            buffer = bytes.fromhex('e900000090')
+            instr = Disasm(buffer)
+            while intr.read() > 0:
+                if instr.is_jump():
+                    instr.follow()
+        """
+        if self.infos.Instruction.BranchType == JmpType and \
+            self.infos.Instruction.AddrValue != 0:
+            return True
+        else:
+            return False
+
+    def is_call(self):
+        """
+        Example:
+            buffer = bytes.fromhex('e80000000090')
+            instr = Disasm(buffer)
+            while intr.read() > 0:
+                if instr.is_call():
+                    instr.follow()
+        """
+        if self.infos.Instruction.BranchType == CallType and \
+            self.infos.Instruction.AddrValue != 0:
+            return True
+        else:
+            return False
+
+    def follow(self):
+        """
+        Example:
+            buffer = bytes.fromhex('e90000000090')
+            instr = Disasm(buffer)
+            while intr.read() > 0:
+                if instr.is_jump():
+                    instr.follow()
+        """
+        if self.infos.Instruction.AddrValue != 0:
+            self.infos.offset = self.infos.Instruction.AddrValue
+            self.length = 0
 
     def repr(self):
         """
