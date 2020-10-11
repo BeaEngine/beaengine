@@ -26,7 +26,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
       FailDecode(pMyDisasm);
     }
     else if (GV.VEX.pp == 1) {
-      if (!Security(1, pMyDisasm)) return;
+      if (!Security(2, pMyDisasm)) return;
       GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
       if (GV.REGOPCODE == 6) {
         GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
@@ -70,7 +70,7 @@ void __bea_callspec__ G13_(PDISASM pMyDisasm)
     }
   }
   else {
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
       FailDecode(pMyDisasm);

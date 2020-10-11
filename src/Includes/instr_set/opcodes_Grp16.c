@@ -22,10 +22,10 @@
 void __bea_callspec__ G16_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
-  if (!Security(1, pMyDisasm)) return;
+  if (!Security(2, pMyDisasm)) return;
   GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
   if (GV.REGOPCODE == 0) {
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
       MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
@@ -41,7 +41,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
   }
   else if (GV.REGOPCODE == 1) {
 
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
       MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
@@ -56,7 +56,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
   }
   else if (GV.REGOPCODE == 2) {
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
       MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
@@ -71,7 +71,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     }
   }
   else if (GV.REGOPCODE == 3) {
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
       MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);

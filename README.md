@@ -29,9 +29,9 @@ See the COPYING and COPYING.LESSER files for more details.
 from BeaEnginePython import *
 
 buffer = bytes.fromhex('6202054000443322')
-target = Disasm(buffer)
-target.read()
-print(target.repr())
+instr = Disasm(buffer)
+instr.read()
+print(instr.repr())
 ```
 Output is :
 
@@ -47,14 +47,11 @@ from BeaEnginePython import *
 
 buffer = bytes.fromhex('4831c04889fbffc04989c49031ed66586a005f80c40c')
 instr = Disasm(buffer)
-go = True
-while go:
-  instr.read()
+while instr.read() > 0:
   if instr.modifies("rax"):
     print(f"{instr.repr():20}rax register is modified")
   else:
     print(instr.repr())
-  go = True if instr.length > 0 else False
 ```
 Output is:
 
@@ -68,7 +65,7 @@ xor ebp, ebp
 pop ax              rax register is modified
 push 00000000h
 pop rdi
-pop rdi             rax register is modified
+add ah, 0Ch         rax register is modified
 ```
 
 ### 2. Releases

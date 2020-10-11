@@ -21,7 +21,7 @@
 void __bea_callspec__ MOD_RM(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
   GV.DECALAGE_EIP = 0;
-  if (!Security(1, pMyDisasm)) return;
+  if (!Security(2, pMyDisasm)) return;
   GV.MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
   GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
   if (GV.MOD_ == 0) {
@@ -29,7 +29,7 @@ void __bea_callspec__ MOD_RM(OPTYPE* pMyOperand, PDISASM pMyDisasm)
   }
   else if (GV.MOD_ == 1) {
     GV.DECALAGE_EIP++;
-    if (!Security(2, pMyDisasm)) return;
+    if (!Security(3, pMyDisasm)) return;
     ModRM_1[GV.RM_](pMyOperand, pMyDisasm);
   }
   else if (GV.MOD_ == 2) {
@@ -206,7 +206,7 @@ void __bea_callspec__ OperandSize8Reg(OPTYPE* pMyOperand, PDISASM pMyDisasm, siz
  * ======================================= */
 void __bea_callspec__ Reg_Opcode(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
-  if (!Security(1, pMyDisasm)) return;
+  if (!Security(2, pMyDisasm)) return;
   GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
   GV.REGOPCODE += 8 * GV.REX.R_ + 16 * GV.EVEX.R1;
   fillRegister(GV.REGOPCODE, pMyOperand, pMyDisasm);
@@ -351,7 +351,7 @@ void __bea_callspec__ Addr_EBX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_SIB(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
   size_t i;
-  if (!Security(2, pMyDisasm)) return;
+  if (!Security(3, pMyDisasm)) return;
   (*pMyOperand).OpType = MEMORY_TYPE;
   if (GV.AddressSize >= 32) {
     GV.DECALAGE_EIP++;
@@ -382,7 +382,7 @@ void __bea_callspec__ Addr_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     (*pMyOperand).OpType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
-        if (!Security(5, pMyDisasm)) return;
+        if (!Security(6, pMyDisasm)) return;
         GV.DECALAGE_EIP+=4;
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
         (*pMyOperand).Memory.Displacement = MyNumber;
@@ -489,9 +489,9 @@ void __bea_callspec__ Addr_ESI(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     }
     else {
         GV.DECALAGE_EIP+=2;
+        if (!Security(4, pMyDisasm)) return;
         MyNumber = *((UInt16*)(UIntPtr) (GV.EIP_+2));
         (*pMyOperand).Memory.Displacement = MyNumber;
-        if (!Security(2, pMyDisasm)) return;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+i,"%.4X", (Int64)MyNumber);
         #endif
@@ -845,11 +845,11 @@ void __bea_callspec__ Addr_SIB_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     long MyNumber;
 
     if (GV.AddressSize >= 32) {
-        if (!Security(3, pMyDisasm)) return;
+        if (!Security(4, pMyDisasm)) return;
         MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+3));
     }
     else {
-        if (!Security(2, pMyDisasm)) return;
+        if (!Security(3, pMyDisasm)) return;
         MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     }
     (*pMyOperand).Memory.Displacement = MyNumber;
@@ -1150,11 +1150,13 @@ void __bea_callspec__ Addr_SIB_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
     size_t i = 0, j;
     long MyNumber;
-    if (!Security(2, pMyDisasm)) return;
+
     if (GV.AddressSize >= 32) {
+        if (!Security(7, pMyDisasm)) return;
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+3));
     }
     else {
+        if (!Security(4, pMyDisasm)) return;
         MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
     }
     (*pMyOperand).Memory.Displacement = MyNumber;
@@ -1525,7 +1527,7 @@ size_t __bea_callspec__ interpretBase(OPTYPE* pMyOperand, size_t i, PDISASM pMyD
   size_t j;
   if ((GV.BASE_  == 5) && (GV.MOD_ == 0)) {
     GV.DECALAGE_EIP += 4;
-    if (!Security(6, pMyDisasm)) return i;
+    if (!Security(7, pMyDisasm)) return i;
     j = i;
     #ifndef BEA_LIGHT_DISASSEMBLY
        i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));

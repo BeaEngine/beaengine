@@ -924,8 +924,9 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         offset = myDisasm.infos.offset
         myDisasm.read()
+        print(myDisasm.repr())
         assert_equal(myDisasm.length, OUT_OF_BLOCK)
-        assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, myDisasm.infos.SecurityBlock)
+        assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 9)
         assert_equal(myDisasm.infos.Operand1.Memory.Displacement, 0)
 
         myVEX = VEX('VEX.128.66.0F38.WIG')
@@ -943,22 +944,22 @@ class TestSuite:
         myDisasm.infos.VirtualAddr = 0x400000
         offset = myDisasm.infos.offset
         myDisasm.read()
-        #assert_equal(myDisasm.length, OUT_OF_BLOCK)
+        assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 3)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 0)
         assert_equal(myDisasm.infos.Reserved_.RM_, 0)
 
 
-        Buffer = bytes.fromhex('40034d03')
+        Buffer = bytes.fromhex('40034d03')[:-1]
         myDisasm = Disasm(Buffer)
         myDisasm.infos.SecurityBlock = 1
         myDisasm.infos.VirtualAddr = 0x400000
         offset = myDisasm.infos.offset
         myDisasm.read()
         assert_equal(myDisasm.length, OUT_OF_BLOCK)
-        assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 0)
-        assert_equal(myDisasm.infos.Reserved_.MOD_, 0)
-        assert_equal(myDisasm.infos.Reserved_.RM_, 0)
+        assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 4)
+        assert_equal(myDisasm.infos.Reserved_.MOD_, 1)
+        assert_equal(myDisasm.infos.Reserved_.RM_, 5)
 
         Buffer = bytes.fromhex('660f3a14443322')
         myDisasm = Disasm(Buffer)
@@ -967,9 +968,9 @@ class TestSuite:
         offset = myDisasm.infos.offset
         myDisasm.read()
         assert_equal(myDisasm.length, OUT_OF_BLOCK)
-        assert_equal(myDisasm.infos.Reserved_.MOD_, 0)
-        assert_equal(myDisasm.infos.Reserved_.RM_, 0)
-        assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 3)
+        assert_equal(myDisasm.infos.Reserved_.MOD_, 1)
+        assert_equal(myDisasm.infos.Reserved_.RM_, 4)
+        assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 8)
 
         Buffer = bytes.fromhex('e811223344')
         myDisasm = Disasm(Buffer)
@@ -980,7 +981,7 @@ class TestSuite:
         assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 0)
 
-        Buffer = bytes.fromhex('691011223344')
+        Buffer = bytes.fromhex('691011223344')[:-1]
         myDisasm = Disasm(Buffer)
         myDisasm.infos.SecurityBlock = 5
         offset = myDisasm.infos.offset
@@ -991,7 +992,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'imul ')
         assert_equal(myDisasm.infos.Instruction.Immediat, 0)
 
-        Buffer = bytes.fromhex('6b1011')
+        Buffer = bytes.fromhex('6b1011')[:-1]
         myDisasm = Disasm(Buffer)
         myDisasm.infos.SecurityBlock = 2
         offset = myDisasm.infos.offset

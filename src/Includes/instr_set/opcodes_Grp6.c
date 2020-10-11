@@ -31,7 +31,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
     (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
     OperandSizeOld = GV.OperandSize;
     GV.OperandSize = 16;
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(2, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
 

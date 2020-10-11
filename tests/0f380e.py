@@ -103,7 +103,7 @@ class TestSuite:
         myVEX.mmmm = 0b10
         myVEX.vvvv = 0b1111
 
-        Buffer = bytes.fromhex('c4{:02x}{:02x}0e'.format(myVEX.byte1(), myVEX.byte2()))
+        Buffer = bytes.fromhex('c4{:02x}{:02x}0e11'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps ')

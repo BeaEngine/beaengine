@@ -42,10 +42,9 @@ You can even do a disasm loop on a binary file :
 
 with open("target.bin", 'rb') as f:
   buffer = f.read()
-  disasm = Disasm(buffer)
-  for i in range(100):
-    disasm.read()
-    print(disasm.repr())
+  instr = Disasm(buffer)
+  while instr.read() > 0:
+    print(instr.repr())
 ```
 **Note :** In Python, *infos* structure is reachable with *disasm.infos*.
 
@@ -82,16 +81,17 @@ int main(void)
 It is possible to ask to BeaEngine to decode a limited block of bytes. This small program decodes instructions of its own code located between 2 virtual addresses. That means BeaEngine won't read any bytes outside these limits even if it tries to decode an instruction starting just before the upper bound. To realize this restriction, BeaEngine uses the field **infos.SecurityBlock** which defines the number of bytes we want to read. By default, an intel instruction never exceeds 15 bytes. Thus, only SecurityBlock values below this limit are used. In all cases, BeaEngine stops decoding an instruction if it exceeds 15 bytes.
 
 ```
-# Python example
+#!/usr/bin/python3
+
+# Python wrapper already handles this feature without any
+# specific option
 
 from BeaEnginePython import *
-buffer = '6202054000443322')
+
+buffer = bytes.fromhex('4831c04889fbffc04989c49031ed66586a005f80c40c')
 instr = Disasm(buffer)
-go = True
-while go:
-  instr.read()
+while instr.read() > 0:
   print(instr.repr())
-  go = True if instr.length > 0 else False
 ```
 
 Let's see how to do it in C :
@@ -154,11 +154,8 @@ from BeaEnginePython import *
 buffer = '6202054000443322')
 instr = Disasm(buffer)
 instr.infos.VirtualAddr = 0x401000
-go = True
-while go:
-  instr.read()
+while instr.read() > 0:
   print(instr.repr())
-  go = True if instr.length > 0 else False
 ```
 
 
@@ -230,11 +227,8 @@ from BeaEnginePython import *
 buffer = '6202054000443322')
 instr = Disasm(buffer)
 instr.infos.Options = NasmSyntax + PrefixedNumeral
-go = True
-while go:
-  instr.read()
+while instr.read() > 0:
   print(instr.repr())
-  go = True if instr.length > 0 else False
 ```
 
 In C:
@@ -263,12 +257,9 @@ This is the first example of how to realize a data-flow analysis with BeaEngine.
 from BeaEnginePython import *
 buffer = '6202054000443322')
 instr = Disasm(buffer)
-go = True
-while go:
-  instr.read()
+while instr.read() > 0:
   if instr.modifies("rax"):
     print(instr.repr())
-  go = True if instr.length > 0 else False
 ```
 
 

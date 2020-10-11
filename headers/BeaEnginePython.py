@@ -964,7 +964,7 @@ class Disasm():
                 disasm.read()
         """
         self.getNextOffset()
-        self.infos.SecurityBlock = self.end_block - self.infos.offset + 1
+        self.infos.SecurityBlock = self.end_block - self.infos.offset
         self.length = BeaDisasm(c_void_p(addressof(self.infos)))
         self.getBytes()
 

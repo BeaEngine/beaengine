@@ -36,7 +36,7 @@ class TestSuite:
         # VBLENDvpd xmm1, xmm2, xmm3/m128, xmm4
 
         myVEX = VEX('VEX.NDS.128.66.0F38.W0')
-        Buffer = bytes.fromhex('{}152b'.format(myVEX.c4()))
+        Buffer = bytes.fromhex('{}152b11'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         #assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f38)
