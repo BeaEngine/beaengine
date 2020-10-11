@@ -1,4 +1,4 @@
-/* Copyright 2006-2019, BeatriX
+/* Copyright 2006-2020, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.

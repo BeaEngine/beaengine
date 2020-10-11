@@ -1,7 +1,7 @@
 /*
  * BeaEngine 4 - x86 & x86-64 disassembler library
  *
- * Copyright 2006-2010, BeatriX
+ * Copyright 2006-2020, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.

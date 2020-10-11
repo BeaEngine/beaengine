@@ -15,7 +15,7 @@ unit BeaEngineDelphi64;
 // ====================================================================
 //{$DEFINE USEDLL}
 // ====================================================================
-// Copyright 2006-2009, BeatriX
+// Copyright 2006-2020, BeatriX
 // File coded by BeatriX
 //
 // This file is part of BeaEngine.

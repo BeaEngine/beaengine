@@ -1,4 +1,4 @@
-/* Copyright 2006-2010, BeatriX
+/* Copyright 2006-2020, BeatriX
  * File coded by BeatriX
  *
  * This file is part of BeaEngine.
@@ -16,8 +16,8 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with BeaEngine.  If not, see <http://www.gnu.org/licenses/>. */
 const__ char* __bea_callspec__ BeaEngineVersion(void) {
-	return "5.0";
+	return "5.1";
 }
 const__ char* __bea_callspec__ BeaEngineRevision(void) {
-	return "beta 5";
+	return "0";
 }
