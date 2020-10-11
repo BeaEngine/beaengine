@@ -94,6 +94,16 @@ Current documentation [HERE](./doc/beaengine.md) explains how are working struct
 
 *old documentation can be read here :* http://beatrix2004.free.fr/BeaEngine/index1.php
 
+Each BeaEngine release is provided with pdf documentation:
+
+```
+sudo apt install pandoc texlive-latex-extra
+cd doc
+pandoc --highlight-style tango -V mainfont="Arial" -V geometry:margin=1cm --output=beaengine.pdf beaengine.md
+pandoc --highlight-style tango -V mainfont="Arial" -V geometry:margin=1cm --output=examples.pdf examples.md
+```
+
+
 ### 6. Examples
 
 Some basic examples to show how BeaEngine is working [HERE](./doc/examples.md)
