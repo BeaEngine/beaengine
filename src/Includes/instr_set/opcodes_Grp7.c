@@ -445,6 +445,26 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
           #endif
           GV.EIP_+= GV.DECALAGE_EIP+2;
         }
+        else if (GV.RM_ == 7) {
+          if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) {
+            GV.ERROR_OPCODE = UD_;
+          }
+          (*pMyDisasm).Instruction.Category = SYSTEM_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "wrpkru ");
+          #endif
+          (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
+          (*pMyDisasm).Operand1.Registers.type = SPECIAL_REG;
+          (*pMyDisasm).Operand1.Registers.special = REG3;
+          (*pMyDisasm).Operand1.OpSize = 32;
+
+          (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;
+          (*pMyDisasm).Operand2.Registers.type = GENERAL_REG;
+          (*pMyDisasm).Operand2.Registers.gpr = REG0;
+          (*pMyDisasm).Operand2.OpSize = 32;
+
+          GV.EIP_+= GV.DECALAGE_EIP+2;
+        }
         else {
           FailDecode(pMyDisasm);
         }

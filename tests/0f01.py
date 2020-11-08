@@ -106,3 +106,27 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'saveprevssp ')
+
+        # 0F 01 EF
+        # WRPKRU
+
+        Buffer = bytes.fromhex('0f01ef')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrpkru ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.special, REG3)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 32)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+        assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand2.Registers.gpr, REG0)
+        assert_equal(myDisasm.infos.Operand2.OpSize, 32)
+        assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
+
+        Buffer = bytes.fromhex('f00f01ef')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrpkru ')
+        assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
