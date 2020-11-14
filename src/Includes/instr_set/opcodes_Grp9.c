@@ -58,6 +58,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
     else if (GV.REGOPCODE == 6) {
         if (GV.MOD_ == 0x3) {
           if (GV.PrefRepe == 1) {
+              (*pMyDisasm).Instruction.Category = UINTR_INSTRUCTION;
               #ifndef BEA_LIGHT_DISASSEMBLY
                  (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "senduipi ");
               #endif
