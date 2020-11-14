@@ -185,6 +185,7 @@ ENDSTRUC
     XSAVE_INSTRUCTION             equ          1e0000h
     SGX_INSTRUCTION               equ          1f0000h
     PCONFIG_INSTRUCTION           equ          200000h
+    UINTR_INSTRUCTION             equ          210000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2

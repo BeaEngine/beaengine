@@ -299,7 +299,8 @@ enum INSTRUCTION_TYPE
   XSAVE_INSTRUCTION             =          0x1e0000,
   SGX_INSTRUCTION               =          0x1f0000,
   PCONFIG_INSTRUCTION           =          0x200000,
-	
+  UINTR_INSTRUCTION             =          0x210000,
+
   DATA_TRANSFER = 0x1,
   ARITHMETIC_INSTRUCTION,
   LOGICAL_INSTRUCTION,
@@ -402,7 +403,6 @@ enum ARGUMENTS_TYPE
   OPMASK_REG =                0x400,
   SEGMENT_REG =               0x800,
   FPU_REG =                   0x1000,
-
 
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,

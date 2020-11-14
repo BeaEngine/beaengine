@@ -105,7 +105,84 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Reserved_.REGOPCODE, 5)
+        assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
+        assert_equal(myDisasm.infos.Reserved_.RM_, 2)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'saveprevssp ')
+
+        # F3 0F 01 EC
+        # UIRET
+
+        Buffer = bytes.fromhex('f30f01ec')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'uiret ')
+        assert_equal(myDisasm.infos.Instruction.Category, UINTR_INSTRUCTION + CONTROL_TRANSFER)
+        assert_equal(myDisasm.infos.Instruction.BranchType, RetType)
+
+        # F3 0F 01 ED
+        # TESTUI
+
+        Buffer = bytes.fromhex('f30f01ed')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'testui ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.special, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 1)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+
+        assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand2.Registers.special, REG4)
+        assert_equal(myDisasm.infos.Operand2.OpSize, 1)
+        assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
+
+        # F3 0F C7
+        # SENDUIPI reg
+
+        Buffer = bytes.fromhex('f30fc7f0')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xfc7)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'senduipi ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 64)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+        assert_equal(myDisasm.repr(), 'senduipi rax')
+
+        # F3 0F 01 EE
+        # CLUI
+
+        Buffer = bytes.fromhex('f30f01ee')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clui ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.special, REG4)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 1)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+
+        # F3 0F 01 EF
+        # STUI
+
+        Buffer = bytes.fromhex('f30f01ef')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'stui ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.special, REG4)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 1)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
 
         # 0F 01 EF
         # WRPKRU

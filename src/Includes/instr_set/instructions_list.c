@@ -7577,7 +7577,9 @@ void __bea_callspec__ retn_(PDISASM pMyDisasm)
     (*pMyDisasm).Operand1.OpType = CONSTANT_TYPE+ABSOLUTE_;
     (*pMyDisasm).Operand1.OpSize = 16;
     (*pMyDisasm).Operand1.AccessMode = READ;
-    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG; (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.type = GENERAL_REG + SPECIAL_REG;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.gpr = REG4;
+    (*pMyDisasm).Instruction.ImplicitModifiedRegs.special = REG0;
 }
 
 /* =======================================
@@ -7913,8 +7915,8 @@ void __bea_callspec__ stc_(PDISASM pMyDisasm)
     #endif
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
-  (*pMyDisasm).Operand1.Registers.type = SPECIAL_REG;
-  (*pMyDisasm).Operand1.Registers.special = REG0;
+    (*pMyDisasm).Operand1.Registers.type = SPECIAL_REG;
+    (*pMyDisasm).Operand1.Registers.special = REG0;
     (*pMyDisasm).Operand1.OpSize = 1;
     FillFlags(pMyDisasm, 98);
 }
@@ -7930,8 +7932,8 @@ void __bea_callspec__ sti_(PDISASM pMyDisasm)
     #endif
     GV.EIP_++;
     (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
-  (*pMyDisasm).Operand1.Registers.type = SPECIAL_REG;
-  (*pMyDisasm).Operand1.Registers.special = REG0;
+    (*pMyDisasm).Operand1.Registers.type = SPECIAL_REG;
+    (*pMyDisasm).Operand1.Registers.special = REG0;
     (*pMyDisasm).Operand1.OpSize = 1;
     FillFlags(pMyDisasm, 100);
 }

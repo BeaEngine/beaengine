@@ -58,7 +58,8 @@ namespace Bea
       XSAVE_INSTRUCTION             =          0x1e0000,
       SGX_INSTRUCTION               =          0x1f0000,
       PCONFIG_INSTRUCTION           =          0x200000,
-
+      UINTR_INSTRUCTION             =          0x210000,
+      
       DATA_TRANSFER = 0x1,
       ARITHMETIC_INSTRUCTION,
       LOGICAL_INSTRUCTION,

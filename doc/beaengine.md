@@ -276,6 +276,7 @@ struct REGISTERTYPE{
    Int64 opmask;
    Int64 segment;
    Int64 fpu;
+   Int64 uintr;
 };
 ~~~~
 
@@ -288,10 +289,11 @@ struct REGISTERTYPE{
 - **ymm** : *[out]* set of flags to define which YMM register is used. For instance, to test if operand 1 uses YMM0, test `infos.Operand1.Registers.ymm & REG0`
 - **zmm** : *[out]* set of flags to define which ZMM register is used. For instance, to test if operand 1 uses ZMM0, test `infos.Operand1.Registers.zmm & REG0`.
 - **special** : *[out]* set of flags to define which special register is used. Special Registers are following :
-   - EFLAGS (REG0)
+   - RFLAGS/EFLAGS (REG0)
    - MXCSR (REG1)
    - SSP (REG2)
    - PKRU (REG3)
+   - UIF (REG4) User Interrupt Flag (1 bit in the user interrupt state) is not a MSR but actually, no MSR is used to set/read this flag
 - **cr** : *[out]* set of flags to define which CR register is used. For instance, to test if operand 1 uses CR0, test `infos.Operand1.Registers.cr & REG0`.
 - **dr** : *[out]* set of flags to define which DR register is used. For instance, to test if operand 1 uses DR0, test `infos.Operand1.Registers.dr & REG0`.
 - **mem_management** : *[out]* set of flags to define which memory management register is used.
@@ -309,7 +311,6 @@ struct REGISTERTYPE{
    - FS (REG4)
    - GS (REG5)
 - **fpu** : *[out]* set of flags to define which FPU register is used. For instance, to test if operand 1 uses *st(0)*, test `infos.Operand1.Registers.fpu & REG0`.
-
 
 # 9. Constants
 

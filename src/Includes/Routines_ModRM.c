@@ -603,6 +603,9 @@ long __bea_callspec__ getDisp8N(PDISASM pMyDisasm)
       else {
         N = -1;
       }
+      break;
+    default:
+      N = -1;
   }
   return N;
 }
@@ -1619,7 +1622,7 @@ size_t __bea_callspec__ interpretIndex(OPTYPE* pMyOperand, size_t i, PDISASM pMy
         if (GV.SYNTAX_ == ATSyntax) {
           if ((GV.BASE_  != 5) || (GV.INDEX_  != 4 || GV.REX.X_)) {
             #ifndef BEA_LIGHT_DISASSEMBLY
-              char str[3] = "";
+              char str[5] = "";
               (void) sprintf(str, ",%d", scale);
               (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
             #endif
@@ -1628,7 +1631,7 @@ size_t __bea_callspec__ interpretIndex(OPTYPE* pMyOperand, size_t i, PDISASM pMy
         }
         else {
           #ifndef BEA_LIGHT_DISASSEMBLY
-            char str[3] = "";
+            char str[5] = "";
             (void) sprintf(str, "*%d", scale);
             (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
           #endif
@@ -1684,7 +1687,7 @@ size_t __bea_callspec__ printSIBScale(OPTYPE* pMyOperand, PDISASM pMyDisasm, siz
     if (GV.SYNTAX_ == ATSyntax) {
       if (GV.BASE_  != 5) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-          char str[3] = "";
+          char str[5] = "";
           (void) sprintf(str, ",%d", scale);
           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
         #endif
@@ -1693,7 +1696,7 @@ size_t __bea_callspec__ printSIBScale(OPTYPE* pMyOperand, PDISASM pMyDisasm, siz
     }
     else {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        char str[4] = "";
+        char str[5] = "";
         (void) sprintf(str, "*%d", scale);
         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
       #endif

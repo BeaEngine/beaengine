@@ -171,7 +171,9 @@ EFLStruct EFLAGS_TABLE[] = {
     {RE_, MO_, MO_, UN_, UN_, MO_, 0  , 0  , 0  , 0  , 0  , 0}, /* 128 - bzhi */
     {0  , 0  , 0  , RE_, 0  , 0  , 0  , 0  , 0  , 0  , 0  , 0}, /* 129 - clac */
     {RE_, RE_, RE_, RE_, RE_, MO_, 0  , 0  , 0  , 0  , 0  , 0}, /* 130 - encls */
-    {RE_, RE_, UN_, RE_, RE_, UN_, 0  , 0  , 0  , 0  , 0  , 0}  /* 131 - enclu */
+    {RE_, RE_, UN_, RE_, RE_, UN_, 0  , 0  , 0  , 0  , 0  , 0}, /* 131 - enclu */
+    {MO_, MO_, MO_, MO_, MO_, MO_, MO_, MO_, MO_, MO_, MO_, 0}, /* 132 - uiret */
+    {RE_, RE_, RE_, RE_, RE_, MO_, 0  , 0  , 0  , 0  , 0  , 0}  /* 133 - testui */
     /*OF, SF , ZF , AF , PF , CF , TF , IF , DF , NT , RF , Align */
     };
 /* =====================================================
