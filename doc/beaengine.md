@@ -276,7 +276,6 @@ struct REGISTERTYPE{
    Int64 opmask;
    Int64 segment;
    Int64 fpu;
-   Int64 uintr;
 };
 ~~~~
 
