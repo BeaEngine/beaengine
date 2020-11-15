@@ -21,6 +21,58 @@ from nose.tools import *
 class TestSuite:
     def test(self):
 
+        # 66 0F 01 CF
+        # SEAMCALL
+
+        Buffer = bytes.fromhex('660f01cf')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamcall ')
+        assert_equal(myDisasm.repr(), 'seamcall ')
+
+        # 66 0F 01 CE
+        # SEAMOPS
+
+        Buffer = bytes.fromhex('660f01ce')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamops ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 64)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
+        assert_equal(myDisasm.repr(), 'seamops ')
+
+        # 66 0F 01 CD
+        # SEAMRET
+
+        Buffer = bytes.fromhex('660f01cd')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamret ')
+        assert_equal(myDisasm.repr(), 'seamret ')
+
+        # 66 0F 01 CC
+        # TDCALL
+
+        Buffer = bytes.fromhex('660f01cc')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tdcall ')
+        assert_equal(myDisasm.repr(), 'tdcall ')
+
         # NP 0F 01 CA
         # CLAC
 

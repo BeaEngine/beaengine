@@ -61,29 +61,82 @@
        FillFlags(pMyDisasm,129);
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
+     else if (GV.RM_ == 0x4) {
+       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+           (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
+           #ifndef BEA_LIGHT_DISASSEMBLY
+              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tdcall ");
+           #endif
+           GV.EIP_+= GV.DECALAGE_EIP+2;
+       }
+       else {
+         FailDecode(pMyDisasm);
+       }
+     }
+     else if (GV.RM_ == 0x5) {
+       if (GV.VEX.state == InUsePrefix){ FailDecode(pMyDisasm); return; }
+       if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+           (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
+           #ifndef BEA_LIGHT_DISASSEMBLY
+              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "seamret ");
+           #endif
+           GV.EIP_+= GV.DECALAGE_EIP+2;
+       }
+       else {
+         FailDecode(pMyDisasm);
+       }
+     }
+     else if (GV.RM_ == 0x6) {
+       if (GV.VEX.state == InUsePrefix){ FailDecode(pMyDisasm); return; }
+       if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+           (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
+           #ifndef BEA_LIGHT_DISASSEMBLY
+              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "seamops ");
+           #endif
+           (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
+           (*pMyDisasm).Operand1.OpSize = 64;
+           (*pMyDisasm).Operand1.AccessMode = READ;
+           (*pMyDisasm).Operand1.Registers.type = GENERAL_REG;
+           (*pMyDisasm).Operand1.Registers.gpr = REG0;
+           GV.EIP_+= GV.DECALAGE_EIP+2;
+       }
+       else {
+         FailDecode(pMyDisasm);
+       }
+     }
      else if (GV.RM_ == 0x7) {
        if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
-       (*pMyDisasm).Instruction.Category = SGX_INSTRUCTION;
-       #ifndef BEA_LIGHT_DISASSEMBLY
-          (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "encls ");
-       #endif
-       (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
-       (*pMyDisasm).Operand1.Memory.BaseRegister = REG1;
+       if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+           (*pMyDisasm).Instruction.Category = VM_INSTRUCTION;
+           #ifndef BEA_LIGHT_DISASSEMBLY
+              (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "seamcall ");
+           #endif
+           GV.EIP_+= GV.DECALAGE_EIP+2;
+       }
+       else {
+         (*pMyDisasm).Instruction.Category = SGX_INSTRUCTION;
+         #ifndef BEA_LIGHT_DISASSEMBLY
+            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "encls ");
+         #endif
+         (*pMyDisasm).Operand1.OpType = MEMORY_TYPE;
+         (*pMyDisasm).Operand1.Memory.BaseRegister = REG1;
 
-       (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
-       (*pMyDisasm).Operand2.Memory.BaseRegister = REG3;
+         (*pMyDisasm).Operand2.OpType = MEMORY_TYPE;
+         (*pMyDisasm).Operand2.Memory.BaseRegister = REG3;
 
-       (*pMyDisasm).Operand3.OpType = REGISTER_TYPE;
-       (*pMyDisasm).Operand3.OpSize = 32;
-       (*pMyDisasm).Operand3.Registers.type = GENERAL_REG;
-       (*pMyDisasm).Operand3.Registers.gpr = REG0;
-       /*
-       Flags Affected
-       CF is set if an invalid token was detected else is cleared.
-       ZF, PF, AF, OF and SF are cleared.
-       */
-       FillFlags(pMyDisasm,130);
-       GV.EIP_+= GV.DECALAGE_EIP+2;
+         (*pMyDisasm).Operand3.OpType = REGISTER_TYPE;
+         (*pMyDisasm).Operand3.OpSize = 32;
+         (*pMyDisasm).Operand3.Registers.type = GENERAL_REG;
+         (*pMyDisasm).Operand3.Registers.gpr = REG0;
+         /*
+         Flags Affected
+         CF is set if an invalid token was detected else is cleared.
+         ZF, PF, AF, OF and SF are cleared.
+         */
+         FillFlags(pMyDisasm,130);
+         GV.EIP_+= GV.DECALAGE_EIP+2;
+       }
      }
      else {
         FailDecode(pMyDisasm);
@@ -165,10 +218,9 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x5) {
+       if (GV.VEX.state == InUsePrefix){ FailDecode(pMyDisasm); return; }
        if (
-           (GV.PrefRepne == 1) || (GV.PrefRepe == 1) ||
-           ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) ||
-           (GV.VEX.state == InUsePrefix)
+           (GV.PrefRepne == 1) || (GV.PrefRepe == 1)
          )
          {
            GV.ERROR_OPCODE = UD_;

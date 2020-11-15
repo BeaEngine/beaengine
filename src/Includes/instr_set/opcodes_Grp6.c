@@ -46,7 +46,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sldt ");
         #endif
-        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;(*pMyDisasm).Operand2.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand2.Registers.type = MEMORY_MANAGEMENT_REG;
         (*pMyDisasm).Operand2.Registers.mem_management = REG1;
         (*pMyDisasm).Operand2.OpSize = 32;
         GV.OperandSize = OperandSizeOld;
@@ -63,7 +64,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "str ");
         #endif
-        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;(*pMyDisasm).Operand2.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand2.Registers.type = MEMORY_MANAGEMENT_REG;
         (*pMyDisasm).Operand2.Registers.mem_management = REG3;
         (*pMyDisasm).Operand2.OpSize = 16;
         GV.OperandSize = OperandSizeOld;
@@ -75,7 +77,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "lldt ");
         #endif
-        (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;(*pMyDisasm).Operand1.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand1.Registers.type = MEMORY_MANAGEMENT_REG;
         (*pMyDisasm).Operand1.Registers.mem_management = REG1;
         (*pMyDisasm).Operand1.OpSize = 16;
         GV.OperandSize = OperandSizeOld;
@@ -87,7 +90,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ltr ");
         #endif
-        (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;(*pMyDisasm).Operand1.Registers.type = MEMORY_MANAGEMENT_REG;
+        (*pMyDisasm).Operand1.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand1.Registers.type = MEMORY_MANAGEMENT_REG;
         (*pMyDisasm).Operand1.Registers.mem_management = REG3;
         (*pMyDisasm).Operand1.OpSize = 16;
         GV.OperandSize = OperandSizeOld;
@@ -99,7 +103,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verr ");
         #endif
-        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;(*pMyDisasm).Operand2.Registers.type = SPECIAL_REG;
+        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand2.Registers.type = SPECIAL_REG;
         (*pMyDisasm).Operand2.Registers.special = REG0;
         (*pMyDisasm).Operand2.OpSize = 16;
         GV.OperandSize = OperandSizeOld;
@@ -111,7 +116,8 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "verw ");
         #endif
-        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;(*pMyDisasm).Operand2.Registers.type = SPECIAL_REG;
+        (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand2.Registers.type = SPECIAL_REG;
         (*pMyDisasm).Operand2.Registers.special = REG0;
         (*pMyDisasm).Operand2.OpSize = 16;
         GV.OperandSize = OperandSizeOld;
