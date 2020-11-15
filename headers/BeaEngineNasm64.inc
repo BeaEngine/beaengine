@@ -115,6 +115,11 @@ STRUC _Disasm
     Operand2:       resb   OPTYPE_size
     Operand3:       resb   OPTYPE_size
     Operand4:       resb   OPTYPE_size
+    Operand5:       resb   OPTYPE_size
+    Operand6:       resb   OPTYPE_size
+    Operand7:       resb   OPTYPE_size
+    Operand8:       resb   OPTYPE_size
+    Operand9:       resb   OPTYPE_size
     Prefix:          resb   PREFIXINFO_size
     Error:          resd   1
     Reserved_        resd   48
@@ -186,6 +191,7 @@ ENDSTRUC
     SGX_INSTRUCTION               equ          1f0000h
     PCONFIG_INSTRUCTION           equ          200000h
     UINTR_INSTRUCTION             equ          210000h
+    KL_INSTRUCTION                equ          220000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2

@@ -215,6 +215,11 @@ typedef struct _Disasm {
    OPTYPE Operand2;
    OPTYPE Operand3;
    OPTYPE Operand4;
+   OPTYPE Operand5;
+   OPTYPE Operand6;
+   OPTYPE Operand7;
+   OPTYPE Operand8;
+   OPTYPE Operand9;
    PREFIXINFO Prefix;
    InternalDatas Reserved_;
 } DISASM, *PDISASM, *LPDISASM;
@@ -300,6 +305,7 @@ enum INSTRUCTION_TYPE
   SGX_INSTRUCTION               =          0x1f0000,
   PCONFIG_INSTRUCTION           =          0x200000,
   UINTR_INSTRUCTION             =          0x210000,
+  KL_INSTRUCTION                =          0x220000,
 
   DATA_TRANSFER = 0x1,
   ARITHMETIC_INSTRUCTION,

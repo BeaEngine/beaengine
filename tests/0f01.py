@@ -142,22 +142,6 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpSize, 1)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
 
-        # F3 0F C7
-        # SENDUIPI reg
-
-        Buffer = bytes.fromhex('f30fc7f0')
-        myDisasm = Disasm(Buffer)
-        length = myDisasm.read()
-        assert_equal(length, len(Buffer))
-        assert_equal(myDisasm.infos.Instruction.Opcode, 0xfc7)
-        assert_equal(myDisasm.infos.Instruction.Category, UINTR_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'senduipi ')
-        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
-        assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
-        assert_equal(myDisasm.infos.Operand1.OpSize, 64)
-        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
-        assert_equal(myDisasm.repr(), 'senduipi rax')
-
         # F3 0F 01 EE
         # CLUI
 

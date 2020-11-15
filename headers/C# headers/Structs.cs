@@ -125,6 +125,11 @@ namespace Bea
     public ArgumentType Operand2;
     public ArgumentType Operand3;
     public ArgumentType Operand4;
+    public ArgumentType Operand5;
+    public ArgumentType Operand6;
+    public ArgumentType Operand7;
+    public ArgumentType Operand8;
+    public ArgumentType Operand9;
     public PrefixInfo Prefix;
     public Int32 Error;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 48, ArraySubType = UnmanagedType.U4)]

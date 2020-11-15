@@ -117,6 +117,11 @@ struct _Disasm
     Operand2       OPTYPE
     Operand3       OPTYPE
     Operand4       OPTYPE
+    Operand5       OPTYPE
+    Operand6       OPTYPE
+    Operand7       OPTYPE
+    Operand8       OPTYPE
+    Operand9       OPTYPE
     Prefix          PREFIXINFO
     Error          dd   0
     Reserved_       dd   48 dup(0)
@@ -189,6 +194,8 @@ ends
     SGX_INSTRUCTION               equ          1f0000h
     PCONFIG_INSTRUCTION           equ          200000h
     UINTR_INSTRUCTION             equ          210000h
+    KL_INSTRUCTION                equ          220000h
+
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
     LOGICAL_INSTRUCTION         equ 3

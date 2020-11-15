@@ -26,13 +26,60 @@ class TestSuite:
 
     def test(self):
 
+        # F3 0F 38 DC 11:rrr:bbb
+        # LOADIWKEY xmm1, xmm2, <EAX>, <XMM0>
+
+        Buffer = bytes.fromhex('f30f38dcc0')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38dc)
+        assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'loadiwkey ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.xmm, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 128)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
+        assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand2.Registers.xmm, REG0)
+        assert_equal(myDisasm.infos.Operand2.OpSize, 128)
+        assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
+        assert_equal(myDisasm.infos.Operand3.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand3.Registers.gpr, REG0)
+        assert_equal(myDisasm.infos.Operand3.OpSize, 32)
+        assert_equal(myDisasm.infos.Operand3.AccessMode, READ)
+        assert_equal(myDisasm.infos.Operand4.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand4.Registers.xmm, REG0)
+        assert_equal(myDisasm.infos.Operand4.OpSize, 128)
+        assert_equal(myDisasm.infos.Operand4.AccessMode, READ)
+        assert_equal(myDisasm.repr(), 'loadiwkey xmm0, xmm0')
+
+        # F3 0F 38 DC !(11):rrr:bbb
+        # AESENC128KL xmm, m384
+
+        Buffer = bytes.fromhex('f30f38dc00')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38dc)
+        assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesenc128kl ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.xmm, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 128)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+        assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
+        assert_equal(myDisasm.infos.Operand2.OpSize, 384)
+        assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
+        assert_equal(myDisasm.repr(), 'aesenc128kl xmm0,  [rax]')
+
         # 66 0F 38 DC /r
         # AESENC xmm1, xmm2/m128
 
         Buffer = bytes.fromhex('660f38dc6bA2')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38dc')
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38dc)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesenc ')
         assert_equal(myDisasm.repr(), 'aesenc xmm5, xmmword ptr [rbx-5Eh]')
 

@@ -112,6 +112,11 @@ Structure _Disasm
   Operand2.OPTYPE
   Operand3.OPTYPE
   Operand4.OPTYPE
+  Operand5.OPTYPE
+  Operand6.OPTYPE
+  Operand7.OPTYPE
+  Operand8.OPTYPE
+  Operand9.OPTYPE
   Prefix.PREFIXINFO
   Error.l
   Reserved_.l[48]
@@ -181,6 +186,7 @@ Global MyDisasm._Disasm
 #SGX_INSTRUCTION               =          $1f0000
 #PCONFIG_INSTRUCTION           =          $200000
 #UINTR_INSTRUCTION             =          $210000
+#KL_INSTRUCTION                =          $220000
 
 #DATA_TRANSFER               = 1
 #ARITHMETIC_INSTRUCTION      = 2

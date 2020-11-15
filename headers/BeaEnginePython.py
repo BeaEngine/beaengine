@@ -183,6 +183,11 @@ class INSTRUCTION(Structure):
                ("Operand2", OPTYPE),
                ("Operand3", OPTYPE),
                ("Operand4", OPTYPE),
+               ("Operand5", OPTYPE),
+               ("Operand6", OPTYPE),
+               ("Operand7", OPTYPE),
+               ("Operand8", OPTYPE),
+               ("Operand9", OPTYPE),
                ("Prefix", PREFIXINFO),
                ("Error", c_int32),
                ("Reserved_", InternalDatas)]
@@ -276,6 +281,7 @@ XSAVE_INSTRUCTION             =    0x1e0000
 SGX_INSTRUCTION               =    0x1f0000
 PCONFIG_INSTRUCTION           =    0x200000
 UINTR_INSTRUCTION             =    0x210000
+KL_INSTRUCTION                =    0x220000
 
 DATA_TRANSFER = 0x1
 ARITHMETIC_INSTRUCTION = 2
@@ -900,6 +906,16 @@ class Disasm():
             status += self.match_registers(self.infos.Operand3.Registers, registers_type)
         if  self.infos.Operand4.AccessMode == READ:
             status += self.match_registers(self.infos.Operand4.Registers, registers_type)
+        if  self.infos.Operand5.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand5.Registers, registers_type)
+        if  self.infos.Operand6.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand6.Registers, registers_type)
+        if  self.infos.Operand7.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand7.Registers, registers_type)
+        if  self.infos.Operand8.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand8.Registers, registers_type)
+        if  self.infos.Operand9.AccessMode == READ:
+            status += self.match_registers(self.infos.Operand9.Registers, registers_type)
         return True if status > 0 else False
 
     def modifies(self, registers):
@@ -913,6 +929,16 @@ class Disasm():
             status += self.match_registers(self.infos.Operand3.Registers, registers_type)
         if  self.infos.Operand4.AccessMode == WRITE:
             status += self.match_registers(self.infos.Operand4.Registers, registers_type)
+        if  self.infos.Operand5.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand5.Registers, registers_type)
+        if  self.infos.Operand6.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand6.Registers, registers_type)
+        if  self.infos.Operand7.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand7.Registers, registers_type)
+        if  self.infos.Operand8.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand8.Registers, registers_type)
+        if  self.infos.Operand9.AccessMode == WRITE:
+            status += self.match_registers(self.infos.Operand9.Registers, registers_type)
         status += self.match_registers(self.infos.Instruction.ImplicitModifiedRegs, registers_type)
 
         return True if status > 0 else False

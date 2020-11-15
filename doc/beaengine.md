@@ -43,6 +43,11 @@ struct PDISASM {
   OPTYPE Operand2;
   OPTYPE Operand3;
   OPTYPE Operand4;
+  OPTYPE Operand5;
+  OPTYPE Operand6;
+  OPTYPE Operand7;
+  OPTYPE Operand8;
+  OPTYPE Operand9;
   PREFIXINFO Prefix;
   Int32 Error;
   UInt32 Reserved_[48];

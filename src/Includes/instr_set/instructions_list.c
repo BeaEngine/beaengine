@@ -25944,8 +25944,44 @@ void __bea_callspec__ aesimc(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ aesenc(PDISASM pMyDisasm)
 {
+    /* ========== 0xf3 */
+    if (GV.PrefRepe == 1) {
+      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm);return; }
+      if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE=UD_;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3) {
+        (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenc128kl ");
+        #endif
+        GV.MemDecoration = Arg2multibytes;
+        (*pMyDisasm).Operand2.OpSize = 384;
+        GV.Register_ = SSE_REG;
+        GxEx(pMyDisasm);
+      }
+      else {
+        (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "loadiwkey ");
+        #endif
+        GV.Register_ = SSE_REG;
+        GxEx(pMyDisasm);
+        (*pMyDisasm).Operand1.AccessMode = READ;
+        (*pMyDisasm).Operand3.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand3.OpSize = 32;
+        (*pMyDisasm).Operand3.AccessMode = READ;
+        (*pMyDisasm).Operand3.Registers.type = GENERAL_REG;
+        (*pMyDisasm).Operand3.Registers.gpr = REG0;
+        (*pMyDisasm).Operand4.OpType = REGISTER_TYPE;
+        (*pMyDisasm).Operand4.OpSize = 128;
+        (*pMyDisasm).Operand4.AccessMode = READ;
+        (*pMyDisasm).Operand4.Registers.type = SSE_REG;
+        (*pMyDisasm).Operand4.Registers.xmm = REG0;
+      }
+    }
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    else if (GV.OperandSize == 16) {
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -25976,12 +26012,134 @@ void __bea_callspec__ aesenc(PDISASM pMyDisasm)
 }
 
 /* ====================================================================
+ *      0x 0f 38 d8
+ * ==================================================================== */
+void __bea_callspec__ aesencwide128(PDISASM pMyDisasm)
+{
+  /* ========== 0xf3 */
+  if (GV.PrefRepe == 1) {
+    if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm);return; }
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE=UD_;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    if ((GV.MOD_ != 0x3) && (GV.REGOPCODE <= 3)){
+      (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+      if (GV.REGOPCODE == 0) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesencwide128kl ");
+        #endif
+        (*pMyDisasm).Operand1.OpSize = 384;
+      }
+      else if (GV.REGOPCODE == 1) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdecwide128kl ");
+        #endif
+        (*pMyDisasm).Operand1.OpSize = 384;
+      }
+      else if (GV.REGOPCODE == 0x3) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdecwide256kl ");
+        #endif
+        (*pMyDisasm).Operand1.OpSize = 512;
+      }
+      else if (GV.REGOPCODE == 0x2) {
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesencwide256kl ");
+        #endif
+        (*pMyDisasm).Operand1.OpSize = 512;
+      }
+      GV.MemDecoration = Arg1multibytes;
+
+      (*pMyDisasm).Operand1.AccessMode = READ;
+      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
+      GV.EIP_ += GV.DECALAGE_EIP+2;
+
+      (*pMyDisasm).Operand2.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand2.OpSize = 128;
+      (*pMyDisasm).Operand2.AccessMode = WRITE;
+      (*pMyDisasm).Operand2.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand2.Registers.xmm = REG0;
+
+      (*pMyDisasm).Operand3.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand3.OpSize = 128;
+      (*pMyDisasm).Operand3.AccessMode = WRITE;
+      (*pMyDisasm).Operand3.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand3.Registers.xmm = REG1;
+
+      (*pMyDisasm).Operand4.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand4.OpSize = 128;
+      (*pMyDisasm).Operand4.AccessMode = WRITE;
+      (*pMyDisasm).Operand4.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand4.Registers.xmm = REG2;
+
+      (*pMyDisasm).Operand5.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand5.OpSize = 128;
+      (*pMyDisasm).Operand5.AccessMode = WRITE;
+      (*pMyDisasm).Operand5.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand5.Registers.xmm = REG3;
+
+      (*pMyDisasm).Operand6.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand6.OpSize = 128;
+      (*pMyDisasm).Operand6.AccessMode = WRITE;
+      (*pMyDisasm).Operand6.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand6.Registers.xmm = REG4;
+
+      (*pMyDisasm).Operand7.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand7.OpSize = 128;
+      (*pMyDisasm).Operand7.AccessMode = WRITE;
+      (*pMyDisasm).Operand7.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand7.Registers.xmm = REG5;
+
+      (*pMyDisasm).Operand8.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand8.OpSize = 128;
+      (*pMyDisasm).Operand8.AccessMode = WRITE;
+      (*pMyDisasm).Operand8.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand8.Registers.xmm = REG6;
+
+      (*pMyDisasm).Operand9.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand9.OpSize = 128;
+      (*pMyDisasm).Operand9.AccessMode = WRITE;
+      (*pMyDisasm).Operand9.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand9.Registers.xmm = REG7;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
  *      0x 0f 38 dd
  * ==================================================================== */
 void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
 {
+  /* ========== 0xf3 */
+  if (GV.PrefRepe == 1) {
+    if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm);return; }
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE=UD_;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ != 0x3) {
+      (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdec128kl ");
+      #endif
+      GV.MemDecoration = Arg2multibytes;
+      (*pMyDisasm).Operand2.OpSize = 384;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+  else if (GV.OperandSize == 16) {
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26016,8 +26174,28 @@ void __bea_callspec__ aesenclast(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ aesdec(PDISASM pMyDisasm)
 {
+    /* ========== 0xf3 */
+    if (GV.PrefRepe == 1) {
+      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm);return; }
+      if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE=UD_;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3) {
+        (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesenc256kl ");
+        #endif
+        GV.MemDecoration = Arg2multibytes;
+        (*pMyDisasm).Operand2.OpSize = 512;
+        GV.Register_ = SSE_REG;
+        GxEx(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    else if (GV.OperandSize == 16) {
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26052,8 +26230,28 @@ void __bea_callspec__ aesdec(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ aesdeclast(PDISASM pMyDisasm)
 {
+    /* ========== 0xf3 */
+    if (GV.PrefRepe == 1) {
+      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm);return; }
+      if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE=UD_;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3) {
+        (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aesdec256kl ");
+        #endif
+        GV.MemDecoration = Arg2multibytes;
+        (*pMyDisasm).Operand2.OpSize = 512;
+        GV.Register_ = SSE_REG;
+        GxEx(pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
+    }
     /* ========== 0x66 */
-    if (GV.OperandSize == 16) {
+    else if (GV.OperandSize == 16) {
         if (GV.VEX.state == InUsePrefix) {
             (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + AES_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26125,6 +26323,141 @@ void __bea_callspec__ aeskeygen(PDISASM pMyDisasm)
 
 }
 
+/* ====================================================================
+ *      0x 0f 38 fa
+ * ==================================================================== */
+void __bea_callspec__ encodekey128_(PDISASM pMyDisasm)
+{
+  /* ========== 0xf3 */
+  if (GV.PrefRepe == 1) {
+    if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm);return; }
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE=UD_;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ == 0x3) {
+      (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "encodekey128 ");
+      #endif
+      GV.Register_ = 0;
+      GV.OperandSize = 32;
+      GxEx(pMyDisasm);
+      (*pMyDisasm).Operand3.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand3.OpSize = 128;
+      (*pMyDisasm).Operand3.AccessMode = WRITE;
+      (*pMyDisasm).Operand3.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand3.Registers.xmm = REG0;
+
+      (*pMyDisasm).Operand4.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand4.OpSize = 128;
+      (*pMyDisasm).Operand4.AccessMode = WRITE;
+      (*pMyDisasm).Operand4.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand4.Registers.xmm = REG1;
+
+      (*pMyDisasm).Operand5.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand5.OpSize = 128;
+      (*pMyDisasm).Operand5.AccessMode = WRITE;
+      (*pMyDisasm).Operand5.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand5.Registers.xmm = REG2;
+
+      (*pMyDisasm).Operand6.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand6.OpSize = 128;
+      (*pMyDisasm).Operand6.AccessMode = WRITE;
+      (*pMyDisasm).Operand6.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand6.Registers.xmm = REG4;
+
+      (*pMyDisasm).Operand7.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand7.OpSize = 128;
+      (*pMyDisasm).Operand7.AccessMode = WRITE;
+      (*pMyDisasm).Operand7.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand7.Registers.xmm = REG5;
+
+      (*pMyDisasm).Operand8.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand8.OpSize = 128;
+      (*pMyDisasm).Operand8.AccessMode = WRITE;
+      (*pMyDisasm).Operand8.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand8.Registers.xmm = REG6;
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+
+/* ====================================================================
+ *      0x 0f 38 fb
+ * ==================================================================== */
+void __bea_callspec__ encodekey256_(PDISASM pMyDisasm)
+{
+  /* ========== 0xf3 */
+  if (GV.PrefRepe == 1) {
+    if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm);return; }
+    if ((*pMyDisasm).Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE=UD_;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (GV.MOD_ == 0x3) {
+      (*pMyDisasm).Instruction.Category = KL_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "encodekey256 ");
+      #endif
+      GV.Register_ = 0;
+      GV.OperandSize = 32;
+      GxEx(pMyDisasm);
+      (*pMyDisasm).Operand3.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand3.OpSize = 128;
+      (*pMyDisasm).Operand3.AccessMode = WRITE;
+      (*pMyDisasm).Operand3.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand3.Registers.xmm = REG0;
+
+      (*pMyDisasm).Operand4.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand4.OpSize = 128;
+      (*pMyDisasm).Operand4.AccessMode = WRITE;
+      (*pMyDisasm).Operand4.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand4.Registers.xmm = REG1;
+
+      (*pMyDisasm).Operand5.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand5.OpSize = 128;
+      (*pMyDisasm).Operand5.AccessMode = WRITE;
+      (*pMyDisasm).Operand5.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand5.Registers.xmm = REG2;
+
+      (*pMyDisasm).Operand6.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand6.OpSize = 128;
+      (*pMyDisasm).Operand6.AccessMode = WRITE;
+      (*pMyDisasm).Operand6.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand6.Registers.xmm = REG3;
+
+      (*pMyDisasm).Operand7.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand7.OpSize = 128;
+      (*pMyDisasm).Operand7.AccessMode = WRITE;
+      (*pMyDisasm).Operand7.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand7.Registers.xmm = REG4;
+
+      (*pMyDisasm).Operand8.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand8.OpSize = 128;
+      (*pMyDisasm).Operand8.AccessMode = WRITE;
+      (*pMyDisasm).Operand8.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand8.Registers.xmm = REG5;
+
+      (*pMyDisasm).Operand9.OpType = REGISTER_TYPE;
+      (*pMyDisasm).Operand9.OpSize = 128;
+      (*pMyDisasm).Operand9.AccessMode = WRITE;
+      (*pMyDisasm).Operand9.Registers.type = SSE_REG;
+      (*pMyDisasm).Operand9.Registers.xmm = REG6;
+
+    }
+    else {
+      FailDecode(pMyDisasm);
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 /* ====================================================================
  *      0x 0f 3a 66
  * ==================================================================== */

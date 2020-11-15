@@ -26,6 +26,25 @@ class TestSuite:
 
     def test(self):
 
+        # F3 0F 38 DF !(11):rrr:bbb
+        # AESDEC128KL xmm, m384
+
+        Buffer = bytes.fromhex('f30f38df00')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38df)
+        assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdec256kl ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.xmm, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 128)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+        assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
+        assert_equal(myDisasm.infos.Operand2.OpSize, 512)
+        assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
+        assert_equal(myDisasm.repr(), 'aesdec256kl xmm0,  [rax]')
+
         # 66 0F 38 DC /r
         # AESdeclast xmm1, xmm2/m128
 
