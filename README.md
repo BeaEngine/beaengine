@@ -1,7 +1,7 @@
 ![beaengine](./doc/beaengine-logo.png)
 # BeaEngine 5
 
-BeaEngine is C library designed to decode instructions from 16 bits, 32 bits and 64 bits intel architectures. It includes standard instructions set and instructions set from FPU, MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX, CLMUL, AES, MPX, AVX, AVX2, AVX512 (VEX & EVEX prefixes), CET, BMI1, BMI2, SGX, UINTR, KL and TDX extensions. If you want to analyze malicious codes and more generally obfuscated codes, BeaEngine sends back a complex structure that describes precisely the analyzed instructions.
+BeaEngine is C library designed to decode instructions from 16 bits, 32 bits and 64 bits intel architectures. It includes standard instructions set and instructions set from FPU, MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, VMX, CLMUL, AES, MPX, AVX, AVX2, AVX512 (VEX & EVEX prefixes), CET, BMI1, BMI2, SGX, UINTR, KL, TDX, AMX extensions. If you want to analyze malicious codes and more generally obfuscated codes, BeaEngine sends back a complex structure that describes precisely the analyzed instructions.
 
 You can use it in C/C++ (usable and compilable with Visual Studio, GCC, MinGW, DigitalMars, BorlandC, WatcomC, SunForte, Pelles C, LCC), in assembler (usable with masm32 and masm64, nasm, fasm, GoAsm) in C#, in Python3, in Delphi, in PureBasic and in WinDev. You can use it in user mode and kernel mode.
 
