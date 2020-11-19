@@ -73,6 +73,7 @@ Structure REGISTERTYPE
    opmask.q
    segment.q
    fpu.q
+   tmm.q
 EndStructure
 Global Registertype.REGISTERTYPE
 
@@ -187,6 +188,7 @@ Global MyDisasm._Disasm
 #PCONFIG_INSTRUCTION           =          $200000
 #UINTR_INSTRUCTION             =          $210000
 #KL_INSTRUCTION                =          $220000
+#AMX_INSTRUCTION               =          $230000
 
 #DATA_TRANSFER               = 1
 #ARITHMETIC_INSTRUCTION      = 2
@@ -298,6 +300,7 @@ Global MyDisasm._Disasm
 #OPMASK_REG                  = $400
 #SEGMENT_REG                 = $800      ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
 #FPU_REG                     = $1000
+#TMM_REG                     = $2000
 
 #RELATIVE_                   = $04000000
 #ABSOLUTE_                   = $08000000

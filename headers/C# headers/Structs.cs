@@ -70,6 +70,7 @@ namespace Bea
     public Int64 opmask;
     public Int64 segment;
     public Int64 fpu;
+    public Int64 tmm;
   }
 
 

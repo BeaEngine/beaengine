@@ -77,6 +77,7 @@ STRUC REGISTERTYPE
    opmask: resq 1
    segment: resq 1
    fpu: resq 1
+   tmm: resq 1
 ENDSTRUC
 
 
@@ -194,6 +195,7 @@ ENDSTRUC
     PCONFIG_INSTRUCTION           equ          200000h
     UINTR_INSTRUCTION             equ          210000h
     KL_INSTRUCTION                equ          220000h
+    AMX_INSTRUCTION               equ          230000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
@@ -305,6 +307,7 @@ ENDSTRUC
     OPMASK_REG                  equ 400h
     SEGMENT_REG                 equ 800h      ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
     FPU_REG                     equ 1000h
+    TMM_REG                     equ 2000h
 
     RELATIVE_                   equ 04000000h
     ABSOLUTE_                   equ 08000000h

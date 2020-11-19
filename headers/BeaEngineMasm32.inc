@@ -73,6 +73,7 @@ EFLStruct ENDS
     opmask    QWORD   0
     segment    QWORD   0
     fpu    QWORD   0
+    tmm QWORD 0
  REGISTERTYPE ENDS
 
 INSTRTYPE STRUCT
@@ -191,6 +192,7 @@ Disasm  PROTO :DWORD
     PCONFIG_INSTRUCTION           equ          200000h
     UINTR_INSTRUCTION             equ          210000h
     KL_INSTRUCTION                equ          220000h
+    AMX_INSTRUCTION               equ          230000h
 
     DATA_TRANSFER               equ 1
     ARITHMETIC_INSTRUCTION      equ 2
@@ -302,6 +304,7 @@ Disasm  PROTO :DWORD
     OPMASK_REG                  equ 400h
     SEGMENT_REG                 equ 800h      ; ES (REG0), CS (REG1), SS (REG2), DS (REG3), FS (REG4), GS (REG5)
     FPU_REG                     equ 1000h
+    TMM_REG                     equ 2000h
 
     RELATIVE_                   equ 04000000h
     ABSOLUTE_                   equ 08000000h

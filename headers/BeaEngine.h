@@ -92,6 +92,7 @@ typedef struct {
    Int64 opmask;
    Int64 segment;
    Int64 fpu;
+   Int64 tmm;
 } REGISTERTYPE ;
 #pragma pack()
 
@@ -198,7 +199,8 @@ enum INSTRUCTION_TYPE
   SGX_INSTRUCTION               =          0x1f0000,
   PCONFIG_INSTRUCTION           =          0x200000,
   UINTR_INSTRUCTION             =          0x210000,
-	KL_INSTRUCTION                =          0x220000,
+  KL_INSTRUCTION                =          0x220000,
+  AMX_INSTRUCTION               =          0x230000,
 
     DATA_TRANSFER = 0x1,
     ARITHMETIC_INSTRUCTION,
@@ -302,6 +304,7 @@ enum ARGUMENTS_TYPE
   OPMASK_REG =                0x400,
   SEGMENT_REG =               0x800,
   FPU_REG =                   0x1000,
+  TMM_REG =                   0x2000,
 
   RELATIVE_ = 0x4000000,
   ABSOLUTE_ = 0x8000000,

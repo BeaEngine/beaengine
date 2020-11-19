@@ -60,6 +60,7 @@ namespace Bea
       PCONFIG_INSTRUCTION           =          0x200000,
       UINTR_INSTRUCTION             =          0x210000,
       KL_INSTRUCTION                =          0x220000,
+      AMX_INSTRUCTION               =          0x230000,
 
       DATA_TRANSFER = 0x1,
       ARITHMETIC_INSTRUCTION,
@@ -162,6 +163,7 @@ namespace Bea
       OPMASK_REG =                0x400,
       SEGMENT_REG =               0x800,
       FPU_REG =                   0x1000,
+      TMM_REG =                   0x2000,
 
       RELATIVE_ = 0x4000000,
       ABSOLUTE_ = 0x8000000,

@@ -116,6 +116,7 @@ uses Windows,SysUtils;
           opmask : int64;
           segment : int64;
           fpu : int64;
+          tmm : int64;
 
        end;
 
@@ -224,6 +225,7 @@ uses Windows,SysUtils;
        PCONFIG_INSTRUCTION           =          $200000;
        UINTR_INSTRUCTION             =          $210000;
        KL_INSTRUCTION                =          $220000;
+       AMX_INSTRUCTION               =          $230000;
        DATA_TRANSFER = $1;
        ARITHMETIC_INSTRUCTION = 2;
        LOGICAL_INSTRUCTION = 3;
@@ -328,6 +330,7 @@ uses Windows,SysUtils;
        OPMASK_REG =                $400;
        SEGMENT_REG =               $800;
        FPU_REG =                   $1000;
+       TMM_REG =                   $2000;
 
        RELATIVE_ = $4000000;
        ABSOLUTE_ = $8000000;

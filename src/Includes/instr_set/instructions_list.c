@@ -5526,7 +5526,8 @@ void __bea_callspec__ cmovno_(PDISASM pMyDisasm)
       (GV.VEX.L == 1) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -19698,7 +19699,349 @@ void __bea_callspec__ psllvd_(PDISASM pMyDisasm)
    }
 }
 
+/* ====================================================================
+*      0x 0f 38 49
+* ==================================================================== */
 
+void __bea_callspec__ ldtilecfg_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if ((GV.VEX.state == InUsePrefix) && (GV.VEX.L == 0)) {
+    switch(GV.VEX.pp){
+      case 0:
+        if (GV.REX.W_ == 0) {
+          /* VEX.W0 */
+          if (!Security(2, pMyDisasm)) return;
+          GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+          GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+          GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
+          if ((GV.REGOPCODE == 0) && (GV.MOD_ != 3)) {
+            (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+            if (GV.VEX.vvvv != 0x15) GV.ERROR_OPCODE = UD_;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "ldtilecfg ");
+            #endif
+            GV.MemDecoration = Arg1multibytes;
+            (*pMyDisasm).Operand1.AccessMode = READ;
+            (*pMyDisasm).Operand1.OpSize = 512;
+            MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
+            GV.EIP_ += GV.DECALAGE_EIP+2;
+          }
+          else if ((GV.REGOPCODE == 0) && (GV.MOD_ == 3) && (GV.RM_ == 0)) {
+            (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+            if (GV.VEX.vvvv != 0x15) GV.ERROR_OPCODE = UD_;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tilerelease ");
+            #endif
+            GV.EIP_ += GV.DECALAGE_EIP+2;
+          }
+          else {
+            FailDecode(pMyDisasm);
+          }
+        }
+        else {
+          /* VEX.W1 */
+          FailDecode(pMyDisasm);
+        }
+        break;
+      case 1:
+        if (GV.REX.W_ == 0) {
+          /* VEX.66.W0 */
+          (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+          if (GV.VEX.vvvv != 0x15) GV.ERROR_OPCODE = UD_;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "sttilecfg ");
+          #endif
+          GV.MemDecoration = Arg1multibytes;
+          (*pMyDisasm).Operand1.AccessMode = WRITE;
+          (*pMyDisasm).Operand1.OpSize = 512;
+          MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          /* VEX.66.W1 */
+          FailDecode(pMyDisasm);
+        }
+        break;
+      case 2:
+        if (GV.REX.W_ == 0) {
+          /* VEX.F3.W0 */
+          FailDecode(pMyDisasm);
+        }
+        else {
+          /* VEX.F3.W1 */
+          FailDecode(pMyDisasm);
+        }
+        break;
+      case 3:
+        if (GV.REX.W_ == 0) {
+          /* VEX.F2.W0 */
+          if (GV.VEX.vvvv != 0x15) GV.ERROR_OPCODE = UD_;
+          (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tilezero ");
+          #endif
+          GV.Register_ = TMM_REG;
+          Reg_Opcode(&(*pMyDisasm).Operand1, pMyDisasm);
+          GV.EIP_ += GV.DECALAGE_EIP+2;
+        }
+        else {
+          /* VEX.F2.W1 */
+          FailDecode(pMyDisasm);
+        }
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 4b
+* ==================================================================== */
+
+void __bea_callspec__ tileload_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if ((GV.VEX.state == InUsePrefix) && (GV.VEX.L == 0)) {
+    switch(GV.VEX.pp){
+      case 0:
+        FailDecode(pMyDisasm);
+        break;
+      case 1:
+        if (!Security(2, pMyDisasm)) return;
+        GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
+        if (GV.RM_ != 0x4) {
+          FailDecode(pMyDisasm);
+        }
+        else {
+          if (GV.REX.W_ == 0) {
+            /* VEX.66.W0 */
+            (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+            if (GV.VEX.vvvv != 0x15) GV.ERROR_OPCODE = UD_;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tileloaddt1 ");
+            #endif
+            GV.Register_ = TMM_REG;
+            GV.MemDecoration = Arg2multibytes;
+            GxEx(pMyDisasm);
+          }
+          else {
+            /* VEX.66.W1 */
+            FailDecode(pMyDisasm);
+          }
+        }
+        break;
+      case 2:
+        if (!Security(2, pMyDisasm)) return;
+        GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
+        if (GV.RM_ != 0x4) {
+          FailDecode(pMyDisasm);
+        }
+        else {
+          if (GV.REX.W_ == 0) {
+            /* VEX.F3.W0 */
+            (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+            if (GV.VEX.vvvv != 0x15) GV.ERROR_OPCODE = UD_;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tilestored ");
+            #endif
+            GV.Register_ = TMM_REG;
+            GV.MemDecoration = Arg1multibytes;
+            ExGx(pMyDisasm);
+          }
+          else {
+            /* VEX.F3.W1 */
+            FailDecode(pMyDisasm);
+          }
+        }
+        break;
+      case 3:
+        if (!Security(2, pMyDisasm)) return;
+        GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
+        if (GV.RM_ != 0x4) {
+          FailDecode(pMyDisasm);
+        }
+        else {
+          if (GV.REX.W_ == 0) {
+            /* VEX.F2.W0 */
+            (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+            if (GV.VEX.vvvv != 0x15) GV.ERROR_OPCODE = UD_;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tileloadd ");
+            #endif
+            GV.Register_ = TMM_REG;
+            GV.MemDecoration = Arg2multibytes;
+            GxEx(pMyDisasm);
+          }
+          else {
+            /* VEX.F2.W1 */
+            FailDecode(pMyDisasm);
+          }
+        }
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 5c
+* ==================================================================== */
+
+void __bea_callspec__ tdpbf16ps_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if ((GV.VEX.state == InUsePrefix) && (GV.VEX.L == 0)) {
+    switch(GV.VEX.pp){
+      case 0:
+        if (GV.REX.W_ == 0) {
+          /* VEX.W0 */
+          FailDecode(pMyDisasm);
+        }
+        else {
+          /* VEX.W1 */
+          FailDecode(pMyDisasm);
+        }
+        break;
+      case 1:
+        if (GV.REX.W_ == 0) {
+          /* VEX.66.W0 */
+          FailDecode(pMyDisasm);
+        }
+        else {
+          /* VEX.66.W1 */
+          FailDecode(pMyDisasm);
+        }
+        break;
+      case 2:
+        if (!Security(2, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (GV.MOD_ != 0x3) {
+          FailDecode(pMyDisasm);
+        }
+        else {
+          if (GV.REX.W_ == 0) {
+            /* VEX.F3.W0 */
+            (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tdpbf16ps ");
+            #endif
+            GV.Register_ = TMM_REG;
+            GxExVEX(pMyDisasm);
+          }
+          else {
+            /* VEX.F3.W1 */
+            FailDecode(pMyDisasm);
+          }
+        }
+        break;
+      case 3:
+        if (GV.REX.W_ == 0) {
+          /* VEX.F2.W0 */
+          FailDecode(pMyDisasm);
+        }
+        else {
+          /* VEX.F2.W1 */
+          FailDecode(pMyDisasm);
+        }
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
+
+/* ====================================================================
+*      0x 0f 38 5e
+* ==================================================================== */
+
+void __bea_callspec__ tdpbssd_(PDISASM pMyDisasm)
+{
+  if (GV.EVEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+  else if ((GV.VEX.state == InUsePrefix) && (GV.VEX.L == 0)) {
+    switch(GV.VEX.pp){
+      case 0:
+        if (GV.REX.W_ == 0) {
+          /* VEX.W0 */
+          (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tdpbuud ");
+          #endif
+          GV.Register_ = TMM_REG;
+          GxExVEX(pMyDisasm);
+        }
+        else {
+          /* VEX.W1 */
+          FailDecode(pMyDisasm);
+        }
+        break;
+      case 1:
+        if (GV.REX.W_ == 0) {
+          /* VEX.66.W0 */
+          (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tdpbusd ");
+          #endif
+          GV.Register_ = TMM_REG;
+          GxExVEX(pMyDisasm);
+        }
+        else {
+          /* VEX.66.W1 */
+          FailDecode(pMyDisasm);
+        }
+        break;
+      case 2:
+        if (!Security(2, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (GV.MOD_ != 0x3) {
+          FailDecode(pMyDisasm);
+        }
+        else {
+          if (GV.REX.W_ == 0) {
+            /* VEX.F3.W0 */
+            (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+            #ifndef BEA_LIGHT_DISASSEMBLY
+               (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tdpbsud ");
+            #endif
+            GV.Register_ = TMM_REG;
+            GxExVEX(pMyDisasm);
+          }
+          else {
+            /* VEX.F3.W1 */
+            FailDecode(pMyDisasm);
+          }
+        }
+        break;
+      case 3:
+        if (GV.REX.W_ == 0) {
+          /* VEX.F2.W0 */
+          (*pMyDisasm).Instruction.Category = AMX_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+             (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "tdpbssd ");
+          #endif
+          GV.Register_ = TMM_REG;
+          GxExVEX(pMyDisasm);
+        }
+        else {
+          /* VEX.F2.W1 */
+          FailDecode(pMyDisasm);
+        }
+    }
+  }
+  else {
+    FailDecode(pMyDisasm);
+  }
+}
 
 /* ====================================================================
 *      0x 0f 38 ac
@@ -20398,7 +20741,8 @@ void __bea_callspec__ vfmsub132ps_(PDISASM pMyDisasm)
   if ((GV.EVEX.state == InUsePrefix) && (GV.VEX.pp == 3)) {
     if (GV.EVEX.W == 0) {
       if (GV.VEX.L == 2) {
-        if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (!Security(2, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "v4fmaddps ");

@@ -69,7 +69,8 @@ class REGISTERTYPE(Structure):
               ("mpx",c_int64),
               ("opmask",c_int64),
               ("segment",c_int64),
-              ("fpu",c_int64)]
+              ("fpu",c_int64),
+              ("tmm",c_int64)]
 
 class MEMORYTYPE(Structure):
    _pack_= 4
@@ -282,6 +283,7 @@ SGX_INSTRUCTION               =    0x1f0000
 PCONFIG_INSTRUCTION           =    0x200000
 UINTR_INSTRUCTION             =    0x210000
 KL_INSTRUCTION                =    0x220000
+AMX_INSTRUCTION               =    0x230000
 
 DATA_TRANSFER = 0x1
 ARITHMETIC_INSTRUCTION = 2
@@ -368,6 +370,7 @@ MPX_REG = 0x200
 OPMASK_REG = 0x400
 SEGMENT_REG = 0x800
 FPU_REG = 0x1000
+TMM_REG = 0x2000
 
 RELATIVE_ = 0x4000000
 ABSOLUTE_ = 0x8000000
@@ -683,12 +686,24 @@ REGSTYPE = {
     'k6': {'type': 'opmask','reg': REG6,'size': 16},
     'k7': {'type': 'opmask','reg': REG7,'size': 16},
 
+    # tmm0-tmm7                                          Registers.tmm
+    'tmm0': {'type': 'tmm','reg': REG0,'size': 8192},
+    'tmm1': {'type': 'tmm','reg': REG1,'size': 8192},
+    'tmm2': {'type': 'tmm','reg': REG2,'size': 8192},
+    'tmm3': {'type': 'tmm','reg': REG3,'size': 8192},
+    'tmm4': {'type': 'tmm','reg': REG4,'size': 8192},
+    'tmm5': {'type': 'tmm','reg': REG5,'size': 8192},
+    'tmm6': {'type': 'tmm','reg': REG6,'size': 8192},
+    'tmm7': {'type': 'tmm','reg': REG7,'size': 8192},
+
     # EFLAGS  MXCSR  SSP  PKRU                            Registers.special
     'rflags': {'type': 'special','reg': REG0,'size': 64},
     'eflags': {'type': 'special','reg': REG0,'size': 32},
     'mxcsr': {'type': 'special','reg': REG1,'size': 32},
     'ssp': {'type': 'special','reg': REG2,'size': 64},
     'pkru': {'type': 'special','reg': REG3,'size': 32},
+    'uif': {'type': 'special','reg': REG4,'size': 1},
+
 
     # GDTR LDTR IDTR TR                                   Registers.mem_management
     'gdtr': {'type': 'mem_management','reg': REG0,'size': 48},
