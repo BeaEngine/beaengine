@@ -27,22 +27,22 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
   GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
   if (GV.REGOPCODE == 1) {
     if (GV.VEX.state == InUsePrefix) {
-      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
+      pMyDisasm->Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blsr ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blsr ");
       #endif
       if (GV.VEX.opcode == 0xc4) {
         /* using VEX3Bytes */
         if (GV.REX.W_ == 0x1) {
           GV.OperandSize = 64;
           GV.MemDecoration = Arg2qword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
+          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         }
         else {
           GV.MemDecoration = Arg2dword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
+          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         }
       }
     }
@@ -52,22 +52,22 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
   }
   else if (GV.REGOPCODE == 2) {
     if (GV.VEX.state == InUsePrefix) {
-      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
+      pMyDisasm->Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blmsk ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blmsk ");
       #endif
       if (GV.VEX.opcode == 0xc4) {
         /* using VEX3Bytes */
         if (GV.REX.W_ == 0x1) {
             GV.OperandSize = 64;
             GV.MemDecoration = Arg2qword;
-            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
-            MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
+            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
+            MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         }
         else {
             GV.MemDecoration = Arg2dword;
-            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
-            MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
+            fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
+            MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         }
       }
     }
@@ -77,22 +77,22 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
   }
   else if (GV.REGOPCODE == 3) {
     if (GV.VEX.state == InUsePrefix) {
-      (*pMyDisasm).Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
+      pMyDisasm->Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "blsi ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blsi ");
       #endif
       if (GV.VEX.opcode == 0xc4) {
         /* using VEX3Bytes */
         if (GV.REX.W_ == 0x1) {
           GV.OperandSize = 64;
           GV.MemDecoration = Arg2qword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
+          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         }
         else {
           GV.MemDecoration = Arg2dword;
-          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &(*pMyDisasm).Operand1, pMyDisasm);
-          MOD_RM(&(*pMyDisasm).Operand2, pMyDisasm);
+          fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
+          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         }
       }
 

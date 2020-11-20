@@ -24,27 +24,28 @@ void __bea_callspec__ MOD_RM(OPTYPE* pMyOperand, PDISASM pMyDisasm)
   if (!Security(2, pMyDisasm)) return;
   GV.MOD_ = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
   GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
-  if (GV.MOD_ == 0) {
-    ModRM_0[GV.RM_](pMyOperand, pMyDisasm);
-  }
-  else if (GV.MOD_ == 1) {
-    GV.DECALAGE_EIP++;
-    if (!Security(3, pMyDisasm)) return;
-    ModRM_1[GV.RM_](pMyOperand, pMyDisasm);
-  }
-  else if (GV.MOD_ == 2) {
-    if (GV.AddressSize >= 32) {
-      GV.DECALAGE_EIP += 4;
-      if (!Security(6, pMyDisasm)) return;
-    }
-    else {
-      GV.DECALAGE_EIP += 2;
-      if (!Security(4, pMyDisasm)) return;
-    }
-    ModRM_2[GV.RM_](pMyOperand, pMyDisasm);
-  }
-  else {
-    ModRM_3[GV.RM_](pMyOperand, pMyDisasm);
+  switch(GV.MOD_) {
+    case 0:
+      ModRM_0[GV.RM_](pMyOperand, pMyDisasm);
+      break;
+    case 1:
+      GV.DECALAGE_EIP++;
+      if (!Security(3, pMyDisasm)) return;
+      ModRM_1[GV.RM_](pMyOperand, pMyDisasm);
+      break;
+    case 2:
+      if (GV.AddressSize >= 32) {
+        GV.DECALAGE_EIP += 4;
+        if (!Security(6, pMyDisasm)) return;
+      }
+      else {
+        GV.DECALAGE_EIP += 2;
+        if (!Security(4, pMyDisasm)) return;
+      }
+      ModRM_2[GV.RM_](pMyOperand, pMyDisasm);
+      break;
+    case 3:
+      ModRM_3[GV.RM_](pMyOperand, pMyDisasm);
   }
 }
 
@@ -53,100 +54,98 @@ void __bea_callspec__ MOD_RM(OPTYPE* pMyOperand, PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ fillRegister(int index, OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
-
     size_t i = 0;
-
     if (GV.Register_ == OPMASK_REG) {
       if (index > 7) {
         GV.ERROR_OPCODE = UD_;
         index = 8;
       }
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersOpmask[index]);
+         (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersOpmask[index]);
       #endif
-      (*pMyOperand).OpType = REGISTER_TYPE;
-      (*pMyOperand).Registers.type = OPMASK_REG;
-      (*pMyOperand).Registers.opmask = REGS[index];
-      (*pMyOperand).OpSize = 64;
+      pMyOperand->OpType = REGISTER_TYPE;
+      pMyOperand->Registers.type = OPMASK_REG;
+      pMyOperand->Registers.opmask = REGS[index];
+      pMyOperand->OpSize = 64;
     }
     else if (GV.Register_ == MPX_REG) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersMPX[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersMPX[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = MPX_REG;
-        (*pMyOperand).Registers.mpx = REGS[index];
-        (*pMyOperand).OpSize = 128;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = MPX_REG;
+        pMyOperand->Registers.mpx = REGS[index];
+        pMyOperand->OpSize = 128;
     }
     else if (GV.Register_ == AVX_REG) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersAVX[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersAVX[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = AVX_REG;
-        (*pMyOperand).Registers.ymm = REGS[index];
-        (*pMyOperand).OpSize = 256;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = AVX_REG;
+        pMyOperand->Registers.ymm = REGS[index];
+        pMyOperand->OpSize = 256;
     }
     else if (GV.Register_ == AVX512_REG) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersAVX512[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersAVX512[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = AVX512_REG;
-        (*pMyOperand).Registers.zmm = REGS[index];
-        (*pMyOperand).OpSize = 512;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = AVX512_REG;
+        pMyOperand->Registers.zmm = REGS[index];
+        pMyOperand->OpSize = 512;
     }
     else if (GV.Register_ == MMX_REG) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersMMX[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersMMX[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = MMX_REG;
-        (*pMyOperand).Registers.mmx = REGS[index];
-        (*pMyOperand).OpSize = 64;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = MMX_REG;
+        pMyOperand->Registers.mmx = REGS[index];
+        pMyOperand->OpSize = 64;
     }
     else if (GV.Register_ == SEGMENT_REG) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersSEG[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersSEG[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = SEGMENT_REG;
-        (*pMyOperand).Registers.segment = REGS[index];
-        (*pMyOperand).OpSize = 16;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = SEGMENT_REG;
+        pMyOperand->Registers.segment = REGS[index];
+        pMyOperand->OpSize = 16;
     }
     else if (GV.Register_ == CR_REG) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersCR[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersCR[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = CR_REG;
-        (*pMyOperand).Registers.cr = REGS[index];
-        (*pMyOperand).OpSize = 32;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = CR_REG;
+        pMyOperand->Registers.cr = REGS[index];
+        pMyOperand->OpSize = 32;
     }
     else if (GV.Register_ == DR_REG) {
         if (GV.SYNTAX_ == ATSyntax) {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersDR_AT[index]);
+               (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersDR_AT[index]);
             #endif
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersDR[index]);
+               (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersDR[index]);
             #endif
         }
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = DR_REG;
-        (*pMyOperand).Registers.dr = REGS[index];
-        (*pMyOperand).OpSize = 32;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = DR_REG;
+        pMyOperand->Registers.dr = REGS[index];
+        pMyOperand->OpSize = 32;
     }
     else if (GV.Register_ == SSE_REG) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersSSE[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersSSE[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = SSE_REG;
-        (*pMyOperand).Registers.xmm = REGS[index];
-        (*pMyOperand).OpSize = 128;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = SSE_REG;
+        pMyOperand->Registers.xmm = REGS[index];
+        pMyOperand->OpSize = 128;
     }
     else if (GV.Register_ == TMM_REG) {
         if (index > 7) {
@@ -154,42 +153,42 @@ void __bea_callspec__ fillRegister(int index, OPTYPE* pMyOperand, PDISASM pMyDis
           index = 8;
         }
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersAMX[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersAMX[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = TMM_REG;
-        (*pMyOperand).Registers.tmm = REGS[index];
-        (*pMyOperand).OpSize = 8192;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = TMM_REG;
+        pMyOperand->Registers.tmm = REGS[index];
+        pMyOperand->OpSize = 8192;
     }
     else if (GV.OperandSize == 8) {
       OperandSize8Reg(pMyOperand, pMyDisasm, i, index);
     }
     else if (GV.OperandSize == 16) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers16Bits[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers16Bits[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = GENERAL_REG;
-        (*pMyOperand).Registers.gpr = REGS[index];
-        (*pMyOperand).OpSize = 16;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = GENERAL_REG;
+        pMyOperand->Registers.gpr = REGS[index];
+        pMyOperand->OpSize = 16;
     }
     else if (GV.OperandSize == 32) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers32Bits[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = GENERAL_REG;
-        (*pMyOperand).Registers.gpr = REGS[index];
-        (*pMyOperand).OpSize = 32;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = GENERAL_REG;
+        pMyOperand->Registers.gpr = REGS[index];
+        pMyOperand->OpSize = 32;
     }
     else if (GV.OperandSize == 64) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[index]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers64Bits[index]);
         #endif
-        (*pMyOperand).OpType = REGISTER_TYPE;
-        (*pMyOperand).Registers.type = GENERAL_REG;
-        (*pMyOperand).Registers.gpr = REGS[index];
-        (*pMyOperand).OpSize = 64;
+        pMyOperand->OpType = REGISTER_TYPE;
+        pMyOperand->Registers.type = GENERAL_REG;
+        pMyOperand->Registers.gpr = REGS[index];
+        pMyOperand->OpSize = 64;
     }
 }
 
@@ -197,21 +196,21 @@ void __bea_callspec__ OperandSize8Reg(OPTYPE* pMyOperand, PDISASM pMyDisasm, siz
 {
   if (GV.REX.state == 0) {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers8BitsLegacy[index]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers8BitsLegacy[index]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = GENERAL_REG;
-    (*pMyOperand).Registers.gpr = REGS8BITS[index+0];
-    (*pMyOperand).OpSize = 8;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = GENERAL_REG;
+    pMyOperand->Registers.gpr = REGS8BITS[index+0];
+    pMyOperand->OpSize = 8;
   }
   else {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers8Bits[index]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers8Bits[index]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = GENERAL_REG;
-    (*pMyOperand).Registers.gpr = REGS[index+0];
-    (*pMyOperand).OpSize = 8;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = GENERAL_REG;
+    pMyOperand->Registers.gpr = REGS[index+0];
+    pMyOperand->OpSize = 8;
   }
   return;
 }
@@ -231,24 +230,24 @@ void __bea_callspec__ Reg_Opcode(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 void __bea_callspec__ fillModrm0Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, size_t i, UInt8 index)
 {
   int index_final;
-  (*pMyOperand).OpType = MEMORY_TYPE;
+  pMyOperand->OpType = MEMORY_TYPE;
   if (GV.AddressSize == 64) {
       index_final = (GV.REX.B_ == 1) ? index + 8 : index;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[index_final]);
+         (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers64Bits[index_final]);
       #endif
-      (*pMyOperand).Memory.BaseRegister = REGS[index_final];
+      pMyOperand->Memory.BaseRegister = REGS[index_final];
   }
   else if (GV.AddressSize == 32) {
     index_final = (GV.REX.B_ == 1) ? index + 8 : index;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[index_final]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers32Bits[index_final]);
     #endif
-    (*pMyOperand).Memory.BaseRegister = REGS[index_final];
+    pMyOperand->Memory.BaseRegister = REGS[index_final];
   }
   else {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersSIB[index]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersSIB[index]);
     #endif
   }
 }
@@ -260,21 +259,21 @@ void __bea_callspec__ fillModrm0Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, 
 void __bea_callspec__ Addr_EAX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
     #ifndef BEA_LIGHT_DISASSEMBLY
-	size_t i = 0;
+  size_t i = 0;
     if (GV.SYNTAX_ == ATSyntax) {
-	   (void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
-	   i += 2;
+     (void) strcpy((char*) pMyOperand->OpMnemonic, "(%");
+     i += 2;
     }
     #endif
     fillModrm0Register(pMyOperand, pMyDisasm, i, 0);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[3];
-      (*pMyOperand).Memory.IndexRegister = REGS[6];
+      pMyOperand->Memory.BaseRegister = REGS[3];
+      pMyOperand->Memory.IndexRegister = REGS[6];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
-       i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+       i = strlen ((char*) &pMyOperand->OpMnemonic);
        if (GV.SYNTAX_ == ATSyntax) {
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
            i += 1;
        }
     #endif
@@ -285,25 +284,25 @@ void __bea_callspec__ Addr_EAX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ Addr_ECX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
-    #ifndef BEA_LIGHT_DISASSEMBLY
-    size_t i = 0;
-    if (GV.SYNTAX_ == ATSyntax) {
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
-        i += 2;
-    }
-	#endif
+  #ifndef BEA_LIGHT_DISASSEMBLY
+  size_t i = 0;
+  if (GV.SYNTAX_ == ATSyntax) {
+    (void) strcpy((char*) pMyOperand->OpMnemonic, "(%");
+    i += 2;
+  }
+  #endif
   fillModrm0Register(pMyOperand, pMyDisasm, i, 1);
   if (GV.AddressSize == 16) {
-    (*pMyOperand).Memory.BaseRegister = REGS[3];
-    (*pMyOperand).Memory.IndexRegister = REGS[7];
+    pMyOperand->Memory.BaseRegister = REGS[3];
+    pMyOperand->Memory.IndexRegister = REGS[7];
   }
-	#ifndef BEA_LIGHT_DISASSEMBLY
-		i = strlen ((char*) &(*pMyOperand).OpMnemonic);
-		if (GV.SYNTAX_ == ATSyntax) {
-			(void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
-			i += 1;
-		}
-	#endif
+  #ifndef BEA_LIGHT_DISASSEMBLY
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
+    if (GV.SYNTAX_ == ATSyntax) {
+      (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
+      i += 1;
+    }
+  #endif
 
 }
 
@@ -312,25 +311,25 @@ void __bea_callspec__ Addr_ECX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ Addr_EDX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
-    #ifndef BEA_LIGHT_DISASSEMBLY
-		size_t i = 0;
-		if (GV.SYNTAX_ == ATSyntax) {
-			(void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
-			i += 2;
-		}
-	#endif
+  #ifndef BEA_LIGHT_DISASSEMBLY
+  size_t i = 0;
+  if (GV.SYNTAX_ == ATSyntax) {
+    (void) strcpy((char*) pMyOperand->OpMnemonic, "(%");
+    i += 2;
+  }
+  #endif
   fillModrm0Register(pMyOperand, pMyDisasm, i, 2);
   if (GV.AddressSize == 16) {
-    (*pMyOperand).Memory.BaseRegister = REGS[5];
-    (*pMyOperand).Memory.IndexRegister = REGS[6];
+    pMyOperand->Memory.BaseRegister = REGS[5];
+    pMyOperand->Memory.IndexRegister = REGS[6];
   }
-	#ifndef BEA_LIGHT_DISASSEMBLY
-		i = strlen ((char*) &(*pMyOperand).OpMnemonic);
-		if (GV.SYNTAX_ == ATSyntax) {
-			(void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
-			i += 1;
-		}
-	#endif
+  #ifndef BEA_LIGHT_DISASSEMBLY
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
+    if (GV.SYNTAX_ == ATSyntax) {
+      (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
+      i += 1;
+    }
+  #endif
 }
 
 
@@ -340,24 +339,24 @@ void __bea_callspec__ Addr_EDX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_EBX(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
     #ifndef BEA_LIGHT_DISASSEMBLY
-	size_t i = 0;
+  size_t i = 0;
     if (GV.SYNTAX_ == ATSyntax) {
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
+        (void) strcpy((char*) pMyOperand->OpMnemonic, "(%");
         i += 2;
     }
-	#endif
+  #endif
   fillModrm0Register(pMyOperand, pMyDisasm, i, 3);
   if (GV.AddressSize == 16) {
-    (*pMyOperand).Memory.BaseRegister = REGS[5];
-    (*pMyOperand).Memory.IndexRegister = REGS[7];
+    pMyOperand->Memory.BaseRegister = REGS[5];
+    pMyOperand->Memory.IndexRegister = REGS[7];
   }
   #ifndef BEA_LIGHT_DISASSEMBLY
-  i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+  i = strlen ((char*) &pMyOperand->OpMnemonic);
   if (GV.SYNTAX_ == ATSyntax) {
-      (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+      (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
       i += 1;
   }
-	#endif
+  #endif
 
 }
 
@@ -368,7 +367,7 @@ void __bea_callspec__ Addr_SIB(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
   size_t i;
   if (!Security(3, pMyDisasm)) return;
-  (*pMyOperand).OpType = MEMORY_TYPE;
+  pMyOperand->OpType = MEMORY_TYPE;
   if (GV.AddressSize >= 32) {
     GV.DECALAGE_EIP++;
     GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr) (GV.EIP_+2))) & 0x7;
@@ -376,15 +375,15 @@ void __bea_callspec__ Addr_SIB(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     GV.INDEX_  = (((UInt8) *((UInt8*) (UIntPtr)(GV.EIP_+2))) & 0x38) >> 3;
     (void) SIB[GV.SCALE_ ](pMyOperand, 0, pMyDisasm);
     if (GV.BASE_ == 4) {
-      i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+      i = strlen ((char*) &pMyOperand->OpMnemonic);
       i = printDisp8(pMyOperand, i, pMyDisasm, 0);
     }
   }
   else {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic, Registers16Bits[6]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic, Registers16Bits[6]);
     #endif
-    (*pMyOperand).Memory.BaseRegister = REGS[6];
+    pMyOperand->Memory.BaseRegister = REGS[6];
   }
 }
 
@@ -396,12 +395,12 @@ void __bea_callspec__ Addr_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     Int32 MyNumber;
     UInt64 MyAddress;
     size_t i = 0;
-    (*pMyOperand).OpType = MEMORY_TYPE;
+    pMyOperand->OpType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
         if (!Security(6, pMyDisasm)) return;
         GV.DECALAGE_EIP+=4;
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
-        (*pMyOperand).Memory.Displacement = MyNumber;
+        pMyOperand->Memory.Displacement = MyNumber;
         if (GV.Architecture == 64) {
             /* add len(opcode + modrm + imm32) */
             MyNumber += 6;
@@ -431,30 +430,30 @@ void __bea_callspec__ Addr_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
                 MyNumber += 1;
               }
             }
-            else if ((*pMyDisasm).Instruction.Opcode >= 0x0F3800) {      /* add two bytes if opcode is a 3-bytes */
+            else if (pMyDisasm->Instruction.Opcode >= 0x0F3800) {      /* add two bytes if opcode is a 3-bytes */
                 MyNumber +=2;
             }
-            else if ((*pMyDisasm).Instruction.Opcode >= 0x0100) {   /* add one byte if opcode is a 2-bytes */
+            else if (pMyDisasm->Instruction.Opcode >= 0x0100) {   /* add one byte if opcode is a 2-bytes */
                 MyNumber +=1;
             }
             CalculateRelativeAddress(&MyAddress, (Int64)MyNumber, pMyDisasm);
-            (*pMyDisasm).Instruction.AddrValue = MyAddress;
+            pMyDisasm->Instruction.AddrValue = MyAddress;
             #ifndef BEA_LIGHT_DISASSEMBLY
-               i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+i,"%.16llX", (Int64)MyAddress);
+               i+= CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+i,"%.16llX", (Int64)MyAddress);
             #endif
-            (*pMyOperand).OpType |= RELATIVE_;
+            pMyOperand->OpType |= RELATIVE_;
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+i,"%.8X", (Int64)MyNumber);
+               i+= CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+i,"%.8X", (Int64)MyNumber);
             #endif
         }
     }
     else {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic, Registers16Bits[7]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic, Registers16Bits[7]);
         #endif
-        (*pMyOperand).Memory.BaseRegister = REGS[7];
+        pMyOperand->Memory.BaseRegister = REGS[7];
     }
 }
 
@@ -467,56 +466,56 @@ void __bea_callspec__ Addr_ESI(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
     if (GV.SYNTAX_ == ATSyntax) {
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
+        (void) strcpy((char*) pMyOperand->OpMnemonic, "(%");
         i += 2;
     }
-	   #endif
-    (*pMyOperand).OpType = MEMORY_TYPE;
+     #endif
+    pMyOperand->OpType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[14]);
+               (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers64Bits[14]);
             #endif
-            (*pMyOperand).Memory.BaseRegister = REGS[6+8];
+            pMyOperand->Memory.BaseRegister = REGS[6+8];
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[6]);
+               (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers64Bits[6]);
             #endif
-            (*pMyOperand).Memory.BaseRegister = REGS[6];
+            pMyOperand->Memory.BaseRegister = REGS[6];
         }
     }
     else if (GV.AddressSize == 32) {
 
         if (GV.REX.B_ == 1) {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[14]);
+               (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers32Bits[14]);
             #endif
-            (*pMyOperand).Memory.BaseRegister = REGS[6+8];
+            pMyOperand->Memory.BaseRegister = REGS[6+8];
         }
         else {
             #ifndef BEA_LIGHT_DISASSEMBLY
-               (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[6]);
+               (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers32Bits[6]);
             #endif
-            (*pMyOperand).Memory.BaseRegister = REGS[6];
+            pMyOperand->Memory.BaseRegister = REGS[6];
         }
     }
     else {
         GV.DECALAGE_EIP+=2;
         if (!Security(4, pMyDisasm)) return;
         MyNumber = *((UInt16*)(UIntPtr) (GV.EIP_+2));
-        (*pMyOperand).Memory.Displacement = MyNumber;
+        pMyOperand->Memory.Displacement = MyNumber;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+i,"%.4X", (Int64)MyNumber);
+           (void) CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+i,"%.4X", (Int64)MyNumber);
         #endif
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
     }
-	#endif
+  #endif
 }
 
 /* =======================================
@@ -527,22 +526,22 @@ void __bea_callspec__ Addr_EDI(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
     if (GV.SYNTAX_ == ATSyntax) {
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
+        (void) strcpy((char*) pMyOperand->OpMnemonic, "(%");
         i += 2;
     }
     #endif
 
   fillModrm0Register(pMyOperand, pMyDisasm, i, 7);
   if (GV.AddressSize == 16) {
-    (*pMyOperand).Memory.BaseRegister = REGS[3];
+    pMyOperand->Memory.BaseRegister = REGS[3];
   }
   #ifndef BEA_LIGHT_DISASSEMBLY
-  i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+  i = strlen ((char*) &pMyOperand->OpMnemonic);
   if (GV.SYNTAX_ == ATSyntax) {
-      (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+      (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
       i += 1;
   }
-	#endif
+  #endif
 }
 
 long __bea_callspec__ getDisp8N(PDISASM pMyDisasm)
@@ -638,7 +637,7 @@ long __bea_callspec__ specific_pop(PDISASM pMyDisasm)
 {
   long N;
   if (
-    ((*pMyDisasm).Instruction.Opcode == 0x8f)) {
+    (pMyDisasm->Instruction.Opcode == 0x8f)) {
       N = GV.OperandSize / 8;
     }
     else {
@@ -661,22 +660,22 @@ size_t __bea_callspec__ printDisp8(OPTYPE* pMyOperand, size_t i, PDISASM pMyDisa
   }
   if (MyNumber < 0) {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "-");
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, "-");
     #endif
     i++;
     j=i;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+j, getNumFormat(MyNumber), (Int64) ~MyNumber+1);
+       i+= CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+j, getNumFormat(MyNumber), (Int64) ~MyNumber+1);
     #endif
   }
   else {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "+");
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, "+");
     #endif
     i ++;
     j=i;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+j, getNumFormat(MyNumber), (Int64) MyNumber);
+       i+= CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+j, getNumFormat(MyNumber), (Int64) MyNumber);
     #endif
   }
   return i;
@@ -693,22 +692,22 @@ size_t __bea_callspec__ printDisp32(OPTYPE* pMyOperand, size_t i, PDISASM pMyDis
 
   if (MyNumber < 0) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "-");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "-");
       #endif
       i ++;
       j=i;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
+         i+= CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+j,"%.8X",(Int64) ~MyNumber+1);
       #endif
   }
   else {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "+");
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, "+");
     #endif
     i ++;
       j = i;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+j,"%.8X",(Int64) MyNumber);
+         i+= CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+j,"%.8X",(Int64) MyNumber);
       #endif
   }
 
@@ -724,23 +723,23 @@ void __bea_callspec__ Addr_EAX_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 0);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[3];
-      (*pMyOperand).Memory.IndexRegister = REGS[6];
+      pMyOperand->Memory.BaseRegister = REGS[3];
+      pMyOperand->Memory.IndexRegister = REGS[6];
     }
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -757,23 +756,23 @@ void __bea_callspec__ Addr_ECX_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     long MyNumber;
     MyNumber = (Int8) *((UInt8*) (UIntPtr)GV.EIP_+2);
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 1);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[3];
-      (*pMyOperand).Memory.IndexRegister = REGS[7];
+      pMyOperand->Memory.BaseRegister = REGS[3];
+      pMyOperand->Memory.IndexRegister = REGS[7];
     }
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -790,24 +789,24 @@ void __bea_callspec__ Addr_EDX_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 2);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[5];
-      (*pMyOperand).Memory.IndexRegister = REGS[6];
+      pMyOperand->Memory.BaseRegister = REGS[5];
+      pMyOperand->Memory.IndexRegister = REGS[6];
     }
 
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -825,25 +824,25 @@ void __bea_callspec__ Addr_EBX_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
 
     fillModrm0Register(pMyOperand, pMyDisasm, i, 3);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[5];
-      (*pMyOperand).Memory.IndexRegister = REGS[7];
+      pMyOperand->Memory.BaseRegister = REGS[5];
+      pMyOperand->Memory.IndexRegister = REGS[7];
     }
 
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+      (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
       i += 1;
       #endif
     }
@@ -869,11 +868,11 @@ void __bea_callspec__ Addr_SIB_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
         if (!Security(3, pMyDisasm)) return;
         MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
     }
-    (*pMyOperand).OpType = MEMORY_TYPE;
+    pMyOperand->OpType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
         GV.DECALAGE_EIP++;
         GV.BASE_  = (*((UInt8*)(UIntPtr) (GV.EIP_+2))) & 0x7;
@@ -884,16 +883,16 @@ void __bea_callspec__ Addr_SIB_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     }
     else {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic, Registers16Bits[6]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic, Registers16Bits[6]);
         #endif
         i += strlen (Registers16Bits[6]);
-        (*pMyOperand).Memory.BaseRegister = REGS[6];
+        pMyOperand->Memory.BaseRegister = REGS[6];
 
     }
 
     if (GV.SYNTAX_ == ATSyntax) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         #endif
         i++;
     }
@@ -911,24 +910,24 @@ void __bea_callspec__ Addr_EBP_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
 
     fillModrm0Register(pMyOperand, pMyDisasm, i, 5);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.IndexRegister = REGS[7];
+      pMyOperand->Memory.IndexRegister = REGS[7];
     }
 
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -945,23 +944,23 @@ void __bea_callspec__ Addr_ESI_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     size_t i = 0;
     long MyNumber;
     MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 6);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[5];
+      pMyOperand->Memory.BaseRegister = REGS[5];
     }
 
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -979,23 +978,23 @@ void __bea_callspec__ Addr_EDI_disp8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
   size_t i = 0;
   long MyNumber;
   MyNumber = *((Int8*)(UIntPtr) (GV.EIP_+2));
-  (*pMyOperand).Memory.Displacement = MyNumber;
+  pMyOperand->Memory.Displacement = MyNumber;
   if (GV.SYNTAX_ == ATSyntax) {
     i = printDisp8(pMyOperand, i, pMyDisasm, MyNumber);
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
     #endif
     i+=2;
   }
   fillModrm0Register(pMyOperand, pMyDisasm, i, 7);
   if (GV.AddressSize == 16) {
-    (*pMyOperand).Memory.BaseRegister = REGS[3];
+    pMyOperand->Memory.BaseRegister = REGS[3];
   }
 
-  i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+  i = strlen ((char*) &pMyOperand->OpMnemonic);
   if (GV.SYNTAX_ == ATSyntax) {
     #ifndef BEA_LIGHT_DISASSEMBLY
-    (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+    (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
     i += 1;
     #endif
   }
@@ -1018,24 +1017,24 @@ void __bea_callspec__ Addr_EAX_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     else{
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
 
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
         #endif
         i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 0);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[3];
-      (*pMyOperand).Memory.IndexRegister = REGS[6];
+      pMyOperand->Memory.BaseRegister = REGS[3];
+      pMyOperand->Memory.IndexRegister = REGS[6];
     }
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -1058,23 +1057,23 @@ void __bea_callspec__ Addr_ECX_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     else{
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
         i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
         #endif
         i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 1);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[3];
-      (*pMyOperand).Memory.IndexRegister = REGS[7];
+      pMyOperand->Memory.BaseRegister = REGS[3];
+      pMyOperand->Memory.IndexRegister = REGS[7];
     }
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -1096,23 +1095,23 @@ void __bea_callspec__ Addr_EDX_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     else{
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 2);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[5];
-      (*pMyOperand).Memory.IndexRegister = REGS[6];
+      pMyOperand->Memory.BaseRegister = REGS[5];
+      pMyOperand->Memory.IndexRegister = REGS[6];
     }
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -1134,24 +1133,24 @@ void __bea_callspec__ Addr_EBX_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     else{
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
 
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 3);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[5];
-      (*pMyOperand).Memory.IndexRegister = REGS[7];
+      pMyOperand->Memory.BaseRegister = REGS[5];
+      pMyOperand->Memory.IndexRegister = REGS[7];
     }
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -1176,11 +1175,11 @@ void __bea_callspec__ Addr_SIB_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
         if (!Security(4, pMyDisasm)) return;
         MyNumber = *((Int16*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
     }
-    (*pMyOperand).OpType = MEMORY_TYPE;
+    pMyOperand->OpType = MEMORY_TYPE;
     if (GV.AddressSize >= 32) {
         GV.DECALAGE_EIP++;
         GV.BASE_  = ((UInt8) *((UInt8*) (UIntPtr)GV.EIP_+2)) & 0x7;
@@ -1191,15 +1190,15 @@ void __bea_callspec__ Addr_SIB_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     }
     else {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy ((char*) (*pMyOperand).OpMnemonic, Registers16Bits[6]);
+           (void) strcpy ((char*) pMyOperand->OpMnemonic, Registers16Bits[6]);
         #endif
-        (*pMyOperand).Memory.BaseRegister = REGS[6];
+        pMyOperand->Memory.BaseRegister = REGS[6];
         i += strlen (Registers16Bits[6]);
     }
 
     if (GV.SYNTAX_ == ATSyntax) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         #endif
         i += 1;
     }
@@ -1222,22 +1221,22 @@ void __bea_callspec__ Addr_EBP_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     else{
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 5);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.IndexRegister = REGS[7];
+      pMyOperand->Memory.IndexRegister = REGS[7];
     }
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
       #endif
     }
@@ -1259,22 +1258,22 @@ void __bea_callspec__ Addr_ESI_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     else{
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 6);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[5];
+      pMyOperand->Memory.BaseRegister = REGS[5];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
     }
     else {
@@ -1296,22 +1295,22 @@ void __bea_callspec__ Addr_EDI_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
     else{
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+2));
     }
-    (*pMyOperand).Memory.Displacement = MyNumber;
+    pMyOperand->Memory.Displacement = MyNumber;
     if (GV.SYNTAX_ == ATSyntax) {
       i = printDisp32(pMyOperand, i, pMyDisasm, MyNumber);
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i+=2;
     }
     fillModrm0Register(pMyOperand, pMyDisasm, i, 7);
     if (GV.AddressSize == 16) {
-      (*pMyOperand).Memory.BaseRegister = REGS[3];
+      pMyOperand->Memory.BaseRegister = REGS[3];
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
-    i = strlen ((char*) &(*pMyOperand).OpMnemonic);
+    i = strlen ((char*) &pMyOperand->OpMnemonic);
     if (GV.SYNTAX_ == ATSyntax) {
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
         i += 1;
     }
     else {
@@ -1328,13 +1327,13 @@ void __bea_callspec__ fillModrm3Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, 
 
   if (GV.Register_ == OPMASK_REG) {
     #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersOpmask[index]);
+      (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersOpmask[index]);
     #endif
     if (index > 8) GV.ERROR_OPCODE = UD_;
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = OPMASK_REG;
-    (*pMyOperand).Registers.opmask = REGS[index];
-    (*pMyOperand).OpSize = 64;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = OPMASK_REG;
+    pMyOperand->Registers.opmask = REGS[index];
+    pMyOperand->OpSize = 64;
     return;
   }
 
@@ -1350,12 +1349,12 @@ void __bea_callspec__ fillModrm3Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, 
       index_final = (GV.REX.B_ == 1) ? index + 8 : index + 0;
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersAVX512[index_final]);
+      (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersAVX512[index_final]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = AVX512_REG;
-    (*pMyOperand).Registers.zmm = REGS[index_final];
-    (*pMyOperand).OpSize = 512;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = AVX512_REG;
+    pMyOperand->Registers.zmm = REGS[index_final];
+    pMyOperand->OpSize = 512;
     return;
   }
   if (GV.Register_ == AVX_REG) {
@@ -1369,36 +1368,36 @@ void __bea_callspec__ fillModrm3Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, 
       index_final = (GV.REX.B_ == 1) ? index + 8 : index + 0;
     }
     #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersAVX[index_final]);
+      (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersAVX[index_final]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = AVX_REG;
-    (*pMyOperand).Registers.ymm = REGS[index_final];
-    (*pMyOperand).OpSize = 256;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = AVX_REG;
+    pMyOperand->Registers.ymm = REGS[index_final];
+    pMyOperand->OpSize = 256;
     return;
   }
   if (GV.Register_ == MPX_REG)
     {
     index_final = (GV.REX.B_ == 1) ? index + 8 : index + 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersMPX[index_final]);
+      (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersMPX[index_final]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = MPX_REG;
-    (*pMyOperand).Registers.mpx = REGS[index_final];
-    (*pMyOperand).OpSize = 128;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = MPX_REG;
+    pMyOperand->Registers.mpx = REGS[index_final];
+    pMyOperand->OpSize = 128;
     return;
   }
   if (GV.Register_ == MMX_REG)
     {
 
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersMMX[index+0]);
+         (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersMMX[index+0]);
       #endif
-      (*pMyOperand).OpType = REGISTER_TYPE;
-      (*pMyOperand).Registers.type = MMX_REG;
-      (*pMyOperand).Registers.mmx = REGS[index+0];
-      (*pMyOperand).OpSize = 64;
+      pMyOperand->OpType = REGISTER_TYPE;
+      pMyOperand->Registers.type = MMX_REG;
+      pMyOperand->Registers.mmx = REGS[index+0];
+      pMyOperand->OpSize = 64;
 
       return;
   }
@@ -1415,12 +1414,12 @@ void __bea_callspec__ fillModrm3Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, 
         index_final = (GV.REX.B_ == 1) ? index + 8 : index + 0;
       }
       #ifndef BEA_LIGHT_DISASSEMBLY
-        (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersSSE[index_final]);
+        (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersSSE[index_final]);
       #endif
-      (*pMyOperand).OpType = REGISTER_TYPE;
-      (*pMyOperand).Registers.type = SSE_REG;
-      (*pMyOperand).Registers.xmm = REGS[index_final];
-      (*pMyOperand).OpSize = 128;
+      pMyOperand->OpType = REGISTER_TYPE;
+      pMyOperand->Registers.type = SSE_REG;
+      pMyOperand->Registers.xmm = REGS[index_final];
+      pMyOperand->OpSize = 128;
       return;
   }
   if (GV.Register_ == TMM_REG) {
@@ -1429,43 +1428,43 @@ void __bea_callspec__ fillModrm3Register(OPTYPE* pMyOperand, PDISASM pMyDisasm, 
         index = 8;
       }
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, RegistersAMX[index]);
+         (void) strcpy ((char*) pMyOperand->OpMnemonic+i, RegistersAMX[index]);
       #endif
-      (*pMyOperand).OpType = REGISTER_TYPE;
-      (*pMyOperand).Registers.type = TMM_REG;
-      (*pMyOperand).Registers.tmm = REGS[index];
-      (*pMyOperand).OpSize = 8192;
+      pMyOperand->OpType = REGISTER_TYPE;
+      pMyOperand->Registers.type = TMM_REG;
+      pMyOperand->Registers.tmm = REGS[index];
+      pMyOperand->OpSize = 8192;
       return;
   }
   if (GV.OperandSize == 64) {
     index_final = (GV.REX.B_ == 1) ? index + 8 : index + 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[index_final]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers64Bits[index_final]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = GENERAL_REG;
-    (*pMyOperand).Registers.gpr = REGS[index_final];
-    (*pMyOperand).OpSize = 64;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = GENERAL_REG;
+    pMyOperand->Registers.gpr = REGS[index_final];
+    pMyOperand->OpSize = 64;
   }
   else if (GV.OperandSize == 32) {
     index_final = (GV.REX.B_ == 1) ? index + 8 : index + 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[index_final]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers32Bits[index_final]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = GENERAL_REG;
-    (*pMyOperand).Registers.gpr = REGS[index_final];
-    (*pMyOperand).OpSize = 32;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = GENERAL_REG;
+    pMyOperand->Registers.gpr = REGS[index_final];
+    pMyOperand->OpSize = 32;
   }
   else if (GV.OperandSize == 16) {
     index_final = (GV.REX.B_ == 1) ? index + 8 : index + 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers16Bits[index_final]);
+       (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers16Bits[index_final]);
     #endif
-    (*pMyOperand).OpType = REGISTER_TYPE;
-    (*pMyOperand).Registers.type = GENERAL_REG;
-    (*pMyOperand).Registers.gpr = REGS[index_final];
-    (*pMyOperand).OpSize = 16;
+    pMyOperand->OpType = REGISTER_TYPE;
+    pMyOperand->Registers.type = GENERAL_REG;
+    pMyOperand->Registers.gpr = REGS[index_final];
+    pMyOperand->OpSize = 16;
   }
   else if (GV.OperandSize == 8) {
     OperandSize8RM(pMyOperand, pMyDisasm, i, index);
@@ -1476,31 +1475,31 @@ void __bea_callspec__ OperandSize8RM(OPTYPE* pMyOperand, PDISASM pMyDisasm, size
 {
   if (GV.REX.B_ == 1) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers8Bits[index+8]);
+         (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers8Bits[index+8]);
       #endif
-      (*pMyOperand).OpType = REGISTER_TYPE;
-      (*pMyOperand).Registers.type = GENERAL_REG;
-      (*pMyOperand).Registers.gpr = REGS[index+8];
-      (*pMyOperand).OpSize = 8;
+      pMyOperand->OpType = REGISTER_TYPE;
+      pMyOperand->Registers.type = GENERAL_REG;
+      pMyOperand->Registers.gpr = REGS[index+8];
+      pMyOperand->OpSize = 8;
   }
   else {
       if (GV.REX.state == 0) {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers8BitsLegacy[index+0]);
+             (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers8BitsLegacy[index+0]);
           #endif
-          (*pMyOperand).OpType = REGISTER_TYPE;
-          (*pMyOperand).Registers.type = GENERAL_REG;
-          (*pMyOperand).Registers.gpr = REGS8BITS[index+0];
-          (*pMyOperand).OpSize = 8;
+          pMyOperand->OpType = REGISTER_TYPE;
+          pMyOperand->Registers.type = GENERAL_REG;
+          pMyOperand->Registers.gpr = REGS8BITS[index+0];
+          pMyOperand->OpSize = 8;
       }
       else {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy ((char*) (*pMyOperand).OpMnemonic+i, Registers8Bits[index+0]);
+             (void) strcpy ((char*) pMyOperand->OpMnemonic+i, Registers8Bits[index+0]);
           #endif
-          (*pMyOperand).OpType = REGISTER_TYPE;
-          (*pMyOperand).Registers.type = GENERAL_REG;
-          (*pMyOperand).Registers.gpr = REGS[index+0];
-          (*pMyOperand).OpSize = 8;
+          pMyOperand->OpType = REGISTER_TYPE;
+          pMyOperand->Registers.type = GENERAL_REG;
+          pMyOperand->Registers.gpr = REGS[index+0];
+          pMyOperand->OpSize = 8;
       }
   }
 
@@ -1561,46 +1560,46 @@ size_t __bea_callspec__ interpretBase(OPTYPE* pMyOperand, size_t i, PDISASM pMyD
     if (!Security(7, pMyDisasm)) return i;
     j = i;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       i+= CopyFormattedNumber(pMyDisasm, (char*) (*pMyOperand).OpMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
+       i+= CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic+j,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_+3)));
     #endif
-    (*pMyOperand).Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
+    pMyOperand->Memory.Displacement = *((UInt32*)(UIntPtr) (GV.EIP_+3));
   }
   else {
     if (GV.SYNTAX_ == ATSyntax) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(%");
       #endif
       i += 2;
     }
     if (GV.AddressSize == 64) {
       if (GV.REX.B_ == 0) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[GV.BASE_ ]);
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers64Bits[GV.BASE_ ]);
         #endif
-        (*pMyOperand).Memory.BaseRegister = REGS[GV.BASE_ ];
+        pMyOperand->Memory.BaseRegister = REGS[GV.BASE_ ];
         i += strlen(Registers64Bits[GV.BASE_ ]);
       }
       else {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[GV.BASE_ +8]);
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers64Bits[GV.BASE_ +8]);
         #endif
-        (*pMyOperand).Memory.BaseRegister = REGS[GV.BASE_ +8];
+        pMyOperand->Memory.BaseRegister = REGS[GV.BASE_ +8];
         i += strlen( Registers64Bits[GV.BASE_ +8]);
       }
     }
     else if (GV.AddressSize == 32) {
       if (GV.REX.B_ == 0) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[GV.BASE_ ]);
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers32Bits[GV.BASE_ ]);
         #endif
-        (*pMyOperand).Memory.BaseRegister = REGS[GV.BASE_ ];
+        pMyOperand->Memory.BaseRegister = REGS[GV.BASE_ ];
         i += strlen( Registers32Bits[GV.BASE_ ]);
       }
       else {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[GV.BASE_ +8]);
+           (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers32Bits[GV.BASE_ +8]);
         #endif
-        (*pMyOperand).Memory.BaseRegister = REGS[GV.BASE_ +8];
+        pMyOperand->Memory.BaseRegister = REGS[GV.BASE_ +8];
         i += strlen( Registers32Bits[GV.BASE_ +8]);
       }
     }
@@ -1616,43 +1615,43 @@ size_t __bea_callspec__ interpretIndex(OPTYPE* pMyOperand, size_t i, PDISASM pMy
       if (GV.AddressSize == 64) {
           if (GV.REX.X_ == 0) {
               #ifndef BEA_LIGHT_DISASSEMBLY
-                 (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[GV.INDEX_ ]);
+                 (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers64Bits[GV.INDEX_ ]);
               #endif
-              (*pMyOperand).Memory.IndexRegister = REGS[GV.INDEX_ ];
+              pMyOperand->Memory.IndexRegister = REGS[GV.INDEX_ ];
               i += strlen( Registers64Bits[GV.INDEX_ ]);
           }
           else {
               #ifndef BEA_LIGHT_DISASSEMBLY
-                 (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers64Bits[GV.INDEX_ +8]);
+                 (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers64Bits[GV.INDEX_ +8]);
               #endif
-              (*pMyOperand).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+              pMyOperand->Memory.IndexRegister = REGS[GV.INDEX_ +8];
               i += strlen( Registers64Bits[GV.INDEX_ +8]);
           }
       }
       else if (GV.AddressSize == 32) {
           if (GV.REX.X_ == 0) {
               #ifndef BEA_LIGHT_DISASSEMBLY
-                 (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[GV.INDEX_ ]);
+                 (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers32Bits[GV.INDEX_ ]);
               #endif
-              (*pMyOperand).Memory.IndexRegister = REGS[GV.INDEX_ ];
+              pMyOperand->Memory.IndexRegister = REGS[GV.INDEX_ ];
               i += strlen( Registers32Bits[GV.INDEX_ ]);
           }
           else {
               #ifndef BEA_LIGHT_DISASSEMBLY
-                 (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, Registers32Bits[GV.INDEX_ +8]);
+                 (void) strcpy((char*) pMyOperand->OpMnemonic+i, Registers32Bits[GV.INDEX_ +8]);
               #endif
-              (*pMyOperand).Memory.IndexRegister = REGS[GV.INDEX_ +8];
+              pMyOperand->Memory.IndexRegister = REGS[GV.INDEX_ +8];
               i += strlen( Registers32Bits[GV.INDEX_ +8]);
           }
       }
-      (*pMyOperand).Memory.Scale = scale;
+      pMyOperand->Memory.Scale = scale;
       if (scale != 1) {
         if (GV.SYNTAX_ == ATSyntax) {
           if ((GV.BASE_  != 5) || (GV.INDEX_  != 4 || GV.REX.X_)) {
             #ifndef BEA_LIGHT_DISASSEMBLY
               char str[5] = "";
               (void) sprintf(str, ",%d", scale);
-              (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
+              (void) strcpy((char*) pMyOperand->OpMnemonic+i, str);
             #endif
             i+=2;
           }
@@ -1661,7 +1660,7 @@ size_t __bea_callspec__ interpretIndex(OPTYPE* pMyOperand, size_t i, PDISASM pMy
           #ifndef BEA_LIGHT_DISASSEMBLY
             char str[5] = "";
             (void) sprintf(str, "*%d", scale);
-            (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
+            (void) strcpy((char*) pMyOperand->OpMnemonic+i, str);
           #endif
           i+=2;
         }
@@ -1670,7 +1669,7 @@ size_t __bea_callspec__ interpretIndex(OPTYPE* pMyOperand, size_t i, PDISASM pMy
   }
   if ((GV.SYNTAX_ == ATSyntax) && ((GV.BASE_  != 5) || (GV.INDEX_  != 4 || GV.REX.X_))) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
       #endif
       i++;
   }
@@ -1685,23 +1684,23 @@ size_t __bea_callspec__ printVSIBRegisters(OPTYPE* pMyOperand, PDISASM pMyDisasm
 
   if (GV.VSIB_ == SSE_REG) {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, RegistersSSE[index]);
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, RegistersSSE[index]);
     #endif
     i += strlen( RegistersSSE[index]);
   }
   else if (GV.VSIB_ == AVX_REG) {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, RegistersAVX[index]);
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, RegistersAVX[index]);
     #endif
     i += strlen( RegistersAVX[index]);
   }
   else if (GV.VSIB_ == AVX512_REG) {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, RegistersAVX512[index]);
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, RegistersAVX512[index]);
     #endif
     i += strlen( RegistersAVX512[index]);
   }
-  (*pMyOperand).Memory.IndexRegister = REGS[index];
+  pMyOperand->Memory.IndexRegister = REGS[index];
 
   return i;
 
@@ -1710,14 +1709,14 @@ size_t __bea_callspec__ printVSIBRegisters(OPTYPE* pMyOperand, PDISASM pMyDisasm
 size_t __bea_callspec__ printSIBScale(OPTYPE* pMyOperand, PDISASM pMyDisasm, size_t i, UInt8 scale)
 {
 
-  (*pMyOperand).Memory.Scale = scale;
+  pMyOperand->Memory.Scale = scale;
   if (scale != 1) {
     if (GV.SYNTAX_ == ATSyntax) {
       if (GV.BASE_  != 5) {
         #ifndef BEA_LIGHT_DISASSEMBLY
           char str[5] = "";
           (void) sprintf(str, ",%d", scale);
-          (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
+          (void) strcpy((char*) pMyOperand->OpMnemonic+i, str);
         #endif
         i+=2;
       }
@@ -1726,7 +1725,7 @@ size_t __bea_callspec__ printSIBScale(OPTYPE* pMyOperand, PDISASM pMyDisasm, siz
       #ifndef BEA_LIGHT_DISASSEMBLY
         char str[5] = "";
         (void) sprintf(str, "*%d", scale);
-        (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, str);
+        (void) strcpy((char*) pMyOperand->OpMnemonic+i, str);
       #endif
       i+=2;
     }
@@ -1741,20 +1740,20 @@ size_t __bea_callspec__ printSeparator(OPTYPE* pMyOperand, size_t i, PDISASM pMy
   if (GV.SYNTAX_ == ATSyntax) {
     if (GV.BASE_  == 5) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "(,%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, "(,%");
       #endif
       i+=3;
     }
     else {
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ",%");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, ",%");
       #endif
       i+=2;
     }
   }
   else {
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, "+");
+       (void) strcpy((char*) pMyOperand->OpMnemonic+i, "+");
     #endif
     i+=1;
   }
@@ -1783,7 +1782,7 @@ size_t __bea_callspec__ interpretVSIBIndex(OPTYPE* pMyOperand, size_t i, PDISASM
 
   if ((GV.SYNTAX_ == ATSyntax) && (GV.BASE_  != 5)) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy((char*) (*pMyOperand).OpMnemonic+i, ")");
+         (void) strcpy((char*) pMyOperand->OpMnemonic+i, ")");
       #endif
       i++;
   }
