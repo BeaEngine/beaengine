@@ -273,7 +273,7 @@ void __bea_callspec__ EvIv(PDISASM pMyDisasm)
     GV.ImmediatSize = 32;                       /* place this instruction before MOD_RM routine to inform it there is an immediat value */
     MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+6;
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(0, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
     if (GV.OperandSize == 64) {
       (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Operand2.OpMnemonic,"%.16llX",(Int64) *((Int32*)(UIntPtr) (GV.EIP_-4)));
@@ -320,7 +320,7 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
     }
     MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+3;
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(0, pMyDisasm)) return;
     if (GV.OperandSize == 32) {
       #ifndef BEA_LIGHT_DISASSEMBLY
       MyNumber = *((Int8*)(UIntPtr) (GV.EIP_-1));
@@ -349,7 +349,7 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
     GV.MemDecoration = Arg1word;
     MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+3;
-    if (!Security(1, pMyDisasm)) return;
+    if (!Security(0, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
       (void) CopyFormattedNumber(pMyDisasm, (char*) &(*pMyDisasm).Operand2.OpMnemonic,"%.4X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
     #endif

@@ -22,6 +22,17 @@ import yaml
 
 class TestSuite:
 
+    def test_81(self):
+
+        Buffer = bytes.fromhex('810011223344')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0x81)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'add ')
+        assert_equal(myDisasm.repr(), 'add dword ptr [rax], 44332211h')
+
+
     def test_SimpleInstructions(self):
         stream = open(os.path.abspath(os.path.join(os.path.dirname(__file__), 'opcode1byte.yml')), "r")
         instructions = yaml.load(stream, Loader=yaml.FullLoader)
