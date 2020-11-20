@@ -1,3 +1,12 @@
+# BeaEngine 5.2.0 (2020-11-20)
+- 12 instructions from Advanced Matrix Extension (AMX) added
+- 4 instructions from Trust Domain Extension (TDX) added
+- 11 instructions from Key Locker Extension (KL) added
+- 5 instructions from User-Interrupt Extension (UINTR) added
+- python wrapper improved to handle data-flow and control-flow analysis
+- new headers (TMM registers added, instructiontype is now able to manage up to 9 operands)
+- documentation updated to 1.2 version
+
 # BeaEngine 5.1.0
 - fix SecurityBlock issues
 - Python Wrapper improved
