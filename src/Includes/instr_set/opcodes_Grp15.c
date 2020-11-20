@@ -141,12 +141,18 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       }
     }
     else if (GV.REGOPCODE == 7) {
-      (*pMyDisasm).Instruction.Category = CLFLUSHOPT_INSTRUCTION;
-      #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "clflushopt ");
-      #endif
-      GV.MemDecoration = Arg1byte;
-      MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (GV.MOD_ != 0x3) {
+        (*pMyDisasm).Instruction.Category = CLFLUSHOPT_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "clflushopt ");
+        #endif
+        GV.MemDecoration = Arg1byte;
+        MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
+      }
+      else {
+        FailDecode(pMyDisasm);
+      }
     }
     else {
       FailDecode(pMyDisasm);

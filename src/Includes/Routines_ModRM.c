@@ -464,13 +464,13 @@ void __bea_callspec__ Addr_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 void __bea_callspec__ Addr_ESI(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
     long MyNumber;
+    size_t i = 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
-	size_t i = 0;
     if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
         i += 2;
     }
-	#endif
+	   #endif
     (*pMyOperand).OpType = MEMORY_TYPE;
     if (GV.AddressSize == 64) {
         if (GV.REX.B_ == 1) {
@@ -524,13 +524,13 @@ void __bea_callspec__ Addr_ESI(OPTYPE* pMyOperand, PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ Addr_EDI(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
+    size_t i = 0;
     #ifndef BEA_LIGHT_DISASSEMBLY
-	size_t i = 0;
     if (GV.SYNTAX_ == ATSyntax) {
         (void) strcpy((char*) (*pMyOperand).OpMnemonic, "(%");
         i += 2;
     }
-	#endif
+    #endif
 
   fillModrm0Register(pMyOperand, pMyDisasm, i, 7);
   if (GV.AddressSize == 16) {
