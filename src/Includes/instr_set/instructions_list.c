@@ -7085,7 +7085,7 @@ void __bea_callspec__ popad_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 32;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
