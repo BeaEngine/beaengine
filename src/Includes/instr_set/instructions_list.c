@@ -1237,7 +1237,8 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
         MyNumber = *((Int32*)(UIntPtr) (GV.EIP_+1))+5+GV.NB_PREFIX;
         CalculateRelativeAddress(&MyAddress,(Int64) MyNumber, pMyDisasm);
         pMyDisasm->Instruction.AddrValue = MyAddress;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         if (MyAddress >= 0x80000000) {
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand1.OpMnemonic, "%.16llX",(Int64) MyAddress);
@@ -1259,7 +1260,8 @@ void __bea_callspec__ call_(PDISASM pMyDisasm)
         CalculateRelativeAddress(&MyAddress,(Int64) MyNumber, pMyDisasm);
         MyAddress = MyAddress & 0xffff;
         pMyDisasm->Instruction.AddrValue = MyAddress;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand1.OpMnemonic, "%.8X",(Int64) MyAddress);
         #endif
@@ -1339,7 +1341,8 @@ void __bea_callspec__ callf_(PDISASM pMyDisasm)
         }
         pMyDisasm->Operand1.OpType = CONSTANT_TYPE+ABSOLUTE_;
         pMyDisasm->Operand1.AccessMode = READ;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         pMyDisasm->Instruction.AddrValue = MyAddress + MyNumber;
     }
 }
@@ -4092,7 +4095,8 @@ void __bea_callspec__ lodsb_(PDISASM pMyDisasm)
     pMyDisasm->Operand2.OpType = MEMORY_TYPE;
     pMyDisasm->Operand2.Memory.BaseRegister = REG6;
     pMyDisasm->Operand2.OpSize = 8;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
     GV.EIP_++;
     FillFlags(pMyDisasm, 59);
 }
@@ -4120,7 +4124,8 @@ void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG6;
         pMyDisasm->Operand2.OpSize = 64;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
         GV.EIP_++;
         FillFlags(pMyDisasm, 59);
     }
@@ -4135,7 +4140,8 @@ void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG6;
         pMyDisasm->Operand2.OpSize = 32;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
         GV.EIP_++;
         FillFlags(pMyDisasm, 59);
     }
@@ -4150,7 +4156,8 @@ void __bea_callspec__ lodsw_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG6;
         pMyDisasm->Operand2.OpSize = 16;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6;
         GV.EIP_++;
         FillFlags(pMyDisasm, 59);
     }
@@ -4185,7 +4192,8 @@ void __bea_callspec__ loop_(PDISASM pMyDisasm)
       pMyDisasm->Operand1.AccessMode = READ;
       pMyDisasm->Operand1.OpSize = 8;
       pMyDisasm->Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
       pMyDisasm->Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 60);
@@ -4200,7 +4208,8 @@ void __bea_callspec__ loop_(PDISASM pMyDisasm)
       pMyDisasm->Operand1.AccessMode = READ;
       pMyDisasm->Operand1.OpSize = 8;
       pMyDisasm->Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
       pMyDisasm->Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 60);
@@ -4236,7 +4245,8 @@ void __bea_callspec__ loopne_(PDISASM pMyDisasm)
       pMyDisasm->Operand1.AccessMode = READ;
       pMyDisasm->Operand1.OpSize = 8;
       pMyDisasm->Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
       pMyDisasm->Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 61);
@@ -4251,7 +4261,8 @@ void __bea_callspec__ loopne_(PDISASM pMyDisasm)
       pMyDisasm->Operand1.AccessMode = READ;
       pMyDisasm->Operand1.OpSize = 8;
       pMyDisasm->Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
       pMyDisasm->Instruction.AddrValue = MyAddress;
       GV.EIP_+=2;
       FillFlags(pMyDisasm, 61);
@@ -4287,7 +4298,8 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.AccessMode = READ;
         pMyDisasm->Operand1.OpSize = 8;
         pMyDisasm->Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
         pMyDisasm->Instruction.AddrValue = MyAddress;
         GV.EIP_+=2;
         FillFlags(pMyDisasm, 61);
@@ -4302,7 +4314,8 @@ void __bea_callspec__ loope_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.AccessMode = READ;
         pMyDisasm->Operand1.OpSize = 8;
         pMyDisasm->Operand1.OpType = CONSTANT_TYPE+RELATIVE_;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG1;
         pMyDisasm->Instruction.AddrValue = MyAddress;
         GV.EIP_+=2;
         FillFlags(pMyDisasm, 61);
@@ -5158,7 +5171,8 @@ void __bea_callspec__ movs_(PDISASM pMyDisasm)
     pMyDisasm->Operand2.OpType = MEMORY_TYPE;
     pMyDisasm->Operand2.Memory.BaseRegister = REG6;
     pMyDisasm->Operand2.OpSize = 8;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
     GV.EIP_++;
     FillFlags(pMyDisasm, 68);
 }
@@ -5185,7 +5199,8 @@ void __bea_callspec__ movsw_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG6;
         pMyDisasm->Operand2.OpSize = 64;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 68);
     }
@@ -5199,7 +5214,8 @@ void __bea_callspec__ movsw_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG6;
         pMyDisasm->Operand2.OpSize = 32;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 68);
     }
@@ -5213,7 +5229,8 @@ void __bea_callspec__ movsw_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG6;
         pMyDisasm->Operand2.OpSize = 16;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG6+REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 68);
     }
@@ -5604,7 +5621,8 @@ void __bea_callspec__ cmovb_(PDISASM pMyDisasm)
       (GV.VEX.L == 1) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -5680,7 +5698,8 @@ void __bea_callspec__ cmovne_(PDISASM pMyDisasm)
       (GV.VEX.L == 1) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -5752,7 +5771,8 @@ void __bea_callspec__ cmovbe_(PDISASM pMyDisasm)
       (GV.VEX.L == 1) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -5827,7 +5847,8 @@ void __bea_callspec__ cmovnbe_(PDISASM pMyDisasm)
       (GV.VEX.L == 1) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -5921,7 +5942,8 @@ void __bea_callspec__ cmovp_(PDISASM pMyDisasm)
       (GV.VEX.L == 1) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -5997,7 +6019,8 @@ void __bea_callspec__ cmovnp_(PDISASM pMyDisasm)
       (GV.VEX.L == 1) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -6066,7 +6089,8 @@ void __bea_callspec__ cmove_(PDISASM pMyDisasm)
       (GV.VEX.L == 0) &&
       (((GV.VEX.vvvv >> 3) & 0x1) == 1)
     ) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ == 0x3) {
       if (GV.REX.W_ == 0) {
         if (GV.VEX.pp == 1) {
@@ -6278,7 +6302,8 @@ void __bea_callspec__ nop_1e(PDISASM pMyDisasm)
     if (GV.REGOPCODE == 1) {
       pMyDisasm->Prefix.RepPrefix = MandatoryPrefix;
       pMyDisasm->Instruction.Category = CET_INSTRUCTION;
-      if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1)) {
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -6299,7 +6324,8 @@ void __bea_callspec__ nop_1e(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 7) {
       pMyDisasm->Prefix.RepPrefix = MandatoryPrefix;
-      if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
       GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       if (GV.RM_ == 0x2) {
@@ -6653,7 +6679,8 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
       pMyDisasm->Operand2.OpType = MEMORY_TYPE;
       pMyDisasm->Operand2.OpSize = 64;
       pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else if (GV.OperandSize == 32) {
       GV.MemDecoration = Arg1dword;
@@ -6662,7 +6689,8 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
       pMyDisasm->Operand2.OpType = MEMORY_TYPE;
       pMyDisasm->Operand2.OpSize = 32;
       pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
       GV.MemDecoration = Arg1word;
@@ -6671,7 +6699,8 @@ void __bea_callspec__ pop_Ev(PDISASM pMyDisasm)
       pMyDisasm->Operand2.OpType = MEMORY_TYPE;
       pMyDisasm->Operand2.OpSize = 16;
       pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
   }
   else {
@@ -6841,7 +6870,8 @@ void __bea_callspec__ pop_es(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 16;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         GV.EIP_++;
     }
 }
@@ -6870,7 +6900,8 @@ void __bea_callspec__ pop_ss(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 16;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         GV.EIP_++;
     }
 }
@@ -6899,7 +6930,8 @@ void __bea_callspec__ pop_ds(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 16;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         GV.EIP_++;
     }
 }
@@ -6932,7 +6964,8 @@ void __bea_callspec__ pop_fs(PDISASM pMyDisasm)
       pMyDisasm->Operand2.OpType = MEMORY_TYPE;
       pMyDisasm->Operand2.OpSize = 16;
       pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
   }
@@ -6965,7 +6998,8 @@ void __bea_callspec__ pop_gs(PDISASM pMyDisasm)
       pMyDisasm->Operand2.OpType = MEMORY_TYPE;
       pMyDisasm->Operand2.OpSize = 16;
       pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
   }
@@ -6990,7 +7024,8 @@ void __bea_callspec__ popfd_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 64;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else if (GV.OperandSize == 32) {
@@ -7005,7 +7040,8 @@ void __bea_callspec__ popfd_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 32;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else {
@@ -7020,7 +7056,8 @@ void __bea_callspec__ popfd_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 16;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
 }
@@ -7048,7 +7085,8 @@ void __bea_callspec__ popad_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 32;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
       pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
@@ -7064,7 +7102,8 @@ void __bea_callspec__ popad_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.OpSize = 16;
         pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
 }
 
@@ -7093,7 +7132,8 @@ void __bea_callspec__ push_es(PDISASM pMyDisasm)
       pMyDisasm->Operand1.OpType = MEMORY_TYPE;
       pMyDisasm->Operand1.OpSize = 16;
       pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
 }
@@ -7122,7 +7162,8 @@ void __bea_callspec__ push_ss(PDISASM pMyDisasm)
       pMyDisasm->Operand1.OpType = MEMORY_TYPE;
       pMyDisasm->Operand1.OpSize = 16;
       pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
 }
@@ -7151,7 +7192,8 @@ void __bea_callspec__ push_ds(PDISASM pMyDisasm)
       pMyDisasm->Operand1.OpType = MEMORY_TYPE;
       pMyDisasm->Operand1.OpSize = 16;
       pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
 }
@@ -7183,7 +7225,8 @@ void __bea_callspec__ push_fs(PDISASM pMyDisasm)
       pMyDisasm->Operand1.OpType = MEMORY_TYPE;
       pMyDisasm->Operand1.OpSize = 16;
       pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+      pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
       GV.EIP_++;
     }
   }
@@ -7212,7 +7255,8 @@ void __bea_callspec__ push_gs(PDISASM pMyDisasm)
     pMyDisasm->Operand1.OpType = MEMORY_TYPE;
     pMyDisasm->Operand1.OpSize = 16;
     pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     GV.EIP_++;
   }
 }
@@ -7240,7 +7284,8 @@ void __bea_callspec__ push_cs(PDISASM pMyDisasm)
     pMyDisasm->Operand1.OpType = MEMORY_TYPE;
     pMyDisasm->Operand1.OpSize = 16;
     pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     GV.EIP_++;
   }
 }
@@ -7403,7 +7448,8 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
         pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
         pMyDisasm->Operand2.OpSize = 64;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else if (GV.OperandSize == 32) {
         if (!Security(5, pMyDisasm)) return;
@@ -7418,7 +7464,8 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
         pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
         pMyDisasm->Operand2.OpSize = 32;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
         if (!Security(3, pMyDisasm)) return;
@@ -7433,7 +7480,8 @@ void __bea_callspec__ push_Iv(PDISASM pMyDisasm)
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
         pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
         pMyDisasm->Operand2.OpSize = 16;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
 }
 
@@ -7458,7 +7506,8 @@ void __bea_callspec__ push_Ib(PDISASM pMyDisasm)
     pMyDisasm->Operand1.Memory.BaseRegister = REG4;
     pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
     pMyDisasm->Operand2.OpSize = 8;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
 
 }
 
@@ -7482,7 +7531,8 @@ void __bea_callspec__ pushfd_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.OpSize = 64;
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else if (GV.OperandSize == 32) {
@@ -7497,7 +7547,8 @@ void __bea_callspec__ pushfd_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.OpSize = 32;
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
     else {
@@ -7512,7 +7563,8 @@ void __bea_callspec__ pushfd_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.OpSize = 16;
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
         FillFlags(pMyDisasm, 78);
     }
 }
@@ -7540,7 +7592,8 @@ void __bea_callspec__ pushad_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.OpSize = 32;
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
     else {
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -7554,7 +7607,8 @@ void __bea_callspec__ pushad_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.OpSize = 16;
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     }
 }
 
@@ -7600,7 +7654,8 @@ void __bea_callspec__ ret_(PDISASM pMyDisasm)
     pMyDisasm->Operand2.OpType = MEMORY_TYPE;
     pMyDisasm->Operand2.OpSize = 32;
     pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7627,7 +7682,8 @@ void __bea_callspec__ retf_(PDISASM pMyDisasm)
     pMyDisasm->Operand2.OpType = MEMORY_TYPE;
     pMyDisasm->Operand2.OpSize = 32;
     pMyDisasm->Operand2.Memory.BaseRegister = REG4;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7658,7 +7714,8 @@ void __bea_callspec__ retf_Iw(PDISASM pMyDisasm)
     pMyDisasm->Operand1.OpType = CONSTANT_TYPE+ABSOLUTE_;
     pMyDisasm->Operand1.OpSize = 16;
     pMyDisasm->Operand1.AccessMode = READ;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
 }
 
 /* =======================================
@@ -7838,7 +7895,8 @@ void __bea_callspec__ scasb_(PDISASM pMyDisasm)
     pMyDisasm->Operand2.OpType = MEMORY_TYPE;
     pMyDisasm->Operand2.Memory.BaseRegister = REG7;
     pMyDisasm->Operand2.OpSize = 8;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
     GV.EIP_++;
     FillFlags(pMyDisasm, 94);
 }
@@ -7867,7 +7925,8 @@ void __bea_callspec__ scas_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG7;
         pMyDisasm->Operand2.OpSize = 64;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 94);
     }
@@ -7883,7 +7942,8 @@ void __bea_callspec__ scas_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG7;
         pMyDisasm->Operand2.OpSize = 32;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 94);
     }
@@ -7899,7 +7959,8 @@ void __bea_callspec__ scas_(PDISASM pMyDisasm)
         pMyDisasm->Operand2.OpType = MEMORY_TYPE;
         pMyDisasm->Operand2.Memory.BaseRegister = REG7;
         pMyDisasm->Operand2.OpSize = 16;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 94);
     }
@@ -7962,7 +8023,8 @@ void __bea_callspec__ stos_(PDISASM pMyDisasm)
     pMyDisasm->Operand1.OpType = MEMORY_TYPE;
     pMyDisasm->Operand1.Memory.BaseRegister = REG7;
     pMyDisasm->Operand1.OpSize = 8;
-    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
     GV.EIP_++;
     FillFlags(pMyDisasm, 101);
 }
@@ -7990,7 +8052,8 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.Memory.BaseRegister = REG7;
         pMyDisasm->Operand1.OpSize = 64;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 101);
     }
@@ -8005,7 +8068,8 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.Memory.BaseRegister = REG7;
         pMyDisasm->Operand1.OpSize = 32;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 101);
     }
@@ -8020,7 +8084,8 @@ void __bea_callspec__ stosw_(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.Memory.BaseRegister = REG7;
         pMyDisasm->Operand1.OpSize = 16;
-        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG; pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG7;
         GV.EIP_++;
         FillFlags(pMyDisasm, 101);
     }
@@ -8260,7 +8325,8 @@ void __bea_callspec__ setno_(PDISASM pMyDisasm)
       (GV.VEX.state == InUsePrefix) &&
       (GV.VEX.L == 0)
     ) {
-      if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) {
         if (GV.REX.W_ == 0) {
           if (GV.VEX.pp == 1) {
@@ -8340,7 +8406,8 @@ void __bea_callspec__ setb_(PDISASM pMyDisasm)
       (GV.VEX.state == InUsePrefix) &&
       (GV.VEX.L == 0)
     ) {
-      if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ == 0x3) {
         if (GV.REX.W_ == 0) {
           if (GV.VEX.pp == 1) {
@@ -8429,7 +8496,8 @@ void __bea_callspec__ setnb_(PDISASM pMyDisasm)
       (GV.VEX.state == InUsePrefix) &&
       (GV.VEX.L == 0)
     ) {
-      if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ == 0x3) {
         if (GV.REX.W_ == 0) {
           if (GV.VEX.pp == 1) {
@@ -11720,7 +11788,8 @@ void __bea_callspec__ crc32_GvEb(PDISASM pMyDisasm)
     GV.EIP_ += GV.DECALAGE_EIP+2;
     }
   else {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_== 0x3) { FailDecode(pMyDisasm); return; }
     if (GV.PrefRepe == 1) GV.ERROR_OPCODE = UD_;
     pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
@@ -11767,7 +11836,8 @@ void __bea_callspec__ crc32_GvEv(PDISASM pMyDisasm)
     GV.EIP_ += GV.DECALAGE_EIP+2;
    }
   else {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_== 0x3) { FailDecode(pMyDisasm); return; }
     if (GV.PrefRepe == 1) GV.ERROR_OPCODE = UD_;
     pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
@@ -13545,7 +13615,8 @@ void __bea_callspec__ lddqu_(PDISASM pMyDisasm)
   }
   else if (GV.VEX.state == InUsePrefix) {
     if (GV.VEX.pp == 3) {
-      if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      if (!Security(2, pMyDisasm)) return;
+      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ == 0x3) { FailDecode(pMyDisasm); return; }
 
       pMyDisasm->Instruction.Category = AVX_INSTRUCTION+SPECIALIZED_128bits;
@@ -13588,7 +13659,8 @@ void __bea_callspec__ maskmovq_(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
   else if (GV.VEX.state == InUsePrefix) {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
 
     if (GV.VEX.pp == 1) {
@@ -13604,7 +13676,8 @@ void __bea_callspec__ maskmovq_(PDISASM pMyDisasm)
     }
   }
   else {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
 
     /* ========== 0x66 */
@@ -13842,7 +13915,8 @@ void __bea_callspec__ movhps_VM(PDISASM pMyDisasm)
    else {
      GV.MemDecoration = Arg2qword;
      pMyDisasm->Instruction.Category = SSE_INSTRUCTION+DATA_TRANSFER;
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_== 0x3) {
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "movlhps ");
@@ -13868,7 +13942,8 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
 {
  if (GV.VEX.state == InUsePrefix) {
    if (GV.VEX.pp == 0x1) {
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_== 0x3) {
          FailDecode(pMyDisasm);
      }
@@ -13883,7 +13958,8 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
      }
    }
    else {
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_== 0x3) {
          FailDecode(pMyDisasm);
      }
@@ -13933,7 +14009,8 @@ void __bea_callspec__ movlps_VM(PDISASM pMyDisasm)
 
     if (GV.VEX.state == InUsePrefix) {
       if (GV.VEX.pp == 0x1) {
-       if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+       if (!Security(2, pMyDisasm)) return;
+       GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
        if (GV.MOD_ == 0x3) {
          FailDecode(pMyDisasm);
        }
@@ -14059,7 +14136,8 @@ void __bea_callspec__ movlps_MV(PDISASM pMyDisasm)
 {
  if (GV.VEX.state == InUsePrefix) {
    if (GV.VEX.pp == 0x1) {
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_== 0x3) {
          FailDecode(pMyDisasm);
      }
@@ -14074,7 +14152,8 @@ void __bea_callspec__ movlps_MV(PDISASM pMyDisasm)
      }
    }
    else {
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_== 0x3) {
          FailDecode(pMyDisasm);
      }
@@ -14121,7 +14200,8 @@ void __bea_callspec__ movlps_MV(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ movmskps_(PDISASM pMyDisasm)
 {
-   if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+   if (!Security(2, pMyDisasm)) return;
+   GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
    if (GV.MOD_!= 0x3) {
        FailDecode(pMyDisasm);
    }
@@ -14312,7 +14392,8 @@ void __bea_callspec__ movntps_(PDISASM pMyDisasm)
    }
  }
  else {
-   if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+   if (!Security(2, pMyDisasm)) return;
+   GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
    if (GV.MOD_== 0x3) {
        FailDecode(pMyDisasm);
    }
@@ -14374,7 +14455,8 @@ void __bea_callspec__ movntq_(PDISASM pMyDisasm)
     }
   }
   else {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_== 0x3) {
       FailDecode(pMyDisasm);
     }
@@ -16117,7 +16199,8 @@ void __bea_callspec__ pextrw_(PDISASM pMyDisasm)
        FailDecode(pMyDisasm);
        return;
      }
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_!= 0x3) {
        FailDecode(pMyDisasm);
        return;
@@ -16150,7 +16233,8 @@ void __bea_callspec__ pextrw_(PDISASM pMyDisasm)
  else {
    /* ========== 0x66 */
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_!= 0x3) {
        FailDecode(pMyDisasm);
        return;
@@ -16171,7 +16255,8 @@ void __bea_callspec__ pextrw_(PDISASM pMyDisasm)
      getImmediat8(&pMyDisasm->Operand3, pMyDisasm);
    }
    else {
-     if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+     if (!Security(2, pMyDisasm)) return;
+     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_!= 0x3) {
        FailDecode(pMyDisasm);
        return;
@@ -16587,7 +16672,8 @@ void __bea_callspec__ vpdpwssd_(PDISASM pMyDisasm)
     else if (GV.VEX.pp == 3) {
       if (GV.EVEX.W == 0) {
         if (GV.VEX.L == 2) {
-          if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+          if (!Security(2, pMyDisasm)) return;
+          GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
           if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
           #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vp4dpwssd ");
@@ -16656,7 +16742,8 @@ void __bea_callspec__ vpdpwssds_(PDISASM pMyDisasm)
     else if (GV.VEX.pp == 3) {
       if (GV.EVEX.W == 0) {
         if (GV.VEX.L == 2) {
-          if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+          if (!Security(2, pMyDisasm)) return;
+          GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
           if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
           #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vp4dpwssds ");
@@ -17246,7 +17333,8 @@ void __bea_callspec__ pmaddubsw_(PDISASM pMyDisasm)
 void __bea_callspec__ invept_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
-  if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+  if (!Security(2, pMyDisasm)) return;
+  GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
   if (GV.MOD_ == 0x3){ FailDecode(pMyDisasm); return; }
   if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
     GV.OperandSize = GV.OriginalOperandSize;
@@ -17270,7 +17358,8 @@ void __bea_callspec__ invept_(PDISASM pMyDisasm)
 void __bea_callspec__ invvpid_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
-  if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+  if (!Security(2, pMyDisasm)) return;
+  GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
   if (GV.MOD_ == 0x3){ FailDecode(pMyDisasm); return; }
   if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
     GV.OperandSize = GV.OriginalOperandSize;
@@ -17294,7 +17383,8 @@ void __bea_callspec__ invvpid_(PDISASM pMyDisasm)
 void __bea_callspec__ invpcid_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
-  if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+  if (!Security(2, pMyDisasm)) return;
+  GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
   if (GV.MOD_ == 0x3){ FailDecode(pMyDisasm); return; }
   if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
     GV.OperandSize = GV.OriginalOperandSize;
@@ -17318,7 +17408,8 @@ void __bea_callspec__ pmovmskb_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) {
     if (GV.EVEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
     if (GV.VEX.vvvv != 15) GV.ERROR_OPCODE = UD_;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -17341,7 +17432,8 @@ void __bea_callspec__ pmovmskb_(PDISASM pMyDisasm)
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
   else {
-    if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    if (!Security(2, pMyDisasm)) return;
+    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_ != 0x3){ FailDecode(pMyDisasm); return; }
 
     /* ========== 0x66 */
@@ -21022,7 +21114,8 @@ void __bea_callspec__ vfmsub132ss_(PDISASM pMyDisasm)
   if ((GV.EVEX.state == InUsePrefix) && (GV.VEX.pp == 3)) {
     if (GV.EVEX.W == 0) {
       if (GV.VEX.L == 2) {
-        if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (!Security(2, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "v4fmaddss ");
@@ -21097,7 +21190,8 @@ void __bea_callspec__ vfmsub213ps_(PDISASM pMyDisasm)
   if ((GV.EVEX.state == InUsePrefix) && (GV.VEX.pp == 3)) {
     if (GV.EVEX.W == 0) {
       if (GV.VEX.L == 2) {
-        if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (!Security(2, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "v4fnmaddps ");
@@ -21238,7 +21332,8 @@ void __bea_callspec__ vfmsub213ss_(PDISASM pMyDisasm)
   if ((GV.EVEX.state == InUsePrefix) && (GV.VEX.pp == 3)) {
     if (GV.EVEX.W == 0) {
       if (GV.VEX.L == 2) {
-        if (!Security(2, pMyDisasm)) return; GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        if (!Security(2, pMyDisasm)) return;
+        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
         if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "v4fnmaddss ");
