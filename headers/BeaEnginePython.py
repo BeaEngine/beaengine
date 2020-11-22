@@ -7,6 +7,7 @@
 
 from ctypes import *
 import re
+import json
 
 INSTRUCT_LENGTH = 64
 
@@ -248,6 +249,14 @@ SE_ = 8
 UN_ = 0x10
 PR_ = 0x20
 
+instrRflags = {
+    TE_: "tested",
+    MO_: "modified",
+    RE_: "reset",
+    SE_: "set",
+    UN_: "undef",
+    PR_: "prior state"
+}
 
 GENERAL_PURPOSE_INSTRUCTION   =     0x10000
 FPU_INSTRUCTION               =     0x20000
@@ -284,6 +293,44 @@ PCONFIG_INSTRUCTION           =    0x200000
 UINTR_INSTRUCTION             =    0x210000
 KL_INSTRUCTION                =    0x220000
 AMX_INSTRUCTION               =    0x230000
+
+instrCateg = {}
+instrCateg[0] = ""
+instrCateg[GENERAL_PURPOSE_INSTRUCTION]   = "GENERAL_PURPOSE_INSTRUCTION"
+instrCateg[FPU_INSTRUCTION]               = "FPU_INSTRUCTION"
+instrCateg[MMX_INSTRUCTION]               = "MMX_INSTRUCTION"
+instrCateg[SSE_INSTRUCTION]               = "SSE_INSTRUCTION"
+instrCateg[SSE2_INSTRUCTION]              = "SSE2_INSTRUCTION"
+instrCateg[SSE3_INSTRUCTION]              = "SSE3_INSTRUCTION"
+instrCateg[SSSE3_INSTRUCTION]             = "SSSE3_INSTRUCTION"
+instrCateg[SSE41_INSTRUCTION]             = "SSE41_INSTRUCTION"
+instrCateg[SSE42_INSTRUCTION]             = "SSE42_INSTRUCTION"
+instrCateg[SYSTEM_INSTRUCTION]            = "SYSTEM_INSTRUCTION"
+instrCateg[VM_INSTRUCTION]                = "VM_INSTRUCTION"
+instrCateg[UNDOCUMENTED_INSTRUCTION]      = "UNDOCUMENTED_INSTRUCTION"
+instrCateg[AMD_INSTRUCTION]               = "AMD_INSTRUCTION"
+instrCateg[ILLEGAL_INSTRUCTION]           = "ILLEGAL_INSTRUCTION"
+instrCateg[AES_INSTRUCTION]               = "AES_INSTRUCTION"
+instrCateg[CLMUL_INSTRUCTION]             = "CLMUL_INSTRUCTION"
+instrCateg[AVX_INSTRUCTION]               = "AVX_INSTRUCTION"
+instrCateg[AVX2_INSTRUCTION]              = "AVX2_INSTRUCTION"
+instrCateg[MPX_INSTRUCTION]               = "MPX_INSTRUCTION"
+instrCateg[AVX512_INSTRUCTION]            = "AVX512_INSTRUCTION"
+instrCateg[SHA_INSTRUCTION]               = "SHA_INSTRUCTION"
+instrCateg[BMI2_INSTRUCTION]              = "BMI2_INSTRUCTION"
+instrCateg[CET_INSTRUCTION]               = "CET_INSTRUCTION"
+instrCateg[BMI1_INSTRUCTION]              = "BMI1_INSTRUCTION"
+instrCateg[XSAVEOPT_INSTRUCTION]          = "XSAVEOPT_INSTRUCTION"
+instrCateg[FSGSBASE_INSTRUCTION]          = "FSGSBASE_INSTRUCTION"
+instrCateg[CLWB_INSTRUCTION]              = "CLWB_INSTRUCTION"
+instrCateg[CLFLUSHOPT_INSTRUCTION]        = "CLFLUSHOPT_INSTRUCTION"
+instrCateg[FXSR_INSTRUCTION]              = "FXSR_INSTRUCTION"
+instrCateg[XSAVE_INSTRUCTION]             = "XSAVE_INSTRUCTION"
+instrCateg[SGX_INSTRUCTION]               = "SGX_INSTRUCTION"
+instrCateg[KL_INSTRUCTION]                = "KL_INSTRUCTION"
+instrCateg[UINTR_INSTRUCTION]             = "UINTR_INSTRUCTION"
+instrCateg[AMX_INSTRUCTION]               = "AMX_INSTRUCTION"
+instrCateg[PCONFIG_INSTRUCTION]           = "PCONFIG_INSTRUCTION"
 
 DATA_TRANSFER = 0x1
 ARITHMETIC_INSTRUCTION = 2
@@ -372,8 +419,33 @@ SEGMENT_REG = 0x800
 FPU_REG = 0x1000
 TMM_REG = 0x2000
 
+instrRegisters = {
+    GENERAL_REG: 'gpr',
+    MMX_REG: 'mmx',
+    SSE_REG: 'xmm',
+    AVX_REG: 'ymm',
+    AVX512_REG: 'zmm',
+    SPECIAL_REG: 'special',
+    CR_REG: 'cr',
+    DR_REG: 'dr',
+    MEMORY_MANAGEMENT_REG: 'mem_management',
+    MPX_REG: 'mpx',
+    OPMASK_REG: 'opmask',
+    SEGMENT_REG: 'segment',
+    FPU_REG: 'fpu',
+    TMM_REG: 'tmm'
+}
+
 RELATIVE_ = 0x4000000
 ABSOLUTE_ = 0x8000000
+
+instr_Types = {
+    NO_ARGUMENT: 'no argument',
+    REGISTER_TYPE: 'register',
+    MEMORY_TYPE: 'memory',
+    CONSTANT_TYPE+ABSOLUTE_: 'constant',
+    CONSTANT_TYPE+RELATIVE_: 'constant+relative',
+}
 
 READ = 0x1
 WRITE = 0x2
@@ -880,6 +952,141 @@ class Disasm():
         self.infos.Archi = 64
         self.length = 0
         self.bytes = bytearray()
+
+    def register_repr(self, registers):
+        regs = []
+        for i in range(0,32):
+            if registers & (1 << i):
+                regs.append(i)
+        return "+".join(f'REG{b}' for b in regs)
+
+    def merge_registers(self, dest, source):
+        dest.type |= source.type
+        dest.gpr |= source.gpr
+        dest.mmx |= source.mmx
+        dest.xmm |= source.xmm
+        dest.ymm |= source.ymm
+        dest.zmm |= source.zmm
+        dest.special |= source.special
+        dest.cr |= source.cr
+        dest.dr |= source.dr
+        dest.mem_management |= source.mem_management
+        dest.mpx |= source.mpx
+        dest.opmask |= source.opmask
+        dest.segment |= source.segment
+        dest.fpu |= source.fpu
+        dest.tmm |= source.tmm
+
+
+    def get_modified_regs(self):
+        regs = REGISTERTYPE()
+        result = {}
+        for i in range(1,10):
+            operand = getattr(self.infos, f'Operand{i}')
+            if operand.OpType == REGISTER_TYPE and operand.AccessMode == WRITE:
+                self.merge_registers(regs, operand.Registers)
+        self.merge_registers(regs, self.infos.Instruction.ImplicitModifiedRegs)
+        for entry in regs._fields_:
+            if entry[0] != 'type':
+                result[entry[0]] = self.register_repr(getattr(regs, entry[0]))
+            else:
+                result[entry[0]] = getattr(regs, entry[0])
+        return result
+
+    def get_read_regs(self):
+        regs = REGISTERTYPE()
+        result = {}
+        for i in range(1,10):
+            operand = getattr(self.infos, f'Operand{i}')
+            if operand.OpType == REGISTER_TYPE and operand.AccessMode == READ:
+                self.merge_registers(regs, operand.Registers)
+            elif operand.OpType == MEMORY_TYPE:
+                regs.type |= GENERAL_REG
+                regs.gpr |= operand.Memory.BaseRegister
+                if self.infos.Reserved_.VSIB_ == SSE_REG:
+                    regs.type |= SSE_REG
+                    regs.xmm |= operand.Memory.IndexRegister
+                elif self.infos.Reserved_.VSIB_ == AVX_REG:
+                    regs.type |= AVX_REG
+                    regs.ymm |= operand.Memory.IndexRegister
+                elif self.infos.Reserved_.VSIB_ == AVX512_REG:
+                    regs.type |= AVX512_REG
+                    regs.zmm |= operand.Memory.IndexRegister
+                else:
+                    regs.gpr |= operand.Memory.IndexRegister
+        for entry in regs._fields_:
+            if entry[0] != 'type':
+                result[entry[0]] = self.register_repr(getattr(regs, entry[0]))
+            else:
+                result[entry[0]] = getattr(regs, entry[0])
+
+        return result
+
+    def json(self):
+        """
+            json dump of instruction structure
+        """
+        instr_struct = self.structure()
+        return json.dumps(instr_struct, indent=4)
+
+    def structure(self):
+        """
+            Dictionary to extract
+            used registers, modified registers, errors...
+        """
+        instr = {}
+        instr['repr'] = self.repr()
+        instr['category'] = instrCateg[self.infos.Instruction.Category & 0x0FFFF0000]
+        instr['mnemonic'] = self.infos.Instruction.Mnemonic.decode()
+        instr['bytes'] = " ".join("{:02x}".format(b if type(b) == int else ord(b)) for b in self.bytes)
+        instr['error'] = self.infos.Error
+        instr['arch'] = self.infos.Archi
+        instr['operands'] = {}
+        instr['registers'] = {
+            'modified': self.get_modified_regs(),
+            'read': self.get_read_regs()
+        }
+        #instr['opcode'] = hex(self.infos.Instruction.Opcode)
+        rflags = self.infos.Instruction.Flags
+        instr['rflags'] = {
+            'of': instrRflags.get(rflags.OF_),
+            'sf': instrRflags.get(rflags.SF_),
+            'zf': instrRflags.get(rflags.ZF_),
+            'af': instrRflags.get(rflags.AF_),
+            'pf': instrRflags.get(rflags.PF_),
+            'cf': instrRflags.get(rflags.CF_),
+            'tf': instrRflags.get(rflags.TF_),
+            'if': instrRflags.get(rflags.IF_),
+            'df': instrRflags.get(rflags.DF_),
+            'nt': instrRflags.get(rflags.NT_),
+            'rf': instrRflags.get(rflags.RF_),
+        }
+        for i in range(1,10):
+            operand = getattr(self.infos, f'Operand{i}')
+            if operand.OpType != NO_ARGUMENT:
+                instr['operands'][i] = {
+                    'repr': operand.OpMnemonic.decode(),
+                    'type': instr_Types.get(operand.OpType),
+                    'size': operand.OpSize,
+                    'mode': {READ: 'read', WRITE: 'write'}.get(operand.AccessMode)
+                }
+                if operand.OpType == REGISTER_TYPE:
+                    instr['operands'][i]['register'] = {
+                        'type': instrRegisters.get(operand.Registers.type)
+                    }
+                    registers = getattr(operand.Registers, instr['operands'][i]['register']['type'])
+                    instr['operands'][i]['register']['value'] = self.register_repr(registers)
+                elif operand.OpType & 0xFFFFF == CONSTANT_TYPE:
+                    instr['immediat'] = hex(self.infos.Instruction.Immediat)
+                elif operand.OpType == MEMORY_TYPE:
+                    instr['operands'][i]['memory'] = {
+                        'base': self.register_repr(operand.Memory.BaseRegister),
+                        'index': self.register_repr(operand.Memory.IndexRegister),
+                        'scale': operand.Memory.Scale,
+                        'displacement': hex(operand.Memory.Displacement)
+                    }
+
+        return instr
 
     def analyze(self, registers: str)->REGISTERTYPE():
         result = REGISTERTYPE()

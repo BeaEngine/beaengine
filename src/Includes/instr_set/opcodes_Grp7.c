@@ -623,6 +623,7 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
     case 6:
       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
       GV.MemDecoration = Arg1word;
+      GV.OperandSize = 16;
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
       pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY

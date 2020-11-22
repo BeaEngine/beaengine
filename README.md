@@ -86,6 +86,115 @@ while instr.read() > 0:
 
 ```
 
+#### 1.4 Extract complete structure
+
+Let's extract complete instruction structure:
+
+```
+#!/usr/bin/python3
+
+from BeaEnginePython import *
+
+instr = Disasm(bytes.fromhex('62017d8115443322'))
+instr.read()
+print(instr.json())
+```
+
+Output is:
+
+~~~~~{json}
+{
+  "repr": "vunpckhpd xmm24, xmm16, xmmword ptr [r11+r14+0220h]",
+  "category": "AVX512_INSTRUCTION",
+  "mnemonic": "vunpckhpd ",
+  "bytes": "62 01 7d 81 15 44 33 22",
+  "error": 0,
+  "arch": 64,
+  "operands": {
+    "1": {
+      "repr": "xmm24",
+      "type": "register",
+      "size": 128,
+      "mode": "write",
+      "register": {
+        "type": "xmm",
+        "value": "REG24"
+      }
+    },
+    "2": {
+      "repr": "xmm16",
+      "type": "register",
+      "size": 128,
+      "mode": "read",
+      "register": {
+        "type": "xmm",
+        "value": "REG16"
+      }
+    },
+    "3": {
+      "repr": "r11+r14+0220h",
+      "type": "memory",
+      "size": 128,
+      "mode": "read",
+      "memory": {
+        "base": "REG11",
+        "index": "REG14",
+        "scale": 1,
+        "displacement": "0x22"
+      }
+    }
+  },
+  "registers": {
+    "modified": {
+      "type": 4,
+      "gpr": "",
+      "mmx": "",
+      "xmm": "REG24",
+      "ymm": "",
+      "zmm": "",
+      "special": "",
+      "cr": "",
+      "dr": "",
+      "mem_management": "",
+      "mpx": "",
+      "opmask": "",
+      "segment": "",
+      "fpu": "",
+      "tmm": ""
+    },
+    "read": {
+      "type": 5,
+      "gpr": "REG11+REG14",
+      "mmx": "",
+      "xmm": "REG16",
+      "ymm": "",
+      "zmm": "",
+      "special": "",
+      "cr": "",
+      "dr": "",
+      "mem_management": "",
+      "mpx": "",
+      "opmask": "",
+      "segment": "",
+      "fpu": "",
+      "tmm": ""
+    }
+  },
+  "rflags": {
+    "of": null,
+    "sf": null,
+    "zf": null,
+    "af": null,
+    "pf": null,
+    "cf": null,
+    "tf": null,
+    "if": null,
+    "df": null,
+    "nt": null,
+    "rf": null
+  }
+}
+~~~~~
 
 ### 2. Releases
 

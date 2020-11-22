@@ -27,6 +27,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
     GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
     GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
     if (GV.REGOPCODE == 1) {
+        if (GV.MOD_ == 0x3) { FailDecode(pMyDisasm); return; }
         GV.MemDecoration = Arg2qword;
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         if (GV.REX.W_ == 1) {

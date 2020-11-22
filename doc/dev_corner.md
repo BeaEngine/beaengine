@@ -119,6 +119,8 @@ Actually, their is no instruction with all these representations for the same op
 ```
 void __bea_callspec__ new_instr(PDISASM pMyDisasm)
 {
+  if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE = UD_;
+  verifyVEXvvvv(pMyDisasm);
   if (GV.EVEX.state == InUsePrefix) {
     switch(GV.VEX.pp){
       case 0:
@@ -162,7 +164,7 @@ void __bea_callspec__ new_instr(PDISASM pMyDisasm)
         }      
     }
   }
-  if (GV.VEX.state == InUsePrefix) {
+  else if (GV.VEX.state == InUsePrefix) {
     switch(GV.VEX.pp){
       case 0:
         if (GV.REX.W_ == 0) {
@@ -214,7 +216,7 @@ void __bea_callspec__ new_instr(PDISASM pMyDisasm)
       /* prefix 0xf2 */
       FailDecode(pMyDisasm);
     }
-    else if ((*pMyDisasm).Prefix.OperandSize == InUsePrefix) {
+    else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
       /* prefix 0x66 */
       FailDecode(pMyDisasm);
     }
@@ -247,29 +249,57 @@ void __bea_callspec__ new_instr(PDISASM pMyDisasm)
         case 0:
           switch(GV.RM_) {
             case 0:
+              FailDecode(pMyDisasm);
+              break;
             case 1:
+              FailDecode(pMyDisasm);
+              break;
             case 2:
+              FailDecode(pMyDisasm);
+              break;
             case 3:
+              FailDecode(pMyDisasm);
+              break;
             case 4:
+              FailDecode(pMyDisasm);
+              break;
             case 5:
+              FailDecode(pMyDisasm);
+              break;
             case 6:
+              FailDecode(pMyDisasm);
+              break;
             case 7:
               FailDecode(pMyDisasm);
           }
         case 1:
           FailDecode(pMyDisasm);
+          break;
         case 2:
           FailDecode(pMyDisasm);
+          break;
         case 3:
           FailDecode(pMyDisasm);
       }
       break;
     case 1:
+      FailDecode(pMyDisasm);
+      break;
     case 2:
+      FailDecode(pMyDisasm);
+      break;
     case 3:
+      FailDecode(pMyDisasm);
+      break;
     case 4:
+      FailDecode(pMyDisasm);
+      break;
     case 5:
+      FailDecode(pMyDisasm);
+      break;
     case 6:
+      FailDecode(pMyDisasm);
+      break;
     case 7:
       FailDecode(pMyDisasm);
   }
