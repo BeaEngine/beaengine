@@ -89,6 +89,7 @@ STRUC INSTRTYPE
     AddrValue:               resq   1
     Immediat:                resq   1
     ImplicitModifiedRegs:    resb   REGISTERTYPE_size
+    ImplicitUsedRegs:        resb   REGISTERTYPE_size
 ENDSTRUC
 
 STRUC OPTYPE

@@ -145,6 +145,7 @@ typedef struct  {
    UInt64 AddrValue;
    Int64 Immediat;
    REGISTERTYPE ImplicitModifiedRegs;
+	 REGISTERTYPE ImplicitUsedRegs;
 } INSTRTYPE;
 #pragma pack()
 

@@ -275,6 +275,40 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
        #endif
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
+     else if (GV.RM_ == 0x4) {
+       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       pMyDisasm->Instruction.Category = VM_INSTRUCTION;
+       #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmfunc ");
+       #endif
+       pMyDisasm->Operand1.OpType = REGISTER_TYPE;
+       pMyDisasm->Operand1.AccessMode = READ;
+       pMyDisasm->Operand1.OpSize = 32;
+       pMyDisasm->Operand1.Registers.type = GENERAL_REG;
+       pMyDisasm->Operand1.Registers.gpr = REG0;
+       GV.EIP_+= GV.DECALAGE_EIP+2;
+     }
+     else if (GV.RM_ == 0x5) {
+       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       pMyDisasm->Instruction.Category = VM_INSTRUCTION;
+       #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xend ");
+       #endif
+       pMyDisasm->Operand1.OpType = REGISTER_TYPE;
+       pMyDisasm->Operand1.OpSize = 32;
+       pMyDisasm->Operand1.Registers.type = GENERAL_REG;
+       pMyDisasm->Operand1.Registers.gpr = REG0;
+       GV.EIP_+= GV.DECALAGE_EIP+2;
+     }
+     else if (GV.RM_ == 0x6) {
+       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       pMyDisasm->Instruction.Category = VM_INSTRUCTION;
+       #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xtest ");
+       #endif
+       FillFlags(pMyDisasm,134);
+       GV.EIP_+= GV.DECALAGE_EIP+2;
+     }
      else if (GV.RM_ == 0x7) {
        if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SGX_INSTRUCTION;
@@ -421,22 +455,24 @@ void __bea_callspec__ G7_regopcode7(PDISASM pMyDisasm)
        #endif
        GV.EIP_+= GV.DECALAGE_EIP+2;
       }
-      else {
-         FailDecode(pMyDisasm);
-      }
-    }
-    else {
-      if (GV.RM_ == 0x1) {
+      else if (GV.RM_ == 0x1) {
         if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
         pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rdtscp ");
         #endif
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr |= REG0 | REG1 | REG2;
+        pMyDisasm->Instruction.ImplicitUsedRegs.type = SPECIAL_REG;
+        pMyDisasm->Instruction.ImplicitUsedRegs.special |= REG5 | REG6;
         GV.EIP_+= GV.DECALAGE_EIP+2;
       }
       else {
-        FailDecode(pMyDisasm);
+         FailDecode(pMyDisasm);
       }
+    }
+    else {
+      FailDecode(pMyDisasm);
     }
   }
  else {
@@ -507,15 +543,10 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 133);
         GV.EIP_+= GV.DECALAGE_EIP+2;
       }
-      else {
-        FailDecode(pMyDisasm);
-      }
     }
     else if (GV.RM_ == 6) {
       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
-      if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
-        GV.ERROR_OPCODE = UD_;
-      }
+      if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE = UD_;
       /* ========= 0xf3 */
       if (GV.PrefRepe == 1) {
         pMyDisasm->Instruction.Category = UINTR_INSTRUCTION;
@@ -528,8 +559,24 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
         pMyDisasm->Operand1.OpSize = 1;
         GV.EIP_+= GV.DECALAGE_EIP+2;
       }
-      else {
+      else if (GV.PrefRepne == 1) {
+        /* prefix 0xf2 */
         FailDecode(pMyDisasm);
+      }
+      else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
+        /* prefix 0x66 */
+        FailDecode(pMyDisasm);
+      }
+      else {
+        /* no prefix */
+        pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
+        #ifndef BEA_LIGHT_DISASSEMBLY
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rdpkru ");
+        #endif
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr |= REG0 | REG2;
+
+        GV.EIP_+= GV.DECALAGE_EIP+2;
       }
     }
     else if (GV.RM_ == 7) {

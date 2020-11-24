@@ -939,13 +939,8 @@ int __bea_callspec__ Security(int len, PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ FillFlags(PDISASM pMyDisasm, int index)
 {
-  Int64 regType, regSpecial;
-  regType = pMyDisasm->Instruction.ImplicitModifiedRegs.type;
-  regSpecial = pMyDisasm->Instruction.ImplicitModifiedRegs.special;
-  regType = regType & SPECIAL_REG;
-  regSpecial = regSpecial & REG0;
-  pMyDisasm->Instruction.ImplicitModifiedRegs.type = regType;
-  pMyDisasm->Instruction.ImplicitModifiedRegs.special = regSpecial;
+  pMyDisasm->Instruction.ImplicitModifiedRegs.type |= SPECIAL_REG;
+  pMyDisasm->Instruction.ImplicitModifiedRegs.special |= REG0;
   pMyDisasm->Instruction.Flags = EFLAGS_TABLE[index];
 }
 /* ====================================================================

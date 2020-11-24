@@ -86,6 +86,7 @@ Structure INSTRTYPE
   AddrValue.q
   Immediat.q
   ImplicitModifiedRegs.REGISTERTYPE
+  ImplicitUsedRegs.REGISTERTYPE
 EndStructure
 Global Instrtype.INSTRTYPE
 

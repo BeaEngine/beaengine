@@ -86,6 +86,7 @@ INSTRTYPE STRUCT
     AddrValue               dq   0
     Immediat                dq   0
     ImplicitModifiedRegs    REGISTERTYPE <0>
+    ImplicitUsedRegs        REGISTERTYPE <0>
 INSTRTYPE ENDS
 
 OPTYPE STRUCT

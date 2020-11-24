@@ -247,3 +247,86 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrpkru ')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
+
+        # NP 0F 01 D4 (reg = 2, mod = 3, rm = 4)
+        # VMFUNC
+
+        Buffer = bytes.fromhex('0f01d4')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmfunc ')
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 32)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
+
+        # NP 0F 01 D5 (reg = 2, mod = 3, rm = 5)
+        # XEND
+
+        Buffer = bytes.fromhex('0f01d5')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xend ')
+        assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
+        assert_equal(myDisasm.infos.Operand1.OpSize, 32)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+
+        # NP 0F 01 D6
+        # XTEST
+
+        Buffer = bytes.fromhex('0f01d6')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xtest ')
+        assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.Flags.OF_, RE_)
+        assert_equal(myDisasm.infos.Instruction.Flags.SF_, RE_)
+        assert_equal(myDisasm.infos.Instruction.Flags.ZF_, MO_)
+        assert_equal(myDisasm.infos.Instruction.Flags.AF_, RE_)
+        assert_equal(myDisasm.infos.Instruction.Flags.PF_, RE_)
+        assert_equal(myDisasm.infos.Instruction.Flags.CF_, RE_)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.type, SPECIAL_REG)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.special, REG0)
+
+        # NP 0F 01 EE (reg = 5, mod = 3, rm = 6)
+        # RDPKRU
+        
+        Buffer = bytes.fromhex('0f01ee')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdpkru ')
+        assert_equal(myDisasm.infos.Instruction.Category, SYSTEM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.type, GENERAL_REG)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.gpr, REG0 | REG2)
+
+        # 0F 01 F9 (reg = 7, mod = 3, rm = 1)
+        # RDTSCP
+
+        Buffer = bytes.fromhex('0f01f9')
+        myDisasm = Disasm(Buffer)
+        length = myDisasm.read()
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdtscp ')
+        assert_equal(myDisasm.infos.Instruction.Category, SYSTEM_INSTRUCTION)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.type, GENERAL_REG)
+        assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.gpr, REG0 | REG1 | REG2)
+
+        # IA32_TIME_STAMP_COUNTER
+        assert_equal(myDisasm.infos.Instruction.ImplicitUsedRegs.type, SPECIAL_REG)
+        assert_equal(myDisasm.infos.Instruction.ImplicitUsedRegs.special & REG5, REG5)
+
+        # IA32_TSC_AUX
+        assert_equal(myDisasm.infos.Instruction.ImplicitUsedRegs.type, SPECIAL_REG)
+        assert_equal(myDisasm.infos.Instruction.ImplicitUsedRegs.special & REG6, REG6)

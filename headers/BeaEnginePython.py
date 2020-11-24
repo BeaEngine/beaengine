@@ -90,7 +90,8 @@ class INSTRTYPE(Structure):
               ("Flags", EFLStruct),
               ("AddrValue", c_uint64),
               ("Immediat", c_int64),
-              ("ImplicitModifiedRegs", REGISTERTYPE)]
+              ("ImplicitModifiedRegs", REGISTERTYPE),
+              ("ImplicitUsedRegs", REGISTERTYPE)]
 
 class OPTYPE(Structure):
    _pack_= 1
@@ -1014,6 +1015,7 @@ class Disasm():
                     regs.zmm |= operand.Memory.IndexRegister
                 else:
                     regs.gpr |= operand.Memory.IndexRegister
+        self.merge_registers(regs, self.infos.Instruction.ImplicitUsedRegs)
         for entry in regs._fields_:
             if entry[0] != 'type':
                 result[entry[0]] = self.register_repr(getattr(regs, entry[0]))
@@ -1138,6 +1140,7 @@ class Disasm():
             status += self.match_registers(self.infos.Operand8.Registers, registers_type)
         if  self.infos.Operand9.AccessMode == READ:
             status += self.match_registers(self.infos.Operand9.Registers, registers_type)
+        status += self.match_registers(self.infos.Instruction.ImplicitUsedRegs, registers_type)
         return True if status > 0 else False
 
     def modifies(self, registers):

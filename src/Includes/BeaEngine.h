@@ -144,7 +144,8 @@ typedef struct  {
    EFLStruct Flags;
    UInt64 AddrValue;
    Int64 Immediat;
-   UInt32 ImplicitModifiedRegs;
+   REGISTERTYPE ImplicitModifiedRegs;
+	 REGISTERTYPE ImplicitUsedRegs;
 } INSTRTYPE;
 #pragma pack()
 

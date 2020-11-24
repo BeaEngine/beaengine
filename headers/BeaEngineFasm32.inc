@@ -90,6 +90,7 @@ struct INSTRTYPE
     AddrValue               dq   0
     Immediat                dq   0
     ImplicitModifiedRegs    REGISTERTYPE
+    ImplicitUsedRegs        REGISTERTYPE
 ends
 
 

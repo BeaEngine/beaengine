@@ -131,6 +131,7 @@ uses Windows,SysUtils;
           AddrValue : int64;
           Immediat : int64;
           ImplicitModifiedRegs : TREGISTERTYPE;
+          ImplicitUsedRegs : TREGISTERTYPE;
        end;
 
   type

@@ -95,6 +95,7 @@ namespace Bea
     public UInt64 AddrValue;
     public Int64 Immediat;
     public RegisterType ImplicitModifiedRegs;
+    public RegisterType ImplicitUsedRegs;
   }
 
   [StructLayout(LayoutKind.Sequential, Pack = 1)]

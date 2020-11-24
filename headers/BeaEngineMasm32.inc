@@ -85,6 +85,7 @@ INSTRTYPE STRUCT
     AddrValue               QWORD   0
     Immediat                QWORD   0
     ImplicitModifiedRegs    REGISTERTYPE <0>
+    ImplicitUsedRegs        REGISTERTYPE <0>
 INSTRTYPE ENDS
 
 OPTYPE STRUCT

@@ -307,6 +307,8 @@ struct REGISTERTYPE{
    - SSP (REG2)
    - PKRU (REG3)
    - UIF (REG4) User Interrupt Flag (1 bit in the user interrupt state) is not a MSR but actually, no MSR is used to set/read this flag
+   - MSR IA32_TIME_STAMP_COUNTER (REG5)
+   - MSR IA32_TSC_AUX (REG6)
 - **cr**: *[out]* set of flags to define which CR register is used. For instance, to test if operand 1 uses CR0, test `infos.Operand1.Registers.cr & REG0`.
 - **dr**: *[out]* set of flags to define which DR register is used. For instance, to test if operand 1 uses DR0, test `infos.Operand1.Registers.dr & REG0`.
 - **mem_management**: *[out]* set of flags to define which memory management register is used.
