@@ -97,7 +97,8 @@ struct INSTRTYPE {
   EFLStruct Flags;
   UInt64 AddrValue;
   Int64 Immediat;
-  UInt32 ImplicitModifiedRegs;
+  REGISTERTYPE ImplicitModifiedRegs;
+  REGISTERTYPE ImplicitUsedRegs;
 };
 ~~~~
 
@@ -111,7 +112,7 @@ struct INSTRTYPE {
  - **AddrValue**: *[out]* If the decoded instruction is a branch instruction and if the destination address can be calculated, the result is stored in that field. A "jmp eax" or a "jmp [eax]" will set this field to 0 .
  - **Immediat**: *[out]* If the instruction uses a constant, this immediat value is stored here.
  - **ImplicitModifiedRegs**: *[out]* Some instructions modify registers implicitly. For example, "push 0" modifies the register RSP. In that case, infos.Instruction.ImplicitModifiedRegs.gpr == REG4. Find more useful informations on that field looking at the Structure [REGISTERTYPE](#8-registers-infos)
-
+ - **ImplicitUsedRegs**: *[out]* Some instructions use registers implicitly. Find more useful informations on that field looking at the Structure [REGISTERTYPE](#8-registers-infos)
 
 # 4. Operand infos
 
