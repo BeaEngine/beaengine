@@ -1113,6 +1113,7 @@ class Disasm():
             registers1.xmm & registers2.xmm or \
             registers1.ymm & registers2.ymm or \
             registers1.zmm & registers2.zmm or \
+            registers1.tmm & registers2.tmm or \
             registers1.opmask & registers2.opmask or \
             registers1.special & registers2.special or \
             registers1.mem_management & registers2.mem_management:
