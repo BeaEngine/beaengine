@@ -176,17 +176,17 @@ uses Windows,SysUtils;
      LPDISASM = ^_Disasm;
 
   const
-     ESReg = 1;
-     DSReg = 2;
-     FSReg = 3;
-     GSReg = 4;
-     CSReg = 5;
-     SSReg = 6;
-     InvalidPrefix = 4;
-     SuperfluousPrefix = 2;
-     NotUsedPrefix = 0;
-     MandatoryPrefix = 8;
-     InUsePrefix = 1;
+      ESReg = 0x1;
+      DSReg = 0x2;
+      FSReg = 0x4;
+      GSReg = 0x8;
+      CSReg = 0x10;
+      SSReg = 0x20;
+      InvalidPrefix = 4;
+      SuperfluousPrefix = 2;
+      NotUsedPrefix = 0;
+      MandatoryPrefix = 8;
+      InUsePrefix = 1;
 
 
   type

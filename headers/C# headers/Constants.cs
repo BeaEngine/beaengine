@@ -7,12 +7,12 @@ namespace Bea
 
     public enum SegmentRegister : byte
     {
-      ESReg = 1,
-      DSReg = 2,
-      FSReg = 3,
-      GSReg = 4,
-      CSReg = 5,
-      SSReg = 6
+      ESReg = 0x1,
+      DSReg = 0x2,
+      FSReg = 0x4,
+      GSReg = 0x8,
+      CSReg = 0x10,
+      SSReg = 0x20
     }
 
     public enum PrefixType : byte

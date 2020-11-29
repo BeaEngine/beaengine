@@ -231,12 +231,12 @@ typedef struct _Disasm {
 #define UD_   2
 #define DE__  3
 
-#define ESReg 1
-#define DSReg 2
-#define FSReg 3
-#define GSReg 4
-#define CSReg 5
-#define SSReg 6
+#define ESReg 0x1
+#define DSReg 0x2
+#define FSReg 0x4
+#define GSReg 0x8
+#define CSReg 0x10
+#define SSReg 0x20
 
 #define InvalidPrefix 4
 #define SuperfluousPrefix 2

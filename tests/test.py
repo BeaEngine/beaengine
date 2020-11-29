@@ -2267,7 +2267,7 @@ class TestSuite:
         Buffer = bytes.fromhex('67654c6973743a000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.repr(), 'imul r14, qword ptr [ebx+74h], 0000003Ah')
+        assert_equal(myDisasm.repr(), 'imul r14, qword ptr gs:[ebx+74h], 0000003Ah')
 
         Buffer = bytes.fromhex('660f73fa02')
         myDisasm = Disasm(Buffer)

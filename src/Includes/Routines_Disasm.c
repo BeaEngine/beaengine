@@ -79,11 +79,17 @@ void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
   pMyDisasm->Operand2.AccessMode = 0;
   pMyDisasm->Operand3.AccessMode = 0;
   pMyDisasm->Operand4.AccessMode = 0;
+  pMyDisasm->Operand5.AccessMode = 0;
+  pMyDisasm->Operand6.AccessMode = 0;
+  pMyDisasm->Operand7.AccessMode = 0;
+  pMyDisasm->Operand8.AccessMode = 0;
+  pMyDisasm->Operand9.AccessMode = 0;
   GV.ERROR_OPCODE = UNKNOWN_OPCODE;
 }
 void __bea_callspec__ ResetREX(PDISASM pMyDisasm)
 {
-  if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1)) GV.OperandSize = GV.OriginalOperandSize;
+  if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1))
+    GV.OperandSize = GV.OriginalOperandSize;
   GV.REX.W_ = 0;
   GV.REX.R_ = 0;
   GV.REX.X_ = 0;
@@ -1173,6 +1179,8 @@ size_t __bea_callspec__ printTabulation(PDISASM pMyDisasm, size_t i)
 }
 /* ====================================================================
  *
+ * operand representation
+ *
  * ==================================================================== */
 size_t __bea_callspec__ printArg(OPTYPE* pMyOperand, PDISASM pMyDisasm, size_t i)
 {
@@ -1180,7 +1188,25 @@ size_t __bea_callspec__ printArg(OPTYPE* pMyOperand, PDISASM pMyDisasm, size_t i
   i = strlen((char*) &pMyDisasm->CompleteInstr);
   return i;
 }
+
+/*
+ *
+ * used to resolve 2^n = a
+ *
+ */
+
+UInt32 find_exp(UInt32 a) {
+  UInt32 i = 0;
+  while (a > 0) {
+    a = a >> 1;
+    i++;
+  }
+  return i;
+}
+
 /* ====================================================================
+ *
+ * operand representation
  *
  * ==================================================================== */
 size_t __bea_callspec__ printDecoratedArg(OPTYPE* pMyOperand, PDISASM pMyDisasm, size_t i)
@@ -1188,15 +1214,10 @@ size_t __bea_callspec__ printDecoratedArg(OPTYPE* pMyOperand, PDISASM pMyDisasm,
   if (GV.SYNTAX_ == NasmSyntax) {
     (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, NasmPrefixes[GV.MemDecoration-1]);
     i = strlen((char*) &pMyDisasm->CompleteInstr);
-    if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0)){
+    if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0) || (pMyDisasm->Prefix.GSPrefix == InUsePrefix)){
       (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "[");
       i++;
-      if (GV.SEGMENTREGS != 0) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[pMyOperand->SegmentReg]);
-      }
-      else {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[3]);
-      }
+      (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[find_exp(pMyOperand->SegmentReg)]);
       i = strlen((char*) &pMyDisasm->CompleteInstr);
     }
     else {
@@ -1217,13 +1238,8 @@ size_t __bea_callspec__ printDecoratedArg(OPTYPE* pMyOperand, PDISASM pMyDisasm,
         (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, GoAsmPrefixes[GV.MemDecoration-1]);
         i = strlen((char*) &pMyDisasm->CompleteInstr);
     }
-    if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0)){
-      if (GV.SEGMENTREGS != 0) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[pMyOperand->SegmentReg]);
-      }
-      else {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[3]);
-      }
+    if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0) || (pMyDisasm->Prefix.GSPrefix == InUsePrefix)){
+      (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[find_exp(pMyOperand->SegmentReg)]);
       i = strlen((char*) &pMyDisasm->CompleteInstr);
       (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "[");
       i++;
@@ -1376,131 +1392,4 @@ void __bea_callspec__ BuildCompleteInstruction(PDISASM pMyDisasm)
   i = printArg4(pMyDisasm, i);
 }
 
-/* ====================================================================
- *  @TODO : must be entirely recoded - for now, it is disabled
- * ==================================================================== */
-void __bea_callspec__ BuildCompleteInstructionATSyntax(PDISASM pMyDisasm)
-{
-    size_t i = 0;
-    i = printMnemonic(pMyDisasm, i);
-
-    /* =============== suffix the mnemonic */
-    if (GV.MemDecoration != 0) {
-      if (GV.MemDecoration > 99) GV.MemDecoration -= 100;
-      (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i-1, ATSuffixes[GV.MemDecoration-1]);
-      i = strlen((char*) &pMyDisasm->CompleteInstr);
-    }
-    else {
-      if (pMyDisasm->Operand1.OpType != NO_ARGUMENT) {
-        if (pMyDisasm->Operand1.OpSize == 8) {
-            (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i-1, ATSuffixes[0]);
-        }
-        else if (pMyDisasm->Operand1.OpSize == 16) {
-            (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i-1, ATSuffixes[1]);
-        }
-        else if (pMyDisasm->Operand1.OpSize == 32) {
-            (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i-1, ATSuffixes[2]);
-        }
-        else if (pMyDisasm->Operand1.OpSize == 64) {
-            (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i-1, ATSuffixes[3]);
-        }
-        i = strlen((char*) &pMyDisasm->CompleteInstr);
-      }
-    }
-    if (GV.OPTIONS & Tabulation) {
-      i = printTabulation(pMyDisasm, i);
-    }
-
-    /* =============== if Arg3.Exists, display it */
-    if (pMyDisasm->Operand3.OpMnemonic != 0) {
-      if (pMyDisasm->Operand3.OpType == REGISTER_TYPE) {
-        (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "%");
-        i++;
-      }
-      else if (pMyDisasm->Operand3.OpType == CONSTANT_TYPE) {
-        (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "\x24");
-        i++;
-      }
-      (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, (char*) &pMyDisasm->Operand3.OpMnemonic);
-      i = strlen((char*) &pMyDisasm->CompleteInstr);
-    }
-
-    i = printArgsSeparator(&pMyDisasm->Operand2, &pMyDisasm->Operand3, pMyDisasm, i);
-
-    /* =============== if Arg2 exists, display it */
-    if (*((UInt8*) &pMyDisasm->Operand2.OpMnemonic) != 0) {
-      if (pMyDisasm->Operand2.OpType & CONSTANT_TYPE) {
-        (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "\x24");
-        i++;
-      }
-      else {
-        if (pMyDisasm->Instruction.BranchType != 0) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "*");
-          i++;
-        }
-        if (pMyDisasm->Operand2.OpType & REGISTER_TYPE) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "%");
-          i++;
-        }
-        else if (pMyDisasm->Operand2.OpType & CONSTANT_TYPE) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "\x24");
-          i++;
-        }
-        else {
-          if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0)){
-            (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "%");
-            i++;
-            if (GV.SEGMENTREGS != 0) {
-              (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[pMyDisasm->Operand2.SegmentReg]);
-            }
-            else {
-              (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[3]);
-            }
-            i = strlen((char*) &pMyDisasm->CompleteInstr);
-          }
-        }
-      }
-      (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, (char*) &pMyDisasm->Operand2.OpMnemonic);
-      i = strlen((char*) &pMyDisasm->CompleteInstr);
-    }
-
-    i = printArgsSeparator(&pMyDisasm->Operand1, &pMyDisasm->Operand2, pMyDisasm, i);
-
-    /* =============== if Arg1 exists, display it */
-    if (*((UInt8*) &pMyDisasm->Operand1.OpMnemonic) != 0) {
-      if (pMyDisasm->Operand1.OpType & CONSTANT_TYPE) {
-        (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "\x24");
-        i++;
-      }
-      else {
-        if (pMyDisasm->Instruction.BranchType != 0) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "*");
-          i++;
-        }
-        if (pMyDisasm->Operand1.OpType & REGISTER_TYPE) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "%");
-          i++;
-        }
-        else if (pMyDisasm->Operand1.OpType & CONSTANT_TYPE) {
-          (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "\x24");
-          i++;
-        }
-        else {
-          if ((GV.SEGMENTREGS != 0) || (GV.SEGMENTFS != 0)){
-            (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, "%");
-            i++;
-            if (GV.SEGMENTREGS != 0) {
-                (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[pMyDisasm->Operand1.SegmentReg]);
-            }
-            else {
-                (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, SegmentRegs[3]);
-            }
-            i = strlen((char*) &pMyDisasm->CompleteInstr);
-          }
-        }
-      }
-      (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, (char*) &pMyDisasm->Operand1.OpMnemonic);
-      i = strlen((char*) &pMyDisasm->CompleteInstr);
-    }
-}
 #endif

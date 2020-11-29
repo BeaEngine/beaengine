@@ -134,10 +134,10 @@ ends
 
     ESReg   equ 1
     DSReg   equ 2
-    FSReg   equ 3
-    GSReg   equ 4
-    CSReg   equ 5
-    SSReg   equ 6
+    FSReg   equ 4h
+    GSReg   equ 8h
+    CSReg   equ 10h
+    SSReg   equ 20h
 
 
  ; ********** Prefixes

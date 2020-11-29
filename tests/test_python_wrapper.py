@@ -24,6 +24,10 @@ class TestSuite:
 
     def test(self):
 
+        #
+        # Test json representation
+        #
+
         myDisasm = Disasm(bytes.fromhex('6202054000443322'))
         myDisasm.read()
         assert_equal(myDisasm.repr(), 'vpshufb zmm24, zmm31, zmmword ptr [r11+r14+0880h]')
@@ -41,15 +45,20 @@ class TestSuite:
         assert_equal(json_output['operands'][1]['register']['type'], "zmm")
         assert_equal(json_output.get('operands').get(1).get('type'), "register")
 
+        #
+        # Test used registers
+        #
 
-        # xor rax, rax
         buffer = bytes.fromhex('4831c0')
         myDisasm = Disasm(buffer)
         myDisasm.read()
+        assert_equal(myDisasm.repr(), "xor rax, rax")
         assert_equal(myDisasm.modifies("rax"), True)
         assert_equal(myDisasm.uses("rax gpr"), True)
         assert_equal(myDisasm.uses("gpr"), True)
 
+        # Test used jumps
+        #
         # e901000000    jmp $+1
         # cc            int3
         # 90            nop
@@ -64,3 +73,12 @@ class TestSuite:
         # read next instruction
         myDisasm.read()
         assert_equal(myDisasm.repr(), "nop ")
+
+        #
+        # Test segment registers
+        #
+
+        myDisasm = Disasm(bytes.fromhex('65488B042560000000'))
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), "mov rax, qword ptr gs:[00000060h]")
+        assert_equal(myDisasm.uses("gs"), True)

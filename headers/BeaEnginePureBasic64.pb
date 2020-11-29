@@ -128,12 +128,12 @@ Global MyDisasm._Disasm
 #LowPosition = 0
 #HighPosition = 1
 
-#ESReg = 1
-#DSReg = 2
-#FSReg = 3
-#GSReg = 4
-#CSReg = 5
-#SSReg = 6
+#ESReg = $1
+#DSReg = $2
+#FSReg = $4
+#GSReg = $8
+#CSReg = $10
+#SSReg = $20
 
 ; ********** Prefixes
 #InvalidPrefix      = 4

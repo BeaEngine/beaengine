@@ -1036,6 +1036,10 @@ class Disasm():
                     regs.zmm |= operand.Memory.IndexRegister
                 else:
                     regs.gpr |= operand.Memory.IndexRegister
+
+                if operand.SegmentReg != 0:
+                    regs.type |= SEGMENT_REG
+                    regs.segment |= operand.SegmentReg
         self.merge_registers(regs, self.infos.Instruction.ImplicitUsedRegs)
         for entry in regs._fields_:
             if entry[0] != 'type':
@@ -1050,6 +1054,7 @@ class Disasm():
         json dump of instruction structure
         Example:
             instr = Disasm(bytes.fromhex('0f2e20'))
+            instr.read()
             print(instr.json())
         """
         instr_struct = self.structure()
@@ -1140,6 +1145,7 @@ class Disasm():
         Check used registers
         Example: ucomiss xmm4, dword ptr [rax]
             instr = Disasm(bytes.fromhex('0f2e20'))
+            instr.read()
             if instr.uses("gpr"):
                 print("one or more general purpose registers are used")
         """
@@ -1165,6 +1171,10 @@ class Disasm():
                         regs.zmm |= operand.Memory.IndexRegister
                     else:
                         regs.gpr |= operand.Memory.IndexRegister
+
+                    if operand.SegmentReg != 0:
+                        regs.type |= SEGMENT_REG
+                        regs.segment |= operand.SegmentReg
                     status += self.match_registers(regs, registers_type)
 
         status += self.match_registers(self.infos.Instruction.ImplicitUsedRegs, registers_type)
@@ -1175,6 +1185,7 @@ class Disasm():
         Check modified registers
         Example: ucomiss xmm4, dword ptr [rax]
             instr = Disasm(bytes.fromhex('0f2e20'))
+            instr.read()
             if instr.modifies("xmm4"):
                 print("xmm4 register is modified")
         """
@@ -1233,6 +1244,7 @@ class Disasm():
         Disassemble next instruction
         Example:
             instr = Disasm(b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00')
+            instr.read()
             print(instr.repr())
 
             instr.next()
@@ -1245,6 +1257,7 @@ class Disasm():
         Disassemble next instruction
         Example:
             instr = Disasm(b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00')
+            instr.read()
             print(instr.repr())
 
             instr.read()
@@ -1269,6 +1282,7 @@ class Disasm():
         Check if it is a jump
         Example:
             instr = Disasm(bytes.fromhex('e9010000CC90'))
+            instr.read()
             while not intr.error():
                 if instr.is_jump():
                     instr.follow()
@@ -1286,6 +1300,7 @@ class Disasm():
         Check if it is a call
         Example:
             instr = Disasm(bytes.fromhex('e801000000CC90'))
+            instr.read()
             while not intr.error():
                 if instr.is_call():
                     instr.follow()
@@ -1302,6 +1317,7 @@ class Disasm():
         """
         Example:
             instr = Disasm(bytes.fromhex('e90000000090'))
+            instr.read()
             while not intr.error():
                 if instr.is_jump():
                     instr.follow()
@@ -1317,9 +1333,8 @@ class Disasm():
         Complete instruction representation for quick analysis
         Example:
             instr = Disasm(b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00')
-            while not intr.error():
+            while instr.read() > 0:
                 print(instr.repr())
-                instr.next()
         """
         return f"{self.infos.repr.decode()}"
 
