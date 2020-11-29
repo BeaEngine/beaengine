@@ -30,7 +30,7 @@ class TestSuite:
         Buffer = bytes.fromhex('{}5cc0'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         length = myDisasm.read()
-        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5c)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tdpbf16ps ')

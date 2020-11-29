@@ -39,7 +39,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand1.OpSize, 512)
         assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
         assert_equal(myDisasm.repr(), 'ldtilecfg  [r8]')
-        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.length, len(Buffer))
 
         # VEX.128.66.0F38.W0 49 !(11):000:bbb
         # STTILECFG m512
@@ -49,7 +49,7 @@ class TestSuite:
         Buffer = bytes.fromhex('{}4900'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         length = myDisasm.read()
-        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x49)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
@@ -66,7 +66,7 @@ class TestSuite:
         Buffer = bytes.fromhex('{}49c0'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         length = myDisasm.read()
-        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x49)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tilerelease ')
@@ -81,7 +81,7 @@ class TestSuite:
         Buffer = bytes.fromhex('{}49c0'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         length = myDisasm.read()
-        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x49)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tilezero ')

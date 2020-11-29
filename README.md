@@ -28,8 +28,7 @@ See the COPYING and COPYING.LESSER files for more details.
 
 from BeaEnginePython import *
 
-buffer = bytes.fromhex('6202054000443322')
-instr = Disasm(buffer)
+instr = Disasm(bytes.fromhex('6202054000443322'))
 instr.read()
 print(instr.repr())
 ```
@@ -77,13 +76,11 @@ add ah, 0Ch         rax register is modified
 
 from BeaEnginePython import *
 
-buffer = bytes.fromhex('e90000000090e901000000cc90')
-instr = Disasm(buffer)
+instr = Disasm(bytes.fromhex('e90000000090e901000000cc90'))
 while instr.read() > 0:
   print(instr.repr())
   if instr.is_jump():
     instr.follow()
-
 ```
 
 #### 1.4 Extract complete structure

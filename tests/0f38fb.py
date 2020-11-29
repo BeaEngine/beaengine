@@ -28,7 +28,7 @@ class TestSuite:
         Buffer = bytes.fromhex('f30f38fbc0')
         myDisasm = Disasm(Buffer)
         length = myDisasm.read()
-        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38fb)
         assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'encodekey256 ')

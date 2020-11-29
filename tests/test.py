@@ -27,7 +27,7 @@ class TestSuite:
         Buffer = bytes.fromhex('810011223344')
         myDisasm = Disasm(Buffer)
         length = myDisasm.read()
-        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x81)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'add ')
         assert_equal(myDisasm.repr(), 'add dword ptr [rax], 44332211h')

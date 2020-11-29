@@ -500,6 +500,8 @@ SuffixedNumeral   = 0x00000000
 
 ShowSegmentRegs   = 0x01000000
 
+MAX_OPERANDS = 9
+
 REGSTYPE = {
     # es ds fs gs cs ss                                   Registers.segment
     'es': {'type': 'segment','reg': REG0,'size': 16},
@@ -508,12 +510,15 @@ REGSTYPE = {
     'gs': {'type': 'segment','reg': REG3,'size': 16},
     'cs': {'type': 'segment','reg': REG4,'size': 16},
     'ss': {'type': 'segment','reg': REG5,'size': 16},
+    'seg': {'type': 'segment','reg': REG0 | REG1 | REG2 | REG3 | REG4 | \
+        REG5,'size': 16},
 
     # bnd0-bnd3                                           Registers.mpx
     'bnd0': {'type': 'mpx','reg': REG0,'size': 128},
     'bnd1': {'type': 'mpx','reg': REG1,'size': 128},
     'bnd2': {'type': 'mpx','reg': REG2,'size': 128},
     'bnd3': {'type': 'mpx','reg': REG3,'size': 128},
+    'bnd': {'type': 'mpx','reg': REG0 | REG1 | REG2 | REG3,'size': 128},
 
     # st0-st7                                             Registers.fpu
     'st0': {'type': 'fpu','reg': REG0,'size': 80},
@@ -524,6 +529,8 @@ REGSTYPE = {
     'st5': {'type': 'fpu','reg': REG5,'size': 80},
     'st6': {'type': 'fpu','reg': REG6,'size': 80},
     'st7': {'type': 'fpu','reg': REG7,'size': 80},
+    'fpu': {'type': 'fpu','reg': REG0 | REG1 | REG2 | \
+        REG3 | REG4 | REG5 | REG6 | REG7,'size': 80},
 
     # dr0-dr15                                            Registers.dr
     'dr0': {'type': 'dr','reg': REG0,'size': 32},
@@ -542,6 +549,9 @@ REGSTYPE = {
     'dr13': {'type': 'dr','reg': REG13,'size': 32},
     'dr14': {'type': 'dr','reg': REG14,'size': 32},
     'dr15': {'type': 'dr','reg': REG15,'size': 32},
+    'dr': {'type': 'dr','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |    \
+        REG6 | REG7 | REG8 | REG9 | REG10 | REG11 | REG12 | REG13 | REG14 | \
+        REG15,'size': 32},
 
     # cr0-cr15                                            Registers.cr
     'cr0': {'type': 'cr','reg': REG0,'size': 32},
@@ -560,8 +570,14 @@ REGSTYPE = {
     'cr13': {'type': 'cr','reg': REG13,'size': 32},
     'cr14': {'type': 'cr','reg': REG14,'size': 32},
     'cr15': {'type': 'cr','reg': REG15,'size': 32},
+    'cr': {'type': 'dr','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |    \
+        REG6 | REG7 | REG8 | REG9 | REG10 | REG11 | REG12 | REG13 | REG14 | \
+        REG15,'size': 32},
 
     # rax rcx rdx rbx rsp rbp rsi rdi r8-r15              Registers.gpr
+    'gpr': {'type': 'gpr','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |  \
+        REG6 | REG7 | REG8 | REG9 | REG10 | REG11 | REG12 | REG13 | REG14 | \
+        REG15,'size': 64},
     'rax': {'type': 'gpr','reg': REG0,'size': 64},
     'rcx': {'type': 'gpr','reg': REG1,'size': 64},
     'rdx': {'type': 'gpr','reg': REG2,'size': 64},
@@ -646,6 +662,8 @@ REGSTYPE = {
     'mm5': {'type': 'mmx','reg': REG5,'size': 64},
     'mm6': {'type': 'mmx','reg': REG6,'size': 64},
     'mm7': {'type': 'mmx','reg': REG7,'size': 64},
+    'mmx': {'type': 'mmx','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |  \
+        REG6 | REG7,'size': 64},
 
     # xmm0-xmm31                                          Registers.xmm
     'xmm0': {'type': 'xmm','reg': REG0,'size': 128},
@@ -680,6 +698,11 @@ REGSTYPE = {
     'xmm29': {'type': 'xmm','reg': REG29,'size': 128},
     'xmm30': {'type': 'xmm','reg': REG30,'size': 128},
     'xmm31': {'type': 'xmm','reg': REG31,'size': 128},
+    'xmm': {'type': 'xmm','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |  \
+        REG6 | REG7 | REG8 | REG9 | REG10 | REG11 | REG12 | REG13 | REG14 | \
+        REG15 | REG16 | REG17 | REG18 | REG19 | REG20 | REG21 | REG22 |     \
+        REG23 | REG24 | REG25 | REG26 | REG27 | REG28 | REG29 | REG30 |     \
+        REG31,'size': 128},
 
     # ymm0-ymm31                                          Registers.ymm
     'ymm0': {'type': 'ymm','reg': REG0,'size': 256},
@@ -714,7 +737,11 @@ REGSTYPE = {
     'ymm29': {'type': 'ymm','reg': REG29,'size': 256},
     'ymm30': {'type': 'ymm','reg': REG30,'size': 256},
     'ymm31': {'type': 'ymm','reg': REG31,'size': 256},
-
+    'ymm': {'type': 'ymm','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |  \
+        REG6 | REG7 | REG8 | REG9 | REG10 | REG11 | REG12 | REG13 | REG14 | \
+        REG15 | REG16 | REG17 | REG18 | REG19 | REG20 | REG21 | REG22 |     \
+        REG23 | REG24 | REG25 | REG26 | REG27 | REG28 | REG29 | REG30 |     \
+        REG31,'size': 256},
     # zmm0-zmm31                                          Registers.zmm
     'zmm0': {'type': 'zmm','reg': REG0,'size': 512},
     'zmm1': {'type': 'zmm','reg': REG1,'size': 512},
@@ -748,7 +775,11 @@ REGSTYPE = {
     'zmm29': {'type': 'zmm','reg': REG29,'size': 512},
     'zmm30': {'type': 'zmm','reg': REG30,'size': 512},
     'zmm31': {'type': 'zmm','reg': REG31,'size': 512},
-
+    'zmm': {'type': 'zmm','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |  \
+        REG6 | REG7 | REG8 | REG9 | REG10 | REG11 | REG12 | REG13 | REG14 | \
+        REG15 | REG16 | REG17 | REG18 | REG19 | REG20 | REG21 | REG22 |     \
+        REG23 | REG24 | REG25 | REG26 | REG27 | REG28 | REG29 | REG30 |     \
+        REG31,'size': 512},
     # k0-k7                                               Registers.opmask
     'k0': {'type': 'opmask','reg': REG0,'size': 16},
     'k1': {'type': 'opmask','reg': REG1,'size': 16},
@@ -758,7 +789,8 @@ REGSTYPE = {
     'k5': {'type': 'opmask','reg': REG5,'size': 16},
     'k6': {'type': 'opmask','reg': REG6,'size': 16},
     'k7': {'type': 'opmask','reg': REG7,'size': 16},
-
+    'opmask': {'type': 'opmask','reg': REG0 | REG1 | REG2 | REG3 | REG4 | \
+        REG5 |  REG6 | REG7,'size': 16},
     # tmm0-tmm7                                          Registers.tmm
     'tmm0': {'type': 'tmm','reg': REG0,'size': 8192},
     'tmm1': {'type': 'tmm','reg': REG1,'size': 8192},
@@ -768,7 +800,8 @@ REGSTYPE = {
     'tmm5': {'type': 'tmm','reg': REG5,'size': 8192},
     'tmm6': {'type': 'tmm','reg': REG6,'size': 8192},
     'tmm7': {'type': 'tmm','reg': REG7,'size': 8192},
-
+    'tmm': {'type': 'tmm','reg': REG0 | REG1 | REG2 | REG3 | REG4 | REG5 |  \
+        REG6 | REG7,'size': 8192},
     # EFLAGS  MXCSR  SSP  PKRU                            Registers.special
     'rflags': {'type': 'special','reg': REG0,'size': 64},
     'eflags': {'type': 'special','reg': REG0,'size': 32},
@@ -776,7 +809,8 @@ REGSTYPE = {
     'ssp': {'type': 'special','reg': REG2,'size': 64},
     'pkru': {'type': 'special','reg': REG3,'size': 32},
     'uif': {'type': 'special','reg': REG4,'size': 1},
-
+    'ia32_time_stamp_counter': {'type': 'special','reg': REG5,'size': 64},
+    'ia32_tsc_aux': {'type': 'special','reg': REG6,'size': 64},
 
     # GDTR LDTR IDTR TR                                   Registers.mem_management
     'gdtr': {'type': 'mem_management','reg': REG0,'size': 48},
@@ -937,11 +971,10 @@ class REX:
 class Disasm():
     def __init__(self, buffer, offset=0, virtualAddr=0):
         """
-        Init Disasm object
+        Initialize Disasm object
         Example :
-            # instantiate BeaEngine on buffer
-            buffer = b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
-            disasm = Disasm(buffer)
+            # instantiate BeaEngine on a buffer
+            disasm = Disasm(b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00')
         """
         self.buffer = buffer
         self.target = create_string_buffer(buffer,len(buffer))
@@ -962,27 +995,15 @@ class Disasm():
         return "+".join(f'REG{b}' for b in regs)
 
     def merge_registers(self, dest, source):
-        dest.type |= source.type
-        dest.gpr |= source.gpr
-        dest.mmx |= source.mmx
-        dest.xmm |= source.xmm
-        dest.ymm |= source.ymm
-        dest.zmm |= source.zmm
-        dest.special |= source.special
-        dest.cr |= source.cr
-        dest.dr |= source.dr
-        dest.mem_management |= source.mem_management
-        dest.mpx |= source.mpx
-        dest.opmask |= source.opmask
-        dest.segment |= source.segment
-        dest.fpu |= source.fpu
-        dest.tmm |= source.tmm
 
+        for entry in source._fields_:
+            value = getattr(dest, entry[0]) | getattr(source, entry[0])
+            setattr(dest, entry[0], value)
 
     def get_modified_regs(self):
         regs = REGISTERTYPE()
         result = {}
-        for i in range(1,10):
+        for i in range(1,MAX_OPERANDS + 1):
             operand = getattr(self.infos, f'Operand{i}')
             if operand.OpType == REGISTER_TYPE and operand.AccessMode == WRITE:
                 self.merge_registers(regs, operand.Registers)
@@ -997,7 +1018,7 @@ class Disasm():
     def get_read_regs(self):
         regs = REGISTERTYPE()
         result = {}
-        for i in range(1,10):
+        for i in range(1,MAX_OPERANDS + 1):
             operand = getattr(self.infos, f'Operand{i}')
             if operand.OpType == REGISTER_TYPE and operand.AccessMode == READ:
                 self.merge_registers(regs, operand.Registers)
@@ -1026,7 +1047,10 @@ class Disasm():
 
     def json(self):
         """
-            json dump of instruction structure
+        json dump of instruction structure
+        Example:
+            instr = Disasm(bytes.fromhex('0f2e20'))
+            print(instr.json())
         """
         instr_struct = self.structure()
         return json.dumps(instr_struct, indent=4)
@@ -1063,7 +1087,7 @@ class Disasm():
             'nt': instrRflags.get(rflags.NT_),
             'rf': instrRflags.get(rflags.RF_),
         }
-        for i in range(1,10):
+        for i in range(1,MAX_OPERANDS + 1):
             operand = getattr(self.infos, f'Operand{i}')
             if operand.OpType != NO_ARGUMENT:
                 instr['operands'][i] = {
@@ -1103,68 +1127,64 @@ class Disasm():
 
     def match_registers(self, registers1, registers2):
         status = 0
-        if registers1.gpr & registers2.gpr or \
-            registers1.segment & registers2.segment or \
-            registers1.mpx & registers2.mpx or \
-            registers1.fpu & registers2.fpu or \
-            registers1.dr & registers2.dr or \
-            registers1.cr & registers2.cr or \
-            registers1.mmx & registers2.mmx or \
-            registers1.xmm & registers2.xmm or \
-            registers1.ymm & registers2.ymm or \
-            registers1.zmm & registers2.zmm or \
-            registers1.tmm & registers2.tmm or \
-            registers1.opmask & registers2.opmask or \
-            registers1.special & registers2.special or \
-            registers1.mem_management & registers2.mem_management:
-            status = 1
+
+        for entry in registers1._fields_:
+            if getattr(registers1, entry[0]) & getattr(registers2, entry[0]):
+                status = 1
+                break
+
         return status
 
     def uses(self, registers):
+        """
+        Check used registers
+        Example: ucomiss xmm4, dword ptr [rax]
+            instr = Disasm(bytes.fromhex('0f2e20'))
+            if instr.uses("gpr"):
+                print("one or more general purpose registers are used")
+        """
         status = 0
         registers_type = self.analyze(registers)
-        if  self.infos.Operand1.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand1.Registers, registers_type)
-        if  self.infos.Operand2.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand2.Registers, registers_type)
-        if  self.infos.Operand3.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand3.Registers, registers_type)
-        if  self.infos.Operand4.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand4.Registers, registers_type)
-        if  self.infos.Operand5.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand5.Registers, registers_type)
-        if  self.infos.Operand6.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand6.Registers, registers_type)
-        if  self.infos.Operand7.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand7.Registers, registers_type)
-        if  self.infos.Operand8.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand8.Registers, registers_type)
-        if  self.infos.Operand9.AccessMode == READ:
-            status += self.match_registers(self.infos.Operand9.Registers, registers_type)
+        for i in range(1,MAX_OPERANDS + 1):
+            operand = getattr(self.infos, f'Operand{i}')
+            if operand.AccessMode == READ:
+                if operand.OpType == REGISTER_TYPE:
+                    status += self.match_registers(operand.Registers, registers_type)
+                elif operand.OpType == MEMORY_TYPE:
+                    regs = REGISTERTYPE()
+                    regs.type |= GENERAL_REG
+                    regs.gpr |= operand.Memory.BaseRegister
+                    if self.infos.Reserved_.VSIB_ == SSE_REG:
+                        regs.type |= SSE_REG
+                        regs.xmm |= operand.Memory.IndexRegister
+                    elif self.infos.Reserved_.VSIB_ == AVX_REG:
+                        regs.type |= AVX_REG
+                        regs.ymm |= operand.Memory.IndexRegister
+                    elif self.infos.Reserved_.VSIB_ == AVX512_REG:
+                        regs.type |= AVX512_REG
+                        regs.zmm |= operand.Memory.IndexRegister
+                    else:
+                        regs.gpr |= operand.Memory.IndexRegister
+                    status += self.match_registers(regs, registers_type)
+
         status += self.match_registers(self.infos.Instruction.ImplicitUsedRegs, registers_type)
         return True if status > 0 else False
 
     def modifies(self, registers):
+        """
+        Check modified registers
+        Example: ucomiss xmm4, dword ptr [rax]
+            instr = Disasm(bytes.fromhex('0f2e20'))
+            if instr.modifies("xmm4"):
+                print("xmm4 register is modified")
+        """
         status = 0
         registers_type = self.analyze(registers)
-        if  self.infos.Operand1.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand1.Registers, registers_type)
-        if  self.infos.Operand2.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand2.Registers, registers_type)
-        if  self.infos.Operand3.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand3.Registers, registers_type)
-        if  self.infos.Operand4.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand4.Registers, registers_type)
-        if  self.infos.Operand5.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand5.Registers, registers_type)
-        if  self.infos.Operand6.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand6.Registers, registers_type)
-        if  self.infos.Operand7.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand7.Registers, registers_type)
-        if  self.infos.Operand8.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand8.Registers, registers_type)
-        if  self.infos.Operand9.AccessMode == WRITE:
-            status += self.match_registers(self.infos.Operand9.Registers, registers_type)
+
+        for i in range(1,MAX_OPERANDS + 1):
+            operand = getattr(self.infos, f'Operand{i}')
+            if operand.AccessMode == WRITE:
+                status += self.match_registers(operand.Registers, registers_type)
         status += self.match_registers(self.infos.Instruction.ImplicitModifiedRegs, registers_type)
 
         return True if status > 0 else False
@@ -1200,21 +1220,35 @@ class Disasm():
         """
         if self.infos.Error < 0:
             self.infos.offset += 1
-            self.infos.VirtualAddr += 1
+            if self.infos.VirtualAddr != 0:
+                self.infos.VirtualAddr += 1
         else:
             self.infos.offset = self.infos.offset + self.length
             if self.infos.VirtualAddr != 0:
                 self.infos.VirtualAddr= self.infos.VirtualAddr+ self.length
         self.length = 0
 
+    def next(self):
+        """
+        Disassemble next instruction
+        Example:
+            instr = Disasm(b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00')
+            print(instr.repr())
+
+            instr.next()
+            print(instr.repr())
+        """
+        return self.read()
+
     def read(self):
         """
-        Disassembler routine
+        Disassemble next instruction
         Example:
-            buffer = b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
-            disasm = Disasm(buffer2)
-            for i in range(4):
-                disasm.read()
+            instr = Disasm(b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00')
+            print(instr.repr())
+
+            instr.read()
+            print(instr.repr())
         """
         self.getNextOffset()
         if self.infos.offset < self.end_block:
@@ -1227,14 +1261,19 @@ class Disasm():
 
         return self.length
 
+    def error(self):
+        return self.infos.Error
+
     def is_jump(self):
         """
+        Check if it is a jump
         Example:
-            buffer = bytes.fromhex('e900000090')
-            instr = Disasm(buffer)
-            while intr.read() > 0:
+            instr = Disasm(bytes.fromhex('e9010000CC90'))
+            while not intr.error():
                 if instr.is_jump():
                     instr.follow()
+                else
+                    instr.next()
         """
         if self.infos.Instruction.BranchType == JmpType and \
             self.infos.Instruction.AddrValue != 0:
@@ -1244,12 +1283,14 @@ class Disasm():
 
     def is_call(self):
         """
+        Check if it is a call
         Example:
-            buffer = bytes.fromhex('e80000000090')
-            instr = Disasm(buffer)
-            while intr.read() > 0:
+            instr = Disasm(bytes.fromhex('e801000000CC90'))
+            while not intr.error():
                 if instr.is_call():
                     instr.follow()
+                else
+                    instr.next()
         """
         if self.infos.Instruction.BranchType == CallType and \
             self.infos.Instruction.AddrValue != 0:
@@ -1260,11 +1301,12 @@ class Disasm():
     def follow(self):
         """
         Example:
-            buffer = bytes.fromhex('e90000000090')
-            instr = Disasm(buffer)
-            while intr.read() > 0:
+            instr = Disasm(bytes.fromhex('e90000000090'))
+            while not intr.error():
                 if instr.is_jump():
                     instr.follow()
+                else
+                    instr.next()
         """
         if self.infos.Instruction.AddrValue != 0:
             self.infos.offset = self.infos.Instruction.AddrValue
@@ -1274,11 +1316,10 @@ class Disasm():
         """
         Complete instruction representation for quick analysis
         Example:
-            buffer = b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00'
-            disasm = Disasm(buffer2)
-            for i in range(4):
-                disasm.read()
-                print(disasm.repr())
+            instr = Disasm(b'\x90\x90\x6a\x00\xe8\xa5\xc7\x02\x00')
+            while not intr.error():
+                print(instr.repr())
+                instr.next()
         """
         return f"{self.infos.repr.decode()}"
 
