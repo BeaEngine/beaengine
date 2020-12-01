@@ -22,9 +22,7 @@
 void __bea_callspec__ PrefLock(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.LockPrefix = InvalidPrefix;
     GV.EIP_++;
@@ -41,9 +39,7 @@ void __bea_callspec__ PrefLock(PDISASM pMyDisasm)
 void __bea_callspec__ PrefREPNE(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.RepnePrefix = SuperfluousPrefix;
     GV.EIP_++;
@@ -77,9 +73,7 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
     pMyDisasm->Prefix.RepPrefix = SuperfluousPrefix;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     GV.EIP_++;
     pMyDisasm->Prefix.Number++;
@@ -111,9 +105,7 @@ void __bea_callspec__ PrefREPE(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGCS(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.CSPrefix = InUsePrefix;
     GV.EIP_++;
@@ -129,9 +121,7 @@ void __bea_callspec__ PrefSEGCS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGDS(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.DSPrefix = InUsePrefix;
     GV.EIP_++;
@@ -147,9 +137,7 @@ void __bea_callspec__ PrefSEGDS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGES(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.ESPrefix = InUsePrefix;
     GV.EIP_++;
@@ -165,9 +153,7 @@ void __bea_callspec__ PrefSEGES(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGFS(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.FSPrefix = InUsePrefix;
     GV.EIP_++;
@@ -184,9 +170,7 @@ void __bea_callspec__ PrefSEGFS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGGS(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.GSPrefix = InUsePrefix;
     GV.EIP_++;
@@ -203,9 +187,7 @@ void __bea_callspec__ PrefSEGGS(PDISASM pMyDisasm)
 void __bea_callspec__ PrefSEGSS(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     pMyDisasm->Prefix.SSPrefix = InUsePrefix;
     GV.EIP_++;
@@ -222,9 +204,7 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
     pMyDisasm->Prefix.OperandSize = InUsePrefix;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     GV.EIP_++;
     pMyDisasm->Prefix.Number++;
@@ -269,9 +249,7 @@ void __bea_callspec__ PrefAdSize(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
     pMyDisasm->Prefix.AddressSize = InUsePrefix;
-    if (GV.VEX.state == InUsePrefix) {
-      GV.ERROR_OPCODE = UD_;
-    }
+    if (GV.VEX.state == InUsePrefix) GV.ERROR_OPCODE = UD_;
     ResetREX(pMyDisasm);
     GV.EIP_++;
     pMyDisasm->Prefix.Number++;

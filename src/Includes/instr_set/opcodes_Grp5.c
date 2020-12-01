@@ -23,7 +23,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (GV.REGOPCODE == 0) {
+    switch (GV.REGOPCODE) {
+    case 0:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
             pMyDisasm->Prefix.LockPrefix = InUsePrefix;
         }
@@ -36,8 +37,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             GV.ERROR_OPCODE = UD_;
         }
         FillFlags(pMyDisasm, 40);
-    }
-    else if (GV.REGOPCODE == 1) {
+    break;
+    case 1:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
             pMyDisasm->Prefix.LockPrefix = InUsePrefix;
         }
@@ -50,8 +51,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             GV.ERROR_OPCODE = UD_;
         }
         FillFlags(pMyDisasm, 30);
-    }
-    else if (GV.REGOPCODE == 2) {
+    break;
+    case 2:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         pMyDisasm->Instruction.BranchType = CallType;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -73,8 +74,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
-    }
-    else if (GV.REGOPCODE == 3) {
+    break;
+    case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         pMyDisasm->Instruction.BranchType = CallType;
         if (GV.SYNTAX_ == ATSyntax) {
@@ -92,8 +93,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
-    }
-    else if (GV.REGOPCODE == 4) {
+    break;
+    case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         pMyDisasm->Instruction.BranchType = JmpType;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -113,8 +114,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         }
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-    }
-    else if (GV.REGOPCODE == 5) {
+    break;
+    case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+CONTROL_TRANSFER;
         pMyDisasm->Instruction.BranchType = JmpType;
         if (GV.SYNTAX_ == ATSyntax) {
@@ -130,8 +131,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         GV.MemDecoration = Arg1fword;
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-    }
-    else if (GV.REGOPCODE == 6) {
+    break;
+    case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "push ");
@@ -155,8 +156,8 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         pMyDisasm->Operand1.Memory.BaseRegister = REG4;
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
-    }
-    else {
+    break;
+    default:
         FailDecode(pMyDisasm);
     }
 }

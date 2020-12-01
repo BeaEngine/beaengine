@@ -24,62 +24,63 @@ void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
     if (!Security(2, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EbIb(pMyDisasm);
-    if (GV.REGOPCODE == 0) {
+    switch(GV.REGOPCODE) {
+    case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rol ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 1) {
+        break;
+    case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ror ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 2) {
+    break;
+    case 2:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcl ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 3) {
+    break;
+    case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcr ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 4) {
+    break;
+    case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shl ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 5) {
+    break;
+    case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 6) {
+    break;
+    case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sal ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 7) {
+    break;
+    case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sar ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
+      }
 }
 
 
@@ -91,62 +92,63 @@ void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
     if (!Security(2, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
-    if (GV.REGOPCODE == 0) {
+    switch(GV.REGOPCODE) {
+    case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rol ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 1) {
+    break;
+    case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ror ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 2) {
+    break;
+    case 2:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcl ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 3) {
+    break;
+    case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcr ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 4) {
+    break;
+    case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shl ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 5) {
+    break;
+    case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 6) {
+    break;
+    case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sal ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 7) {
+    break;
+    case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sar ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
+      }
 }
 
 /* ====================================================================
@@ -166,56 +168,57 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
     pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
     pMyDisasm->Operand2.OpSize = 8;
     pMyDisasm->Instruction.Immediat = 1;
-    if (GV.REGOPCODE == 0) {
+    switch(GV.REGOPCODE) {
+    case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rol ");
         #endif
         FillFlags(pMyDisasm, 87);
-    }
-    else if (GV.REGOPCODE == 1) {
+    break;
+    case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ror ");
         #endif
         FillFlags(pMyDisasm, 87);
-    }
-    else if (GV.REGOPCODE == 2) {
+    break;
+    case 2:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcl ");
         #endif
         FillFlags(pMyDisasm, 80);
-    }
-    else if (GV.REGOPCODE == 3) {
+    break;
+    case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcr ");
         #endif
         FillFlags(pMyDisasm, 80);
-    }
-    else if (GV.REGOPCODE == 4) {
+    break;
+    case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shl ");
         #endif
         FillFlags(pMyDisasm, 91);
-    }
-    else if (GV.REGOPCODE == 5) {
+    break;
+    case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr ");
         #endif
         FillFlags(pMyDisasm, 91);
-    }
-    else if (GV.REGOPCODE == 6) {
+    break;
+    case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sal ");
         #endif
         FillFlags(pMyDisasm, 91);
-    }
-    else if (GV.REGOPCODE == 7) {
+    break;
+    case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sar ");
@@ -249,56 +252,57 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
     pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
     pMyDisasm->Operand2.OpSize = 8;
     pMyDisasm->Instruction.Immediat = 1;
-    if (GV.REGOPCODE == 0) {
+    switch(GV.REGOPCODE) {
+    case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rol ");
         #endif
         FillFlags(pMyDisasm, 87);
-    }
-    else if (GV.REGOPCODE == 1) {
+    break;
+    case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ror ");
         #endif
         FillFlags(pMyDisasm, 87);
-    }
-    else if (GV.REGOPCODE == 2) {
+    break;
+    case 2:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcl ");
         #endif
         FillFlags(pMyDisasm, 80);
-    }
-    else if (GV.REGOPCODE == 3) {
+    break;
+    case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcr ");
         #endif
         FillFlags(pMyDisasm, 80);
-    }
-    else if (GV.REGOPCODE == 4) {
+    break;
+    case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shl ");
         #endif
         FillFlags(pMyDisasm, 91);
-    }
-    else if (GV.REGOPCODE == 5) {
+    break;
+    case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr ");
         #endif
         FillFlags(pMyDisasm, 91);
-    }
-    else if (GV.REGOPCODE == 6) {
+    break;
+    case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sal ");
         #endif
         FillFlags(pMyDisasm, 91);
-    }
-    else if (GV.REGOPCODE == 7) {
+    break;
+    case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sar ");
@@ -327,56 +331,57 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
     pMyDisasm->Operand2.Registers.type = GENERAL_REG;
     pMyDisasm->Operand2.Registers.gpr = REG1;
     pMyDisasm->Operand2.OpSize = 8;
-    if (GV.REGOPCODE == 0) {
+    switch(GV.REGOPCODE) {
+    case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rol ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 1) {
+    break;
+    case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ror ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 2) {
+    break;
+    case 2:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcl ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 3) {
+    break;
+    case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcr ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 4) {
+    break;
+    case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shl ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 5) {
+    break;
+    case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 6) {
+    break;
+    case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sal ");
         #endif
-        FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 7) {
+      FillFlags(pMyDisasm, 92);
+    break;
+    case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sar ");
@@ -411,56 +416,57 @@ void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
     pMyDisasm->Operand2.Registers.type = GENERAL_REG;
     pMyDisasm->Operand2.Registers.gpr = REG1;
     pMyDisasm->Operand2.OpSize = 8;
-    if (GV.REGOPCODE == 0) {
+    switch(GV.REGOPCODE) {
+    case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rol ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 1) {
+    break;
+    case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ror ");
         #endif
         FillFlags(pMyDisasm, 88);
-    }
-    else if (GV.REGOPCODE == 2) {
+    break;
+    case 2:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcl ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 3) {
+    break;
+    case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rcr ");
         #endif
         FillFlags(pMyDisasm, 81);
-    }
-    else if (GV.REGOPCODE == 4) {
+    break;
+    case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shl ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 5) {
+    break;
+    case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 6) {
+    break;
+    case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sal ");
         #endif
         FillFlags(pMyDisasm, 92);
-    }
-    else if (GV.REGOPCODE == 7) {
+    break;
+    case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sar ");

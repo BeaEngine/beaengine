@@ -248,9 +248,7 @@ void __bea_callspec__ add_EbGb(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ add_EvGv(PDISASM pMyDisasm)
 {
-  if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
-    pMyDisasm->Prefix.LockPrefix = InUsePrefix;
-  }
+  if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) pMyDisasm->Prefix.LockPrefix = InUsePrefix;
   pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
   #ifndef BEA_LIGHT_DISASSEMBLY
      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "add ");
@@ -27160,97 +27158,98 @@ void __bea_callspec__ D8_(PDISASM pMyDisasm)
     if (MyMODRM <= 0xbf) {
         GV.MemDecoration = Arg2dword;
         GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-        if (GV.REGOPCODE == 0) {
+        switch (GV.REGOPCODE) {
+          case 0:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fadd ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 1) {
+          break;
+          case 1:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fmul ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 2) {
+          break;
+          case 2:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fcom ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
             pMyDisasm->Operand1.AccessMode = READ;
-        }
-        else if (GV.REGOPCODE == 3) {
+          break;
+          case 3:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fcomp ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
             pMyDisasm->Operand1.AccessMode = READ;
-        }
-        else if (GV.REGOPCODE == 4) {
+          break;
+          case 4:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsub ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 5) {
+          break;
+          case 5:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsubr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 6) {
+          break;
+          case 6:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fdiv ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 7) {
+          break;
+          case 7:
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fdivr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else {
+          break;
+          default:
             FailDecode(pMyDisasm);
         }
     }
@@ -27272,15 +27271,15 @@ void __bea_callspec__ D8_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xd0) {
@@ -27300,15 +27299,15 @@ void __bea_callspec__ D8_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xe0) {
@@ -27328,15 +27327,15 @@ void __bea_callspec__ D8_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xf0) {
@@ -27356,15 +27355,15 @@ void __bea_callspec__ D8_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
     }
@@ -27389,7 +27388,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
     if (MyMODRM <= 0xbf) {
 
         GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-        if (GV.REGOPCODE == 0) {
+        switch (GV.REGOPCODE) {
+case 0:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -27397,11 +27397,11 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fld ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 2) {
+break;
+case 2:
             GV.MemDecoration = Arg1dword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -27409,11 +27409,11 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fst ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 3) {
+break;
+case 3:
             GV.MemDecoration = Arg1dword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -27421,11 +27421,11 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fstp ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 4) {
+break;
+case 4:
             GV.MemDecoration = Arg2multibytes;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+FPUCONTROL;
@@ -27433,11 +27433,11 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldenv ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 5) {
+break;
+case 5:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+FPUCONTROL;
@@ -27445,11 +27445,11 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldcw ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 6) {
+break;
+case 6:
             GV.MemDecoration = Arg1multibytes;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+FPUCONTROL;
@@ -27457,11 +27457,11 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fstenv ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 7) {
+break;
+case 7:
             GV.MemDecoration = Arg1word;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+FPUCONTROL;
@@ -27469,11 +27469,11 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fstcw ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else {
+break;
+default:
             FailDecode(pMyDisasm);
         }
     }
@@ -27496,15 +27496,15 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xd0) {
@@ -27523,8 +27523,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else {
@@ -27539,8 +27539,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fchs ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==1) {
@@ -27549,8 +27549,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fabs ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==4) {
@@ -27571,8 +27571,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fld1 ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
                 pMyDisasm->Operand2.OpSize = 80;
@@ -27584,8 +27584,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldl2t ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
                 pMyDisasm->Operand2.OpSize = 80;
@@ -27596,8 +27596,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldl2e ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
                 pMyDisasm->Operand2.OpSize = 80;
@@ -27608,8 +27608,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldpi ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
                 pMyDisasm->Operand2.OpSize = 80;
@@ -27620,8 +27620,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldlg2 ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
                 pMyDisasm->Operand2.OpSize = 80;
@@ -27633,8 +27633,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldln2 ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
                 pMyDisasm->Operand2.OpSize = 80;
@@ -27645,8 +27645,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fldz ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
                 pMyDisasm->Operand2.OpSize = 80;
@@ -27663,8 +27663,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "f2xm1 ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==1) {
@@ -27673,8 +27673,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fyl2x ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==2) {
@@ -27683,8 +27683,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fptan ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==3) {
@@ -27693,8 +27693,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fpatan ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==4) {
@@ -27703,8 +27703,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxtract ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==5) {
@@ -27713,8 +27713,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fprem1 ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==6) {
@@ -27735,8 +27735,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fprem ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==9) {
@@ -27745,8 +27745,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fyl2xp1 ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==0xa) {
@@ -27755,8 +27755,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsqrt ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==0xb) {
@@ -27765,8 +27765,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsincos ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==0xc) {
@@ -27775,8 +27775,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "frndint ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==0xd) {
@@ -27785,8 +27785,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fscale ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==0xe) {
@@ -27795,8 +27795,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsin ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if ((MyMODRM & 0xf) ==0xf) {
@@ -27805,8 +27805,8 @@ void __bea_callspec__ D9_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fcos ");
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else {
@@ -27836,7 +27836,8 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
     if (MyMODRM <= 0xbf) {
 
         GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-        if (GV.REGOPCODE == 0) {
+        switch(GV.REGOPCODE) {
+case 0:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -27844,11 +27845,11 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fiadd ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 1) {
+break;
+case 1:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -27856,11 +27857,11 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fimul ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 2) {
+break;
+case 2:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
@@ -27868,12 +27869,12 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ficom ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
             pMyDisasm->Operand1.AccessMode = READ;
-        }
-        else if (GV.REGOPCODE == 3) {
+break;
+case 3:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
@@ -27881,12 +27882,12 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ficomp ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
             pMyDisasm->Operand1.AccessMode = READ;
-        }
-        else if (GV.REGOPCODE == 4) {
+break;
+case 4:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -27894,11 +27895,11 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fisub ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 5) {
+break;
+case 5:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -27906,11 +27907,11 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fisubr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 6) {
+break;
+case 6:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -27918,11 +27919,11 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fidiv ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 7) {
+break;
+case 7:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -27930,11 +27931,11 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fidivr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else {
+break;
+default:
             FailDecode(pMyDisasm);
         }
     }
@@ -27957,15 +27958,15 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xd0) {
@@ -27986,15 +27987,15 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
 
         }
@@ -28004,8 +28005,8 @@ void __bea_callspec__ DA_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fucompp ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             pMyDisasm->Operand1.AccessMode = READ;
         }
@@ -28035,7 +28036,8 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
     if (MyMODRM <= 0xbf) {
 
         GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-        if (GV.REGOPCODE == 0) {
+        switch (GV.REGOPCODE) {
+case 0:
             GV.MemDecoration = Arg2dword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28043,11 +28045,11 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fild ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 1) {
+break;
+case 1:
             GV.MemDecoration = Arg1dword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28055,11 +28057,11 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fisttp ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 2) {
+break;
+case 2:
             GV.MemDecoration = Arg1dword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28067,11 +28069,11 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fist ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 3) {
+break;
+case 3:
             GV.MemDecoration = Arg1dword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28079,11 +28081,11 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fistp ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 5) {
+break;
+case 5:
             GV.MemDecoration = Arg2tbyte;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28091,11 +28093,11 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fld ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 7) {
+break;
+case 7:
             GV.MemDecoration = Arg1tbyte;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28103,11 +28105,11 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fstp ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else {
+break;
+default:
             FailDecode(pMyDisasm);
         }
     }
@@ -28130,15 +28132,15 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xd0) {
@@ -28159,15 +28161,15 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[0];
             pMyDisasm->Operand1.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand2.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xe0) {
@@ -28217,16 +28219,16 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand1.AccessMode = READ;
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
                 #endif
                 pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+                pMyDisasm->Operand2.Registers.type = FPU_REG;
+                pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
                 pMyDisasm->Operand2.OpSize = 80;
             }
             else {
@@ -28243,16 +28245,16 @@ void __bea_callspec__ DB_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[0]);
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[0];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[0];
                 pMyDisasm->Operand1.OpSize = 80;
                 pMyDisasm->Operand1.AccessMode = READ;
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
                 #endif
                 pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+                pMyDisasm->Operand2.Registers.type = FPU_REG;
+                pMyDisasm->Operand2.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
                 pMyDisasm->Operand2.OpSize = 80;
             }
             else {
@@ -28285,7 +28287,8 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
     if (MyMODRM <= 0xbf) {
 
         GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-        if (GV.REGOPCODE == 0) {
+        switch (GV.REGOPCODE) {
+case 0:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28293,11 +28296,11 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fadd ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 1) {
+break;
+case 1:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28305,11 +28308,11 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fmul ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 2) {
+break;
+case 2:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
@@ -28317,12 +28320,12 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fcom ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
             pMyDisasm->Operand1.AccessMode = READ;
-        }
-        else if (GV.REGOPCODE == 3) {
+break;
+case 3:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
@@ -28330,12 +28333,12 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fcomp ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
             pMyDisasm->Operand1.AccessMode = READ;
-        }
-        else if (GV.REGOPCODE == 4) {
+break;
+case 4:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28343,11 +28346,11 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsub ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 5) {
+break;
+case 5:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28355,11 +28358,11 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsubr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 6) {
+break;
+case 6:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28367,11 +28370,11 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fdiv ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 7) {
+break;
+case 7:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28379,11 +28382,11 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fdivr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else {
+break;
+default:
             FailDecode(pMyDisasm);
         }
     }
@@ -28406,15 +28409,15 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[0];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[0];
             pMyDisasm->Operand2.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xd0) {
@@ -28435,8 +28438,8 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
 
         }
@@ -28457,15 +28460,15 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[0];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[0];
             pMyDisasm->Operand2.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xf0) {
@@ -28485,15 +28488,15 @@ void __bea_callspec__ DC_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[0];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[0];
             pMyDisasm->Operand2.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
 
         }
@@ -28523,7 +28526,8 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
     if (MyMODRM <= 0xbf) {
 
         GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-        if (GV.REGOPCODE == 0) {
+        switch(GV.REGOPCODE) {
+case 0:
             GV.MemDecoration = Arg2qword;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28531,11 +28535,11 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fld ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 1) {
+break;
+case 1:
             GV.MemDecoration = Arg1qword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28543,11 +28547,11 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fisttp ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 2) {
+break;
+case 2:
             GV.MemDecoration = Arg1qword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28555,11 +28559,11 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fst ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 3) {
+break;
+case 3:
             GV.MemDecoration = Arg1qword;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28567,11 +28571,11 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fstp ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 4) {
+break;
+case 4:
             GV.MemDecoration = Arg2multibytes;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+FPUCONTROL;
@@ -28579,11 +28583,11 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "frstor ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 108*8;
-        }
-        else if (GV.REGOPCODE == 6) {
+break;
+case 6:
             GV.MemDecoration = Arg1multibytes;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+FPUCONTROL;
@@ -28591,11 +28595,11 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fsave ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REG0;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REG0;
             pMyDisasm->Operand2.OpSize = 108*8;
-        }
-        else if (GV.REGOPCODE == 7) {
+break;
+case 7:
             GV.MemDecoration = Arg1word;
             MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+FPUCONTROL;
@@ -28603,10 +28607,10 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fstsw ");
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
             pMyDisasm->Operand2.OpSize = 16;
-        }
-        else {
+break;
+default:
             FailDecode(pMyDisasm);
         }
     }
@@ -28629,8 +28633,8 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xd0) {
@@ -28651,8 +28655,8 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
 
         }
@@ -28666,15 +28670,15 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[0]);
                 #endif
                 pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[0];
+                pMyDisasm->Operand2.Registers.type = FPU_REG;
+                pMyDisasm->Operand2.Registers.fpu = REGS[0];
                 pMyDisasm->Operand2.OpSize = 80;
                 #ifndef BEA_LIGHT_DISASSEMBLY
                    (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else {
@@ -28686,8 +28690,8 @@ void __bea_callspec__ DD_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
                 pMyDisasm->Operand1.OpSize = 80;
             }
 
@@ -28719,7 +28723,8 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
     if (MyMODRM <= 0xbf) {
 
         GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-        if (GV.REGOPCODE == 0) {
+        switch (GV.REGOPCODE) {
+case 0:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28727,11 +28732,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fiadd ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 1) {
+break;
+case 1:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28739,11 +28744,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fimul ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 2) {
+break;
+case 2:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
@@ -28751,11 +28756,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ficom ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 3) {
+break;
+case 3:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+COMPARISON_INSTRUCTION;
@@ -28763,11 +28768,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ficomp ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 4) {
+break;
+case 4:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28775,11 +28780,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fisub ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 5) {
+break;
+case 5:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28787,11 +28792,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fisubr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 6) {
+break;
+case 6:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28799,11 +28804,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fidiv ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else if (GV.REGOPCODE == 7) {
+break;
+case 7:
             GV.MemDecoration = Arg2word;
             MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
             pMyDisasm->Instruction.Category = FPU_INSTRUCTION+ARITHMETIC_INSTRUCTION;
@@ -28811,11 +28816,11 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fidivr ");
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REG0;
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REG0;
             pMyDisasm->Operand1.OpSize = 80;
-        }
-        else {
+break;
+default:
             FailDecode(pMyDisasm);
         }
     }
@@ -28838,15 +28843,15 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[0];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[0];
             pMyDisasm->Operand2.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xd0) {
@@ -28859,8 +28864,8 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                    (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
                 #endif
                 pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+                pMyDisasm->Operand1.Registers.type = FPU_REG;
+                pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
                 pMyDisasm->Operand1.OpSize = 80;
             }
             else if (MyMODRM == 0xd9){
@@ -28893,15 +28898,15 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[0];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[0];
             pMyDisasm->Operand2.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
         }
         else if ((MyMODRM & 0xf0) == 0xf0) {
@@ -28922,15 +28927,15 @@ void __bea_callspec__ DE_(PDISASM pMyDisasm)
                (void) strcpy (pMyDisasm->Operand2.OpMnemonic, (*pRegistersFPU)[0]);
             #endif
             pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = FPU_REG;
-  pMyDisasm->Operand2.Registers.fpu = REGS[0];
+            pMyDisasm->Operand2.Registers.type = FPU_REG;
+            pMyDisasm->Operand2.Registers.fpu = REGS[0];
             pMyDisasm->Operand2.OpSize = 80;
             #ifndef BEA_LIGHT_DISASSEMBLY
                (void) strcpy (pMyDisasm->Operand1.OpMnemonic, (*pRegistersFPU)[(MyMODRM & 0xf)%8]);
             #endif
             pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type = FPU_REG;
-  pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
+            pMyDisasm->Operand1.Registers.type = FPU_REG;
+            pMyDisasm->Operand1.Registers.fpu = REGS[(MyMODRM & 0xf)%8];
             pMyDisasm->Operand1.OpSize = 80;
 
         }
@@ -28959,7 +28964,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
   if (MyMODRM <= 0xbf) {
 
       GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-      if (GV.REGOPCODE == 0) {
+      switch (GV.REGOPCODE) {
+      case 0:
           GV.MemDecoration = Arg2word;
           MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28970,8 +28976,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand1.Registers.type = FPU_REG;
           pMyDisasm->Operand1.Registers.fpu = REG0;
           pMyDisasm->Operand1.OpSize = 80;
-      }
-      else if (GV.REGOPCODE == 1) {
+      break;
+      case 1:
           GV.MemDecoration = Arg1word;
           MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28982,8 +28988,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand2.Registers.type = FPU_REG;
           pMyDisasm->Operand2.Registers.fpu = REG0;
           pMyDisasm->Operand2.OpSize = 80;
-      }
-      else if (GV.REGOPCODE == 2) {
+      break;
+      case 2:
           GV.MemDecoration = Arg1word;
           MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -28994,8 +29000,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand2.Registers.type = FPU_REG;
           pMyDisasm->Operand2.Registers.fpu = REG0;
           pMyDisasm->Operand2.OpSize = 80;
-      }
-      else if (GV.REGOPCODE == 3) {
+      break;
+      case 3:
           GV.MemDecoration = Arg1word;
           MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -29006,8 +29012,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand2.Registers.type = FPU_REG;
           pMyDisasm->Operand2.Registers.fpu = REG0;
           pMyDisasm->Operand2.OpSize = 80;
-      }
-      else if (GV.REGOPCODE == 4) {
+      break;
+      case 4:
           GV.MemDecoration = Arg2multibytes;
           MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -29018,8 +29024,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand1.Registers.type = FPU_REG;
           pMyDisasm->Operand1.Registers.fpu = REG0;
           pMyDisasm->Operand1.OpSize = 80;
-      }
-      else if (GV.REGOPCODE == 5) {
+      break;
+      case 5:
           GV.MemDecoration = Arg2qword;
           MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -29030,8 +29036,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand1.Registers.type = FPU_REG;
           pMyDisasm->Operand1.Registers.fpu = REG0;
           pMyDisasm->Operand1.OpSize = 80;
-      }
-      else if (GV.REGOPCODE == 6) {
+      break;
+      case 6:
           GV.MemDecoration = Arg1multibytes;
           MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -29042,8 +29048,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand2.Registers.type = FPU_REG;
           pMyDisasm->Operand2.Registers.fpu = REG0;
           pMyDisasm->Operand2.OpSize = 80;
-      }
-      else if (GV.REGOPCODE == 7) {
+      break;
+      case 7:
           GV.MemDecoration = Arg1qword;
           MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
           pMyDisasm->Instruction.Category = FPU_INSTRUCTION+DATA_TRANSFER;
@@ -29054,8 +29060,8 @@ void __bea_callspec__ DF_(PDISASM pMyDisasm)
           pMyDisasm->Operand2.Registers.type = FPU_REG;
           pMyDisasm->Operand2.Registers.fpu = REG0;
           pMyDisasm->Operand2.OpSize = 80;
-      }
-      else {
+      break;
+      default:
           FailDecode(pMyDisasm);
       }
   }

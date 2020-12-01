@@ -414,10 +414,10 @@ void __bea_callspec__ Addr_disp32(OPTYPE* pMyOperand, PDISASM pMyDisasm)
             if (GV.ImmediatSize == 32) {
                 MyNumber += 4;
             }
-            if (GV.ImmediatSize == 16) {
+            else if (GV.ImmediatSize == 16) {
                 MyNumber += 2;
             }
-            if (GV.ImmediatSize == 8) {
+            else if (GV.ImmediatSize == 8) {
                 MyNumber += 1;
             }
             /* add len (62h + P0 + P1 + P2) - 1 */

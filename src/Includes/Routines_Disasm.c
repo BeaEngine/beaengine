@@ -171,6 +171,8 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ FixOpSizeForMemoryOperand (PDISASM pMyDisasm)
 {
+
+  /*
   if ((GV.MemDecoration > 0) && (GV.MemDecoration < 99))
   {
     if (ArgsSize[GV.MemDecoration - 1] != 0) {
@@ -194,6 +196,23 @@ void __bea_callspec__ FixOpSizeForMemoryOperand (PDISASM pMyDisasm)
   {
     if (ArgsSize[GV.MemDecoration - 301] != 0) {
       pMyDisasm->Operand4.OpSize = ArgsSize[GV.MemDecoration - 301];
+    }
+  }
+  */
+  int i = GV.MemDecoration / 100;
+  if (ArgsSize[GV.MemDecoration - (i*100+1)] != 0) {
+    switch (i) {
+      case 0:
+        pMyDisasm->Operand1.OpSize = ArgsSize[GV.MemDecoration - 1];
+        break;
+      case 1:
+        pMyDisasm->Operand2.OpSize = ArgsSize[GV.MemDecoration - 101];
+        break;
+      case 2:
+        pMyDisasm->Operand3.OpSize = ArgsSize[GV.MemDecoration - 201];
+        break;
+      case 3:
+        pMyDisasm->Operand4.OpSize = ArgsSize[GV.MemDecoration - 301];
     }
   }
 }

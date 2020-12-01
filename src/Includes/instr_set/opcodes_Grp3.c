@@ -23,7 +23,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (GV.REGOPCODE == 0) {
+    switch (GV.REGOPCODE) {
+      case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "test ");
@@ -31,8 +32,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         EbIb(pMyDisasm);
         pMyDisasm->Operand1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
-    }
-    else if (GV.REGOPCODE == 1) {
+      break;
+      case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "test ");
@@ -40,8 +41,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         EbIb(pMyDisasm);
         pMyDisasm->Operand1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
-    }
-    else if (GV.REGOPCODE == 2) {
+      break;
+      case 2:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
             pMyDisasm->Prefix.LockPrefix = InUsePrefix;
         }
@@ -51,16 +52,16 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         #endif
         Eb(pMyDisasm);
         FillFlags(pMyDisasm, 73);
-    }
-    else if (GV.REGOPCODE == 3) {
+      break;
+      case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "neg ");
         #endif
         Eb(pMyDisasm);
         FillFlags(pMyDisasm, 71);
-    }
-    else if (GV.REGOPCODE == 4) {
+      break;
+      case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "mul ");
@@ -76,8 +77,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0;
         FillFlags(pMyDisasm, 70);
-    }
-    else if (GV.REGOPCODE == 5) {
+      break;
+      case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "imul ");
@@ -91,8 +92,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         pMyDisasm->Operand1.Registers.gpr = REG0+REG2;
         pMyDisasm->Operand1.OpSize = 8;
         FillFlags(pMyDisasm, 38);
-    }
-    else if (GV.REGOPCODE == 6) {
+      break;
+      case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "div ");
@@ -106,8 +107,8 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         pMyDisasm->Operand1.Registers.gpr = REG0+REG2;
         pMyDisasm->Operand1.OpSize = 8;
         FillFlags(pMyDisasm, 31);
-    }
-    else if (GV.REGOPCODE == 7) {
+      break;
+      case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "idiv ");
@@ -124,7 +125,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0;
         FillFlags(pMyDisasm, 37);
-    }
+      }
 }
 
 /* ====================================================================
@@ -134,7 +135,8 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
     GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-    if (GV.REGOPCODE == 0) {
+    switch (GV.REGOPCODE) {
+      case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "test ");
@@ -142,8 +144,8 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         EvIv(pMyDisasm);
         pMyDisasm->Operand1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
-    }
-    else if (GV.REGOPCODE == 1) {
+      break;
+      case 1:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "test ");
@@ -151,8 +153,8 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         EvIv(pMyDisasm);
         pMyDisasm->Operand1.AccessMode = READ;
         FillFlags(pMyDisasm, 104);
-    }
-    else if (GV.REGOPCODE == 2) {
+      break;
+      case 2:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
             pMyDisasm->Prefix.LockPrefix = InUsePrefix;
         }
@@ -162,31 +164,31 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         #endif
         Ev(pMyDisasm);
         FillFlags(pMyDisasm, 73);
-    }
-    else if (GV.REGOPCODE == 3) {
+      break;
+      case 3:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "neg ");
         #endif
         Ev(pMyDisasm);
         FillFlags(pMyDisasm, 71);
-    }
-    else if (GV.REGOPCODE == 4) {
+      break;
+      case 4:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "mul ");
         #endif
         if (GV.OperandSize == 64) {
             GV.MemDecoration = Arg2qword;
-			pMyDisasm->Operand1.OpSize = 64;
+            pMyDisasm->Operand1.OpSize = 64;
         }
         else if (GV.OperandSize == 32) {
             GV.MemDecoration = Arg2dword;
-			pMyDisasm->Operand1.OpSize = 32;
+            pMyDisasm->Operand1.OpSize = 32;
         }
         else {
             GV.MemDecoration = Arg2word;
-			pMyDisasm->Operand1.OpSize = 16;
+            pMyDisasm->Operand1.OpSize = 16;
         }
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
@@ -195,23 +197,23 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0+REG2;
         FillFlags(pMyDisasm, 70);
-    }
-    else if (GV.REGOPCODE == 5) {
+      break;
+      case 5:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "imul ");
         #endif
         if (GV.OperandSize == 64) {
             GV.MemDecoration = Arg2qword;
-			pMyDisasm->Operand1.OpSize = 64;
+            pMyDisasm->Operand1.OpSize = 64;
         }
         else if (GV.OperandSize == 32) {
             GV.MemDecoration = Arg2dword;
-			pMyDisasm->Operand1.OpSize = 32;
+            pMyDisasm->Operand1.OpSize = 32;
         }
         else {
             GV.MemDecoration = Arg2word;
-			pMyDisasm->Operand1.OpSize = 16;
+            pMyDisasm->Operand1.OpSize = 16;
         }
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
@@ -220,23 +222,23 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0+REG2;
         FillFlags(pMyDisasm, 38);
-    }
-    else if (GV.REGOPCODE == 6) {
+      break;
+      case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "div ");
         #endif
         if (GV.OperandSize == 64) {
             GV.MemDecoration = Arg2qword;
-			pMyDisasm->Operand1.OpSize = 64;
+            pMyDisasm->Operand1.OpSize = 64;
         }
         else if (GV.OperandSize == 32) {
             GV.MemDecoration = Arg2dword;
-			pMyDisasm->Operand1.OpSize = 32;
+            pMyDisasm->Operand1.OpSize = 32;
         }
         else {
             GV.MemDecoration = Arg2word;
-			pMyDisasm->Operand1.OpSize = 16;
+            pMyDisasm->Operand1.OpSize = 16;
         }
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
@@ -245,23 +247,23 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0+REG2;
         FillFlags(pMyDisasm, 31);
-    }
-    else if (GV.REGOPCODE == 7) {
+      break;
+      case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "idiv ");
         #endif
         if (GV.OperandSize == 64) {
             GV.MemDecoration = Arg2qword;
-			pMyDisasm->Operand1.OpSize = 64;
+            pMyDisasm->Operand1.OpSize = 64;
         }
         else if (GV.OperandSize == 32) {
             GV.MemDecoration = Arg2dword;
-			pMyDisasm->Operand1.OpSize = 32;
+            pMyDisasm->Operand1.OpSize = 32;
         }
         else {
             GV.MemDecoration = Arg2word;
-			pMyDisasm->Operand1.OpSize = 16;
+            pMyDisasm->Operand1.OpSize = 16;
         }
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
@@ -270,5 +272,5 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0+REG2;
         FillFlags(pMyDisasm, 37);
-    }
+      }
 }
