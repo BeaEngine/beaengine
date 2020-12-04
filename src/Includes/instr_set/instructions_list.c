@@ -6861,7 +6861,10 @@ void __bea_callspec__ pop_edi(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ pop_es(PDISASM pMyDisasm)
 {
-
+  if (GV.Architecture == 64) {
+      FailDecode(pMyDisasm);
+      return;
+  }
   pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
   #ifndef BEA_LIGHT_DISASSEMBLY
      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pop ");
@@ -6886,7 +6889,10 @@ void __bea_callspec__ pop_es(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ pop_ss(PDISASM pMyDisasm)
 {
-
+  if (GV.Architecture == 64) {
+      FailDecode(pMyDisasm);
+      return;
+  }
   pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
   #ifndef BEA_LIGHT_DISASSEMBLY
      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pop ");
@@ -6911,7 +6917,10 @@ void __bea_callspec__ pop_ss(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ pop_ds(PDISASM pMyDisasm)
 {
-
+  if (GV.Architecture == 64) {
+      FailDecode(pMyDisasm);
+      return;
+  }
   pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
   #ifndef BEA_LIGHT_DISASSEMBLY
      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pop ");
@@ -7097,6 +7106,10 @@ void __bea_callspec__ popad_(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ push_es(PDISASM pMyDisasm)
 {
+  if (GV.Architecture == 64) {
+      FailDecode(pMyDisasm);
+      return;
+  }
   pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
   #ifndef BEA_LIGHT_DISASSEMBLY
      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "push ");
@@ -7122,6 +7135,10 @@ void __bea_callspec__ push_es(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ push_ss(PDISASM pMyDisasm)
 {
+  if (GV.Architecture == 64) {
+      FailDecode(pMyDisasm);
+      return;
+  }
   pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
   #ifndef BEA_LIGHT_DISASSEMBLY
      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "push ");
@@ -7147,7 +7164,10 @@ void __bea_callspec__ push_ss(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ push_ds(PDISASM pMyDisasm)
 {
-
+  if (GV.Architecture == 64) {
+      FailDecode(pMyDisasm);
+      return;
+  }
   pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
   #ifndef BEA_LIGHT_DISASSEMBLY
      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "push ");
