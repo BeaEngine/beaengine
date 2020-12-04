@@ -45,6 +45,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsd ')
         assert_equal(myDisasm.repr(), 'addsd xmm6, qword ptr [rax]')
+        assert_equal(myDisasm.infos.Operand2.OpSize, 64)
 
         # F3 0F 58 /r
         # ADDSS xmm1, xmm2/m32
@@ -66,6 +67,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f58)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addpd ')
         assert_equal(myDisasm.repr(), 'addpd xmm6, xmmword ptr [rax]')
+        assert_equal(myDisasm.infos.Operand2.OpSize, 128)
 
         # 66 0F 58 /r
         # ADDPD xmm1, xmm2/m128

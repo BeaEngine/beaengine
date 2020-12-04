@@ -86,15 +86,16 @@ void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
   pMyDisasm->Operand9.AccessMode = 0;
   GV.ERROR_OPCODE = UNKNOWN_OPCODE;
 }
+
 void __bea_callspec__ ResetREX(PDISASM pMyDisasm)
 {
   if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1))
     GV.OperandSize = GV.OriginalOperandSize;
-  GV.REX.W_ = 0;
-  GV.REX.R_ = 0;
-  GV.REX.X_ = 0;
-  GV.REX.B_ = 0;
-  GV.REX.state = 0;
+    GV.REX.W_ = 0;
+    GV.REX.R_ = 0;
+    GV.REX.X_ = 0;
+    GV.REX.B_ = 0;
+    GV.REX.state = 0;
 }
 
 /* ====================================================================
@@ -102,7 +103,8 @@ void __bea_callspec__ ResetREX(PDISASM pMyDisasm)
  * ==================================================================== */
 int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
 {
-  (void) memset (&GV, 0, sizeof (InternalDatas));
+  size_t i = sizeof (OPTYPE);
+  (void) memset (&GV, '\x0', sizeof (InternalDatas));
   GV.EIP_ = pMyDisasm->EIP;
   GV.EIP_REAL = GV.EIP_;
   GV.EIP_VA = pMyDisasm->VirtualAddr;
@@ -114,7 +116,7 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
   GV.OperandSize = 32;
   GV.OriginalOperandSize = 32;
   GV.AddressSize = 32;
-  GV.Register_ = 0;
+  /*GV.Register_ = 0;*/
   GV.Architecture = pMyDisasm->Archi;
   if (GV.Architecture == 0) GV.Architecture = 64;
   pMyDisasm->Prefix.Number = 0;
@@ -124,16 +126,17 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
     GV.OriginalOperandSize = 16;
     GV.AddressSize = 16;
   }
-  (void) memset (&pMyDisasm->Operand1, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand2, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand3, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand4, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand5, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand6, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand7, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand8, 0, sizeof (OPTYPE));
-  (void) memset (&pMyDisasm->Operand9, 0, sizeof (OPTYPE));
+  (void) memset (&pMyDisasm->Operand1, 0, i);
+  (void) memset (&pMyDisasm->Operand2, 0, i);
+  (void) memset (&pMyDisasm->Operand3, 0, i);
+  (void) memset (&pMyDisasm->Operand4, 0, i);
+  (void) memset (&pMyDisasm->Operand5, 0, i);
+  (void) memset (&pMyDisasm->Operand6, 0, i);
+  (void) memset (&pMyDisasm->Operand7, 0, i);
+  (void) memset (&pMyDisasm->Operand8, 0, i);
+  (void) memset (&pMyDisasm->Operand9, 0, i);
   (void) memset (&pMyDisasm->Prefix, 0, sizeof (PREFIXINFO));
+
   pMyDisasm->Operand1.AccessMode = WRITE;
   pMyDisasm->Operand1.OpPosition = LowPosition;
   pMyDisasm->Operand2.OpPosition = LowPosition;
@@ -156,13 +159,15 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
   pMyDisasm->Operand7.AccessMode = READ;
   pMyDisasm->Operand8.AccessMode = READ;
   pMyDisasm->Operand9.AccessMode = READ;
-  (void) memset (&pMyDisasm->Instruction, 0, sizeof (INSTRTYPE));
+  (void) memset (&pMyDisasm->Instruction, '\x0', sizeof (INSTRTYPE));
   GV.OPTIONS = (UInt32)pMyDisasm->Options;
   GV.SYNTAX_ = (UInt32)pMyDisasm->Options & 0xff00;
   GV.FORMATNUMBER = (UInt32)pMyDisasm->Options & PrefixedNumeral;
   GV.SEGMENTREGS = (UInt32)pMyDisasm->Options & ShowSegmentRegs;
+  /*
   GV.OutOfBlock = 0;
   GV.ERROR_OPCODE = 0;
+  */
   GV.EVEX.masking = MERGING_ZEROING;
   return 1;
 }
@@ -171,34 +176,6 @@ int __bea_callspec__ InitVariables (PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ FixOpSizeForMemoryOperand (PDISASM pMyDisasm)
 {
-
-  /*
-  if ((GV.MemDecoration > 0) && (GV.MemDecoration < 99))
-  {
-    if (ArgsSize[GV.MemDecoration - 1] != 0) {
-      pMyDisasm->Operand1.OpSize = ArgsSize[GV.MemDecoration - 1];
-    }
-
-  }
-  else if ((GV.MemDecoration > 100) && (GV.MemDecoration < 199))
-  {
-    if (ArgsSize[GV.MemDecoration - 101] != 0) {
-      pMyDisasm->Operand2.OpSize = ArgsSize[GV.MemDecoration - 101];
-    }
-  }
-  else if ((GV.MemDecoration > 200) && (GV.MemDecoration < 299))
-  {
-    if (ArgsSize[GV.MemDecoration - 201] != 0) {
-      pMyDisasm->Operand3.OpSize = ArgsSize[GV.MemDecoration - 201];
-    }
-  }
-  else if ((GV.MemDecoration > 300) && (GV.MemDecoration < 399))
-  {
-    if (ArgsSize[GV.MemDecoration - 301] != 0) {
-      pMyDisasm->Operand4.OpSize = ArgsSize[GV.MemDecoration - 301];
-    }
-  }
-  */
   int i = GV.MemDecoration / 100;
   if (ArgsSize[GV.MemDecoration - (i*100+1)] != 0) {
     switch (i) {
@@ -234,9 +211,11 @@ void __bea_callspec__ FixREXPrefixes (PDISASM pMyDisasm)
  * ==================================================================== */
 int __bea_callspec__ AnalyzeOpcode (PDISASM pMyDisasm)
 {
+  UInt8 *opcode;
   if (!Security(1, pMyDisasm)) return 0;
-  pMyDisasm->Instruction.Opcode = *((UInt8*) (UIntPtr)(GV.EIP_));
-  (void) opcode_map1[*((UInt8*) (UIntPtr)GV.EIP_)](pMyDisasm);
+  opcode = (UInt8*) GV.EIP_;
+  pMyDisasm->Instruction.Opcode = *opcode;
+  (void) opcode_map1[*opcode](pMyDisasm);
   return 1;
 }
 /* ====================================================================
@@ -316,16 +295,16 @@ void __bea_callspec__ EvIv(PDISASM pMyDisasm)
     if (!Security(0, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
     if (GV.OperandSize == 64) {
-      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.16llX",(Int64) *((Int32*)(UIntPtr) (GV.EIP_-4)));
+      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.16llX",(Int64) *((Int32*) (GV.EIP_-4)));
     }
     else {
-      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X",(Int64) *((UInt32*)(UIntPtr) (GV.EIP_-4)));
+      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X",(Int64) *((UInt32*) (GV.EIP_-4)));
     }
     #endif
 
     pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
     pMyDisasm->Operand2.OpSize = 32;
-    pMyDisasm->Instruction.Immediat = *((UInt32*)(UIntPtr) (GV.EIP_-4));
+    pMyDisasm->Instruction.Immediat = *((UInt32*) (GV.EIP_-4));
   }
   else {
     GV.MemDecoration = Arg1word;
@@ -334,11 +313,11 @@ void __bea_callspec__ EvIv(PDISASM pMyDisasm)
     GV.EIP_ += GV.DECALAGE_EIP+4;
     if (!Security(1, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.4X",(Int64)*((UInt16*)(UIntPtr) (GV.EIP_-2)));
+      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.4X",(Int64)*((UInt16*) (GV.EIP_-2)));
     #endif
     pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
     pMyDisasm->Operand2.OpSize = 16;
-    pMyDisasm->Instruction.Immediat = *((UInt16*)(UIntPtr) (GV.EIP_-2));
+    pMyDisasm->Instruction.Immediat = *((UInt16*) (GV.EIP_-2));
   }
 }
 
@@ -363,27 +342,27 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
     if (!Security(0, pMyDisasm)) return;
     if (GV.OperandSize == 32) {
       #ifndef BEA_LIGHT_DISASSEMBLY
-      MyNumber = *((Int8*)(UIntPtr) (GV.EIP_-1));
+      MyNumber = *((Int8*) (GV.EIP_-1));
       if (MyNumber > 0) {
-        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.2X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.2X",(Int64)*((Int8*) (GV.EIP_-1)));
       }
       else {
-        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X",(Int64)*((Int8*)(IntPtr) (GV.EIP_-1)));
+        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X",(Int64)*((Int8*) (GV.EIP_-1)));
       }
       #endif
     }
     else {
       #ifndef BEA_LIGHT_DISASSEMBLY
-      MyNumber = *((Int8*)(UIntPtr) (GV.EIP_-1));
+      MyNumber = *((Int8*) (GV.EIP_-1));
       if (MyNumber > 0) {
-        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.2X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.2X",(Int64)*((Int8*) (GV.EIP_-1)));
       }
       else {
-        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.16llX",(Int64)*((Int8*)(IntPtr) (GV.EIP_-1)));
+        (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.16llX",(Int64)*((Int8*) (GV.EIP_-1)));
       }
       #endif
     }
-  pMyDisasm->Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_-1));
+  pMyDisasm->Instruction.Immediat = *((UInt8*) (GV.EIP_-1));
   }
   else {
     GV.MemDecoration = Arg1word;
@@ -391,9 +370,9 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
     GV.EIP_ += GV.DECALAGE_EIP+3;
     if (!Security(0, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.4X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+      (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.4X",(Int64)*((Int8*) (GV.EIP_-1)));
     #endif
-    pMyDisasm->Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_-1));
+    pMyDisasm->Instruction.Immediat = *((UInt8*) (GV.EIP_-1));
   }
 }
 /* ====================================================================
@@ -411,9 +390,9 @@ void __bea_callspec__ EbIb(PDISASM pMyDisasm)
   GV.EIP_ += GV.DECALAGE_EIP+3;
   if (!Security(0, pMyDisasm)) return;
   #ifndef BEA_LIGHT_DISASSEMBLY
-    (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.2X",(Int64)*((Int8*)(UIntPtr) (GV.EIP_-1)));
+    (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.2X",(Int64)*((Int8*) (GV.EIP_-1)));
   #endif
-  pMyDisasm->Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_-1));
+  pMyDisasm->Instruction.Immediat = *((UInt8*) (GV.EIP_-1));
 }
 
 /* ====================================================================
@@ -752,9 +731,9 @@ void __bea_callspec__ getImmediat8(OPTYPE* pMyOperand, PDISASM pMyDisasm)
   GV.EIP_++;
   GV.ImmediatSize = 8;
   if (!Security(0, pMyDisasm)) return;
-  pMyDisasm->Instruction.Immediat = *((UInt8*)(UIntPtr) (GV.EIP_- 1));
+  pMyDisasm->Instruction.Immediat = *((UInt8*) (GV.EIP_- 1));
   #ifndef BEA_LIGHT_DISASSEMBLY
-     (void) CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic, "%.2X",(Int64) *((UInt8*)(UIntPtr) (GV.EIP_- 1)));
+     (void) CopyFormattedNumber(pMyDisasm, (char*) pMyOperand->OpMnemonic, "%.2X",(Int64) *((UInt8*) (GV.EIP_- 1)));
   #endif
   pMyOperand->OpType = CONSTANT_TYPE+ABSOLUTE_;
   pMyOperand->OpSize = 8;
@@ -878,7 +857,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
       GV.ImmediatSize = 32;
       pMyDisasm->Operand1.OpSize = 64;
       pMyDisasm->Operand2.OpSize = 32;
-      MyNumber = *((UInt32*)(UIntPtr) (GV.EIP_+1));
+      MyNumber = *((UInt32*) (GV.EIP_+1));
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.16llX",(Int64) MyNumber);
       #endif
@@ -900,7 +879,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
       GV.ImmediatSize = 32;
       pMyDisasm->Operand1.OpSize = 32;
       pMyDisasm->Operand2.OpSize = 32;
-      MyNumber = *((UInt32*)(UIntPtr) (GV.EIP_+1));
+      MyNumber = *((UInt32*) (GV.EIP_+1));
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X",(Int64) MyNumber);
       #endif
@@ -922,7 +901,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
       GV.ImmediatSize = 16;
       pMyDisasm->Operand1.OpSize = 16;
       pMyDisasm->Operand2.OpSize = 16;
-      MyNumber = *((UInt16*)(UIntPtr) (GV.EIP_+1));
+      MyNumber = *((UInt16*) (GV.EIP_+1));
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X", (Int64) MyNumber);
       #endif
@@ -1340,8 +1319,12 @@ size_t __bea_callspec__ printArg4(PDISASM pMyDisasm, size_t i)
 size_t __bea_callspec__ printArgsSeparator(OPTYPE* pMyOperand1, OPTYPE* pMyOperand2, PDISASM pMyDisasm, size_t i)
 {
   if (
-      ((UInt8)*((UInt8*) &(*pMyOperand1).OpMnemonic) != 0) &&
-       ((UInt8)*((UInt8*) &(*pMyOperand2).OpMnemonic) != 0)
+    (pMyOperand1->OpMnemonic[0] != 0) &&
+     (pMyOperand2->OpMnemonic[0] != 0)
+     /*
+      ((UInt8)*((UInt8*) &(pMyOperand1->OpMnemonic) != 0) &&
+       ((UInt8)*((UInt8*) &(pMyOperand2->OpMnemonic) != 0)
+       */
      ) {
     (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, ", ");
     i += 2;
