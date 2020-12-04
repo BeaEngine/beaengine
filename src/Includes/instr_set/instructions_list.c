@@ -7221,23 +7221,28 @@ void __bea_callspec__ push_fs(PDISASM pMyDisasm)
  * ======================================= */
 void __bea_callspec__ push_gs(PDISASM pMyDisasm)
 {
-  pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
-  #ifndef BEA_LIGHT_DISASSEMBLY
-     (void) strcpy (pMyDisasm->Instruction.Mnemonic, "push ");
-  #endif
-  #ifndef BEA_LIGHT_DISASSEMBLY
-     (void) strcpy((char*) &pMyDisasm->Operand1.OpMnemonic, RegistersSEG[5]);
-  #endif
-  pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand2.Registers.type = SEGMENT_REG;
-  pMyDisasm->Operand2.Registers.segment = REGS[5];
-  pMyDisasm->Operand2.OpSize = 16;
-  pMyDisasm->Operand1.OpType = MEMORY_TYPE;
-  pMyDisasm->Operand1.OpSize = 16;
-  pMyDisasm->Operand1.Memory.BaseRegister = REG4;
-  pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
-  pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
-  GV.EIP_++;
+  if (GV.VEX.state == InUsePrefix) {
+    FailDecode(pMyDisasm);
+  }
+    else {
+    pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy (pMyDisasm->Instruction.Mnemonic, "push ");
+    #endif
+    #ifndef BEA_LIGHT_DISASSEMBLY
+       (void) strcpy((char*) &pMyDisasm->Operand1.OpMnemonic, RegistersSEG[5]);
+    #endif
+    pMyDisasm->Operand2.OpType = REGISTER_TYPE;
+    pMyDisasm->Operand2.Registers.type = SEGMENT_REG;
+    pMyDisasm->Operand2.Registers.segment = REGS[5];
+    pMyDisasm->Operand2.OpSize = 16;
+    pMyDisasm->Operand1.OpType = MEMORY_TYPE;
+    pMyDisasm->Operand1.OpSize = 16;
+    pMyDisasm->Operand1.Memory.BaseRegister = REG4;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+    pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
+    GV.EIP_++;
+  }
 }
 
 /* =======================================
