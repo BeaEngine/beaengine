@@ -642,8 +642,7 @@ const char * __bea_callspec__ getNumFormat(long MyNumber)
 long __bea_callspec__ specific_pop(PDISASM pMyDisasm)
 {
   long N;
-  if (
-    (pMyDisasm->Instruction.Opcode == 0x8f)) {
+  if (pMyDisasm->Instruction.Opcode == 0x8f) {
       N = GV.OperandSize / 8;
     }
     else {

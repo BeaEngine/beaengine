@@ -22,7 +22,7 @@
 void __bea_callspec__ G15_(PDISASM pMyDisasm)
 {
   if (!Security(2, pMyDisasm)) return;
-  GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+  GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
   /* ========= 0xf3 */
   if (GV.PrefRepe == 1) {
     if (GV.REGOPCODE == 0) {
@@ -324,7 +324,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
         return;
       }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_== 0x3) {
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -332,15 +332,15 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         #endif
       }
       else {
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
-        GV.MemDecoration = Arg2multibytes;
+        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        GV.MemDecoration = Arg1multibytes;
         pMyDisasm->Instruction.Category = XSAVE_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xrstor ");
         #endif
-        pMyDisasm->Operand2.OpSize = 512 * 8;
-        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
         pMyDisasm->Operand1.OpSize = 512 * 8;
+        pMyDisasm->Instruction.ImplicitUsedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitUsedRegs.gpr = REG0 | REG2;
       }
     }
     else if (GV.REGOPCODE == 6) {

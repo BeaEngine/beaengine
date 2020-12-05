@@ -26129,13 +26129,27 @@ void __bea_callspec__ sha1nexte_(PDISASM pMyDisasm)
     FailDecode(pMyDisasm);
   }
   else {
-    pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
-    GV.MemDecoration = Arg2_m128_xmm;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sha1nexte ");
-    #endif
-    GV.Register_ = SSE_REG;
-    GxEx(pMyDisasm);
+    if (GV.PrefRepe == 1) {
+      /* prefix 0xf3 */
+      FailDecode(pMyDisasm);
+    }
+    else if (GV.PrefRepne == 1) {
+      /* prefix 0xf2 */
+      FailDecode(pMyDisasm);
+    }
+    else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
+      /* prefix 0x66 */
+      FailDecode(pMyDisasm);
+    }
+    else {
+      pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
+      GV.MemDecoration = Arg2_m128_xmm;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sha1nexte ");
+      #endif
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
+    }
   }
 }
 
@@ -26253,9 +26267,7 @@ void __bea_callspec__ sha256msg1_(PDISASM pMyDisasm)
 void __bea_callspec__ sha256msg2_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) {
-    if (
-      (GV.EVEX.pp == 1)
-    ) {
+    if (GV.EVEX.pp == 1) {
       pMyDisasm->Instruction.Category = AVX512_INSTRUCTION;
       GV.EVEX.tupletype = FULL;
       if (GV.EVEX.W == 0) {
@@ -26298,9 +26310,7 @@ void __bea_callspec__ sha256rnd_(PDISASM pMyDisasm)
 {
 
   if (GV.EVEX.state == InUsePrefix) {
-    if (
-      (GV.EVEX.pp == 1)
-    ) {
+    if (GV.EVEX.pp == 1) {
       pMyDisasm->Instruction.Category = AVX512_INSTRUCTION;
       GV.EVEX.tupletype = FULL;
       if (GV.EVEX.W == 0) {

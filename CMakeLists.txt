@@ -11,6 +11,7 @@ option (optBUILD_64BIT   "Build 64 bits executable" OFF)
 option (optBUILD_DLL     "Build Shared Objects"     OFF)
 option (optBUILD_STDCALL "Build using stdcall"      OFF)
 option (optBUILD_LITE	 "Build without text disassembly"      OFF)
+option (USE_CLANG "build application with clang" OFF)
 
 if (optHAS_OPTIMIZED)
   if (optHAS_SYMBOLS)
@@ -32,7 +33,11 @@ if (NOT BEA_COMPILER)
     if (WATCOM)
       set (BEA_COMPILER watcom)
     else ()
-      set (BEA_COMPILER gnu)
+      if (USE_CLANG)
+        set (BEA_COMPILER clang)
+      else ()
+        set (BEA_COMPILER gnu)
+      endif()
     endif ()
   endif ()
   if (${CMAKE_SYSTEM_NAME} STREQUAL FreeBSD)
@@ -63,7 +68,16 @@ if (NOT BEA_COMPILER)
     endif ()
   endif ()
 endif ()
-
+# =========================================
+# clang configuration
+# =========================================
+if (BEA_COMPILER STREQUAL clang)
+  set (CMAKE_C_COMPILER   clang)
+  set (CMAKE_CXX_COMPILER clang++)
+  set (BEA_WARNINGS -Wall -W -Wextra -Wconversion -Wno-long-long
+    -Wshadow  -Wpointer-arith -Wcast-qual  -Wcast-align -Wwrite-strings)
+  list (APPEND BEA_FLAGS -fsanitize=fuzzer-no-link)
+endif ()
 # =========================================
 # gcc configuration
 # =========================================

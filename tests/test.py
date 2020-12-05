@@ -2375,3 +2375,10 @@ class TestSuite:
         assert_equal(myDisasm.repr(), 'lock dec dword ptr [rax+44332211h]')
         assert_equal(myDisasm.infos.Prefix.LockPrefix, 1)
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, 0)
+
+        Buffer = bytes.fromhex('480faeae0fd2ae')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xrstor ')
+        check = myDisasm.json()

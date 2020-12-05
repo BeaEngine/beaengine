@@ -836,9 +836,7 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
   pMyDisasm->Operand2.OpType = CONSTANT_TYPE+ABSOLUTE_;
   pMyDisasm->Operand2.OpSize = 8;
   GV.EIP_ += 2;
-  if (
-      (pMyDisasm->Prefix.LockPrefix == InUsePrefix)
-    ) {
+  if (pMyDisasm->Prefix.LockPrefix == InUsePrefix) {
     GV.ERROR_OPCODE = UD_;
   }
 }
@@ -918,9 +916,7 @@ void __bea_callspec__ eAX_Iv(PDISASM pMyDisasm)
       }
       GV.EIP_+= 3;
     }
-    if (
-        (pMyDisasm->Prefix.LockPrefix == InUsePrefix)
-      ) {
+    if (pMyDisasm->Prefix.LockPrefix == InUsePrefix) {
       GV.ERROR_OPCODE = UD_;
     }
 }
