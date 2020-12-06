@@ -164,7 +164,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
         return;
       }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) {
         GV.MemDecoration = Arg1multibytes;
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
@@ -180,13 +180,11 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
           #endif
         }
         pMyDisasm->Operand1.OpSize = 512 * 8;
-        pMyDisasm->Operand2.OpSize = 512 * 8;
-        pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-        pMyDisasm->Operand2.Registers.type = FPU_REG + SSE_REG + MMX_REG;
-        pMyDisasm->Operand2.Registers.fpu = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
-        pMyDisasm->Operand2.Registers.mmx = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
-        pMyDisasm->Operand2.Registers.xmm = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
-        pMyDisasm->Operand2.Registers.special = REG1; /* MXCSR Register */
+        pMyDisasm->Instruction.ImplicitUsedRegs.type = FPU_REG + SSE_REG + MMX_REG;
+        pMyDisasm->Instruction.ImplicitUsedRegs.fpu = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
+        pMyDisasm->Instruction.ImplicitUsedRegs.mmx = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
+        pMyDisasm->Instruction.ImplicitUsedRegs.xmm = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
+        pMyDisasm->Instruction.ImplicitUsedRegs.special = REG1; /* MXCSR Register */
       }
       else {
         FailDecode(pMyDisasm);
@@ -197,10 +195,10 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
         return;
       }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_!= 0x3) {
-        GV.MemDecoration = Arg2multibytes;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        GV.MemDecoration = Arg1multibytes;
+        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         pMyDisasm->Instruction.Category = FXSR_INSTRUCTION;
         if (GV.REX.W_ == 1) {
           #ifndef BEA_LIGHT_DISASSEMBLY
@@ -212,14 +210,13 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
              (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxrstor ");
           #endif
         }
-        pMyDisasm->Operand2.OpSize = 512 * 8;
-        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
         pMyDisasm->Operand1.OpSize = 512 * 8;
-        pMyDisasm->Operand1.Registers.type = FPU_REG + SSE_REG + MMX_REG;
-        pMyDisasm->Operand1.Registers.fpu = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
-        pMyDisasm->Operand1.Registers.mmx = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
-        pMyDisasm->Operand1.Registers.xmm = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
-        pMyDisasm->Operand1.Registers.special = REG1; /* MXCSR Register */
+        pMyDisasm->Operand1.AccessMode = READ;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = FPU_REG + SSE_REG + MMX_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.fpu = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.mmx = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.xmm = REG0+REG1+REG2+REG3+REG4+REG5+REG6+REG7;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.special = REG1; /* MXCSR Register */
 
       }
       else {
@@ -308,11 +305,11 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
           #ifndef BEA_LIGHT_DISASSEMBLY
              (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsave ");
           #endif
-        }      pMyDisasm->Operand1.OpSize = 512 * 8;
-        pMyDisasm->Operand2.OpType = REGISTER_TYPE;
-        pMyDisasm->Operand2.OpSize = 32 * 2;
-        pMyDisasm->Operand2.Registers.type = GENERAL_REG;
-        pMyDisasm->Operand2.Registers.gpr = REG0 + REG2;
+        }
+        pMyDisasm->Operand1.OpSize = 512 * 8;
+        pMyDisasm->Operand1.AccessMode = WRITE;
+        pMyDisasm->Instruction.ImplicitUsedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitUsedRegs.gpr = REG0 + REG2;
       }
       else {
         FailDecode(pMyDisasm);
@@ -339,8 +336,9 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xrstor ");
         #endif
         pMyDisasm->Operand1.OpSize = 512 * 8;
-        pMyDisasm->Instruction.ImplicitUsedRegs.type = GENERAL_REG;
-        pMyDisasm->Instruction.ImplicitUsedRegs.gpr = REG0 | REG2;
+        pMyDisasm->Operand1.AccessMode = READ;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
+        pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0 | REG2;
       }
     }
     else if (GV.REGOPCODE == 6) {

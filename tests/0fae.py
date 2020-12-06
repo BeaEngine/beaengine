@@ -200,7 +200,6 @@ class TestSuite:
         assert_equal(myDisasm.repr(), 'fxsave64  [rax]')
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 512 * 8)
-        assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
 
 
         # NP 0F AE /1
@@ -224,9 +223,7 @@ class TestSuite:
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxrstor64 ')
         assert_equal(myDisasm.repr(), 'fxrstor64  [rax]')
-        assert_equal(myDisasm.infos.Operand2.OpType, MEMORY_TYPE)
-        assert_equal(myDisasm.infos.Operand2.OpSize, 512 * 8)
-        assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
+        assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
 
         # NP 0F AE /2
         # LDMXCSR m32
