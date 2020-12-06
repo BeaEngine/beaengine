@@ -28,7 +28,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrfsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrfsbase')
         assert_equal(myDisasm.repr(), 'wrfsbase eax')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.type, SEGMENT_REG)
@@ -43,7 +43,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrfsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrfsbase')
         assert_equal(myDisasm.repr(), 'wrfsbase rax')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.type, SEGMENT_REG)
@@ -56,7 +56,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrgsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrgsbase')
         assert_equal(myDisasm.repr(), 'wrgsbase eax')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.type, SEGMENT_REG)
@@ -71,7 +71,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrgsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrgsbase')
         assert_equal(myDisasm.repr(), 'wrgsbase rax')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.type, SEGMENT_REG)
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdfsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdfsbase')
         assert_equal(myDisasm.repr(), 'rdfsbase eax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.Registers.type, SEGMENT_REG)
@@ -99,7 +99,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdfsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdfsbase')
         assert_equal(myDisasm.repr(), 'rdfsbase rax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.Registers.type, SEGMENT_REG)
@@ -112,7 +112,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdgsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdgsbase')
         assert_equal(myDisasm.repr(), 'rdgsbase eax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.Registers.type, SEGMENT_REG)
@@ -127,7 +127,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdgsbase ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdgsbase')
         assert_equal(myDisasm.repr(), 'rdgsbase rax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.Registers.type, SEGMENT_REG)
@@ -142,7 +142,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ptwrite ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ptwrite')
         assert_equal(myDisasm.repr(), 'ptwrite qword ptr [rax]')
         assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
 
@@ -153,7 +153,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ptwrite ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ptwrite')
         assert_equal(myDisasm.repr(), 'ptwrite dword ptr [rax]')
         assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
 
@@ -164,7 +164,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clwb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clwb')
         assert_equal(myDisasm.repr(), 'clwb byte ptr [rax]')
 
         # 66 0F AE /7
@@ -174,7 +174,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clflushopt ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clflushopt')
         assert_equal(myDisasm.repr(), 'clflushopt byte ptr [rax]')
 
         # NP 0F AE /0
@@ -184,7 +184,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxsave ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxsave')
         assert_equal(myDisasm.repr(), 'fxsave  [rax]')
 
         # NP REX.W + 0F AE /0
@@ -196,7 +196,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxsave64 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxsave64')
         assert_equal(myDisasm.repr(), 'fxsave64  [rax]')
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 512 * 8)
@@ -209,7 +209,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxrstor ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxrstor')
         assert_equal(myDisasm.repr(), 'fxrstor  [rax]')
 
         # NP REX.W + 0F AE /1
@@ -221,7 +221,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxrstor64 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'fxrstor64')
         assert_equal(myDisasm.repr(), 'fxrstor64  [rax]')
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
 
@@ -232,7 +232,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ldmxcsr ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ldmxcsr')
         assert_equal(myDisasm.repr(), 'ldmxcsr dword ptr [rax]')
 
         # VEX.LZ.0F.WIG AE /2
@@ -243,7 +243,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xae)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vldmxcsr ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vldmxcsr')
         assert_equal(myDisasm.repr(), 'vldmxcsr dword ptr [r8]')
 
 
@@ -257,7 +257,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xsaveopt ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xsaveopt')
         assert_equal(myDisasm.repr(), 'xsaveopt  [rax]')
 
 
@@ -270,7 +270,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xsaveopt64 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xsaveopt64')
         assert_equal(myDisasm.repr(), 'xsaveopt64  [rax]')
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 512 * 8)
@@ -286,7 +286,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'incsspd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'incsspd')
         assert_equal(myDisasm.repr(), 'incsspd eax')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 64)
@@ -302,7 +302,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfae')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'incsspq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'incsspq')
         assert_equal(myDisasm.repr(), 'incsspq rax')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 64)

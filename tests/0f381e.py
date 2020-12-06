@@ -28,7 +28,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf381e')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsd')
         assert_equal(myDisasm.repr(), 'pabsd mm5, qword ptr [rbx+11h]')
 
         # 66 0F 38 1e /r
@@ -38,7 +38,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf381e')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsd')
         assert_equal(myDisasm.repr(), 'pabsd xmm5, xmmword ptr [rbx+11h]')
 
         # VEX.128.66.0F38.WIG 1e /r
@@ -50,7 +50,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd')
         assert_equal(myDisasm.repr(), 'vpabsd xmm10, xmmword ptr [r8]')
 
         # VEX.256.66.0F38.WIG 1e /r
@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd')
         assert_equal(myDisasm.repr(), 'vpabsd xmm28, xmmword ptr [r8]')
 
         # EVEX.256.66.0F38.WIG 1e /r
@@ -77,7 +77,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd')
         assert_equal(myDisasm.repr(), 'vpabsd ymm28, ymmword ptr [r8]')
 
         # EVEX.512.66.0F38.WIG 1e /r
@@ -89,5 +89,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsd')
         assert_equal(myDisasm.repr(), 'vpabsd zmm28, zmmword ptr [r8]')

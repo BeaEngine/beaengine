@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5b)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x8 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x8')
         assert_equal(myDisasm.repr(), 'vbroadcasti32x8 zmm25, ymmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 5B /r
@@ -42,5 +42,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5b)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti64x4 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti64x4')
         assert_equal(myDisasm.repr(), 'vbroadcasti64x4 zmm25, ymmword ptr [r14]')

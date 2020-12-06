@@ -33,7 +33,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5c)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd')
         assert_equal(myDisasm.repr(), 'vsubpd ymm8, ymm15, ymmword ptr [rbp+44h]')
 
         myVEX = VEX('VEX.NDS.256.66.0F.WIG')
@@ -44,7 +44,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5c)
         assert_equal(myDisasm.infos.Reserved_.NB_PREFIX, 1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd')
         assert_equal(myDisasm.infos.Operand3.Memory.Displacement, 0x11111100)
         assert_equal(myDisasm.repr(), 'vsubpd ymm8, ymm15, ymmword ptr [0000000022222209h]')
 
@@ -58,7 +58,7 @@ class TestSuite:
         myDisasm.infos.VirtualAddr = 0x11111100
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5c)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd')
         assert_equal(myDisasm.repr(), 'vsubpd xmm24, xmm31, xmmword ptr [000000002222220Ah]')
 
 
@@ -69,7 +69,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.infos.VirtualAddr = 0x11111100
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdeclast ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdeclast')
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38df)
         assert_equal(myDisasm.infos.Instruction.AddrValue, 0x22222209)
         assert_equal(myDisasm.infos.Reserved_.NB_PREFIX, 1)
@@ -85,7 +85,7 @@ class TestSuite:
         myDisasm.infos.VirtualAddr = 0x11111100
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf5c)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'subpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'subpd')
         assert_equal(myDisasm.repr(), 'subpd xmm0, xmmword ptr [0000000022222208h]')
 
 
@@ -103,7 +103,7 @@ class TestSuite:
         myDisasm.infos.VirtualAddr = 0x11111100
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5c)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vsubpd')
         assert_equal(myDisasm.repr(), 'vsubpd xmm1, xmm15, xmm2')
 
 
@@ -116,5 +116,5 @@ class TestSuite:
         Buffer = bytes.fromhex('{}91443322'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpgatherqd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpgatherqd')
         assert_equal(myDisasm.repr(), 'vpgatherqd xmm24, qword ptr [r11+xmm6+22h]')

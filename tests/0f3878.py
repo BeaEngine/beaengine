@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb')
         assert_equal(myDisasm.repr(), 'vpbroadcastb xmm12, byte ptr [r8]')
 
         # VEX.256.66.0F38.W0 78 /r
@@ -43,7 +43,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb')
         assert_equal(myDisasm.repr(), 'vpbroadcastb ymm12, byte ptr [r8]')
 
         # EVEX.128.66.0F38.W0 78 /r
@@ -54,7 +54,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb')
         assert_equal(myDisasm.repr(), 'vpbroadcastb xmm25, byte ptr [r14]')
 
         # EVEX.256.66.0F38.W0 78 /r
@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb')
         assert_equal(myDisasm.repr(), 'vpbroadcastb ymm25, byte ptr [r14]')
 
         # EVEX.512.66.0F38.W0 78 /r
@@ -76,5 +76,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x78)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastb')
         assert_equal(myDisasm.repr(), 'vpbroadcastb zmm25, byte ptr [r14]')

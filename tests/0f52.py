@@ -28,7 +28,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf52')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rsqrtps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rsqrtps')
         assert_equal(myDisasm.repr(), 'rsqrtps xmm2, xmmword ptr [rbx]')
 
         # VEX.128.0F.WIG 52 /r
@@ -39,7 +39,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x52)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrtps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrtps')
         assert_equal(myDisasm.repr(), 'vrsqrtps xmm12, xmm8')
 
         # VEX.256.0F.WIG 52 /r
@@ -50,7 +50,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x52)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrtps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrtps')
         assert_equal(myDisasm.repr(), 'vrsqrtps ymm12, ymm8')
 
         # F3 0F 52 /r
@@ -60,7 +60,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf52')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rsqrtss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rsqrtss')
         assert_equal(myDisasm.repr(), 'rsqrtss xmm2, dword ptr [rbx]')
 
         # VEX.NDS.LIG.F3.0F.WIG 52 /r
@@ -71,5 +71,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x52)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrtss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrtss')
         assert_equal(myDisasm.repr(), 'vrsqrtss xmm14, xmm15, dword ptr [r8]')

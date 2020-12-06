@@ -1,56 +1,56 @@
-- entry : 'nop '
+- entry : 'nop'
   seq : 0x90
-- entry : 'cmc '
+- entry : 'cmc'
   seq : 0xF5
-- entry : 'stc '
+- entry : 'stc'
   seq : 0xF9
-- entry : 'clc '
+- entry : 'clc'
   seq : 0xF8
-- entry : 'cli '
+- entry : 'cli'
   seq : 0xFA
-- entry : 'sti '
+- entry : 'sti'
   seq : 0xFB
-- entry : 'cld '
+- entry : 'cld'
   seq : 0xFC
-- entry : 'std '
+- entry : 'std'
   seq : 0xFD
-- entry : 'salc '
+- entry : 'salc'
   seq : 0xD6
-- entry : 'xlatb '
+- entry : 'xlatb'
   seq : 0xD7
-- entry : 'leave '
+- entry : 'leave'
   seq : 0xC9
-- entry : 'int1 '
+- entry : 'int1'
   seq : 0xF1
-- entry : 'int3 '
+- entry : 'int3'
   seq : 0xCC
-- entry : 'into '
+- entry : 'into'
   seq : 0xCE
-- entry : 'iretd '
+- entry : 'iretd'
   seq : 0xCF
-- entry : 'ret '
+- entry : 'ret'
   seq : 0xC3
-- entry : 'hlt '
+- entry : 'hlt'
   seq : 0xF4
-- entry : 'lahf '
+- entry : 'lahf'
   seq : 0x9F
-- entry : 'sahf '
+- entry : 'sahf'
   seq : 0x9E
-- entry : 'wait '
+- entry : 'wait'
   seq : 0x9B
-- entry : 'daa '
+- entry : 'daa'
   seq : 0x27
-- entry : 'aaa '
+- entry : 'aaa'
   seq : 0x37
-- entry : 'das '
+- entry : 'das'
   seq : 0x2F
-- entry : 'aas '
+- entry : 'aas'
   seq : 0x3F
-- entry : 'pushad '
+- entry : 'pushad'
   seq : 0x60
-- entry : 'popad '
+- entry : 'popad'
   seq : 0x61
-- entry : 'pushfd '
+- entry : 'pushfd'
   seq : 0x9C
-- entry : 'popfd '
+- entry : 'popfd'
   seq : 0x9D

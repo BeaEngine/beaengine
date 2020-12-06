@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x38)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti128 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti128')
         assert_equal(myDisasm.repr(), 'vinserti128 ymm10, ymm0, xmmword ptr [r8], 33h')
 
         # EVEX.256.66.0F3A.W0 38 /r ib
@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x38)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti32x4 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti32x4')
         assert_equal(myDisasm.repr(), 'vinserti32x4 ymm28, ymm16, xmmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 38 /r ib
@@ -53,7 +53,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x38)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti32x4 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti32x4')
         assert_equal(myDisasm.repr(), 'vinserti32x4 zmm28, zmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 38 /r ib
@@ -64,7 +64,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x38)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti64x2 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti64x2')
         assert_equal(myDisasm.repr(), 'vinserti64x2 ymm28, ymm16, xmmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 38 /r ib
@@ -75,5 +75,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x38)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti64x2 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinserti64x2')
         assert_equal(myDisasm.repr(), 'vinserti64x2 zmm28, zmm16, xmmword ptr [r8], 11h')

@@ -44,7 +44,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         }
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sldt ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sldt");
         #endif
         pMyDisasm->Operand2.OpType = REGISTER_TYPE;
         pMyDisasm->Operand2.Registers.type = MEMORY_MANAGEMENT_REG;
@@ -62,7 +62,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         }
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "str ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "str");
         #endif
         pMyDisasm->Operand2.OpType = REGISTER_TYPE;
         pMyDisasm->Operand2.Registers.type = MEMORY_MANAGEMENT_REG;
@@ -75,7 +75,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2word;
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lldt ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lldt");
         #endif
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;
         pMyDisasm->Operand1.Registers.type = MEMORY_MANAGEMENT_REG;
@@ -88,7 +88,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2word;
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ltr ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ltr");
         #endif
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;
         pMyDisasm->Operand1.Registers.type = MEMORY_MANAGEMENT_REG;
@@ -101,7 +101,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         GV.MemDecoration = Arg1word;
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "verr ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "verr");
         #endif
         pMyDisasm->Operand2.OpType = REGISTER_TYPE;
         pMyDisasm->Operand2.Registers.type = SPECIAL_REG;
@@ -114,7 +114,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         GV.MemDecoration = Arg1word;
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "verw ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "verw");
         #endif
         pMyDisasm->Operand2.OpType = REGISTER_TYPE;
         pMyDisasm->Operand2.Registers.type = SPECIAL_REG;

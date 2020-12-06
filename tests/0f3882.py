@@ -29,5 +29,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3882)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'invpcid ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'invpcid')
         assert_equal(myDisasm.repr(), 'invpcid rsp, dqword ptr [rax]')

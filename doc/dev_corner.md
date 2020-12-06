@@ -38,8 +38,8 @@ class TestSuite:
       myDisasm = Disasm(Buffer)
       myDisasm.read()
       assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
-      assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr64 ')
-      assert_equal(myDisasm.repr(), 'endbr64 ')
+      assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr64')
+      assert_equal(myDisasm.repr(), 'endbr64')
 
 ```
 
@@ -61,7 +61,7 @@ class TestSuite:
     myDisasm = Disasm(Buffer)
     myDisasm.read()
     assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-    assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+    assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl')
     assert_equal(myDisasm.repr(), 'lsl rdx, word ptr [rax+00000000h]')
 
 ```
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x00)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermq')
         assert_equal(myDisasm.repr(), 'vpermq ymm12, ymm8, 11h')
 
         # EVEX.256.66.0F3A.W1 00 /r ib
@@ -95,7 +95,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x00)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermq')
         assert_equal(myDisasm.repr(), 'vpermq ymm4, ymmword ptr [rax], 11h')
 ```
 
@@ -313,7 +313,7 @@ Previous templates only implement a `FailDecode` function. If you want to add a 
 ```
 (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
 #ifndef BEA_LIGHT_DISASSEMBLY
-   (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aaa ");
+   (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "aaa");
 #endif
 GV.EIP_++;
 ```
@@ -324,7 +324,7 @@ Here the instruction is one byte long, we just need to fill *Instruction.Categor
 ```
 (*pMyDisasm).Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
 #ifndef BEA_LIGHT_DISASSEMBLY
-   (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add ");
+   (void) strcpy ((*pMyDisasm).Instruction.Mnemonic, "add");
 #endif
 switch(GV.OperandSize) {
   case 16:

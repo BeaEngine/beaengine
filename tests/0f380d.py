@@ -32,7 +32,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c402010d0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd')
         assert_equal(myDisasm.repr(), 'vpermilpd xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F38.W0 0d /r
@@ -41,7 +41,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c402050d0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd')
         assert_equal(myDisasm.repr(), 'vpermilpd ymm9, ymm15, ymmword ptr [r14]')
 
         # EVEX.NDS.128.66.0F38.W0 0d /r
@@ -56,7 +56,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd')
         assert_equal(myDisasm.repr(), 'vpermilpd xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F38.W0 0d /r
@@ -71,7 +71,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd')
         assert_equal(myDisasm.repr(), 'vpermilpd ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F38.W0 0d /r
@@ -86,7 +86,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilpd')
         assert_equal(myDisasm.repr(), 'vpermilpd zmm25, zmm31, zmmword ptr [r14]')
 
         # No VEX.66 prefix
@@ -94,14 +94,14 @@ class TestSuite:
         Buffer = bytes.fromhex('c402000d0e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'??? ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'???')
 
         # No VEX Prefix
 
         Buffer = bytes.fromhex('0f380d9011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'??? ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'???')
 
         # If VEX.W = 1 #UD
 

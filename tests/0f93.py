@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x93)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovw')
         assert_equal(myDisasm.repr(), 'kmovw r11d, k3')
 
         # VEX.L0.66.0F.W0 93 /r
@@ -43,7 +43,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x93)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovb')
         assert_equal(myDisasm.repr(), 'kmovb r11d, k3')
 
         # VEX.L0.F2.0F.W0 93 /r
@@ -55,7 +55,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x93)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovd')
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
         assert_equal(myDisasm.infos.Reserved_.VEX.pp, 3)
         assert_equal(myDisasm.repr(), 'kmovd r11d, k3')
@@ -69,7 +69,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x93)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovq')
         assert_equal(myDisasm.repr(), 'kmovq r11, k3')
 
         # 0F 93
@@ -80,5 +80,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f93)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'setnb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'setnb')
         assert_equal(myDisasm.repr(), 'setnb byte ptr [rax]')

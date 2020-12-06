@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfd7)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmovmskb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmovmskb')
         assert_equal(myDisasm.repr(), 'pmovmskb rax, mm0')
 
         # 66 0F D7 /r
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfd7)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmovmskb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmovmskb')
         assert_equal(myDisasm.repr(), 'pmovmskb rax, xmm0')
 
         # VEX.128.66.0F.WIG D7 /r
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd7)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmovmskb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmovmskb')
         assert_equal(myDisasm.repr(), 'vpmovmskb r8, xmm8')
 
         # VEX.256.66.0F.WIG D7 /r
@@ -64,7 +64,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd7)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmovmskb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmovmskb')
         assert_equal(myDisasm.repr(), 'vpmovmskb r8, ymm8')
 
 
@@ -74,5 +74,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd7)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmovmskb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmovmskb')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

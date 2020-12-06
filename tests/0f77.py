@@ -28,7 +28,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f77)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'emms ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'emms')
 
         # VEX.256.0F.WIG
         # VZEROALL
@@ -38,7 +38,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vzeroall ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vzeroall')
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.ymm, REG1|REG0
          |REG2 |REG3 |REG4 |REG5 |REG6 |REG7 |REG8 |REG9
          |REG10 |REG11 |REG12 |REG13 |REG14 |REG15)
@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vzeroupper ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vzeroupper')
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.ymm, REG1|REG0
          |REG2 |REG3 |REG4 |REG5 |REG6 |REG7 |REG8 |REG9
          |REG10 |REG11 |REG12 |REG13 |REG14 |REG15)
@@ -65,5 +65,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x77)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vzeroupper ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vzeroupper')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

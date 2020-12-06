@@ -28,7 +28,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtpd2pi ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtpd2pi')
         assert_equal(myDisasm.repr(), 'cvtpd2pi mm4, xmmword ptr [rax]')
 
         # NP 0F 2d /r
@@ -38,7 +38,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtps2pi ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtps2pi')
         assert_equal(myDisasm.repr(), 'cvtps2pi mm4, qword ptr [rax]')
 
         # F2 0F 2d /r
@@ -48,14 +48,14 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtsd2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtsd2si')
         assert_equal(myDisasm.repr(), 'cvtsd2si esp, qword ptr [rax]')
 
         Buffer = bytes.fromhex('f20f2de0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtsd2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtsd2si')
         assert_equal(myDisasm.repr(), 'cvtsd2si esp, xmm0')
 
 
@@ -68,7 +68,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtsd2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtsd2si')
         assert_equal(myDisasm.repr(), 'cvtsd2si rsp, qword ptr [rax]')
 
         # VEX.LIG.F2.0F.W0 2d /r 1
@@ -79,7 +79,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si')
         assert_equal(myDisasm.repr(), 'vcvtsd2si r10d, qword ptr [r8]')
 
         # VEX.LIG.F2.0F.W1 2d /r 1
@@ -90,7 +90,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si')
         assert_equal(myDisasm.repr(), 'vcvtsd2si r10, qword ptr [r8]')
 
         # EVEX.LIG.F2.0F.W0 2d /r
@@ -103,7 +103,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si')
         assert_equal(myDisasm.repr(), 'vcvtsd2si r10d, qword ptr [r14]')
 
         # EVEX.LIG.F2.0F.W1 2d /r
@@ -116,7 +116,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtsd2si')
         assert_equal(myDisasm.repr(), 'vcvtsd2si r10, qword ptr [r14]')
 
         # F3 0F 2d /r
@@ -126,7 +126,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtss2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtss2si')
         assert_equal(myDisasm.repr(), 'cvtss2si esp, dword ptr [rax]')
 
         # F3 REX.W 0F 2d /r
@@ -138,7 +138,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtss2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'cvtss2si')
         assert_equal(myDisasm.repr(), 'cvtss2si rsp, dword ptr [rax]')
 
         # VEX.LIG.F3.0F.W0 2d /r 1
@@ -149,7 +149,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si')
         assert_equal(myDisasm.repr(), 'vcvtss2si r10d, dword ptr [r8]')
 
         # VEX.LIG.F3.0F.W1 2d /r 1
@@ -160,7 +160,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si')
         assert_equal(myDisasm.repr(), 'vcvtss2si r10, dword ptr [r8]')
 
         # EVEX.LIG.F3.0F.W0 2d /r
@@ -173,7 +173,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si')
         assert_equal(myDisasm.repr(), 'vcvtss2si r10d, dword ptr [r14]')
 
         # EVEX.LIG.F3.0F.W1 2d /r
@@ -186,7 +186,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtss2si')
         assert_equal(myDisasm.repr(), 'vcvtss2si r10, dword ptr [r14]')
 
         # VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD.

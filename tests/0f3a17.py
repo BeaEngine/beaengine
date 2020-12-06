@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a17)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'extractps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'extractps')
         assert_equal(myDisasm.repr(), 'extractps dword ptr [rax], xmm4, 11h')
 
         # VEX.128.66.0F3A.WIG 17 /r ib
@@ -41,7 +41,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractps')
         assert_equal(myDisasm.repr(), 'vextractps r8d, xmm12, 11h')
 
         # EVEX.128.66.0F3A.WIG 17 /r ib
@@ -52,5 +52,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x17)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vextractps')
         assert_equal(myDisasm.repr(), 'vextractps dword ptr [r8], xmm28, 11h')

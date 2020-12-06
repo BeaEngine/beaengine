@@ -26,7 +26,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfe4')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmulhuw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmulhuw')
         assert_equal(myDisasm.repr(), 'pmulhuw xmm2, xmmword ptr [rax+44332211h]')
 
         # VEX.NDS.128.66.0F.WIG e4 /r
@@ -34,7 +34,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c40101e40e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw')
         assert_equal(myDisasm.repr(), 'vpmulhuw xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F.WIG e4 /r
@@ -42,7 +42,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c40105e40e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw')
         assert_equal(myDisasm.repr(), 'vpmulhuw ymm9, ymm15, ymmword ptr [r14]')
 
         # EVEX.NDS.128.66.0F.WIG e4 /r
@@ -56,7 +56,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xe4')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw')
         assert_equal(myDisasm.repr(), 'vpmulhuw xmm25, xmm31, xmmword ptr [r14]')
 
         # EVEX.NDS.256.66.0F.WIG e4 /r
@@ -70,7 +70,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xe4')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw')
         assert_equal(myDisasm.repr(), 'vpmulhuw ymm25, ymm31, ymmword ptr [r14]')
 
         # EVEX.NDS.512.66.0F.WIG e4 /r
@@ -84,5 +84,5 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.EVEX.pp, 0x1)
         assert_equal(myDisasm.infos.Reserved_.EVEX.mm, 0x1)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xe4')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpmulhuw')
         assert_equal(myDisasm.repr(), 'vpmulhuw zmm25, zmm31, zmmword ptr [r14]')

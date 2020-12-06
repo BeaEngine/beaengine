@@ -29,8 +29,8 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr64 ')
-        assert_equal(myDisasm.repr(), 'endbr64 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr64')
+        assert_equal(myDisasm.repr(), 'endbr64')
 
         # F3 0F 1E FB
         # ENDBR32
@@ -39,8 +39,8 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr32 ')
-        assert_equal(myDisasm.repr(), 'endbr32 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'endbr32')
+        assert_equal(myDisasm.repr(), 'endbr32')
 
         # F3 0F 1E /1
         # RDSSPD R32
@@ -49,7 +49,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf1e)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdsspd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdsspd')
         assert_equal(myDisasm.repr(), 'rdsspd eax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 64)
@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf1e')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdsspq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdsspq')
         assert_equal(myDisasm.repr(), 'rdsspq rax')
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand2.OpSize, 64)

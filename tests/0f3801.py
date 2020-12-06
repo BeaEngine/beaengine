@@ -33,7 +33,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf3801')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'phaddw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'phaddw')
         assert_equal(myDisasm.repr(), 'phaddw mm2, qword ptr [rax+44332211h]')
 
         # 66 0F 38 01 /r
@@ -43,7 +43,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf3801')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'phaddw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'phaddw')
         assert_equal(myDisasm.repr(), 'phaddw xmm2, xmmword ptr [rax+44332211h]')
 
         # VEX.NDS.128.66.0F38.WIG 01 /r
@@ -52,7 +52,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c40201010e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vphaddw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vphaddw')
         assert_equal(myDisasm.repr(), 'vphaddw xmm9, xmm15, xmmword ptr [r14]')
 
         # VEX.NDS.256.66.0F38.WIG 01 /r
@@ -61,5 +61,5 @@ class TestSuite:
         Buffer = bytes.fromhex('c40205010e')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vphaddw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vphaddw')
         assert_equal(myDisasm.repr(), 'vphaddw ymm9, ymm15, ymmword ptr [r14]')

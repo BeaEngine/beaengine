@@ -31,7 +31,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38fa)
         assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'encodekey128 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'encodekey128')
 
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)

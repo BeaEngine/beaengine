@@ -64,5 +64,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x89')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mov ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mov')
         assert_equal(myDisasm.repr(), 'mov dword ptr [r9], edx')

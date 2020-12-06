@@ -37,7 +37,7 @@ class TestSuite:
         assert_equal(json_output.get('category'), "AVX512_INSTRUCTION")
         assert_equal(json_output['bytes'], "62 02 05 40 00 44 33 22")
         assert_equal(json_output['arch'], 64)
-        assert_equal(json_output['mnemonic'], "vpshufb ")
+        assert_equal(json_output['mnemonic'], "vpshufb")
         assert_equal(json_output['operands'][1]['repr'], "zmm24")
         assert_equal(json_output['operands'][1]['type'], "register")
         assert_equal(json_output['operands'][1]['size'], 512)
@@ -66,13 +66,13 @@ class TestSuite:
         myDisasm = Disasm(bytes.fromhex('e901000000cc90'))
         # read first instruction
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'jmp ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'jmp')
         assert_equal(myDisasm.is_jump(), True)
         # change offset to point at jump target
         myDisasm.follow()
         # read next instruction
         myDisasm.read()
-        assert_equal(myDisasm.repr(), "nop ")
+        assert_equal(myDisasm.repr(), "nop")
 
         #
         # Test segment registers

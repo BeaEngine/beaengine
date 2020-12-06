@@ -73,7 +73,7 @@ void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm)
 void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
 {
   #ifndef BEA_LIGHT_DISASSEMBLY
-   (void) strcpy (pMyDisasm->Instruction.Mnemonic, "??? ");
+   (void) strcpy (pMyDisasm->Instruction.Mnemonic, "???");
   #endif
   pMyDisasm->Operand1.AccessMode = 0;
   pMyDisasm->Operand2.AccessMode = 0;
@@ -1173,13 +1173,26 @@ size_t __bea_callspec__ printTabulation(PDISASM pMyDisasm, size_t i)
 }
 /* ====================================================================
  *
+ * ==================================================================== */
+size_t __bea_callspec__ printOneSpace(PDISASM pMyDisasm, size_t i)
+{
+  (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, " ");
+  i = strlen((char*) &pMyDisasm->CompleteInstr);
+  return i;
+}
+/* ====================================================================
+ *
  * operand representation
  *
  * ==================================================================== */
 size_t __bea_callspec__ printArg(OPTYPE* pMyOperand, PDISASM pMyDisasm, size_t i)
 {
-  (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, (char*) &pMyOperand->OpMnemonic);
-  i = strlen((char*) &pMyDisasm->CompleteInstr);
+  size_t mnemonic = strlen((char*) &pMyOperand->OpMnemonic);
+  if (mnemonic != 0) {
+    i = printOneSpace(pMyDisasm, i);
+    (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, (char*) &pMyOperand->OpMnemonic);
+    i = strlen((char*) &pMyDisasm->CompleteInstr);
+  }
   return i;
 }
 
@@ -1205,6 +1218,7 @@ UInt32 find_exp(UInt32 a) {
  * ==================================================================== */
 size_t __bea_callspec__ printDecoratedArg(OPTYPE* pMyOperand, PDISASM pMyDisasm, size_t i)
 {
+  i = printOneSpace(pMyDisasm, i);
   if (GV.SYNTAX_ == NasmSyntax) {
     (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, NasmPrefixes[GV.MemDecoration-1]);
     i = strlen((char*) &pMyDisasm->CompleteInstr);
@@ -1314,16 +1328,9 @@ size_t __bea_callspec__ printArg4(PDISASM pMyDisasm, size_t i)
  * ==================================================================== */
 size_t __bea_callspec__ printArgsSeparator(OPTYPE* pMyOperand1, OPTYPE* pMyOperand2, PDISASM pMyDisasm, size_t i)
 {
-  if (
-    (pMyOperand1->OpMnemonic[0] != 0) &&
-     (pMyOperand2->OpMnemonic[0] != 0)
-     /*
-      ((UInt8)*((UInt8*) &(pMyOperand1->OpMnemonic) != 0) &&
-       ((UInt8)*((UInt8*) &(pMyOperand2->OpMnemonic) != 0)
-       */
-     ) {
-    (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, ", ");
-    i += 2;
+  if ((pMyOperand1->OpMnemonic[0] != 0) && (pMyOperand2->OpMnemonic[0] != 0)) {
+    (void) strcpy ((char*) &pMyDisasm->CompleteInstr+i, ",");
+    i += 1;
   }
   return i;
 }

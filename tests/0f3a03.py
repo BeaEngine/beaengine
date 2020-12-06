@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignd')
         assert_equal(myDisasm.repr(), 'valignd xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.128.66.0F3A.W1 03 /r ib
@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignq')
         assert_equal(myDisasm.repr(), 'valignq xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 03 /r ib
@@ -53,7 +53,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignd')
         assert_equal(myDisasm.repr(), 'valignd ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 03 /r ib
@@ -64,7 +64,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignq')
         assert_equal(myDisasm.repr(), 'valignq ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 03 /r ib
@@ -75,7 +75,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignd')
         assert_equal(myDisasm.repr(), 'valignd zmm28, zmm16, zmmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 03 /r ib
@@ -86,5 +86,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'valignq')
         assert_equal(myDisasm.repr(), 'valignq zmm28, zmm16, zmmword ptr [r8], 11h')

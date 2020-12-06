@@ -33,7 +33,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5c)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tdpbf16ps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tdpbf16ps')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.tmm, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 8192)

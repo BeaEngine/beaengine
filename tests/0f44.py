@@ -34,7 +34,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotw')
         assert_equal(myDisasm.repr(), 'knotw k1, k3')
 
         # VEX.L0.66.0F.W0 44 /r
@@ -50,7 +50,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotb')
         assert_equal(myDisasm.repr(), 'knotb k1, k3')
 
         # VEX.L0.0F.W1 44 /r
@@ -66,7 +66,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 1)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotq')
         assert_equal(myDisasm.repr(), 'knotq k1, k3')
 
         # VEX.L0.66.0F.W1 44 /r
@@ -82,5 +82,5 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 0)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 1)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'knotd')
         assert_equal(myDisasm.repr(), 'knotd k1, k3')

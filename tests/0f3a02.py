@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpblendd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpblendd')
         assert_equal(myDisasm.repr(), 'vpblendd xmm12, xmm0, xmm8, 11h')
 
         # VEX.256.66.0F3A.W0 02 /r ib
@@ -42,5 +42,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x02)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpblendd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpblendd')
         assert_equal(myDisasm.repr(), 'vpblendd ymm12, ymm0, ymm8, 11h')

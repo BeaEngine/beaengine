@@ -29,7 +29,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pextrw')
         assert_equal(myDisasm.repr(), 'pextrw ax, mm0, 22h')
         assert_equal(myDisasm.infos.Instruction.Immediat, 0x22)
 
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pextrw')
         assert_equal(myDisasm.repr(), 'pextrw ax, xmm0, 22h')
         assert_equal(myDisasm.infos.Instruction.Immediat, 0x22)
 
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw')
         assert_equal(myDisasm.repr(), 'vpextrw r8w, xmm8, F0h')
 
 
@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw')
         assert_equal(myDisasm.repr(), 'vpextrw r8w, xmm24, BBh')
 
 
@@ -77,7 +77,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         myEVEX = EVEX('EVEX.128.66.0F.WIG')
@@ -86,7 +86,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # If VEX.vvvv != 1111B or EVEX.vvvv != 1111B.
@@ -97,7 +97,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         myEVEX = EVEX('EVEX.128.66.0F.WIG')
@@ -106,5 +106,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xc5)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrw')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

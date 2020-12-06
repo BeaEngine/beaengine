@@ -33,7 +33,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermps')
         assert_equal(myDisasm.repr(), 'vpermps ymm12, ymm0, ymmword ptr [r8]')
 
         # EVEX.NDS.256.66.0F38.W0 16 /r
@@ -45,7 +45,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermps')
         assert_equal(myDisasm.repr(), 'vpermps ymm28, ymm16, ymmword ptr [r8]')
 
         # EVEX.NDS.512.66.0F38.W0 16 /r
@@ -57,7 +57,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermps')
         assert_equal(myDisasm.repr(), 'vpermps zmm28, zmm16, zmmword ptr [r8]')
 
         # EVEX.NDS.256.66.0F38.W1 16 /r
@@ -69,7 +69,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermpd')
         assert_equal(myDisasm.repr(), 'vpermpd ymm28, ymm16, ymmword ptr [r8]')
 
         # EVEX.NDS.512.66.0F38.W1 16 /r
@@ -81,5 +81,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x16)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermpd')
         assert_equal(myDisasm.repr(), 'vpermpd zmm28, zmm16, zmmword ptr [r8]')

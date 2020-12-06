@@ -35,7 +35,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38d8)
         assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesencwide128kl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesencwide128kl')
 
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 384)
@@ -92,7 +92,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38d8)
         assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdecwide128kl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdecwide128kl')
 
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 384)
@@ -149,7 +149,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38d8)
         assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesencwide256kl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesencwide256kl')
 
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 512)
@@ -206,7 +206,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38d8)
         assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdecwide256kl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdecwide256kl')
 
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 512)

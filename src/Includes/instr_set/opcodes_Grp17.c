@@ -29,7 +29,7 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       pMyDisasm->Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blsr ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blsr");
       #endif
       if (GV.VEX.opcode == 0xc4) {
         /* using VEX3Bytes */
@@ -54,7 +54,7 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       pMyDisasm->Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blmsk ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blmsk");
       #endif
       if (GV.VEX.opcode == 0xc4) {
         /* using VEX3Bytes */
@@ -79,7 +79,7 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
     if (GV.VEX.state == InUsePrefix) {
       pMyDisasm->Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blsi ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "blsi");
       #endif
       if (GV.VEX.opcode == 0xc4) {
         /* using VEX3Bytes */

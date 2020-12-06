@@ -29,8 +29,8 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec ')
-        assert_equal(myDisasm.repr(), 'getsec ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec')
+        assert_equal(myDisasm.repr(), 'getsec')
 
 
         # 66 0F 37 /r
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # F0 0F 37 /r
@@ -50,7 +50,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # F2 0F 37 /r
@@ -60,7 +60,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # F3 0F 37 /r
@@ -70,7 +70,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf37')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'getsec')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
 
@@ -81,7 +81,7 @@ class TestSuite:
         Buffer = bytes.fromhex('{}37'.format(myVEX.c4()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'??? ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'???')
 
         # EVEX.NDS.128.0F.W0 37 /r
         # getsec
@@ -90,4 +90,4 @@ class TestSuite:
         Buffer = bytes.fromhex('{}37'.format(myEVEX.prefix()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'??? ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'???')

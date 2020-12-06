@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti128 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti128')
         assert_equal(myDisasm.repr(), 'vbroadcasti128 ymm10, xmmword ptr [r8]')
 
         # EVEX.256.66.0F38.W0 5A /r
@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x4 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x4')
         assert_equal(myDisasm.repr(), 'vbroadcasti32x4 ymm25, xmmword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 5A /r
@@ -54,7 +54,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x4 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti32x4')
         assert_equal(myDisasm.repr(), 'vbroadcasti32x4 zmm25, xmmword ptr [r14]')
 
         # EVEX.256.66.0F38.W1 5A /r
@@ -66,7 +66,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti64x2 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti64x2')
         assert_equal(myDisasm.repr(), 'vbroadcasti64x2 ymm25, xmmword ptr [r14]')
 
         # EVEX.512.66.0F38.W1 5A /r
@@ -78,5 +78,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x5a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti64x2 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vbroadcasti64x2')
         assert_equal(myDisasm.repr(), 'vbroadcasti64x2 zmm25, xmmword ptr [r14]')

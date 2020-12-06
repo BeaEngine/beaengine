@@ -29,7 +29,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubpd')
         assert_equal(myDisasm.repr(), 'addsubpd xmm4, xmmword ptr [rax]')
 
         # VEX.NDS.128.66.0F.WIG D0 /r
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubpd')
         assert_equal(myDisasm.repr(), 'vaddsubpd xmm12, xmm15, xmmword ptr [r8]')
 
         # VEX.NDS.256.66.0F.WIG D0 /r
@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubpd')
         assert_equal(myDisasm.repr(), 'vaddsubpd ymm12, ymm15, ymmword ptr [r8]')
 
         # F2 0F D0 /r
@@ -61,7 +61,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubps')
         assert_equal(myDisasm.repr(), 'addsubps xmm4, xmmword ptr [rax]')
 
         # VEX.NDS.128.F2.0F.WIG D0 /r
@@ -72,7 +72,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubps')
         assert_equal(myDisasm.repr(), 'vaddsubps xmm12, xmm15, xmmword ptr [r8]')
 
         # VEX.NDS.256.F2.0F.WIG D0 /r
@@ -83,5 +83,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xd0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaddsubps')
         assert_equal(myDisasm.repr(), 'vaddsubps ymm12, ymm15, ymmword ptr [r8]')

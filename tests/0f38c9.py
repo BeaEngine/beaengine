@@ -34,5 +34,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38c9')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1msg1 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1msg1')
         assert_equal(myDisasm.repr(), 'sha1msg1 xmm5, xmmword ptr [rbx+11h]')

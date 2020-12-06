@@ -35,7 +35,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.VEX.L, 1)
         assert_equal(myDisasm.infos.Reserved_.REX.W_, 0)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnw')
         assert_equal(myDisasm.repr(), 'kandnw k1, k2, k3')
 
         # VEX.L1.66.0F.W0 42 /r
@@ -48,7 +48,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x42')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnb')
         assert_equal(myDisasm.repr(), 'kandnb k1, k2, k3')
 
         # VEX.L1.0F.W1 42 /r
@@ -61,7 +61,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x42')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnq')
         assert_equal(myDisasm.repr(), 'kandnq k1, k2, k3')
 
         # VEX.L1.66.0F.W1 42 /r
@@ -74,5 +74,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x42')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kandnd')
         assert_equal(myDisasm.repr(), 'kandnd k1, k2, k3')

@@ -30,8 +30,8 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamcall ')
-        assert_equal(myDisasm.repr(), 'seamcall ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamcall')
+        assert_equal(myDisasm.repr(), 'seamcall')
 
         # 66 0F 01 CE
         # SEAMOPS
@@ -42,12 +42,12 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamops ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamops')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 64)
         assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
-        assert_equal(myDisasm.repr(), 'seamops ')
+        assert_equal(myDisasm.repr(), 'seamops')
 
         # 66 0F 01 CD
         # SEAMRET
@@ -58,8 +58,8 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamret ')
-        assert_equal(myDisasm.repr(), 'seamret ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'seamret')
+        assert_equal(myDisasm.repr(), 'seamret')
 
         # 66 0F 01 CC
         # TDCALL
@@ -70,8 +70,8 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tdcall ')
-        assert_equal(myDisasm.repr(), 'tdcall ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tdcall')
+        assert_equal(myDisasm.repr(), 'tdcall')
 
         # NP 0F 01 CA
         # CLAC
@@ -80,7 +80,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clac ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clac')
 
         # NP 0F 01 CB
         # STAC
@@ -89,7 +89,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'stac ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'stac')
 
         # NP 0F 01 C5
         # PCONFIG
@@ -99,27 +99,27 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig')
 
         Buffer = bytes.fromhex('f00f01c5')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         Buffer = bytes.fromhex('f20f01c5')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         Buffer = bytes.fromhex('f30f01c5')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pconfig')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # NP 0F 01 C0
@@ -129,7 +129,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclv ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclv')
 
         # NP 0F 01 D7
         # ENCLU
@@ -138,7 +138,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclu ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclu')
 
         # NP 0F 01 CF
         # ENCLS
@@ -147,7 +147,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'encls ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'encls')
 
 
         # F3 0F 01 EA (mod=11, /5, RM=010)
@@ -160,7 +160,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.REGOPCODE, 5)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 3)
         assert_equal(myDisasm.infos.Reserved_.RM_, 2)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'saveprevssp ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'saveprevssp')
 
         # F3 0F 01 EC
         # UIRET
@@ -170,7 +170,7 @@ class TestSuite:
         length = myDisasm.read()
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'uiret ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'uiret')
         assert_equal(myDisasm.infos.Instruction.Category, UINTR_INSTRUCTION + CONTROL_TRANSFER)
         assert_equal(myDisasm.infos.Instruction.BranchType, RetType)
 
@@ -183,7 +183,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, UINTR_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'testui ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'testui')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.special, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 1)
@@ -203,7 +203,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, UINTR_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clui ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clui')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.special, REG4)
         assert_equal(myDisasm.infos.Operand1.OpSize, 1)
@@ -218,7 +218,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, UINTR_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'stui ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'stui')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.special, REG4)
         assert_equal(myDisasm.infos.Operand1.OpSize, 1)
@@ -231,7 +231,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrpkru ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrpkru')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.special, REG3)
         assert_equal(myDisasm.infos.Operand1.OpSize, 32)
@@ -245,7 +245,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrpkru ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrpkru')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # NP 0F 01 D4 (reg = 2, mod = 3, rm = 4)
@@ -257,7 +257,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmfunc ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmfunc')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 32)
@@ -271,7 +271,7 @@ class TestSuite:
         length = myDisasm.read()
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xend ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xend')
         assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
@@ -286,7 +286,7 @@ class TestSuite:
         length = myDisasm.read()
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xtest ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xtest')
         assert_equal(myDisasm.infos.Instruction.Category, VM_INSTRUCTION)
         assert_equal(myDisasm.infos.Instruction.Flags.OF_, RE_)
         assert_equal(myDisasm.infos.Instruction.Flags.SF_, RE_)
@@ -305,7 +305,7 @@ class TestSuite:
         length = myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.length, len(Buffer))
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdpkru ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdpkru')
         assert_equal(myDisasm.infos.Instruction.Category, SYSTEM_INSTRUCTION)
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.type, GENERAL_REG)
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.gpr, REG0 | REG2)
@@ -318,7 +318,7 @@ class TestSuite:
         length = myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.length, len(Buffer))
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdtscp ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rdtscp')
         assert_equal(myDisasm.infos.Instruction.Category, SYSTEM_INSTRUCTION)
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.type, GENERAL_REG)
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.gpr, REG0 | REG1 | REG2)

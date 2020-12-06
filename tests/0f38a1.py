@@ -32,7 +32,7 @@ class TestSuite:
         myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqd')
         assert_equal(myDisasm.repr(), 'vpscatterqd qword ptr [r11+xmm30+0088h] {k1}, xmm24')
 
         # EVEX.256.66.0F38.W0 A1 /vsib
@@ -45,7 +45,7 @@ class TestSuite:
         myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqd')
         assert_equal(myDisasm.repr(), 'vpscatterqd qword ptr [r11+ymm30+0088h] {k1}, xmm24')
 
         # EVEX.512.66.0F38.W0 A1 /vsib
@@ -58,7 +58,7 @@ class TestSuite:
         myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqd')
         assert_equal(myDisasm.repr(), 'vpscatterqd qword ptr [r11+zmm30+0088h] {k1}, ymm24')
 
         # EVEX.128.66.0F38.W1 A1 /vsib
@@ -71,7 +71,7 @@ class TestSuite:
         myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqq')
         assert_equal(myDisasm.repr(), 'vpscatterqq qword ptr [r11+xmm30+0110h] {k1}, xmm24')
 
         # EVEX.256.66.0F38.W1 A1 /vsib
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqq')
         assert_equal(myDisasm.repr(), 'vpscatterqq qword ptr [r11+ymm30+0110h] {k1}, ymm24')
 
         # EVEX.512.66.0F38.W1 A1 /vsib
@@ -97,5 +97,5 @@ class TestSuite:
         myDisasm.infos.Options = ShowEVEXMasking
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xa1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpscatterqq')
         assert_equal(myDisasm.repr(), 'vpscatterqq qword ptr [r11+zmm30+0110h] {k1}, zmm24')

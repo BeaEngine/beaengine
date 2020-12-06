@@ -29,7 +29,7 @@ class TestSuite:
         length = myDisasm.read()
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x81)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'add ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'add')
         assert_equal(myDisasm.repr(), 'add dword ptr [rax], 44332211h')
 
 
@@ -68,7 +68,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpSize, 32)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38f6')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'adcx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'adcx')
         assert_equal(myDisasm.infos.Instruction.Category, GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION)
         assert_equal(myDisasm.repr(), 'adcx edx, dword ptr [rax+11111111h]')
 
@@ -341,7 +341,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpSize, 128)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfd0')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubpd')
         assert_equal(myDisasm.infos.Instruction.Category, SSE3_INSTRUCTION+SIMD_FP_PACKED)
         assert_equal(myDisasm.repr(), 'addsubpd xmm2, xmmword ptr [rax+11111111h]')
 
@@ -385,7 +385,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpSize, 128)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfd0')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'addsubps')
         assert_equal(myDisasm.infos.Instruction.Category, SSE3_INSTRUCTION+SIMD_FP_PACKED)
         assert_equal(myDisasm.repr(), 'addsubps xmm2, xmmword ptr [rax+11111111h]')
 
@@ -1167,7 +1167,7 @@ class TestSuite:
         Buffer = b'\x0F\x01\xCA\x90\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.repr(), 'clac ')
+        assert_equal(myDisasm.repr(), 'clac')
 
     def test_cmppd(self):
 
@@ -2257,12 +2257,12 @@ class TestSuite:
         Buffer = b'\x66\xf3\xa5'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.repr(), 'rep movsw ')
+        assert_equal(myDisasm.repr(), 'rep movsw')
 
         Buffer = b'\xf3\x66\xa5'
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.repr(), 'rep movsw ')
+        assert_equal(myDisasm.repr(), 'rep movsw')
 
         Buffer = bytes.fromhex('67654c6973743a000000')
         myDisasm = Disasm(Buffer)
@@ -2278,7 +2278,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.infos.Archi = 16
         myDisasm.read()
-        assert_equal(myDisasm.repr(), '??? ')
+        assert_equal(myDisasm.repr(), '???')
 
         Buffer = bytes.fromhex('820000')
         myDisasm = Disasm(Buffer)
@@ -2317,7 +2317,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.infos.Archi = 32
         myDisasm.read()
-        assert_equal(myDisasm.repr(), 'rep cmpsw ')
+        assert_equal(myDisasm.repr(), 'rep cmpsw')
 
     def test_lock(self):
         '''Minimal regression tests for https://github.com/BeaEngine/beaengine/issues/9'''
@@ -2380,5 +2380,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.repr(), '')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xrstor ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xrstor')
         check = myDisasm.json()

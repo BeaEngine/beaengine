@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38cd')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha256msg2 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha256msg2')
         assert_equal(myDisasm.repr(), 'sha256msg2 xmm5, xmmword ptr [rbx+11h]')
 
         # EVEX.NDS.LIG.66.0F38.W0 CD /r
@@ -41,7 +41,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcd)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28ss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28ss')
         assert_equal(myDisasm.repr(), 'vrsqrt28ss xmm24, xmm31, dword ptr [r8]')
 
         # EVEX.NDS.LIG.66.0F38.W1 CD /r
@@ -52,5 +52,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xcd)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28sd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt28sd')
         assert_equal(myDisasm.repr(), 'vrsqrt28sd xmm24, xmm31, qword ptr [r8]')

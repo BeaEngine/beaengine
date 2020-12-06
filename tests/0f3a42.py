@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a42)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mpsadbw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mpsadbw')
         assert_equal(myDisasm.repr(), 'mpsadbw xmm4, xmmword ptr [rax], 11h')
 
         # VEX.128.66.0F3A.WIG 42 /r ib
@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x42)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmpsadbw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmpsadbw')
         assert_equal(myDisasm.repr(), 'vmpsadbw xmm1, xmm0, xmm9, 11h')
 
         # VEX.256.66.0F3A.WIG 42 /r ib
@@ -54,7 +54,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x42)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmpsadbw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmpsadbw')
         assert_equal(myDisasm.repr(), 'vmpsadbw ymm1, ymm0, ymm9, 11h')
 
         # EVEX.128.66.0F3A.W0 42 /r ib
@@ -65,7 +65,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x42)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vdbpsadbw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vdbpsadbw')
         assert_equal(myDisasm.repr(), 'vdbpsadbw xmm28, xmm16, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 42 /r ib
@@ -76,7 +76,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x42)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vdbpsadbw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vdbpsadbw')
         assert_equal(myDisasm.repr(), 'vdbpsadbw ymm28, ymm16, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 42 /r ib
@@ -87,5 +87,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x42)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vdbpsadbw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vdbpsadbw')
         assert_equal(myDisasm.repr(), 'vdbpsadbw zmm28, zmm16, zmmword ptr [r8], 11h')

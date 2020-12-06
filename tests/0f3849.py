@@ -34,7 +34,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Reserved_.VEX.mmmmm, 0x2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x49)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ldtilecfg ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ldtilecfg')
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 512)
         assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
@@ -55,7 +55,7 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand1.OpType, MEMORY_TYPE)
         assert_equal(myDisasm.infos.Operand1.OpSize, 512)
         assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sttilecfg ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sttilecfg')
         assert_equal(myDisasm.repr(), 'sttilecfg  [r8]')
 
         # VEX.128.NP.0F38.W0 49 C0
@@ -69,8 +69,8 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x49)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tilerelease ')
-        assert_equal(myDisasm.repr(), 'tilerelease ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tilerelease')
+        assert_equal(myDisasm.repr(), 'tilerelease')
 
         # VEX.128.F2.0F38.W0 49 11:rrr:000
         # TILEZERO tmm1
@@ -84,7 +84,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x49)
         assert_equal(myDisasm.infos.Instruction.Category, AMX_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tilezero ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'tilezero')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.tmm, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 8192)

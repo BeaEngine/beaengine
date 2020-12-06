@@ -31,7 +31,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rdfsbase ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rdfsbase");
       #endif
       GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
@@ -46,7 +46,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rdgsbase ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rdgsbase");
       #endif
       GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
@@ -61,7 +61,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "wrfsbase ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "wrfsbase");
       #endif
       GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
       MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
@@ -76,7 +76,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "wrgsbase ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "wrgsbase");
       #endif
       GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
       MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
@@ -89,7 +89,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (pMyDisasm->Prefix.OperandSize == InUsePrefix) GV.ERROR_OPCODE = UD_;
       pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ptwrite ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ptwrite");
       #endif
       GV.MemDecoration = (GV.REX.W_ == 1) ? Arg1qword : Arg1dword;
       GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
@@ -102,12 +102,12 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1)) {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "incsspq ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "incsspq");
         #endif
       }
       else {
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "incsspd ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "incsspd");
         #endif
       }
       GV.OperandSize = (GV.REX.W_ == 1) ? 64 : 32;
@@ -130,7 +130,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_ != 0x3) {
         pMyDisasm->Instruction.Category = CLWB_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "clwb ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "clwb");
         #endif
         GV.MemDecoration = Arg1byte;
 
@@ -145,7 +145,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_ != 0x3) {
         pMyDisasm->Instruction.Category = CLFLUSHOPT_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "clflushopt ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "clflushopt");
         #endif
         GV.MemDecoration = Arg1byte;
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
@@ -171,12 +171,12 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         pMyDisasm->Instruction.Category = FXSR_INSTRUCTION;
         if (GV.REX.W_ == 1) {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxsave64 ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxsave64");
           #endif
         }
         else {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxsave ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxsave");
           #endif
         }
         pMyDisasm->Operand1.OpSize = 512 * 8;
@@ -202,12 +202,12 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         pMyDisasm->Instruction.Category = FXSR_INSTRUCTION;
         if (GV.REX.W_ == 1) {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxrstor64 ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxrstor64");
           #endif
         }
         else {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxrstor ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "fxrstor");
           #endif
         }
         pMyDisasm->Operand1.OpSize = 512 * 8;
@@ -239,13 +239,13 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         if (GV.VEX.state == InUsePrefix) {
           pMyDisasm->Instruction.Category = AVX_INSTRUCTION+STATE_MANAGEMENT;
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vldmxcsr ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vldmxcsr");
           #endif
         }
         else {
           pMyDisasm->Instruction.Category = SSE_INSTRUCTION+STATE_MANAGEMENT;
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ldmxcsr ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ldmxcsr");
           #endif
         }
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;
@@ -269,13 +269,13 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         if (GV.VEX.state == InUsePrefix) {
           pMyDisasm->Instruction.Category = AVX_INSTRUCTION+STATE_MANAGEMENT;
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vstmxcsr ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vstmxcsr");
           #endif
         }
         else {
           pMyDisasm->Instruction.Category = SSE_INSTRUCTION+STATE_MANAGEMENT;
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "stmxcsr ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "stmxcsr");
           #endif
         }
         pMyDisasm->Operand2.OpType = REGISTER_TYPE;
@@ -298,12 +298,12 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         pMyDisasm->Instruction.Category = XSAVE_INSTRUCTION;
         if (GV.REX.W_ == 1) {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsave64 ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsave64");
           #endif
         }
         else {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsave ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsave");
           #endif
         }
         pMyDisasm->Operand1.OpSize = 512 * 8;
@@ -325,7 +325,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_== 0x3) {
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lfence ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lfence");
         #endif
       }
       else {
@@ -333,7 +333,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         GV.MemDecoration = Arg1multibytes;
         pMyDisasm->Instruction.Category = XSAVE_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xrstor ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xrstor");
         #endif
         pMyDisasm->Operand1.OpSize = 512 * 8;
         pMyDisasm->Operand1.AccessMode = READ;
@@ -350,19 +350,19 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_== 0x3) {
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "mfence ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "mfence");
         #endif
       }
       else {
         pMyDisasm->Instruction.Category = XSAVEOPT_INSTRUCTION;
         if (GV.REX.W_ == 1) {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsaveopt64 ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsaveopt64");
           #endif
         }
         else {
           #ifndef BEA_LIGHT_DISASSEMBLY
-             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsaveopt ");
+             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsaveopt");
           #endif
         }
         GV.MemDecoration = Arg1multibytes;
@@ -382,7 +382,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       if (GV.MOD_== 0x3) {
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sfence ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sfence");
         #endif
       }
       else {
@@ -392,7 +392,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         GV.MemDecoration = Arg2byte;
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "clflush ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "clflush");
         #endif
       }
     }

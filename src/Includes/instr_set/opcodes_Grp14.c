@@ -37,7 +37,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
           return;
         }
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpsllq ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpsllq");
         #endif
         pMyDisasm->Instruction.Category = AVX2_INSTRUCTION;
         if (GV.VEX.L == 0) {
@@ -67,7 +67,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
           return;
         }
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpslldq ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpslldq");
         #endif
         pMyDisasm->Instruction.Category = AVX2_INSTRUCTION;
         if (GV.VEX.L == 0) {
@@ -120,7 +120,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psrlq ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psrlq");
       #endif
       GV.EIP_ += GV.DECALAGE_EIP+2;
       getImmediat8(&pMyDisasm->Operand2, pMyDisasm);
@@ -133,7 +133,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         GV.Register_ = 0;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psrldq ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psrldq");
         #endif
         GV.EIP_ += GV.DECALAGE_EIP+2;
         getImmediat8(&pMyDisasm->Operand2, pMyDisasm);
@@ -156,7 +156,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psllq ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psllq");
       #endif
       GV.EIP_ += GV.DECALAGE_EIP+2;
       getImmediat8(&pMyDisasm->Operand2, pMyDisasm);
@@ -170,7 +170,7 @@ void __bea_callspec__ G14_(PDISASM pMyDisasm)
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
         GV.Register_ = 0;
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pslldq ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pslldq");
         #endif
         GV.EIP_ += GV.DECALAGE_EIP+2;
         getImmediat8(&pMyDisasm->Operand2, pMyDisasm);

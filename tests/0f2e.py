@@ -29,7 +29,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'comiss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'comiss')
         assert_equal(myDisasm.repr(), 'comiss xmm4, dword ptr [rax]')
 
 
@@ -41,7 +41,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomiss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomiss')
         assert_equal(myDisasm.repr(), 'vcomiss xmm10, dword ptr [r8]')
 
         # EVEX.LIG.0F.W0 2f /r
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomiss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomiss')
         assert_equal(myDisasm.repr(), 'vcomiss xmm26, dword ptr [r14]')
 
         # 66 0F 2f /r
@@ -62,7 +62,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf2f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'comisd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'comisd')
         assert_equal(myDisasm.repr(), 'comisd xmm4, qword ptr [rax]')
 
         # VEX.LIG.66.0F.WIG 2f /r
@@ -73,7 +73,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomisd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomisd')
         assert_equal(myDisasm.repr(), 'vcomisd xmm10, qword ptr [r8]')
 
         # EVEX.LIG.66.0F.W1 2f /r
@@ -84,7 +84,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomisd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomisd')
         assert_equal(myDisasm.repr(), 'vcomisd xmm26, qword ptr [r14]')
 
         # VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD.
@@ -95,5 +95,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x2f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomisd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcomisd')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

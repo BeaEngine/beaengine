@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x4f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt14ss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt14ss')
         assert_equal(myDisasm.repr(), 'vrsqrt14ss xmm28, xmmword ptr [r8]')
 
 
@@ -43,5 +43,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x4f)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt14sd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrsqrt14sd')
         assert_equal(myDisasm.repr(), 'vrsqrt14sd xmm28, xmmword ptr [r8]')

@@ -31,5 +31,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x06)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vperm2f128 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vperm2f128')
         assert_equal(myDisasm.repr(), 'vperm2f128 ymm12, ymm0, ymm8, 11h')

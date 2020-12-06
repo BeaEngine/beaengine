@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movbe ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movbe')
         assert_equal(myDisasm.repr(), 'movbe dword ptr [rax], esp')
 
         # REX.W + 0F 38 f1 /r
@@ -44,7 +44,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movbe ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movbe')
         assert_equal(myDisasm.repr(), 'movbe qword ptr [rdi], rsp')
 
         # F2 0F 38 F1 /r
@@ -54,7 +54,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'crc32 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'crc32')
         assert_equal(myDisasm.repr(), 'crc32 esp, dword ptr [rax]')
 
         # F2 REX.W 0F 38 F1 /r
@@ -66,5 +66,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38f1)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'crc32 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'crc32')
         assert_equal(myDisasm.repr(), 'crc32 rsp, qword ptr [rdi]')

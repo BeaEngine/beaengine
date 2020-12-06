@@ -29,7 +29,7 @@ class TestSuite:
         Buffer = bytes.fromhex('0f38f627')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrssd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrssd')
         assert_equal(myDisasm.repr(), 'wrssd dword ptr [rdi], esp')
 
         # REX.W 0F 38 F6
@@ -40,7 +40,7 @@ class TestSuite:
         Buffer = bytes.fromhex('{:02x}0f38f627'.format(myREX.byte()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrssq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'wrssq')
         assert_equal(myDisasm.repr(), 'wrssq qword ptr [rdi], rsp')
 
         # VEX.NDD.LZ.F2.0F38.W0 F6 /r
@@ -54,7 +54,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf6)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mulx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mulx')
         assert_equal(myDisasm.repr(), 'mulx eax, ecx, dword ptr [r8]')
 
         # VEX.NDD.LZ.F2.0F38.W1 F6 /r
@@ -68,7 +68,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf6)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mulx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'mulx')
         assert_equal(myDisasm.repr(), 'mulx rax, rcx, qword ptr [r8]')
 
         # 66 0F 38 F6 /r
@@ -94,7 +94,7 @@ class TestSuite:
         Buffer = bytes.fromhex('f0660f38f627')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'adcx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'adcx')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # F3 0F 38 F6 /r
@@ -120,5 +120,5 @@ class TestSuite:
         Buffer = bytes.fromhex('f0f30f38f627')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'adox ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'adox')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

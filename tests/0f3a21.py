@@ -31,14 +31,14 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'insertps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'insertps')
         assert_equal(myDisasm.repr(), 'insertps xmm4, dword ptr [rax], 11h')
 
         Buffer = bytes.fromhex('660f3a21c011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'insertps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'insertps')
         assert_equal(myDisasm.repr(), 'insertps xmm0, xmm0, 11h')
 
         # VEX.128.66.0F3A.WIG 21 /r ib
@@ -49,7 +49,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps')
         assert_equal(myDisasm.repr(), 'vinsertps xmm12, xmm0, xmm8, 11h')
 
         myVEX = VEX('VEX.128.66.0F3A.WIG')
@@ -57,7 +57,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps')
         assert_equal(myDisasm.repr(), 'vinsertps xmm12, xmm0, dword ptr [r8], 11h')
 
         # EVEX.128.66.0F3A.W0 21 /r ib
@@ -68,7 +68,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps')
         assert_equal(myDisasm.repr(), 'vinsertps xmm28, xmm16, dword ptr [r8], 11h')
 
 
@@ -77,5 +77,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x21)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vinsertps')
         assert_equal(myDisasm.repr(), 'vinsertps xmm24, xmm16, xmm24, 11h')

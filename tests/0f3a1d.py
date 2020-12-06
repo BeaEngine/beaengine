@@ -32,7 +32,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph xmm8, xmm8, 11h')
 
         myVEX = VEX('VEX.128.66.0F3A.W0')
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph qword ptr [r8], xmm12, 11h')
 
         # VEX.256.66.0F3A.W0 1D /r ib
@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph xmm8, ymm12, 11h')
 
         myVEX = VEX('VEX.256.66.0F3A.W0')
@@ -59,7 +59,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph xmmword ptr [r8], ymm12, 11h')
 
         # EVEX.128.66.0F3A.W0 1D /r ib
@@ -70,7 +70,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph qword ptr [r8], xmm28, 11h')
 
         myEVEX = EVEX('EVEX.128.66.0F3A.W0')
@@ -78,7 +78,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph xmm24, xmm28, 11h')
 
         # EVEX.256.66.0F3A.W0 1D /r ib
@@ -89,7 +89,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph xmmword ptr [r8], ymm28, 11h')
 
         myEVEX = EVEX('EVEX.256.66.0F3A.W0')
@@ -97,7 +97,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph xmm24, ymm28, 11h')
 
         # EVEX.512.66.0F3A.W0 1D /r ib
@@ -108,7 +108,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph ymmword ptr [r8], zmm28, 11h')
 
         myEVEX = EVEX('EVEX.512.66.0F3A.W0')
@@ -116,5 +116,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1d)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vcvtps2ph')
         assert_equal(myDisasm.repr(), 'vcvtps2ph ymm24, zmm28, 11h')

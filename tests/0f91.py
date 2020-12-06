@@ -30,14 +30,14 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f91)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'setno ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'setno')
         assert_equal(myDisasm.repr(), 'setno byte ptr [rax]')
 
         Buffer = bytes.fromhex('0f91c0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f91)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'setno ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'setno')
         assert_equal(myDisasm.repr(), 'setno al')
 
         # VEX.L0.0F.W0 91 /r
@@ -49,7 +49,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x91')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovw')
         assert_equal(myDisasm.repr(), 'kmovw word ptr [r8], k4')
 
         # VEX.L0.66.0F.W0 91 /r
@@ -61,7 +61,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x91')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovb')
         assert_equal(myDisasm.repr(), 'kmovb byte ptr [r8], k4')
 
         # VEX.L0.0F.W1 91 /r
@@ -73,7 +73,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x91')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovq')
         assert_equal(myDisasm.repr(), 'kmovq qword ptr [r8], k4')
 
         # VEX.L0.66.0F.W1 91 /r
@@ -85,5 +85,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x91')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kmovd')
         assert_equal(myDisasm.repr(), 'kmovd dword ptr [r8], k4')

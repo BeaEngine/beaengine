@@ -30,14 +30,14 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a0a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'roundss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'roundss')
         assert_equal(myDisasm.repr(), 'roundss xmm4, dword ptr [rax], 11h')
 
         Buffer = bytes.fromhex('660f3a0ac011')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a0a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'roundss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'roundss')
         assert_equal(myDisasm.repr(), 'roundss xmm0, xmm0, 11h')
 
         # VEX.LIG.66.0F3A.WIG 0A /r ib
@@ -48,7 +48,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vroundss ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vroundss')
         assert_equal(myDisasm.repr(), 'vroundss xmm10, xmm0, dword ptr [r8], 33h')
 
         # EVEX.LIG.66.0F3A.W0 0A /r ib
@@ -59,5 +59,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0a)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrndscaless ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vrndscaless')
         assert_equal(myDisasm.repr(), 'vrndscaless xmm28, xmm16, dword ptr [r8], 11h')

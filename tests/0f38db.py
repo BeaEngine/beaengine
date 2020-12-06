@@ -33,7 +33,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38db')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesimc ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesimc')
         assert_equal(myDisasm.repr(), 'aesimc xmm5, xmmword ptr [rbx-5Eh]')
 
 
@@ -66,5 +66,5 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}db6ba2'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaesimc ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaesimc')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

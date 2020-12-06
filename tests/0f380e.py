@@ -40,7 +40,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}0ec0'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps')
         assert_equal(myDisasm.repr(), 'vtestps xmm0, xmm0')
 
         # VEX.128.66.0F38.W0 0E /r
@@ -57,7 +57,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}0e27'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps')
         assert_equal(myDisasm.repr(), 'vtestps xmm4, xmmword ptr [rdi]')
 
         # VEX.256.66.0F38.W0 0E /r
@@ -74,7 +74,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}0ec0'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps')
         assert_equal(myDisasm.repr(), 'vtestps ymm0, ymm0')
 
         # VEX.256.66.0F38.W0 0E /r
@@ -91,7 +91,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}0e8200000000'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps')
         assert_equal(myDisasm.repr(), 'vtestps ymm0, ymmword ptr [rdx+00000000h]')
 
         # if VEX.W = 1 #UD
@@ -106,7 +106,7 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}0e11'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)
 
         # if VEX.vvvv != 0b1111 #UD
@@ -120,5 +120,5 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}0e0e'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vtestps')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

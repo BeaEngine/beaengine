@@ -71,5 +71,5 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}4b0000'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vblendvpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vblendvpd')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

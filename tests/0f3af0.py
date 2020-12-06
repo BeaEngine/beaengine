@@ -33,7 +33,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx')
         assert_equal(myDisasm.repr(), 'rorx r10d, dword ptr [r8], 33h')
 
         myVEX = VEX('VEX.LZ.F2.0F3A.W0')
@@ -41,7 +41,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx')
         assert_equal(myDisasm.repr(), 'rorx r8d, r8d, 33h')
 
         # VEX.LZ.F2.0F3A.W1 F0 /r ib
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx')
         assert_equal(myDisasm.repr(), 'rorx r10, qword ptr [r8], 33h')
 
         myVEX = VEX('VEX.LZ.F2.0F3A.W1')
@@ -60,5 +60,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf0)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'rorx')
         assert_equal(myDisasm.repr(), 'rorx r8, r8, 33h')

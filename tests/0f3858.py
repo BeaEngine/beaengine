@@ -29,7 +29,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd')
         assert_equal(myDisasm.repr(), 'vpbroadcastd xmm10, dword ptr [r8]')
 
         # VEX.256.66.0F38.W0 58 /r
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd')
         assert_equal(myDisasm.repr(), 'vpbroadcastd ymm10, dword ptr [r8]')
 
         # EVEX.128.66.0F38.W0 58 /r
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd')
         assert_equal(myDisasm.repr(), 'vpbroadcastd xmm25, dword ptr [r14]')
 
         # EVEX.256.66.0F38.W0 58 /r
@@ -64,7 +64,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd')
         assert_equal(myDisasm.repr(), 'vpbroadcastd ymm25, dword ptr [r14]')
 
         # EVEX.512.66.0F38.W0 58 /r
@@ -76,5 +76,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x58)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastd')
         assert_equal(myDisasm.repr(), 'vpbroadcastd zmm25, dword ptr [r14]')

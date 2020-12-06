@@ -28,7 +28,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl')
         assert_equal(myDisasm.repr(), 'lsl sp, ax')
 
         # 0F 03 /r
@@ -38,14 +38,14 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl')
         assert_equal(myDisasm.repr(), 'lsl esp, eax')
 
         Buffer = bytes.fromhex('0f039000000000')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl')
         assert_equal(myDisasm.repr(), 'lsl edx, word ptr [rax+00000000h]')
 
 
@@ -55,7 +55,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl')
         assert_equal(myDisasm.repr(), 'lsl rdx, word ptr [rax+00000000h]')
 
         myREX = REX()
@@ -65,12 +65,12 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
         assert_equal(myDisasm.infos.Reserved_.MOD_, 0x3)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl')
         assert_equal(myDisasm.repr(), 'lsl rsp, eax')
 
         Buffer = bytes.fromhex('f00f03e0')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf03)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'lsl')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

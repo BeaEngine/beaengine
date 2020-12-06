@@ -26,6 +26,6 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfff)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ud0 ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'ud0')
         assert_equal(myDisasm.repr(), 'ud0 edx, dword ptr [rax+44332211h]')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

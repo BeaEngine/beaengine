@@ -35,7 +35,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38dd)
         assert_equal(myDisasm.infos.Instruction.Category, KL_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdec128kl ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesdec128kl')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.xmm, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 128)
@@ -52,7 +52,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38dd')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesenclast ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'aesenclast')
         assert_equal(myDisasm.repr(), 'aesenclast xmm5, xmmword ptr [rbx-5Eh]')
 
 
@@ -85,5 +85,5 @@ class TestSuite:
         Buffer = bytes.fromhex('c4{:02x}{:02x}dd6ba2'.format(myVEX.byte1(), myVEX.byte2()))
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaesenclast ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vaesenclast')
         assert_equal(myDisasm.infos.Reserved_.ERROR_OPCODE, UD_)

@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f3a14)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pextrb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pextrb')
         assert_equal(myDisasm.repr(), 'pextrb byte ptr [rax], xmm4, 11h')
 
         # VEX.128.66.0F3A.W0 14 /r ib
@@ -41,7 +41,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x14)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrb')
         assert_equal(myDisasm.repr(), 'vpextrb r8w, xmm12, 11h')
 
         # EVEX.128.66.0F3A.WIG 14 /r ib
@@ -52,5 +52,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x14)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpextrb')
         assert_equal(myDisasm.repr(), 'vpextrb byte ptr [r8], xmm28, 11h')

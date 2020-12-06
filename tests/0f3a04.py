@@ -31,7 +31,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x04)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps')
         assert_equal(myDisasm.repr(), 'vpermilps xmm12, xmm8, 11h')
 
         # VEX.256.66.0F3A.W0 04 /r ib
@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x04)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps')
         assert_equal(myDisasm.repr(), 'vpermilps ymm12, ymm8, 11h')
 
         # EVEX.128.66.0F3A.W0 04 /r ib
@@ -53,7 +53,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x04)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps')
         assert_equal(myDisasm.repr(), 'vpermilps xmm28, xmmword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W0 04 /r ib
@@ -64,7 +64,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x04)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps')
         assert_equal(myDisasm.repr(), 'vpermilps ymm28, ymmword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 04 /r
@@ -75,5 +75,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x04)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpermilps')
         assert_equal(myDisasm.repr(), 'vpermilps zmm28, zmmword ptr [r8], 11h')

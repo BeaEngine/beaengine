@@ -30,7 +30,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw')
         assert_equal(myDisasm.repr(), 'vpbroadcastw xmm12, word ptr [r8]')
 
         # VEX.256.66.0F38.W0 79 /r
@@ -42,7 +42,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw')
         assert_equal(myDisasm.repr(), 'vpbroadcastw ymm12, word ptr [r8]')
 
         # EVEX.128.66.0F38.W0 79 /r
@@ -53,7 +53,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw')
         assert_equal(myDisasm.repr(), 'vpbroadcastw xmm25, word ptr [r14]')
 
         # EVEX.256.66.0F38.W0 79 /r
@@ -64,7 +64,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw')
         assert_equal(myDisasm.repr(), 'vpbroadcastw ymm25, word ptr [r14]')
 
         # EVEX.512.66.0F38.W0 79 /r
@@ -75,5 +75,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x79)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpbroadcastw')
         assert_equal(myDisasm.repr(), 'vpbroadcastw zmm25, word ptr [r14]')

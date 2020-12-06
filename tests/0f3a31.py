@@ -32,7 +32,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kshiftrq ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kshiftrq')
         assert_equal(myDisasm.repr(), 'kshiftrq k1, k1, 11h')
 
         # VEX.L0.66.0F3A.W0 31 /r
@@ -44,5 +44,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x31)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kshiftrd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'kshiftrd')
         assert_equal(myDisasm.repr(), 'kshiftrd k4, k0, 11h')

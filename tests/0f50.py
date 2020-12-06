@@ -28,7 +28,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf50')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movmskps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movmskps')
         assert_equal(myDisasm.repr(), 'movmskps rsp, xmm0')
 
         # VEX.128.0F.WIG 50 /r
@@ -40,7 +40,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskps')
         assert_equal(myDisasm.repr(), 'vmovmskps r12, xmm8')
 
         # VEX.256.0F.WIG 50 /r
@@ -51,7 +51,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskps ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskps')
         assert_equal(myDisasm.repr(), 'vmovmskps r12, ymm8')
 
         # 66 0F 50 /r
@@ -61,7 +61,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf50')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movmskpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'movmskpd')
         assert_equal(myDisasm.repr(), 'movmskpd rsp, xmm0')
 
         # VEX.128.66.0F.WIG 50 /r
@@ -72,7 +72,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskpd')
         assert_equal(myDisasm.repr(), 'vmovmskpd r12, xmm8')
 
         # VEX.256.66.0F.WIG 50 /r
@@ -83,7 +83,7 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0x50')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskpd ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vmovmskpd')
         assert_equal(myDisasm.repr(), 'vmovmskpd r12, ymm8')
 
         #UD If VEX.vvvv ≠ 1111B.

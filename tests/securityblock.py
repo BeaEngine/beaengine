@@ -873,7 +873,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.length, 4)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf381c)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsb')
 
         # SecurityBlock if MOD == 0 and RM = 5
 
@@ -884,7 +884,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.length, 8)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf381c)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pabsb')
         assert_equal(myDisasm.repr(), 'pabsb mm0, qword ptr [0000000000400009h]')
 
         # SecurityBlock if MOD == 1 (disp8)
@@ -936,7 +936,7 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.length, 10)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x1c)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsb ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vpabsb')
         assert_equal(myDisasm.repr(), 'vpabsb xmm8, xmmword ptr [r11+r14+44332211h]')
 
         Buffer = bytes.fromhex('4003')
@@ -989,7 +989,7 @@ class TestSuite:
         assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x69)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'imul ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'imul')
         assert_equal(myDisasm.infos.Instruction.Immediat, 0)
 
         Buffer = bytes.fromhex('6b1011')[:-1]
@@ -1000,7 +1000,7 @@ class TestSuite:
         assert_equal(myDisasm.length, OUT_OF_BLOCK)
         assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 2)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x6b)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'imul ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'imul')
         assert_equal(myDisasm.infos.Instruction.Immediat, 0)
 
         Buffer = bytes.fromhex('691011223344')
@@ -1012,7 +1012,7 @@ class TestSuite:
         assert_equal(myDisasm.length, 6)
         assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 6)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x69)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'imul ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'imul')
         assert_equal(myDisasm.infos.Instruction.Immediat, 0x44332211)
 
 
@@ -1026,7 +1026,7 @@ class TestSuite:
         assert_equal(myDisasm.length, 15)
         assert_equal(myDisasm.infos.Reserved_.EIP_ - offset, 15)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x90)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'nop ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'nop')
 
 
         Buffer = bytes.fromhex('0f8001000000')
@@ -1037,4 +1037,4 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.length, 6)
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x0f80)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'jo ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'jo')

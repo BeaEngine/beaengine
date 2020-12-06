@@ -30,7 +30,7 @@ class TestSuite:
         assert_equal(myDisasm.length, len(Buffer))
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xfc7)
         assert_equal(myDisasm.infos.Instruction.Category, UINTR_INSTRUCTION)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'senduipi ')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'senduipi')
         assert_equal(myDisasm.infos.Operand1.OpType, REGISTER_TYPE)
         assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 64)

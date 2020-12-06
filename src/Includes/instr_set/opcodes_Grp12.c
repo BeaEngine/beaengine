@@ -37,7 +37,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
           return;
         }
         #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpsllw ");
+           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpsllw");
         #endif
         pMyDisasm->Instruction.Category = AVX2_INSTRUCTION;
         if (GV.VEX.L == 0) {
@@ -89,7 +89,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
         GV.Register_ = MMX_REG;
       }
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psrlw ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psrlw");
       #endif
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
@@ -109,7 +109,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
         GV.Register_ = MMX_REG;
       }
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psraw ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psraw");
       #endif
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
@@ -129,7 +129,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
         GV.Register_ = MMX_REG;
       }
       #ifndef BEA_LIGHT_DISASSEMBLY
-         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psllw ");
+         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psllw");
       #endif
       MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
