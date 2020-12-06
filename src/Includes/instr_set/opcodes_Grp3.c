@@ -22,7 +22,7 @@
 void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     switch (GV.REGOPCODE) {
       case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;
@@ -134,7 +134,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
 void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     switch (GV.REGOPCODE) {
       case 0:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+BIT_UInt8;

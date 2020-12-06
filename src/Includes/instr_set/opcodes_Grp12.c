@@ -27,9 +27,9 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
     }
     else if (GV.VEX.pp == 1) {
       if (!Security(2, pMyDisasm)) return;
-      GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+      GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
       if (GV.REGOPCODE == 6) {
-        GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+        GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
         if (
           (GV.EVEX.state != InUsePrefix) &&
           (GV.MOD_!= 0x3)) {
@@ -71,12 +71,12 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
   }
   else {
     if (!Security(2, pMyDisasm)) return;
-    GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+    GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
       FailDecode(pMyDisasm);
       return;
     }
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     if (GV.REGOPCODE == 2) {
       if (GV.OperandSize == 16) {
         pMyDisasm->Instruction.Category = SSE_INSTRUCTION+SHIFT_ROTATE;

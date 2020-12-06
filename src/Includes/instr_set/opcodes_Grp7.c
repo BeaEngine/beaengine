@@ -630,9 +630,9 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
 {
   if (GV.EVEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
   if (!Security(2, pMyDisasm)) return;
-  GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
-  GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
-  GV.RM_  = (*((UInt8*)(UIntPtr) (GV.EIP_+1))) & 0x7;
+  GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
+  GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
+  GV.RM_  = (*((UInt8*) (GV.EIP_+1))) & 0x7;
   switch(GV.REGOPCODE) {
     case 0:
       G7_regopcode0(pMyDisasm);

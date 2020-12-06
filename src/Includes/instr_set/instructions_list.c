@@ -7475,7 +7475,7 @@ void __bea_callspec__ push_Ib(PDISASM pMyDisasm)
     #endif
     if (!Security(2, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
-       (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X",(Int64)*((Int8*)(IntPtr) (GV.EIP_+1)));
+       (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.8X",(Int64)*((Int8*) (GV.EIP_+1)));
     #endif
     GV.ImmediatSize = 8;
     pMyDisasm->Instruction.Immediat = *((UInt8*) (GV.EIP_+1));

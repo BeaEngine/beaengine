@@ -24,7 +24,7 @@
 void __bea_callspec__ G17_(PDISASM pMyDisasm)
 {
   if (!Security(2, pMyDisasm)) return;
-  GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+  GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
   if (GV.REGOPCODE == 1) {
     if (GV.VEX.state == InUsePrefix) {
       pMyDisasm->Instruction.Category = AVX_INSTRUCTION + LOGICAL_INSTRUCTION;

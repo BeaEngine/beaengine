@@ -822,7 +822,7 @@ void __bea_callspec__ ALIb(PDISASM pMyDisasm)
   long MyNumber;
   if (!Security(2, pMyDisasm)) return;
   GV.ImmediatSize = 8;
-  MyNumber = *((Int8*)(IntPtr) (GV.EIP_+1));
+  MyNumber = *((Int8*) (GV.EIP_+1));
   #ifndef BEA_LIGHT_DISASSEMBLY
     (void) CopyFormattedNumber(pMyDisasm, (char*) &pMyDisasm->Operand2.OpMnemonic,"%.2X",(Int64) MyNumber);
   #endif

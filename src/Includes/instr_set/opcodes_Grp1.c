@@ -22,7 +22,7 @@
 void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     EbIb(pMyDisasm);
     switch (GV.REGOPCODE) {
       case 0:
@@ -124,7 +124,7 @@ void __bea_callspec__ G1_EbIb2(PDISASM pMyDisasm)
 void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     EvIv(pMyDisasm);
     switch (GV.REGOPCODE) {
       case 0:
@@ -214,7 +214,7 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
 void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
 {
     if (!Security(2, pMyDisasm)) return;
-    GV.REGOPCODE = ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 3) & 0x7;
+    GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     EvIb(pMyDisasm);
     switch (GV.REGOPCODE) {
       case 0:

@@ -27,7 +27,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
   if (GV.PrefRepe == 1) {
     if (GV.REGOPCODE == 0) {
       if (GV.Architecture != 64) { FailDecode(pMyDisasm); return; }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -42,7 +42,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 1) {
       if (GV.Architecture != 64) { FailDecode(pMyDisasm); return; }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -57,7 +57,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 2) {
       if (GV.Architecture != 64) { FailDecode(pMyDisasm); return; }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -72,7 +72,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 3) {
       if (GV.Architecture != 64) { FailDecode(pMyDisasm); return; }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = FSGSBASE_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -98,7 +98,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 5) {
       pMyDisasm->Instruction.Category = CET_INSTRUCTION;
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) { FailDecode(pMyDisasm); return; }
       if ((GV.REX.state == InUsePrefix) && (GV.REX.W_ == 1)) {
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -126,7 +126,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
     GV.OperandSize = GV.OriginalOperandSize;
     pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
     if (GV.REGOPCODE == 6) {
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) {
         pMyDisasm->Instruction.Category = CLWB_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -141,7 +141,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
       }
     }
     else if (GV.REGOPCODE == 7) {
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_ != 0x3) {
         pMyDisasm->Instruction.Category = CLFLUSHOPT_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -232,7 +232,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
         return;
       }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_!= 0x3) {
         GV.MemDecoration = Arg2dword;
         MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
@@ -262,7 +262,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
         return;
       }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_!= 0x3) {
         GV.MemDecoration = Arg1dword;
         MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
@@ -346,7 +346,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
         return;
       }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_== 0x3) {
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -378,7 +378,7 @@ void __bea_callspec__ G15_(PDISASM pMyDisasm)
         FailDecode(pMyDisasm);
         return;
       }
-      GV.MOD_= ((*((UInt8*)(UIntPtr) (GV.EIP_+1))) >> 6) & 0x3;
+      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
       if (GV.MOD_== 0x3) {
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
         #ifndef BEA_LIGHT_DISASSEMBLY
