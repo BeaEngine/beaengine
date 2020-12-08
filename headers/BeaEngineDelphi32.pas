@@ -1,6 +1,6 @@
 // ====================================================================
 //
-//  Delphi Static lib for BeaEngine 4.x
+//  Delphi Static lib for BeaEngine 5.x
 //
 //  upDate: 2010-Jan-9
 //  v0.4 support Delphi7 - Delphi2010

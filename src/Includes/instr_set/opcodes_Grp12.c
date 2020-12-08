@@ -23,7 +23,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
 {
   if (GV.VEX.state == InUsePrefix) {
     if (GV.VEX.pp == 0) {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
     else if (GV.VEX.pp == 1) {
       if (!Security(2, pMyDisasm)) return;
@@ -33,7 +33,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
         if (
           (GV.EVEX.state != InUsePrefix) &&
           (GV.MOD_!= 0x3)) {
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
           return;
         }
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -53,27 +53,27 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
           GV.MemDecoration = Arg2_m512_zmm;
         }
         fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_+=2;
         getImmediat8(&pMyDisasm->Operand3, pMyDisasm);
 
       }
       else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
       }
     }
     else if (GV.VEX.pp == 2) {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
   else {
     if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       return;
     }
     GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
@@ -91,7 +91,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psrlw");
       #endif
-      MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
       GV.EIP_ += GV.DECALAGE_EIP+2;
       getImmediat8(&pMyDisasm->Operand2, pMyDisasm);
@@ -111,7 +111,7 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psraw");
       #endif
-      MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
       GV.EIP_ += GV.DECALAGE_EIP+2;
       getImmediat8(&pMyDisasm->Operand2, pMyDisasm);
@@ -131,13 +131,13 @@ void __bea_callspec__ G12_(PDISASM pMyDisasm)
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy (pMyDisasm->Instruction.Mnemonic, "psllw");
       #endif
-      MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
       GV.Register_ = 0;
       GV.EIP_ += GV.DECALAGE_EIP+2;
       getImmediat8(&pMyDisasm->Operand2, pMyDisasm);
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
 }

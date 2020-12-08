@@ -1,7 +1,7 @@
 ; *****************************************
 ;
 ;
-;   Header for BeaEngine 4.x (nasm 64 bits)
+;   Header for BeaEngine 5.x (nasm 64 bits)
 ;
 ;
 ; *****************************************

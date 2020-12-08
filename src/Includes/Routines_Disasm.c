@@ -70,7 +70,7 @@ void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm)
 /* ====================================================================
  *
  * ==================================================================== */
-void __bea_callspec__ FailDecode(PDISASM pMyDisasm)
+void __bea_callspec__ failDecode(PDISASM pMyDisasm)
 {
   #ifndef BEA_LIGHT_DISASSEMBLY
    (void) strcpy (pMyDisasm->Instruction.Mnemonic, "???");
@@ -242,8 +242,8 @@ void __bea_callspec__ GbEb(PDISASM pMyDisasm)
 {
   GV.MemDecoration = Arg2byte;
   GV.OperandSize = 8;
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
-  MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
   GV.OperandSize = 32;
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
@@ -272,8 +272,8 @@ void __bea_callspec__ EvGv(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ ExGx(PDISASM pMyDisasm)
 {
-  MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
-  Reg_Opcode(&pMyDisasm->Operand2, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand2, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
@@ -290,7 +290,7 @@ void __bea_callspec__ EvIv(PDISASM pMyDisasm)
       GV.MemDecoration = Arg1dword;
     }
     GV.ImmediatSize = 32;                       /* place this instruction before MOD_RM routine to inform it there is an immediat value */
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+6;
     if (!Security(0, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -309,7 +309,7 @@ void __bea_callspec__ EvIv(PDISASM pMyDisasm)
   else {
     GV.MemDecoration = Arg1word;
     GV.ImmediatSize = 16;
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+4;
     if (!Security(1, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -337,7 +337,7 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
     else {
       GV.MemDecoration = Arg1dword;
     }
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+3;
     if (!Security(0, pMyDisasm)) return;
     if (GV.OperandSize == 32) {
@@ -366,7 +366,7 @@ void __bea_callspec__ EvIb(PDISASM pMyDisasm)
   }
   else {
     GV.MemDecoration = Arg1word;
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+3;
     if (!Security(0, pMyDisasm)) return;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -385,7 +385,7 @@ void __bea_callspec__ EbIb(PDISASM pMyDisasm)
   GV.ImmediatSize = 8;
   GV.MemDecoration = Arg1byte;
   GV.OperandSize = 8;
-  MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
   GV.OperandSize = 32;
   GV.EIP_ += GV.DECALAGE_EIP+3;
   if (!Security(0, pMyDisasm)) return;
@@ -402,7 +402,7 @@ void __bea_callspec__ Eb(PDISASM pMyDisasm)
 {
   GV.MemDecoration = Arg1byte;
   GV.OperandSize = 8;
-  MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
   GV.OperandSize = 32;
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
@@ -421,7 +421,7 @@ void __bea_callspec__ Ev(PDISASM pMyDisasm)
   else {
     GV.MemDecoration = Arg1word;
   }
-  MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
@@ -439,8 +439,8 @@ void __bea_callspec__ GvEv(PDISASM pMyDisasm)
   else {
     GV.MemDecoration = Arg2word;
   }
-  MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
@@ -449,9 +449,9 @@ void __bea_callspec__ GvEv(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GyEy(PDISASM pMyDisasm)
 {
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
   fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand2, pMyDisasm);
-  MOD_RM(&pMyDisasm->Operand3, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand3, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
@@ -484,11 +484,11 @@ void __bea_callspec__ ArgsVEX(PDISASM pMyDisasm)
   }
 }
 
-void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm)
+void __bea_callspec__ vex_CMPPS(PDISASM pMyDisasm)
 {
   verifyVEXvvvv(pMyDisasm);
   GV.Register_ = OPMASK_REG;
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
   if (GV.VEX.L == 0) {
     pMyDisasm->Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = SSE_REG;
@@ -505,7 +505,7 @@ void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm)
     GV.MemDecoration = Arg3_m512_zmm;
   }
   fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand2, pMyDisasm);
-  MOD_RM(&pMyDisasm->Operand3, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand3, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
@@ -515,16 +515,16 @@ void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ EyGy(PDISASM pMyDisasm)
 {
-  MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
   fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand2, pMyDisasm);
-  Reg_Opcode(&pMyDisasm->Operand3, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand3, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
-void __bea_callspec__ ArgsVEX_EyGy(PDISASM pMyDisasm)
+void __bea_callspec__ vex_EyGy(PDISASM pMyDisasm)
 {
   verifyVEXvvvv(pMyDisasm);
   if (GV.VEX.L == 0) {
@@ -550,7 +550,7 @@ void __bea_callspec__ ArgsVEX_EyGy(PDISASM pMyDisasm)
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
-void __bea_callspec__ ArgsVEX_ExGx(PDISASM pMyDisasm)
+void __bea_callspec__ vex_ExGx(PDISASM pMyDisasm)
 {
   verifyVEXvvvv(pMyDisasm);
   if (GV.VEX.L == 0) {
@@ -576,7 +576,7 @@ void __bea_callspec__ ArgsVEX_ExGx(PDISASM pMyDisasm)
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
-void __bea_callspec__ ArgsVEX_GxE(PDISASM pMyDisasm, int reg1, int reg2, int reg3)
+void __bea_callspec__ vex_GxE(PDISASM pMyDisasm, int reg1, int reg2, int reg3)
 {
   verifyVEXvvvv(pMyDisasm);
   if (GV.VEX.L == 0) {
@@ -602,34 +602,34 @@ void __bea_callspec__ ArgsVEX_GxE(PDISASM pMyDisasm, int reg1, int reg2, int reg
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
-void __bea_callspec__ ArgsVEX_GE(PDISASM pMyDisasm, int mem1, int mem2, int mem3, int reg1, int reg2, int reg3)
+void __bea_callspec__ vex_GE(PDISASM pMyDisasm, int mem1, int mem2, int mem3, int reg1, int reg2, int reg3)
 {
   verifyVEXvvvv(pMyDisasm);
   if (GV.VEX.L == 0) {
     pMyDisasm->Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = reg1;
     GV.MemDecoration = mem1;
-    MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
     GV.Register_ = SSE_REG;
-    Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+    decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
   else if (GV.VEX.L == 0x1) {
     pMyDisasm->Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = reg2;
     GV.MemDecoration = mem2;
-    MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
     GV.Register_ = AVX_REG;
-    Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+    decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
   else if (GV.EVEX.LL == 0x2) {
     pMyDisasm->Instruction.Category = AVX512_INSTRUCTION;
     GV.Register_ = reg3;
     GV.MemDecoration = mem3;
-    MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
     GV.Register_ = AVX512_REG;
-    Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+    decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
 }
@@ -639,7 +639,7 @@ void __bea_callspec__ ArgsVEX_GE(PDISASM pMyDisasm, int mem1, int mem2, int mem3
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
-void __bea_callspec__ ArgsVEX_GEx(PDISASM pMyDisasm, int mem1, int mem2, int mem3)
+void __bea_callspec__ vex_GEx(PDISASM pMyDisasm, int mem1, int mem2, int mem3)
 {
   verifyVEXvvvv(pMyDisasm);
   if (GV.VEX.L == 0) {
@@ -665,34 +665,34 @@ void __bea_callspec__ ArgsVEX_GEx(PDISASM pMyDisasm, int mem1, int mem2, int mem
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
-void __bea_callspec__ ArgsVEX_ExG(PDISASM pMyDisasm, int mem1, int mem2, int mem3, int reg1, int reg2, int reg3)
+void __bea_callspec__ vex_ExG(PDISASM pMyDisasm, int mem1, int mem2, int mem3, int reg1, int reg2, int reg3)
 {
   verifyVEXvvvv(pMyDisasm);
   if (GV.VEX.L == 0) {
     pMyDisasm->Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX_INSTRUCTION;
     GV.Register_ = reg1;
     GV.MemDecoration = mem1;
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.Register_ = SSE_REG;
-    Reg_Opcode(&pMyDisasm->Operand2, pMyDisasm);
+    decodeRegOpcode(&pMyDisasm->Operand2, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
   else if (GV.VEX.L == 0x1) {
     pMyDisasm->Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : AVX2_INSTRUCTION;
     GV.Register_ = reg2;
     GV.MemDecoration = mem2;
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.Register_ = AVX_REG;
-    Reg_Opcode(&pMyDisasm->Operand2, pMyDisasm);
+    decodeRegOpcode(&pMyDisasm->Operand2, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
   else if (GV.EVEX.LL == 0x2) {
     pMyDisasm->Instruction.Category = AVX512_INSTRUCTION;
     GV.Register_ = reg3;
     GV.MemDecoration = mem3;
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.Register_ = AVX512_REG;
-    Reg_Opcode(&pMyDisasm->Operand2, pMyDisasm);
+    decodeRegOpcode(&pMyDisasm->Operand2, pMyDisasm);
     GV.EIP_ += GV.DECALAGE_EIP+2;
   }
 }
@@ -700,7 +700,7 @@ void __bea_callspec__ ArgsVEX_ExG(PDISASM pMyDisasm, int mem1, int mem2, int mem
 /* ====================================================================
  * Used by AVX instructions
  * ==================================================================== */
-void __bea_callspec__ ArgsVEX_GxEx(PDISASM pMyDisasm)
+void __bea_callspec__ vex_GxEx(PDISASM pMyDisasm)
 {
   verifyVEXvvvv(pMyDisasm);
   if (GV.VEX.L == 0) {
@@ -760,22 +760,22 @@ void __bea_callspec__ GvEb(PDISASM pMyDisasm)
   if (GV.OperandSize == 64) {
     GV.MemDecoration = Arg2byte;
     GV.OperandSize = 8;
-    MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
     GV.OperandSize = 64;
   }
   else if (GV.OperandSize == 32) {
     GV.MemDecoration = Arg2byte;
     GV.OperandSize = 8;
-    MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
     GV.OperandSize = 32;
   }
   else {
     GV.MemDecoration = Arg2byte;
     GV.OperandSize = 8;
-    MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
     GV.OperandSize = 16;
   }
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
@@ -784,8 +784,8 @@ void __bea_callspec__ GvEb(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GxEx(PDISASM pMyDisasm)
 {
-  MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 
@@ -794,8 +794,8 @@ void __bea_callspec__ GxEx(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ GxExVEX(PDISASM pMyDisasm)
 {
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
-  MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
   fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand3, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
@@ -808,9 +808,9 @@ void __bea_callspec__ GvEw(PDISASM pMyDisasm)
   GV.MemDecoration = Arg2word;
   GV.OriginalOperandSize = GV.OperandSize;
   GV.OperandSize = 16;
-  MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+  decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
   GV.OperandSize = GV.OriginalOperandSize;
-  Reg_Opcode(&pMyDisasm->Operand1, pMyDisasm);
+  decodeRegOpcode(&pMyDisasm->Operand1, pMyDisasm);
   GV.EIP_ += GV.DECALAGE_EIP+2;
 }
 

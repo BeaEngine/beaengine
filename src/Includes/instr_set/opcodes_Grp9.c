@@ -27,9 +27,9 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
     GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
     GV.RM_  = (*((UInt8*) (GV.EIP_+1))) & 0x7;
     if (GV.REGOPCODE == 1) {
-        if (GV.MOD_ == 0x3) { FailDecode(pMyDisasm); return; }
+        if (GV.MOD_ == 0x3) { failDecode(pMyDisasm); return; }
         GV.MemDecoration = Arg2qword;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         if (GV.REX.W_ == 1) {
             GV.MemDecoration = Arg2dqword;
             pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+DATA_TRANSFER;
@@ -67,16 +67,16 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
               #endif
               GV.Register_ = 0;
               GV.OperandSize = 64;
-              MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+              decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
               GV.EIP_ += GV.DECALAGE_EIP+2;
           }
           else {
-            FailDecode(pMyDisasm);
+            failDecode(pMyDisasm);
           }
         }
         else {
           GV.MemDecoration = Arg2qword;
-          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+          decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
           pMyDisasm->Instruction.Category = VM_INSTRUCTION;
           if (GV.OperandSize == 16) {
               #ifndef BEA_LIGHT_DISASSEMBLY
@@ -98,7 +98,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 7) {
         GV.MemDecoration = Arg2qword;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         pMyDisasm->Instruction.Category = VM_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmptrst");
@@ -106,7 +106,7 @@ void __bea_callspec__ G9_(PDISASM pMyDisasm)
         GV.EIP_ += GV.DECALAGE_EIP+2;
     }
     else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
 
 }

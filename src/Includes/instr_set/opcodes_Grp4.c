@@ -52,6 +52,6 @@ void __bea_callspec__ G4_Eb(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 30);
     }
     else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
 }

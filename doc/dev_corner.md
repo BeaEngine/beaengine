@@ -126,41 +126,41 @@ void __bea_callspec__ new_instr(PDISASM pMyDisasm)
       case 0:
         if (GV.EVEX.W == 0) {
           /* EVEX.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* EVEX.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         break;
       case 1:
         if (GV.EVEX.W == 0) {
           /* EVEX.66.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* EVEX.66.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         break;
       case 2:
         if (GV.EVEX.W == 0) {
           /* EVEX.F3.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* EVEX.F3.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         break;
       case 3:
         if (GV.EVEX.W == 0) {
           /* EVEX.F2.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* EVEX.F2.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }      
     }
   }
@@ -169,60 +169,60 @@ void __bea_callspec__ new_instr(PDISASM pMyDisasm)
       case 0:
         if (GV.REX.W_ == 0) {
           /* VEX.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* VEX.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         break;
       case 1:
         if (GV.REX.W_ == 0) {
           /* VEX.66.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* VEX.66.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         break;
       case 2:
         if (GV.REX.W_ == 0) {
           /* VEX.F3.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* VEX.F3.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         break;
       case 3:
         if (GV.REX.W_ == 0) {
           /* VEX.F2.W0 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }
         else {
           /* VEX.F2.W1 */
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
         }      
     }
   }
   else {
     if (GV.PrefRepe == 1) {
       /* prefix 0xf3 */
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
     else if (GV.PrefRepne == 1) {
       /* prefix 0xf2 */
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
     else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
       /* prefix 0x66 */
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
     else {
       /* no prefix */
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
 }
@@ -249,65 +249,65 @@ void __bea_callspec__ new_instr(PDISASM pMyDisasm)
         case 0:
           switch(GV.RM_) {
             case 0:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
               break;
             case 1:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
               break;
             case 2:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
               break;
             case 3:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
               break;
             case 4:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
               break;
             case 5:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
               break;
             case 6:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
               break;
             case 7:
-              FailDecode(pMyDisasm);
+              failDecode(pMyDisasm);
           }
         case 1:
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
           break;
         case 2:
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
           break;
         case 3:
-          FailDecode(pMyDisasm);
+          failDecode(pMyDisasm);
       }
       break;
     case 1:
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       break;
     case 2:
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       break;
     case 3:
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       break;
     case 4:
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       break;
     case 5:
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       break;
     case 6:
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       break;
     case 7:
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
   }
 }
 ```
 
 ## 4. managing operands & mnemonic
-Previous templates only implement a `FailDecode` function. If you want to add a mnemonic and operands, replace the `FailDecode(pMyDisasm)` by something like this :
+Previous templates only implement a `failDecode` function. If you want to add a mnemonic and operands, replace the `failDecode(pMyDisasm)` by something like this :
 
 **simplest implementation**
 ```
@@ -336,8 +336,8 @@ switch(GV.OperandSize) {
   case 64:
     GV.MemDecoration = Arg1qword;
 }
-MOD_RM(&(*pMyDisasm).Operand1, pMyDisasm);
-Reg_Opcode(&(*pMyDisasm).Operand2, pMyDisasm);
+decodeModrm(&(*pMyDisasm).Operand1, pMyDisasm);
+decodeRegOpcode(&(*pMyDisasm).Operand2, pMyDisasm);
 GV.EIP_ += GV.DECALAGE_EIP+2;
 ```
 *MemDecoration* is a manual parameter used to decorate output when operand is a memory operand. *MOD_RM* and *Reg_Opcode* are used to fill **Operand1** and **Operand2**. Fortunatly, there are a lot of helpers to avoid operand decoding complexity.
@@ -352,6 +352,6 @@ void __bea_callspec__ new_instr(PDISASM);
 
 ## 6. Add pointer in Data_opcode arrays
 
-Choose your function location in the appropriate array. In the example below, in the array `0F 38`, we can see a FailDecode function at line B, row 1. Replacing this function by `new_instr` means that BeaEngine will give control to `new_instr` each time it tries to decode `0F 38 B1`
+Choose your function location in the appropriate array. In the example below, in the array `0F 38`, we can see a failDecode function at line B, row 1. Replacing this function by `new_instr` means that BeaEngine will give control to `new_instr` each time it tries to decode `0F 38 B1`
 
 ![dataopcode](./dataopcodes.png)

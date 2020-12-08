@@ -21,14 +21,14 @@
  * ==================================================================== */
 void __bea_callspec__ G16_(PDISASM pMyDisasm)
 {
-  if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+  if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
   if (!Security(2, pMyDisasm)) return;
   GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
   if (GV.REGOPCODE == 0) {
     if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
-      MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
       GV.MemDecoration = Arg2byte;
       pMyDisasm->Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -36,7 +36,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
       #endif
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
   else if (GV.REGOPCODE == 1) {
@@ -44,7 +44,7 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
     if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
-      MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
       GV.MemDecoration = Arg2byte;
       pMyDisasm->Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -52,14 +52,14 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
       #endif
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
   else if (GV.REGOPCODE == 2) {
     if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
-      MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
       GV.MemDecoration = Arg2byte;
       pMyDisasm->Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -67,14 +67,14 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
       #endif
     }
     else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
   }
   else if (GV.REGOPCODE == 3) {
     if (!Security(2, pMyDisasm)) return;
     GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
     if (GV.MOD_!= 0x3) {
-      MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
       GV.MemDecoration = Arg2byte;
       pMyDisasm->Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -82,11 +82,11 @@ void __bea_callspec__ G16_(PDISASM pMyDisasm)
       #endif
     }
     else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
   }
   else {
-    FailDecode(pMyDisasm);
+    failDecode(pMyDisasm);
   }
   GV.EIP_+= GV.DECALAGE_EIP+2;
 }

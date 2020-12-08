@@ -70,6 +70,6 @@ void __bea_callspec__ G8_EvIb(PDISASM pMyDisasm)
         FillFlags(pMyDisasm, 11);
     }
     else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
 }

@@ -1,7 +1,7 @@
 ;- Simple Test BeaEngine 32-Bit, no Prototypes
 ;- "Helle" Klaus Helbing, 04.01.2010
 
-;Header for BeaEngine 4.x (PureBasic 32 bits)
+;Header for BeaEngine 5.x (PureBasic 32 bits)
 
 Structure REX_Struct
   W_.b

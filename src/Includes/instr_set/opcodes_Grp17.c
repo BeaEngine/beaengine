@@ -37,17 +37,17 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
           GV.OperandSize = 64;
           GV.MemDecoration = Arg2qword;
           fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
-          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+          decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         }
         else {
           GV.MemDecoration = Arg2dword;
           fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
-          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+          decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         }
       }
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
   else if (GV.REGOPCODE == 2) {
@@ -62,17 +62,17 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
             GV.OperandSize = 64;
             GV.MemDecoration = Arg2qword;
             fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
-            MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+            decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         }
         else {
             GV.MemDecoration = Arg2dword;
             fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
-            MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+            decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         }
       }
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
   else if (GV.REGOPCODE == 3) {
@@ -87,22 +87,22 @@ void __bea_callspec__ G17_(PDISASM pMyDisasm)
           GV.OperandSize = 64;
           GV.MemDecoration = Arg2qword;
           fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
-          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+          decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         }
         else {
           GV.MemDecoration = Arg2dword;
           fillRegister((~GV.VEX.vvvv & 0xF) + 16 * GV.EVEX.V, &pMyDisasm->Operand1, pMyDisasm);
-          MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+          decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         }
       }
 
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
   else {
-    FailDecode(pMyDisasm);
+    failDecode(pMyDisasm);
   }
   GV.EIP_+= GV.DECALAGE_EIP + 2;
 }

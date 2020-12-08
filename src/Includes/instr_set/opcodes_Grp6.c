@@ -24,7 +24,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
     Int32 OperandSizeOld = 0;
 
     if (GV.VEX.state == InUsePrefix) {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
       return;
     }
 
@@ -42,7 +42,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         else {
             GV.MemDecoration = Arg1word;
         }
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sldt");
         #endif
@@ -60,7 +60,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         else {
             GV.MemDecoration = Arg1word;
         }
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "str");
         #endif
@@ -73,7 +73,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 2) {
         GV.MemDecoration = Arg2word;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lldt");
         #endif
@@ -86,7 +86,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 3) {
         GV.MemDecoration = Arg2word;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ltr");
         #endif
@@ -99,7 +99,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 4) {
         GV.MemDecoration = Arg1word;
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "verr");
         #endif
@@ -112,7 +112,7 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
     }
     else if (GV.REGOPCODE == 5) {
         GV.MemDecoration = Arg1word;
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "verw");
         #endif
@@ -124,11 +124,11 @@ void __bea_callspec__ G6_(PDISASM pMyDisasm)
         GV.EIP_+= GV.DECALAGE_EIP+2;
     }
     else if (GV.REGOPCODE == 6) {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
         GV.OperandSize = OperandSizeOld;
     }
     else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
         GV.OperandSize = OperandSizeOld;
     }
 }

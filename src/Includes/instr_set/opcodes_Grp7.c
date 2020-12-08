@@ -21,7 +21,7 @@
  {
  if (GV.MOD_== 0x3) {
      if (GV.RM_ == 0x00) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SSE3_INSTRUCTION+AGENT_SYNCHRONISATION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "monitor");
@@ -29,7 +29,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x01) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SSE3_INSTRUCTION+AGENT_SYNCHRONISATION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "mwait");
@@ -37,7 +37,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x2) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
        pMyDisasm->Operand1.Registers.type = SPECIAL_REG;
@@ -49,7 +49,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x3) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
        pMyDisasm->Operand1.AccessMode = WRITE;
@@ -62,7 +62,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x4) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
            pMyDisasm->Instruction.Category = VM_INSTRUCTION;
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -71,11 +71,11 @@
            GV.EIP_+= GV.DECALAGE_EIP+2;
        }
        else {
-         FailDecode(pMyDisasm);
+         failDecode(pMyDisasm);
        }
      }
      else if (GV.RM_ == 0x5) {
-       if (GV.VEX.state == InUsePrefix){ FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix){ failDecode(pMyDisasm); return; }
        if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
            pMyDisasm->Instruction.Category = VM_INSTRUCTION;
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -84,11 +84,11 @@
            GV.EIP_+= GV.DECALAGE_EIP+2;
        }
        else {
-         FailDecode(pMyDisasm);
+         failDecode(pMyDisasm);
        }
      }
      else if (GV.RM_ == 0x6) {
-       if (GV.VEX.state == InUsePrefix){ FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix){ failDecode(pMyDisasm); return; }
        if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
            pMyDisasm->Instruction.Category = VM_INSTRUCTION;
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -102,11 +102,11 @@
            GV.EIP_+= GV.DECALAGE_EIP+2;
        }
        else {
-         FailDecode(pMyDisasm);
+         failDecode(pMyDisasm);
        }
      }
      else if (GV.RM_ == 0x7) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
            pMyDisasm->Instruction.Category = VM_INSTRUCTION;
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -139,13 +139,13 @@
        }
      }
      else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
      }
    }
    else {
-     if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+     if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
      GV.MemDecoration = Arg1fword;
-     MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+     decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
      pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sidt");
@@ -163,7 +163,7 @@
  {
    if (GV.MOD_== 0x3) {
      if (GV.RM_ == 0) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SGX_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "enclv");
@@ -187,7 +187,7 @@
      }
 
      else if (GV.RM_ == 0x1) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmcall");
@@ -195,7 +195,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x2) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmlaunch");
@@ -203,7 +203,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x3) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmresume");
@@ -211,7 +211,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x4) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmxoff");
@@ -219,7 +219,7 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x5) {
-       if (GV.VEX.state == InUsePrefix){ FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix){ failDecode(pMyDisasm); return; }
        if (
            (GV.PrefRepne == 1) || (GV.PrefRepe == 1)
          )
@@ -237,13 +237,13 @@
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else {
-       FailDecode(pMyDisasm);
+       failDecode(pMyDisasm);
      }
    }
    else {
-     if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+     if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
      GV.MemDecoration = Arg1fword;
-     MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+     decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
      pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sgdt");
@@ -260,7 +260,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
 {
    if (GV.MOD_== 0x3) {
      if (GV.RM_ == 0x0) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xgetbv");
@@ -268,7 +268,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x1) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xsetbv");
@@ -276,7 +276,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x4) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmfunc");
@@ -289,7 +289,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x5) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xend");
@@ -301,7 +301,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x6) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xtest");
@@ -310,7 +310,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x7) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SGX_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "enclu");
@@ -337,13 +337,13 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else {
-       FailDecode(pMyDisasm);
+       failDecode(pMyDisasm);
      }
    }
    else {
-     if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+     if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
      GV.MemDecoration = Arg2fword;
-     MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+     decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
      pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lgdt");
@@ -360,7 +360,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
 {
    if (GV.MOD_== 0x3) {
      if (GV.RM_ == 0x0) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmrun");
@@ -368,7 +368,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x1) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmmcall");
@@ -376,7 +376,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x2) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmload");
@@ -384,7 +384,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x3) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmsave");
@@ -392,7 +392,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x4) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "stgi");
@@ -400,7 +400,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x5) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "clgi");
@@ -408,7 +408,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x6) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "skinit");
@@ -416,7 +416,7 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else if (GV.RM_ == 0x7) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "invlpga");
@@ -424,13 +424,13 @@ void __bea_callspec__ G7_regopcode3(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
      }
      else {
-         FailDecode(pMyDisasm);
+         failDecode(pMyDisasm);
      }
    }
    else {
-     if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+     if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
      GV.MemDecoration = Arg2fword;
-     MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+     decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
      pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lidt");
@@ -448,7 +448,7 @@ void __bea_callspec__ G7_regopcode7(PDISASM pMyDisasm)
   if (GV.MOD_== 0x3) {
     if (GV.Architecture == 64) {
       if (GV.RM_ == 0x0) {
-       if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+       if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "swapgs");
@@ -456,7 +456,7 @@ void __bea_callspec__ G7_regopcode7(PDISASM pMyDisasm)
        GV.EIP_+= GV.DECALAGE_EIP+2;
       }
       else if (GV.RM_ == 0x1) {
-        if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
         pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "rdtscp");
@@ -468,17 +468,17 @@ void __bea_callspec__ G7_regopcode7(PDISASM pMyDisasm)
         GV.EIP_+= GV.DECALAGE_EIP+2;
       }
       else {
-         FailDecode(pMyDisasm);
+         failDecode(pMyDisasm);
       }
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
  else {
-   if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+   if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
    GV.MemDecoration = Arg2byte;
-   MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+   decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
    pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
    #ifndef BEA_LIGHT_DISASSEMBLY
       (void) strcpy (pMyDisasm->Instruction.Mnemonic, "invlpg");
@@ -492,7 +492,7 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
 {
   if (GV.MOD_== 3) {
     if (GV.RM_ == 2) {
-      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+      if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
       /* ========= 0xf3 */
       if (GV.PrefRepe == 1) {
         pMyDisasm->Instruction.Category = CET_INSTRUCTION;
@@ -502,11 +502,11 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
         GV.EIP_+= GV.DECALAGE_EIP+2;
       }
       else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
       }
     }
     else if (GV.RM_ == 4) {
-      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+      if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
       /* ========= 0xf3 */
       if (GV.PrefRepe == 1) {
         pMyDisasm->Instruction.Category = UINTR_INSTRUCTION + CONTROL_TRANSFER;
@@ -519,11 +519,11 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
         GV.EIP_+= GV.DECALAGE_EIP+2;
       }
       else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
       }
     }
     else if (GV.RM_ == 5) {
-      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+      if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
       /* ========= 0xf3 */
       if (GV.PrefRepe == 1) {
         pMyDisasm->Instruction.Category = UINTR_INSTRUCTION;
@@ -545,7 +545,7 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
       }
     }
     else if (GV.RM_ == 6) {
-      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+      if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
       if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) GV.ERROR_OPCODE = UD_;
       /* ========= 0xf3 */
       if (GV.PrefRepe == 1) {
@@ -561,11 +561,11 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
       }
       else if (GV.PrefRepne == 1) {
         /* prefix 0xf2 */
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
       }
       else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
         /* prefix 0x66 */
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
       }
       else {
         /* no prefix */
@@ -580,7 +580,7 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
       }
     }
     else if (GV.RM_ == 7) {
-      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+      if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
       if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
         GV.ERROR_OPCODE = UD_;
       }
@@ -615,11 +615,11 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
       }
     }
     else {
-      FailDecode(pMyDisasm);
+      failDecode(pMyDisasm);
     }
   }
   else {
-    FailDecode(pMyDisasm);
+    failDecode(pMyDisasm);
   }
 }
 
@@ -628,7 +628,7 @@ void __bea_callspec__ G7_regopcode5(PDISASM pMyDisasm)
  * ==================================================================== */
 void __bea_callspec__ G7_(PDISASM pMyDisasm)
 {
-  if (GV.EVEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+  if (GV.EVEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
   if (!Security(2, pMyDisasm)) return;
   GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
   GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
@@ -648,11 +648,11 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
       break;
     case 4:
       if (GV.VEX.state == InUsePrefix) {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
         return;
       }
       GV.MemDecoration = Arg2word;
-      MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
       if (GV.ERROR_OPCODE == OUT_OF_BLOCK) return;
       pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -668,10 +668,10 @@ void __bea_callspec__ G7_(PDISASM pMyDisasm)
       G7_regopcode5(pMyDisasm);
       break;
     case 6:
-      if (GV.VEX.state == InUsePrefix) { FailDecode(pMyDisasm); return; }
+      if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
       GV.MemDecoration = Arg1word;
       GV.OperandSize = 16;
-      MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+      decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
       pMyDisasm->Instruction.Category = SYSTEM_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
          (void) strcpy (pMyDisasm->Instruction.Mnemonic, "lmsw");

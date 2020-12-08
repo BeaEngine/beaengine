@@ -842,30 +842,32 @@ BeaDisasm = __module.Disasm
 class EVEX:
     def __init__(self, params = ""):
         self.reset()
-
-        if re.match("(.*)\.(NDS|NDD|DDS)\.(.*)", params):
+        # NDS = Non destructive source
+        # NDD = Non destructive destination
+        # DDS = Destructive Destination and source
+        if re.match(r"(.*)\.(NDS|NDD|DDS)\.(.*)", params):
             self.vvvv = 0b0
 
-        if re.match("(.*)\.512\.(.*)", params):
+        if re.match(r"(.*)\.512\.(.*)", params):
             self.LL = 0b10
-        elif re.match("(.*)\.256\.(.*)", params):
+        elif re.match(r"(.*)\.256\.(.*)", params):
             self.LL = 0b1
 
-        if re.match("(.*)\.66\.(.*)", params):
+        if re.match(r"(.*)\.66\.(.*)", params):
             self.pp = 0b1
-        elif re.match("(.*)\.F3\.(.*)", params):
+        elif re.match(r"(.*)\.F3\.(.*)", params):
             self.pp = 0b10
-        elif re.match("(.*)\.F2\.(.*)", params):
+        elif re.match(r"(.*)\.F2\.(.*)", params):
             self.pp = 0b11
 
-        if re.match("(.*)\.0F\.(.*)", params):
+        if re.match(r"(.*)\.0F\.(.*)", params):
             self.mm = 0b1
-        elif re.match("(.*)\.0F38\.(.*)", params):
+        elif re.match(r"(.*)\.0F38\.(.*)", params):
             self.mm = 0b10
-        elif re.match("(.*)\.0F3A\.(.*)", params):
+        elif re.match(r"(.*)\.0F3A\.(.*)", params):
             self.mm = 0b11
 
-        if re.match("(.*)\.W1(.*)", params):
+        if re.match(r"(.*)\.W1(.*)", params):
             self.W = 0b1
 
     def reset(self):
@@ -875,7 +877,7 @@ class EVEX:
         self.B = 0
         self.Rprime = 0
         self.X = 0
-        self.vvvv = 0b1111
+        self.vvvv = 0b1111  # default value to tell it is unused
         self.V = 0
         self.aaa = 0
         self.W = 0
@@ -898,31 +900,33 @@ class EVEX:
 class VEX:
     def __init__(self, params = ""):
         self.reset()
-
-        if re.match("(.*)\.(NDS|NDD|DDS)\.(.*)", params):
+        # NDS = Non destructive source
+        # NDD = Non destructive destination
+        # DDS = Destructive Destination and source
+        if re.match(r"(.*)\.(NDS|NDD|DDS)\.(.*)", params):
             self.vvvv = 0b0
 
-        if re.match("(.*)\.256\.(.*)", params):
+        if re.match(r"(.*)\.256\.(.*)", params):
             self.L = 0b1
 
-        if re.match("(.*)\.66\.(.*)", params):
+        if re.match(r"(.*)\.66\.(.*)", params):
             self.pp = 0b1
-        elif re.match("(.*)\.F3\.(.*)", params):
+        elif re.match(r"(.*)\.F3\.(.*)", params):
             self.pp = 0b10
-        elif re.match("(.*)\.F2\.(.*)", params):
+        elif re.match(r"(.*)\.F2\.(.*)", params):
             self.pp = 0b11
 
-        if re.match("(.*)\.0F38\.(.*)", params):
+        if re.match(r"(.*)\.0F38\.(.*)", params):
             self.mmmm = 0b10
-        elif re.match("(.*)\.0F3A\.(.*)", params):
+        elif re.match(r"(.*)\.0F3A\.(.*)", params):
             self.mmmm = 0b11
-        elif re.match("(.*)\.(0F\.(.*)|0F)", params):
+        elif re.match(r"(.*)\.(0F\.(.*)|0F)", params):
             self.mmmm = 0b1
 
-        if re.match("(.*)\.W1(.*)", params):
+        if re.match(r"(.*)\.W1(.*)", params):
             self.W = 0b1
 
-        if re.match("(.*)\.L1(.*)", params):
+        if re.match(r"(.*)\.L1(.*)", params):
             self.L = 0b1
 
     def reset(self):

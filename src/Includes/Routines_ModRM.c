@@ -18,7 +18,7 @@
  * =======================================
  *
  * ======================================= */
-void __bea_callspec__ MOD_RM(OPTYPE* pMyOperand, PDISASM pMyDisasm)
+void __bea_callspec__ decodeModrm(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
   UInt8* modrm;
   GV.DECALAGE_EIP = 0;
@@ -225,7 +225,7 @@ void __bea_callspec__ OperandSize8Reg(OPTYPE* pMyOperand, PDISASM pMyDisasm, siz
 /* =======================================
  *
  * ======================================= */
-void __bea_callspec__ Reg_Opcode(OPTYPE* pMyOperand, PDISASM pMyDisasm)
+void __bea_callspec__ decodeRegOpcode(OPTYPE* pMyOperand, PDISASM pMyDisasm)
 {
   if (!Security(2, pMyDisasm)) return;
   GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
@@ -639,7 +639,7 @@ const char * __bea_callspec__ getNumFormat(long MyNumber)
   }
 }
 
-long __bea_callspec__ specific_pop(PDISASM pMyDisasm)
+long __bea_callspec__ specificPop(PDISASM pMyDisasm)
 {
   long N;
   if (pMyDisasm->Instruction.Opcode == 0x8f) {
@@ -661,7 +661,7 @@ size_t __bea_callspec__ printDisp8(OPTYPE* pMyOperand, size_t i, PDISASM pMyDisa
     if (N != -1) MyNumber = MyNumber * N;
   }
   if ((GV.RM_ == 4) && (GV.BASE_ == 4) && (GV.Architecture >=32)) {
-    MyNumber += specific_pop(pMyDisasm);
+    MyNumber += specificPop(pMyDisasm);
   }
   if (MyNumber < 0) {
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -692,7 +692,7 @@ size_t __bea_callspec__ printDisp32(OPTYPE* pMyOperand, size_t i, PDISASM pMyDis
   size_t j;
 
   if ((GV.RM_ == 4) && (GV.BASE_ == 4) && (GV.Architecture >=32)) {
-    MyNumber += specific_pop(pMyDisasm);
+    MyNumber += specificPop(pMyDisasm);
   }
 
   if (MyNumber < 0) {

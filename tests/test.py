@@ -263,8 +263,6 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand3.AccessMode, READ)
         assert_equal(myDisasm.repr(), 'vaddsd xmm2, xmm15, qword ptr [r8+11111111h]')
 
-
-
     def test_addss(self):
         # using REX.R to access extended xmm registers
         Buffer = b'\x44\xF3\x0F\x58\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
@@ -750,7 +748,6 @@ class TestSuite:
         myDisasm.infos.Options = IntrinsicMemSyntax
         myDisasm.read()
         assert_equal(myDisasm.repr(), 'andpd xmm2, m128d [rax-6F6F6F70h]')
-
 
         Buffer = b'\x66\x0F\x54\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90'
         myDisasm = Disasm(Buffer)
@@ -2102,7 +2099,6 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand4.AccessMode, READ)
         assert_equal(myDisasm.repr(), 'vcmptrue_ussd xmm8, xmm15, xmmword ptr [r8], 1Fh')
 
-
     def test_mpx(self):
 
         Buffer = b'\xf3\x41\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
@@ -2193,8 +2189,6 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpSize, 32)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
 
-
-
         Buffer = b'\x66\x0f\x1a\xc0\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)
         myDisasm.infos.Archi = 0
@@ -2206,7 +2200,6 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand2.OpType, REGISTER_TYPE) #MPX_REG) # + REG0)
         assert_equal(myDisasm.infos.Operand2.OpSize, 128)
         assert_equal(myDisasm.infos.Operand2.AccessMode, READ)
-
 
         Buffer = b'\x66\x0f\x1a\x0b\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
         myDisasm = Disasm(Buffer)

@@ -68,7 +68,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         #endif
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
@@ -85,7 +85,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         #endif
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
@@ -100,7 +100,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         #endif
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
@@ -115,7 +115,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         #endif
         GV.MemDecoration = Arg2byte;
         GV.OperandSize = 8;
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;
@@ -190,7 +190,7 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
             pMyDisasm->Operand1.OpSize = 16;
         }
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
         pMyDisasm->Operand1.Registers.gpr = REG0;
@@ -215,7 +215,7 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
             pMyDisasm->Operand1.OpSize = 16;
         }
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
         pMyDisasm->Operand1.Registers.gpr = REG0;
@@ -240,7 +240,7 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
             pMyDisasm->Operand1.OpSize = 16;
         }
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
         pMyDisasm->Operand1.Registers.gpr = REG0+REG2;
@@ -265,7 +265,7 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
             GV.MemDecoration = Arg2word;
             pMyDisasm->Operand1.OpSize = 16;
         }
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
         pMyDisasm->Operand1.Registers.gpr = REG0+REG2;

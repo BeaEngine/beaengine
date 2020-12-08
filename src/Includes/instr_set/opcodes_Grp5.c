@@ -70,7 +70,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             GV.MemDecoration = Arg1word;
         }
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
@@ -89,7 +89,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             #endif
         }
         GV.MemDecoration = Arg1fword;
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
@@ -112,7 +112,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             GV.MemDecoration = Arg1word;
         }
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
     break;
     case 5:
@@ -129,7 +129,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
             #endif
         }
         GV.MemDecoration = Arg1fword;
-        MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
     break;
     case 6:
@@ -149,7 +149,7 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         else {
             GV.MemDecoration = Arg2word;
         }
-        MOD_RM(&pMyDisasm->Operand2, pMyDisasm);
+        decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
         pMyDisasm->Operand1.OpType = MEMORY_TYPE;
         pMyDisasm->Operand1.OpSize = GV.OperandSize;
@@ -158,6 +158,6 @@ void __bea_callspec__ G5_Ev(PDISASM pMyDisasm)
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG4;
     break;
     default:
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
 }

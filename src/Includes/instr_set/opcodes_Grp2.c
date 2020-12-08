@@ -160,7 +160,7 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
     GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MemDecoration = Arg1byte;
     GV.OperandSize = 8;
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.OperandSize = 32;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy (pMyDisasm->Operand2.OpMnemonic, "1");
@@ -245,7 +245,7 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
     else {
         GV.MemDecoration = Arg1word;
     }
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy (pMyDisasm->Operand2.OpMnemonic, "1");
     #endif
@@ -322,7 +322,7 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
     GV.REGOPCODE = ((*((UInt8*) (GV.EIP_+1))) >> 3) & 0x7;
     GV.MemDecoration = Arg1byte;
     GV.OperandSize = 8;
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     GV.OperandSize = 32;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy (pMyDisasm->Operand2.OpMnemonic, Registers8Bits[1]);
@@ -408,7 +408,7 @@ void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
     else {
         GV.MemDecoration = Arg1word;
     }
-    MOD_RM(&pMyDisasm->Operand1, pMyDisasm);
+    decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy (pMyDisasm->Operand2.OpMnemonic, Registers8Bits[1]);
     #endif

@@ -1,7 +1,7 @@
 ; *****************************************
 ;
 ;
-;   Header for BeaEngine 4.x (fasm 32 bits)
+;   Header for BeaEngine 5.x (fasm 32 bits)
 ;
 ;
 ; *****************************************

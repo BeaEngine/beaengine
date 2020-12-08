@@ -1,4 +1,8 @@
-/*  Header for BeaEngine 4.x    */
+/*
+ *  
+ * Header for BeaEngine 5.x
+ * 
+ */
 #ifndef _BEA_ENGINE_
 #define _BEA_ENGINE_
 

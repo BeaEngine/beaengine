@@ -232,7 +232,7 @@ void __bea_callspec__ PrefOpSize(PDISASM pMyDisasm)
         (void) opcode_map4[*((UInt8*) GV.EIP_)](pMyDisasm);
     }
     else {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
     if (GV.Architecture == 16) {
         GV.OperandSize = 16;

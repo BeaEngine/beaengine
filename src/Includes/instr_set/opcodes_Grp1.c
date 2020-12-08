@@ -111,7 +111,7 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
 void __bea_callspec__ G1_EbIb2(PDISASM pMyDisasm)
 {
     if (GV.Architecture == 64) {
-        FailDecode(pMyDisasm);
+        failDecode(pMyDisasm);
     }
     else {
         G1_EbIb(pMyDisasm);

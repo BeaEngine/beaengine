@@ -18,9 +18,9 @@
 
 
 /* ====================================== Routines_MODRM */
-void __bea_callspec__ MOD_RM(OPTYPE*, PDISASM);
+void __bea_callspec__ decodeModrm(OPTYPE*, PDISASM);
 void __bea_callspec__ fillRegister(int, OPTYPE*, PDISASM);
-void __bea_callspec__ Reg_Opcode(OPTYPE*, PDISASM);
+void __bea_callspec__ decodeRegOpcode(OPTYPE*, PDISASM);
 
 void __bea_callspec__ Addr_EAX(OPTYPE*, PDISASM);
 void __bea_callspec__ Addr_ECX(OPTYPE*, PDISASM);
@@ -86,14 +86,14 @@ void __bea_callspec__ GvEv(PDISASM);
 void __bea_callspec__ GyEy(PDISASM);
 void __bea_callspec__ EyGy(PDISASM);
 void __bea_callspec__ ArgsVEX(PDISASM);
-void __bea_callspec__ ArgsVEX_GxEx(PDISASM);
-void __bea_callspec__ ArgsVEX_GxE(PDISASM, int, int, int);
-void __bea_callspec__ ArgsVEX_GEx(PDISASM, int, int, int);
-void __bea_callspec__ ArgsVEX_ExG(PDISASM, int, int, int, int, int, int);
-void __bea_callspec__ ArgsVEX_GE(PDISASM, int, int, int, int, int, int);
-void __bea_callspec__ ArgsVEX_ExGx(PDISASM);
-void __bea_callspec__ ArgsVEX_EyGy(PDISASM);
-void __bea_callspec__ ArgsVEX_CMPPS(PDISASM pMyDisasm);
+void __bea_callspec__ vex_GxEx(PDISASM);
+void __bea_callspec__ vex_GxE(PDISASM, int, int, int);
+void __bea_callspec__ vex_GEx(PDISASM, int, int, int);
+void __bea_callspec__ vex_ExG(PDISASM, int, int, int, int, int, int);
+void __bea_callspec__ vex_GE(PDISASM, int, int, int, int, int, int);
+void __bea_callspec__ vex_ExGx(PDISASM);
+void __bea_callspec__ vex_EyGy(PDISASM);
+void __bea_callspec__ vex_CMPPS(PDISASM pMyDisasm);
 void __bea_callspec__ GvEb(PDISASM);
 void __bea_callspec__ GxEx(PDISASM);
 void __bea_callspec__ GxExVEX(PDISASM);
@@ -131,7 +131,7 @@ void __bea_callspec__ Esc_2byte(PDISASM);
 void __bea_callspec__ Esc_tableA4(PDISASM);
 void __bea_callspec__ Esc_tableA5(PDISASM);
 
-void __bea_callspec__ FailDecode(PDISASM);
+void __bea_callspec__ failDecode(PDISASM);
 void __bea_callspec__ aaa_(PDISASM);
 void __bea_callspec__ aad_(PDISASM);
 void __bea_callspec__ aas_(PDISASM);
