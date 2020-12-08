@@ -106,7 +106,7 @@ Structure _Disasm
   EIP.l
   VirtualAddr.q
   SecurityBlock.l
-  CompleteInstr.b[64]
+  CompleteInstr.b[80]
   Archi.l
   Options.q
   Instruction.INSTRTYPE

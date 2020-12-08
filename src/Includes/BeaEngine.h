@@ -20,7 +20,7 @@ namespace BeaEngine {
 #endif
 
 
-#define INSTRUCT_LENGTH 64
+#define INSTRUCT_LENGTH 80
 
 #pragma pack(1)
 typedef struct {

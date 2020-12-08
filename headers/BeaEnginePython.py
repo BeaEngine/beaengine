@@ -9,7 +9,7 @@ from ctypes import *
 import re
 import json
 
-INSTRUCT_LENGTH = 64
+INSTRUCT_LENGTH = 80
 
 class REX_Struct(Structure):
    _pack_= 1

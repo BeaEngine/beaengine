@@ -39,7 +39,7 @@ interface
 uses Windows,SysUtils;
 
   const
-     INSTRUCT_LENGTH = 64;
+     INSTRUCT_LENGTH = 80;
 
 
   type

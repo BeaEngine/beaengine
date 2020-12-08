@@ -104,7 +104,7 @@ _Disasm STRUCT
     EIP             DWORD   0
     VirtualAddr     QWORD   0
     SecurityBlock   DWORD   0
-    CompleteInstr   BYTE    64 dup(0)
+    CompleteInstr   BYTE    80 dup(0)
     Archi           DWORD   0
     Options         QWORD   0
     Instruction     INSTRTYPE <0>

@@ -3,7 +3,7 @@ namespace Bea
 {
   public class BeaConstants
   {
-    public static int INSTRUCT_LENGTH = 64;
+    public static int INSTRUCT_LENGTH = 80;
 
     public enum SegmentRegister : byte
     {

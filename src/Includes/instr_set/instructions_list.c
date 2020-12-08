@@ -16654,6 +16654,7 @@ void __bea_callspec__ vpdpwssd_(PDISASM pMyDisasm)
           if (!Security(2, pMyDisasm)) return;
           GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
           if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
+          GV.EVEX.tupletype = TUPLE4;
           #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vp4dpwssd");
           #endif
@@ -16723,6 +16724,7 @@ void __bea_callspec__ vpdpwssds_(PDISASM pMyDisasm)
         if (GV.VEX.L == 2) {
           if (!Security(2, pMyDisasm)) return;
           GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
+          GV.EVEX.tupletype = TUPLE4;
           if ((GV.EVEX.b == 1) || (GV.MOD_ == 3)) GV.ERROR_OPCODE = UD_;
           #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vp4dpwssds");

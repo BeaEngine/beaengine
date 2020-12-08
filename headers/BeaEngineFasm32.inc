@@ -111,7 +111,7 @@ struct _Disasm
     EIP             dd   0
     VirtualAddr     dq   0
     SecurityBlock   dd   0
-    CompleteInstr   db   64 dup(0)
+    CompleteInstr   db   80 dup(0)
     Archi           dd   0
     Options         dq   0
     Instruction     INSTRTYPE

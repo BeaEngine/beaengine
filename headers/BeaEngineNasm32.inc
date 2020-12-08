@@ -110,7 +110,7 @@ STRUC _Disasm
     EIP:             resd   1
     VirtualAddr:     resq   1
     SecurityBlock:   resd   1
-    CompleteInstr:   resb   64
+    CompleteInstr:   resb   80
     Archi:           resd   1
     Options:         resq   1
     Instruction:     resb   INSTRTYPE_size
