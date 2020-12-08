@@ -20146,6 +20146,7 @@ void __bea_callspec__ vfnmadd213ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20179,6 +20180,7 @@ void __bea_callspec__ vfnmadd213ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20212,6 +20214,7 @@ void __bea_callspec__ vfmsub231ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20351,6 +20354,7 @@ void __bea_callspec__ vfnmsub213ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20384,6 +20388,7 @@ void __bea_callspec__ vfmsubadd213ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20417,6 +20422,7 @@ void __bea_callspec__ vfmaddsub231ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (
             ((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) ||
@@ -20452,6 +20458,7 @@ void __bea_callspec__ vfmsubadd132ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (
             ((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) ||
@@ -20487,6 +20494,7 @@ void __bea_callspec__ vfnmadd132ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (
             ((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) ||
@@ -20522,6 +20530,7 @@ void __bea_callspec__ vfnmadd132ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (
            ((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) ||
@@ -20557,6 +20566,7 @@ void __bea_callspec__ vfmadd132ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20590,6 +20600,7 @@ void __bea_callspec__ vfnmsub132ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20623,6 +20634,7 @@ void __bea_callspec__ vfnmsub132ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20767,6 +20779,7 @@ void __bea_callspec__ vfmadd132ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20800,6 +20813,7 @@ void __bea_callspec__ vfnmadd231ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -20876,6 +20890,7 @@ void __bea_callspec__ vfmsub132ps_(PDISASM pMyDisasm)
   else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
     GV.OperandSize = GV.OriginalOperandSize;
     pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+    if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
     if (GV.VEX.state == InUsePrefix) {
      if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21026,6 +21041,7 @@ void __bea_callspec__ vfmsubadd231ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21059,6 +21075,7 @@ void __bea_callspec__ vfmaddsub213ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21135,6 +21152,7 @@ void __bea_callspec__ vfmsub132ss_(PDISASM pMyDisasm)
   else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21211,6 +21229,7 @@ void __bea_callspec__ vfmsub213ps_(PDISASM pMyDisasm)
   else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21244,6 +21263,7 @@ void __bea_callspec__ vfnmadd231ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21277,6 +21297,7 @@ void __bea_callspec__ vfmadd231ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21353,6 +21374,7 @@ void __bea_callspec__ vfmsub213ss_(PDISASM pMyDisasm)
   else if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21386,6 +21408,7 @@ void __bea_callspec__ vfnmsub231ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21419,6 +21442,7 @@ void __bea_callspec__ vfnmsub231ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21452,6 +21476,7 @@ void __bea_callspec__ vfmadd231ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21485,6 +21510,7 @@ void __bea_callspec__ vfmadd213ss_(PDISASM pMyDisasm)
   if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
     GV.OperandSize = GV.OriginalOperandSize;
     pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+    if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
     if (GV.VEX.state == InUsePrefix) {
      if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21518,6 +21544,7 @@ void __bea_callspec__ vfnmsub213ss_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = TUPLE1_SCALAR;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21669,6 +21696,7 @@ void __bea_callspec__ vfmaddsub132ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21702,6 +21730,7 @@ void __bea_callspec__ vfmadd213ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21735,6 +21764,7 @@ void __bea_callspec__ vfmsub231ps_(PDISASM pMyDisasm)
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
        GV.OperandSize = GV.OriginalOperandSize;
        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+       if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        if (GV.VEX.state == InUsePrefix) {
          if (((GV.REX.W_ == 0x0) && (GV.EVEX.state != InUsePrefix)) || ((GV.EVEX.state == InUsePrefix) && (GV.EVEX.W == 0))) {
            #ifndef BEA_LIGHT_DISASSEMBLY
@@ -25507,8 +25537,15 @@ void __bea_callspec__ vpermt2b(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ vpbroadcastd2(PDISASM pMyDisasm)
 {
+  UInt8* modrm;
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.VEX.pp == 1) {
+      modrm = (UInt8*) (GV.EIP_ + 1);
+      GV.MOD_ = (*modrm >> 6) & 0x3;
+      if (GV.MOD_ != 3) {
+        FailDecode(pMyDisasm);
+        return;
+      }
       pMyDisasm->Instruction.Category = AVX512_INSTRUCTION;
       if (GV.EVEX.W == 0) {
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -25552,9 +25589,16 @@ void __bea_callspec__ vpbroadcastd2(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ vpbroadcastw2(PDISASM pMyDisasm)
 {
+  UInt8* modrm;
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.VEX.pp == 1) {
       if (GV.EVEX.W == 0) {
+        modrm = (UInt8*) (GV.EIP_ + 1);
+        GV.MOD_ = (*modrm >> 6) & 0x3;
+        if (GV.MOD_ != 3) {
+          FailDecode(pMyDisasm);
+          return;
+        }
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpbroadcastw");
         #endif
@@ -25596,9 +25640,16 @@ void __bea_callspec__ vpbroadcastw2(PDISASM pMyDisasm)
 * ==================================================================== */
 void __bea_callspec__ vpbroadcastb2(PDISASM pMyDisasm)
 {
+  UInt8* modrm;
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.VEX.pp == 1) {
       if (GV.EVEX.W == 0) {
+        modrm = (UInt8*) (GV.EIP_ + 1);
+        GV.MOD_ = (*modrm >> 6) & 0x3;
+        if (GV.MOD_ != 3) {
+          FailDecode(pMyDisasm);
+          return;
+        }
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vpbroadcastb");
         #endif
@@ -26269,7 +26320,7 @@ void __bea_callspec__ sha256msg2_(PDISASM pMyDisasm)
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.EVEX.pp == 1) {
       pMyDisasm->Instruction.Category = AVX512_INSTRUCTION;
-      GV.EVEX.tupletype = FULL;
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
       if (GV.EVEX.W == 0) {
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vrsqrt28ss");
@@ -26312,7 +26363,7 @@ void __bea_callspec__ sha256rnd_(PDISASM pMyDisasm)
   if (GV.EVEX.state == InUsePrefix) {
     if (GV.EVEX.pp == 1) {
       pMyDisasm->Instruction.Category = AVX512_INSTRUCTION;
-      GV.EVEX.tupletype = FULL;
+      GV.EVEX.tupletype = TUPLE1_SCALAR;
       if (GV.EVEX.W == 0) {
         #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vrcp28ss");
