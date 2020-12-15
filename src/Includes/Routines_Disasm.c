@@ -54,6 +54,18 @@ int __bea_callspec__ Disasm (PDISASM pMyDisasm)
 
 /* ====================================================================
  *
+ *  used for instructions encoded with no prefix (NP)
+ * 
+ * ==================================================================== */
+bool __bea_callspec__ prefixes_present(PDISASM pMyDisasm) {
+  bool status = false;
+  if ((pMyDisasm->Prefix.OperandSize == InUsePrefix) || (GV.PrefRepe == 1) || (GV.PrefRepne == 1)) 
+    status = true;
+  return status;
+}
+
+/* ====================================================================
+ *
  * ==================================================================== */
 void __bea_callspec__ CompleteInstructionFields (PDISASM pMyDisasm)
 {

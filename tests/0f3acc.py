@@ -21,6 +21,22 @@ from nose.tools import *
 
 class TestSuite:
 
+    def check_np(self, data):
+        Buffer = bytes.fromhex(f'66{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f2{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f3{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')  
+
     def test(self):
 
         # NP 0F 3A CC /r ib
@@ -32,3 +48,5 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf3acc)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1rnds4')
         assert_equal(myDisasm.repr(), 'sha1rnds4 xmm4, xmmword ptr [rax], 33h')
+
+        self.check_np('0f3acc2033')

@@ -21,7 +21,7 @@
 void __bea_callspec__ decodeModrm(OPTYPE*, PDISASM);
 void __bea_callspec__ fillRegister(int, OPTYPE*, PDISASM);
 void __bea_callspec__ decodeRegOpcode(OPTYPE*, PDISASM);
-
+bool __bea_callspec__ prefixes_present(PDISASM pMyDisasm);
 void __bea_callspec__ Addr_EAX(OPTYPE*, PDISASM);
 void __bea_callspec__ Addr_ECX(OPTYPE*, PDISASM);
 void __bea_callspec__ Addr_EDX(OPTYPE*, PDISASM);

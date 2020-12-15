@@ -21,6 +21,22 @@ from nose.tools import *
 
 class TestSuite:
 
+    def check_np(self, data):
+        Buffer = bytes.fromhex(f'66{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f2{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f3{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???') 
+
     def test(self):
 
         # NP 0F 38 CC /r
@@ -32,6 +48,8 @@ class TestSuite:
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38cc')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha256msg1')
         assert_equal(myDisasm.repr(), 'sha256msg1 xmm5, xmmword ptr [rbx+11h]')
+
+        self.check_np('0f38cc6b11')
 
         # EVEX.512.66.0F38.W0 CC /r
         # VRSQRT28PS zmm1 {k1}{z},zmm2/m512/m32bcst {sae}

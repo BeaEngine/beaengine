@@ -18,11 +18,26 @@
 from headers.BeaEnginePython import *
 from nose.tools import *
 
-
 class TestSuite:
     """
     Variable Blend Packed
     """
+
+    def check_np(self, data):
+        Buffer = bytes.fromhex(f'66{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f2{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f3{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???') 
 
     def test(self):
 
@@ -58,3 +73,5 @@ class TestSuite:
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38c8')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1nexte')
         assert_equal(myDisasm.repr(), 'sha1nexte xmm5, xmmword ptr [rbx+11h]')
+
+        self.check_np('0f38c86b11')

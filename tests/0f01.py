@@ -19,6 +19,23 @@ from headers.BeaEnginePython import *
 from nose.tools import *
 
 class TestSuite:
+
+    def check_np(self, data):
+        Buffer = bytes.fromhex(f'66{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f2{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f3{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')        
+
     def test(self):
 
         # 66 0F 01 CF
@@ -82,6 +99,8 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'clac')
 
+        self.check_np('0f01ca')
+
         # NP 0F 01 CB
         # STAC
 
@@ -90,6 +109,8 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'stac')
+
+        self.check_np('0f01cb')
 
         # NP 0F 01 C5
         # PCONFIG
@@ -131,6 +152,8 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclv')
 
+        self.check_np('0f01c0')
+
         # NP 0F 01 D7
         # ENCLU
 
@@ -140,6 +163,8 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'enclu')
 
+        self.check_np('0f01d7')
+
         # NP 0F 01 CF
         # ENCLS
 
@@ -148,7 +173,6 @@ class TestSuite:
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0xf01)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'encls')
-
 
         # F3 0F 01 EA (mod=11, /5, RM=010)
         # SAVEPREVSSP
@@ -263,6 +287,8 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand1.OpSize, 32)
         assert_equal(myDisasm.infos.Operand1.AccessMode, READ)
 
+        self.check_np('0f01d4')
+
         # NP 0F 01 D5 (reg = 2, mod = 3, rm = 5)
         # XEND
 
@@ -277,6 +303,8 @@ class TestSuite:
         assert_equal(myDisasm.infos.Operand1.Registers.gpr, REG0)
         assert_equal(myDisasm.infos.Operand1.OpSize, 32)
         assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
+
+        self.check_np('0f01d5')
 
         # NP 0F 01 D6
         # XTEST
@@ -296,6 +324,8 @@ class TestSuite:
         assert_equal(myDisasm.infos.Instruction.Flags.CF_, RE_)
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.type, SPECIAL_REG)
         assert_equal(myDisasm.infos.Instruction.ImplicitModifiedRegs.special, REG0)
+
+        self.check_np('0f01d6')
 
         # NP 0F 01 EE (reg = 5, mod = 3, rm = 6)
         # RDPKRU

@@ -38,6 +38,7 @@
      }
      else if (GV.RM_ == 0x2) {
        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
        pMyDisasm->Operand1.Registers.type = SPECIAL_REG;
@@ -50,6 +51,7 @@
      }
      else if (GV.RM_ == 0x3) {
        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+FLAG_CONTROL_INSTRUCTION;
        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
        pMyDisasm->Operand1.AccessMode = WRITE;
@@ -114,7 +116,7 @@
            #endif
            GV.EIP_+= GV.DECALAGE_EIP+2;
        }
-       else {
+       else if (GV.NB_PREFIX == 0) {
          pMyDisasm->Instruction.Category = SGX_INSTRUCTION;
          #ifndef BEA_LIGHT_DISASSEMBLY
             (void) strcpy (pMyDisasm->Instruction.Mnemonic, "encls");
@@ -136,6 +138,9 @@
          */
          FillFlags(pMyDisasm,130);
          GV.EIP_+= GV.DECALAGE_EIP+2;
+       }
+       else {
+         failDecode(pMyDisasm);
        }
      }
      else {
@@ -164,6 +169,7 @@
    if (GV.MOD_== 0x3) {
      if (GV.RM_ == 0) {
        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SGX_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "enclv");
@@ -277,6 +283,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
      }
      else if (GV.RM_ == 0x4) {
        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmfunc");
@@ -290,6 +297,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
      }
      else if (GV.RM_ == 0x5) {
        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xend");
@@ -302,6 +310,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
      }
      else if (GV.RM_ == 0x6) {
        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = VM_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xtest");
@@ -311,6 +320,7 @@ void __bea_callspec__ G7_regopcode2(PDISASM pMyDisasm)
      }
      else if (GV.RM_ == 0x7) {
        if (GV.VEX.state == InUsePrefix) { failDecode(pMyDisasm); return; }
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        pMyDisasm->Instruction.Category = SGX_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "enclu");

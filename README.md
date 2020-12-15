@@ -10,7 +10,7 @@ Next, you can realize accurate analysis on data-flow and control-flow to generat
 
 Its source code is under LGPL3 license with a "Makefile builder" and headers for following languages : C/C++, C#, Python3, Delphi, PureBasic, masm32, masm64, nasm(x86 and x64), fasm(x86 and x64), GoAsm(x86 and x64).
 
-BeaEngine has been implemented using opcode tables from the intel documentation and tables from Christian Ludloff website [www.sandpile.org](http://www.sandpile.org)
+BeaEngine is implemented using opcode tables from the intel documentation, tables from **Christian Ludloff** website [www.sandpile.org](http://www.sandpile.org) and project **x86doc** from Felix Cloutier [https://www.felixcloutier.com](https://www.felixcloutier.com)
 
 ## LICENSE
 

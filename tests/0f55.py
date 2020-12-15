@@ -19,6 +19,18 @@ from headers.BeaEnginePython import *
 from nose.tools import *
 
 class TestSuite:
+
+    def check_np(self, data):
+        Buffer = bytes.fromhex(f'f2{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f3{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???') 
+
     def test(self):
 
         # NP 0F 55 /r
@@ -30,6 +42,8 @@ class TestSuite:
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf55')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'andnps')
         assert_equal(myDisasm.repr(), 'andnps xmm2, xmmword ptr [rax+00000000h]')
+
+        self.check_np('0f559000000000')
 
         # VEX.NDS.128.0F 55 /r
         # VandnpS xmm1,xmm2, xmm3/m128

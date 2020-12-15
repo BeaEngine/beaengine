@@ -9327,6 +9327,7 @@ void __bea_callspec__ vmread_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     pMyDisasm->Instruction.Category = VM_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmread");
@@ -9406,6 +9407,7 @@ void __bea_callspec__ vmwrite_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     pMyDisasm->Instruction.Category = VM_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vmwrite");
@@ -10478,13 +10480,14 @@ void __bea_callspec__ andnps_VW(PDISASM pMyDisasm)
            if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
        }
        else {
-           GV.MemDecoration = Arg2_m128_xmm;
-           pMyDisasm->Instruction.Category = SSE_INSTRUCTION+LOGICAL_INSTRUCTION;
-           #ifndef BEA_LIGHT_DISASSEMBLY
-              (void) strcpy (pMyDisasm->Instruction.Mnemonic, "andnps");
-           #endif
-           GV.Register_ = SSE_REG;
-           GxEx(pMyDisasm);
+          if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return;}
+          GV.MemDecoration = Arg2_m128_xmm;
+          pMyDisasm->Instruction.Category = SSE_INSTRUCTION+LOGICAL_INSTRUCTION;
+          #ifndef BEA_LIGHT_DISASSEMBLY
+            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "andnps");
+          #endif
+          GV.Register_ = SSE_REG;
+          GxEx(pMyDisasm);
 
        }
    }
@@ -10534,6 +10537,7 @@ void __bea_callspec__ andps_VW(PDISASM pMyDisasm)
          ArgsVEX(pMyDisasm);
        }
        else {
+         if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
          GV.MemDecoration = Arg2_m128_xmm;
          pMyDisasm->Instruction.Category = SSE_INSTRUCTION+LOGICAL_INSTRUCTION;
          #ifndef BEA_LIGHT_DISASSEMBLY
@@ -10723,6 +10727,7 @@ void __bea_callspec__ sha1rnds4_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2_m128_xmm;
     pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -11895,7 +11900,7 @@ void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
        GxEx(pMyDisasm);
 
    }
-   else {
+   else if (GV.NB_PREFIX == 0) {
        GV.MemDecoration = Arg2dword;
        pMyDisasm->Instruction.Category = SSE_INSTRUCTION+COMPARISON_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -11903,7 +11908,9 @@ void __bea_callspec__ comiss_VW(PDISASM pMyDisasm)
        #endif
        GV.Register_ = SSE_REG;
        GxEx(pMyDisasm);
-
+   }
+   else {
+     failDecode(pMyDisasm);
    }
  }
 }
@@ -12974,7 +12981,8 @@ void __bea_callspec__ haddpd_VW(PDISASM pMyDisasm)
        GxEx(pMyDisasm);
 
    }
-   else {
+   else if (GV.PrefRepne == 1){
+      /* 0xF2 */
        GV.MemDecoration = Arg2_m128_xmm;
        pMyDisasm->Instruction.Category = SSE3_INSTRUCTION+SIMD_FP_HORIZONTAL;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -12983,6 +12991,9 @@ void __bea_callspec__ haddpd_VW(PDISASM pMyDisasm)
        GV.Register_ = SSE_REG;
        GxEx(pMyDisasm);
 
+   }
+   else {
+     failDecode(pMyDisasm);
    }
  }
 
@@ -13031,7 +13042,8 @@ void __bea_callspec__ hsubpd_VW(PDISASM pMyDisasm)
      GxEx(pMyDisasm);
 
    }
-   else {
+   else if (GV.PrefRepne == 1){
+     /* 0xF2 */
      GV.MemDecoration = Arg2_m128_xmm;
      pMyDisasm->Instruction.Category = SSE3_INSTRUCTION+SIMD_FP_HORIZONTAL;
      #ifndef BEA_LIGHT_DISASSEMBLY
@@ -13040,6 +13052,9 @@ void __bea_callspec__ hsubpd_VW(PDISASM pMyDisasm)
      GV.Register_ = SSE_REG;
      GxEx(pMyDisasm);
 
+   }
+   else {
+     failDecode(pMyDisasm);
    }
  }
 }
@@ -13671,6 +13686,7 @@ void __bea_callspec__ maskmovq_(PDISASM pMyDisasm)
       GxEx(pMyDisasm);
     }
      else {
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
       GV.MemDecoration = Arg2qword;
       pMyDisasm->Instruction.Category = SSE_INSTRUCTION+CACHEABILITY_CONTROL;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -13738,6 +13754,7 @@ void __bea_callspec__ movaps_VW(PDISASM pMyDisasm)
 
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
      GV.MemDecoration = Arg2_m128_xmm;
      pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+DATA_TRANSFER;
      #ifndef BEA_LIGHT_DISASSEMBLY
@@ -13846,6 +13863,7 @@ void __bea_callspec__ movhps_VM(PDISASM pMyDisasm)
      vex_GxEx(pMyDisasm);
    }
    else if (GV.VEX.pp == 0x0) {
+     if (GV.VEX.L == 1) { failDecode(pMyDisasm); return; }
      ArgsVEX(pMyDisasm);
      if (GV.MOD_ == 0x3) {
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -13920,6 +13938,7 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
 {
  if (GV.VEX.state == InUsePrefix) {
    if (GV.VEX.pp == 0x1) {
+     /* 66h */
      if (!Security(2, pMyDisasm)) return;
      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_== 0x3) {
@@ -13935,7 +13954,9 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
        GV.MemDecoration = Arg1qword;
      }
    }
-   else {
+   else if (GV.VEX.pp == 0x0) {
+     /* no prefix */
+     if (GV.VEX.L == 1) { failDecode(pMyDisasm); return; }
      if (!Security(2, pMyDisasm)) return;
      GV.MOD_= ((*((UInt8*) (GV.EIP_+1))) >> 6) & 0x3;
      if (GV.MOD_== 0x3) {
@@ -13951,6 +13972,9 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
        GV.MemDecoration = Arg1qword;
      }
    }
+   else {
+     failDecode(pMyDisasm);
+   }
  } else {
    /* ========== 0x66 */
    if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
@@ -13965,7 +13989,7 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
        ExGx(pMyDisasm);
 
    }
-   else {
+   else if (!prefixes_present(pMyDisasm)){
        GV.MemDecoration = Arg1qword;
        pMyDisasm->Instruction.Category = SSE_INSTRUCTION+DATA_TRANSFER;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -13974,6 +13998,9 @@ void __bea_callspec__ movhps_MV(PDISASM pMyDisasm)
        GV.Register_ = SSE_REG;
        ExGx(pMyDisasm);
 
+   }
+   else {
+     failDecode(pMyDisasm);
    }
  }
 }
@@ -14087,6 +14114,7 @@ void __bea_callspec__ movlps_VM(PDISASM pMyDisasm)
 
      }
      else {
+        if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
          GV.MemDecoration = Arg2qword;
          pMyDisasm->Instruction.Category = SSE_INSTRUCTION+DATA_TRANSFER;
          GV.Register_ = SSE_REG;
@@ -14240,6 +14268,7 @@ void __bea_callspec__ movmskps_(PDISASM pMyDisasm)
          GV.EIP_ += GV.DECALAGE_EIP+2;
        }
        else {
+         if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
          GV.MemDecoration = Arg2_m128_xmm;
          pMyDisasm->Instruction.Category = SSE_INSTRUCTION+DATA_TRANSFER;
          #ifndef BEA_LIGHT_DISASSEMBLY
@@ -14391,7 +14420,7 @@ void __bea_callspec__ movntps_(PDISASM pMyDisasm)
        GV.EIP_ += GV.DECALAGE_EIP+2;
 
    }
-   else {
+   else if (GV.NB_PREFIX == 0) {
        GV.MemDecoration = Arg1_m128_xmm;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+CACHEABILITY_CONTROL;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -14402,6 +14431,9 @@ void __bea_callspec__ movntps_(PDISASM pMyDisasm)
        GV.Register_ = 0;
        decodeModrm(&pMyDisasm->Operand1, pMyDisasm);
        GV.EIP_ += GV.DECALAGE_EIP+2;
+   }
+   else {
+     failDecode(pMyDisasm);
    }
  }
 }
@@ -14777,6 +14809,7 @@ void __bea_callspec__ orps_VW(PDISASM pMyDisasm)
          ArgsVEX(pMyDisasm);
        }
        else {
+         if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
          GV.MemDecoration = Arg2_m128_xmm;
          pMyDisasm->Instruction.Category = SSE_INSTRUCTION+LOGICAL_INSTRUCTION;
          #ifndef BEA_LIGHT_DISASSEMBLY
@@ -16361,6 +16394,7 @@ void __bea_callspec__ phaddd_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -16403,6 +16437,7 @@ void __bea_callspec__ phaddsw_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -16446,6 +16481,7 @@ void __bea_callspec__ phaddw_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -16872,6 +16908,7 @@ void __bea_callspec__ phsubw_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -16915,6 +16952,7 @@ void __bea_callspec__ phsubd_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -17030,6 +17068,7 @@ void __bea_callspec__ phsubsw_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -17300,6 +17339,7 @@ void __bea_callspec__ pmaddubsw_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
    }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -17437,6 +17477,7 @@ void __bea_callspec__ pmovmskb_(PDISASM pMyDisasm)
       GV.EIP_ += GV.DECALAGE_EIP+2;
     }
     else {
+      if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
       pMyDisasm->Instruction.Category = SSE_INSTRUCTION+SIMD64bits;
       #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pmovmskb");
@@ -17484,6 +17525,7 @@ void __bea_callspec__ pmulhrsw_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+ARITHMETIC_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -17678,13 +17720,14 @@ void __bea_callspec__ pshufb_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
    }
    else {
-    GV.MemDecoration = Arg2qword;
-    pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+SHUFFLE_UNPACK;
-    #ifndef BEA_LIGHT_DISASSEMBLY
-      (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pshufb");
-    #endif
-    GV.Register_ = MMX_REG;
-    GxEx(pMyDisasm);
+      if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
+      GV.MemDecoration = Arg2qword;
+      pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+SHUFFLE_UNPACK;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+        (void) strcpy (pMyDisasm->Instruction.Mnemonic, "pshufb");
+      #endif
+      GV.Register_ = MMX_REG;
+      GxEx(pMyDisasm);
    }
 }
 
@@ -17819,6 +17862,7 @@ void __bea_callspec__ psignb_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+PACKED_SIGN;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -17862,6 +17906,7 @@ void __bea_callspec__ psignd_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+PACKED_SIGN;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -17935,6 +17980,7 @@ void __bea_callspec__ psignw_(PDISASM pMyDisasm)
     GxEx(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION+PACKED_SIGN;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -18456,6 +18502,7 @@ void __bea_callspec__ shufps_(PDISASM pMyDisasm)
       GxEx(pMyDisasm);
     }
     else {
+      if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
       GV.MemDecoration = Arg2_m128_xmm;
       pMyDisasm->Instruction.Category = SSE_INSTRUCTION+SHUFFLE_UNPACK;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -18541,7 +18588,7 @@ void __bea_callspec__ ucomiss_VW(PDISASM pMyDisasm)
        GxEx(pMyDisasm);
 
    }
-   else {
+   else if (GV.NB_PREFIX == 0) {
        pMyDisasm->Instruction.Category = SSE_INSTRUCTION+COMPARISON_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
           (void) strcpy (pMyDisasm->Instruction.Mnemonic, "ucomiss");
@@ -18549,6 +18596,9 @@ void __bea_callspec__ ucomiss_VW(PDISASM pMyDisasm)
        GV.MemDecoration = Arg2dword;
        GV.Register_ = SSE_REG;
        GxEx(pMyDisasm);
+   }
+   else {
+     failDecode(pMyDisasm);
    }
  }
 }
@@ -18568,13 +18618,16 @@ void __bea_callspec__ unpckhps_(PDISASM pMyDisasm)
      if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
      ArgsVEX(pMyDisasm);
    }
-   else {
+   else if (GV.VEX.pp == 0x0) {  
      pMyDisasm->Instruction.Category = (GV.EVEX.state == InUsePrefix) ? AVX512_INSTRUCTION : SSE_INSTRUCTION;
      #ifndef BEA_LIGHT_DISASSEMBLY
         (void) strcpy (pMyDisasm->Instruction.Mnemonic, "vunpckhps");
      #endif
      if (GV.EVEX.state == InUsePrefix) GV.EVEX.tupletype = FULL;
      ArgsVEX(pMyDisasm);
+   }
+   else {
+     failDecode(pMyDisasm);
    }
  }
  else {
@@ -18592,6 +18645,7 @@ void __bea_callspec__ unpckhps_(PDISASM pMyDisasm)
 
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2_m128_xmm;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+SHUFFLE_UNPACK;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -18645,6 +18699,7 @@ void __bea_callspec__ unpcklps_(PDISASM pMyDisasm)
 
      }
      else {
+       if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
          GV.MemDecoration = Arg2_m128_xmm;
          pMyDisasm->Instruction.Category = SSE2_INSTRUCTION+SHUFFLE_UNPACK;
          #ifndef BEA_LIGHT_DISASSEMBLY
@@ -18712,6 +18767,7 @@ void __bea_callspec__ xorps_VW(PDISASM pMyDisasm)
          ArgsVEX(pMyDisasm);
        }
        else {
+         if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return;}
          GV.MemDecoration = Arg2_m128_xmm;
          pMyDisasm->Instruction.Category = SSE_INSTRUCTION+LOGICAL_INSTRUCTION;
          #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21877,6 +21933,7 @@ void __bea_callspec__ por_(PDISASM pMyDisasm)
 
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -21946,25 +22003,25 @@ void __bea_callspec__ pand_block(PDISASM pMyDisasm, const char* mnemonic1, const
   else {
     /* ========== 0x66 */
     if (pMyDisasm->Prefix.OperandSize == InUsePrefix) {
-        GV.OperandSize = GV.OriginalOperandSize;
-        pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
-        pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, mnemonic2);
-        #endif
-        GV.MemDecoration = Arg2_m128_xmm;
-        GV.Register_ = SSE_REG;
-        GxEx(pMyDisasm);
-
+      GV.OperandSize = GV.OriginalOperandSize;
+      pMyDisasm->Prefix.OperandSize = MandatoryPrefix;
+      pMyDisasm->Instruction.Category = SSSE3_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy (pMyDisasm->Instruction.Mnemonic, mnemonic2);
+      #endif
+      GV.MemDecoration = Arg2_m128_xmm;
+      GV.Register_ = SSE_REG;
+      GxEx(pMyDisasm);
     }
     else {
-        GV.MemDecoration = Arg2qword;
-        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
-        #ifndef BEA_LIGHT_DISASSEMBLY
-           (void) strcpy (pMyDisasm->Instruction.Mnemonic, mnemonic2);
-        #endif
-        GV.Register_ = MMX_REG;
-        GxEx(pMyDisasm);
+      if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
+      GV.MemDecoration = Arg2qword;
+      pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
+      #ifndef BEA_LIGHT_DISASSEMBLY
+          (void) strcpy (pMyDisasm->Instruction.Mnemonic, mnemonic2);
+      #endif
+      GV.Register_ = MMX_REG;
+      GxEx(pMyDisasm);
     }
   }
 
@@ -22017,6 +22074,7 @@ void __bea_callspec__ pand_(PDISASM pMyDisasm)
         GxEx(pMyDisasm);
       }
       else {
+        if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
         GV.MemDecoration = Arg2qword;
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22074,6 +22132,7 @@ void __bea_callspec__ punpckhwd_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22113,6 +22172,7 @@ void __bea_callspec__ punpcklqdq_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22156,6 +22216,7 @@ void __bea_callspec__ punpckhdq_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22208,6 +22269,7 @@ void __bea_callspec__ punpckldq_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22283,6 +22345,7 @@ void __bea_callspec__ pandn_(PDISASM pMyDisasm)
       GxEx(pMyDisasm);
     }
     else {
+      if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
       GV.MemDecoration = Arg2qword;
       pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
       #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22342,6 +22405,7 @@ void __bea_callspec__ packuswb_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22405,6 +22469,7 @@ void __bea_callspec__ punpckhqdq_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22474,6 +22539,7 @@ void __bea_callspec__ packssdw_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22521,6 +22587,7 @@ void __bea_callspec__ packsswb_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22687,6 +22754,7 @@ void __bea_callspec__ pxor_(PDISASM pMyDisasm)
 
     }
     else {
+      if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
         GV.MemDecoration = Arg2qword;
         pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22765,6 +22833,8 @@ void __bea_callspec__ punpckhbw_(PDISASM pMyDisasm)
        }
    }
    else {
+     if ((GV.VEX.state == InUsePrefix) || (prefixes_present(pMyDisasm))) 
+      { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22841,6 +22911,7 @@ void __bea_callspec__ punpcklbw_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2qword;
        pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -22889,6 +22960,7 @@ void __bea_callspec__ punpcklwd_(PDISASM pMyDisasm)
        }
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     GV.MemDecoration = Arg2qword;
     pMyDisasm->Instruction.Category = SSE2_INSTRUCTION;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -24712,6 +24784,7 @@ void __bea_callspec__ rsqrtps_(PDISASM pMyDisasm)
 
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
      GV.MemDecoration = Arg2_m128_xmm;
      pMyDisasm->Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
      #ifndef BEA_LIGHT_DISASSEMBLY
@@ -24765,6 +24838,7 @@ void __bea_callspec__ rcpps_(PDISASM pMyDisasm)
 
    }
    else {
+     if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
        GV.MemDecoration = Arg2_m128_xmm;
        pMyDisasm->Instruction.Category = SSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;
        #ifndef BEA_LIGHT_DISASSEMBLY
@@ -24899,6 +24973,7 @@ void __bea_callspec__ movd_EP(PDISASM pMyDisasm)
       GV.EIP_ += GV.DECALAGE_EIP+2;
     }
     else {
+      if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
       if (GV.REX.W_ == 1) {
         GV.MemDecoration = Arg1qword;
         #ifndef BEA_LIGHT_DISASSEMBLY
@@ -25332,6 +25407,7 @@ void __bea_callspec__ pabsb_(PDISASM pMyDisasm)
       GV.Register_ = SSE_REG;
     }
     else {
+      if (prefixes_present(pMyDisasm)) {failDecode(pMyDisasm);return;} 
       GV.MemDecoration = Arg2qword;
       GV.Register_ = MMX_REG;
     }
@@ -26218,6 +26294,7 @@ void __bea_callspec__ sha1msg1_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
     GV.MemDecoration = Arg2_m128_xmm;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26263,6 +26340,7 @@ void __bea_callspec__ sha1msg2_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
     GV.MemDecoration = Arg2_m128_xmm;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26307,6 +26385,7 @@ void __bea_callspec__ sha256msg1_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return;}
     pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
     GV.MemDecoration = Arg2_m128_xmm;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26349,6 +26428,7 @@ void __bea_callspec__ sha256msg2_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
     GV.MemDecoration = Arg2_m128_xmm;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26392,6 +26472,7 @@ void __bea_callspec__ sha256rnd_(PDISASM pMyDisasm)
     failDecode(pMyDisasm);
   }
   else {
+    if (prefixes_present(pMyDisasm)) { failDecode(pMyDisasm); return; }
     pMyDisasm->Instruction.Category = SHA_INSTRUCTION;
     GV.MemDecoration = Arg2_m128_xmm;
     #ifndef BEA_LIGHT_DISASSEMBLY
@@ -26400,7 +26481,7 @@ void __bea_callspec__ sha256rnd_(PDISASM pMyDisasm)
     GV.Register_ = SSE_REG;
     GxEx(pMyDisasm);
     pMyDisasm->Operand1.OpType = REGISTER_TYPE;
-  pMyDisasm->Operand1.Registers.type =  SSE_REG;
+    pMyDisasm->Operand1.Registers.type =  SSE_REG;
     pMyDisasm->Operand1.Registers.xmm = REG0;
     #ifndef BEA_LIGHT_DISASSEMBLY
        (void) strcpy ((char*) pMyDisasm->Operand3.OpMnemonic, RegistersSSE[0]);

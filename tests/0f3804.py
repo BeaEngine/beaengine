@@ -49,18 +49,14 @@ class TestSuite:
         Buffer = bytes.fromhex('f20f38049011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf3804')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmaddubsw')
-        assert_equal(myDisasm.repr(), 'pmaddubsw mm2, qword ptr [rax+44332211h]')
+        assert_equal(myDisasm.repr(), "???")
 
         # NP 0F 38 04 /r 1
         # pmaddubsw mm1, mm2/m64
         Buffer = bytes.fromhex('f30f38049011223344')
         myDisasm = Disasm(Buffer)
         myDisasm.read()
-        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf3804')
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'pmaddubsw')
-        assert_equal(myDisasm.repr(), 'pmaddubsw mm2, qword ptr [rax+44332211h]')
+        assert_equal(myDisasm.repr(), "???")
 
         # VEX.NDS.128.66.0F38.WIG 04 /r
         # Vpmaddubsw xmm1, xmm2, xmm3/m128

@@ -24,15 +24,34 @@ class TestSuite:
     Variable Blend Packed
     """
 
+    def check_np(self, data):
+        Buffer = bytes.fromhex(f'66{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f2{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???')
+
+        Buffer = bytes.fromhex(f'f3{data}')
+        myDisasm = Disasm(Buffer)
+        myDisasm.read()
+        assert_equal(myDisasm.repr(), '???') 
+
     def test(self):
 
 
-        # NP 0F 38 C8 /r
-        # SHA1NEXTE xmm1, xmm2/m128
+        # NP 0F 38 C9 /r
+        # sha1msg1 xmm1, xmm2/m128
 
         Buffer = bytes.fromhex('0f38c96b11')
         myDisasm = Disasm(Buffer)
-        myDisasm.read()
-        assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xf38c9')
+        length = myDisasm.read()
+        assert_equal(length, len(Buffer))
+        assert_equal(myDisasm.infos.Instruction.Opcode, 0xf38c9)
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'sha1msg1')
         assert_equal(myDisasm.repr(), 'sha1msg1 xmm5, xmmword ptr [rbx+11h]')
+
+        self.check_np('0f38c96b11')
