@@ -1009,7 +1009,7 @@ class Disasm():
         result = {}
         for i in range(1,MAX_OPERANDS + 1):
             operand = getattr(self.infos, f'Operand{i}')
-            if operand.OpType == REGISTER_TYPE and operand.AccessMode == WRITE:
+            if operand.OpType == REGISTER_TYPE and operand.AccessMode & WRITE:
                 self.merge_registers(regs, operand.Registers)
         self.merge_registers(regs, self.infos.Instruction.ImplicitModifiedRegs)
         for entry in regs._fields_:
@@ -1024,7 +1024,7 @@ class Disasm():
         result = {}
         for i in range(1,MAX_OPERANDS + 1):
             operand = getattr(self.infos, f'Operand{i}')
-            if operand.OpType == REGISTER_TYPE and operand.AccessMode == READ:
+            if operand.OpType == REGISTER_TYPE and operand.AccessMode & READ:
                 self.merge_registers(regs, operand.Registers)
             elif operand.OpType == MEMORY_TYPE:
                 regs.type |= GENERAL_REG
@@ -1103,7 +1103,7 @@ class Disasm():
                     'repr': operand.OpMnemonic.decode(),
                     'type': instr_Types.get(operand.OpType),
                     'size': operand.OpSize,
-                    'mode': {READ: 'read', WRITE: 'write'}.get(operand.AccessMode)
+                    'mode': {READ: 'read', WRITE: 'write', READ+WRITE: 'read+write'}.get(operand.AccessMode)
                 }
                 if operand.OpType == REGISTER_TYPE:
                     instr['operands'][i]['register'] = {
@@ -1157,7 +1157,7 @@ class Disasm():
         registers_type = self.analyze(registers)
         for i in range(1,MAX_OPERANDS + 1):
             operand = getattr(self.infos, f'Operand{i}')
-            if operand.AccessMode == READ:
+            if operand.AccessMode & READ:
                 if operand.OpType == REGISTER_TYPE:
                     status += self.match_registers(operand.Registers, registers_type)
                 elif operand.OpType == MEMORY_TYPE:
@@ -1198,7 +1198,7 @@ class Disasm():
 
         for i in range(1,MAX_OPERANDS + 1):
             operand = getattr(self.infos, f'Operand{i}')
-            if operand.AccessMode == WRITE:
+            if operand.AccessMode & WRITE:
                 status += self.match_registers(operand.Registers, registers_type)
         status += self.match_registers(self.infos.Instruction.ImplicitModifiedRegs, registers_type)
 

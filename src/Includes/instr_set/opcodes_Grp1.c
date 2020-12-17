@@ -34,6 +34,7 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "add");
         #endif
         FillFlags(pMyDisasm, 5);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 1:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -43,6 +44,7 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "or");
         #endif
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         FillFlags(pMyDisasm, 74);
         break;
       case 2:
@@ -54,6 +56,7 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "adc");
         #endif
         FillFlags(pMyDisasm, 4);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 3:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -74,6 +77,7 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "and");
         #endif
         FillFlags(pMyDisasm, 6);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 5:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -84,6 +88,7 @@ void __bea_callspec__ G1_EbIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sub");
         #endif
         FillFlags(pMyDisasm, 103);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 6:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -136,6 +141,7 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "add");
         #endif
         FillFlags(pMyDisasm, 5);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 1:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -145,6 +151,7 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
         #ifndef BEA_LIGHT_DISASSEMBLY
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "or");
         #endif
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         FillFlags(pMyDisasm, 74);
         break;
 
@@ -157,6 +164,7 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "adc");
         #endif
         FillFlags(pMyDisasm, 4);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 3:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -177,6 +185,7 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "and");
         #endif
         FillFlags(pMyDisasm, 6);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 5:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -187,6 +196,7 @@ void __bea_callspec__ G1_EvIv(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sub");
         #endif
         FillFlags(pMyDisasm, 103);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 6:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -226,6 +236,7 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "add");
         #endif
         FillFlags(pMyDisasm, 5);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 1:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -246,6 +257,7 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "adc");
         #endif
         FillFlags(pMyDisasm, 4);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 3:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -266,6 +278,7 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "and");
         #endif
         FillFlags(pMyDisasm, 6);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 5:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -276,6 +289,7 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "sub");
         #endif
         FillFlags(pMyDisasm, 103);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 6:
         if (pMyDisasm->Prefix.LockPrefix == InvalidPrefix) {
@@ -286,6 +300,7 @@ void __bea_callspec__ G1_EvIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "xor");
         #endif
         FillFlags(pMyDisasm, 113);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         break;
       case 7:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+ARITHMETIC_INSTRUCTION;

@@ -31,8 +31,8 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x55)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmss')
-        assert_equal(myDisasm.repr(), 'vfixupmmss ymm28, ymm16, dword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupimmss')
+        assert_equal(myDisasm.repr(), 'vfixupimmss ymm28, ymm16, dword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W0 55 /r ib
         # vfixupmmss zmm1{k1}{z}, zmm2, zmm3/m32, imm8
@@ -42,8 +42,8 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x55)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmss')
-        assert_equal(myDisasm.repr(), 'vfixupmmss zmm28, zmm16, dword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupimmss')
+        assert_equal(myDisasm.repr(), 'vfixupimmss zmm28, zmm16, dword ptr [r8], 11h')
 
         # EVEX.256.66.0F3A.W1 55 /r ib
         # vfixupmmsd ymm1{k1}{z}, ymm2, ymm3/m64, imm8
@@ -53,8 +53,8 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x55)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmsd')
-        assert_equal(myDisasm.repr(), 'vfixupmmsd ymm28, ymm16, qword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupimmsd')
+        assert_equal(myDisasm.repr(), 'vfixupimmsd ymm28, ymm16, qword ptr [r8], 11h')
 
         # EVEX.512.66.0F3A.W1 55 /r ib
         # vfixupmmsd zmm1{k1}{z}, zmm2, zmm3/m64, imm8
@@ -64,5 +64,5 @@ class TestSuite:
         myDisasm = Disasm(Buffer)
         myDisasm.read()
         assert_equal(myDisasm.infos.Instruction.Opcode, 0x55)
-        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupmmsd')
-        assert_equal(myDisasm.repr(), 'vfixupmmsd zmm28, zmm16, qword ptr [r8], 11h')
+        assert_equal(myDisasm.infos.Instruction.Mnemonic, b'vfixupimmsd')
+        assert_equal(myDisasm.repr(), 'vfixupimmsd zmm28, zmm16, qword ptr [r8], 11h')

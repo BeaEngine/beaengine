@@ -51,6 +51,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "not");
         #endif
         Eb(pMyDisasm);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         FillFlags(pMyDisasm, 73);
       break;
       case 3:
@@ -59,6 +60,7 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "neg");
         #endif
         Eb(pMyDisasm);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         FillFlags(pMyDisasm, 71);
       break;
       case 4:
@@ -88,8 +90,10 @@ void __bea_callspec__ G3_Eb(PDISASM pMyDisasm)
         decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.OperandSize = 32;
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
+        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
+        pMyDisasm->Operand1.Registers.type = GENERAL_REG;
         pMyDisasm->Operand1.Registers.gpr = REG0+REG2;
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         pMyDisasm->Operand1.OpSize = 8;
         FillFlags(pMyDisasm, 38);
       break;
@@ -163,6 +167,7 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "not");
         #endif
         Ev(pMyDisasm);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         FillFlags(pMyDisasm, 73);
       break;
       case 3:
@@ -171,6 +176,7 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "neg");
         #endif
         Ev(pMyDisasm);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         FillFlags(pMyDisasm, 71);
       break;
       case 4:
@@ -217,8 +223,10 @@ void __bea_callspec__ G3_Ev(PDISASM pMyDisasm)
         }
         decodeModrm(&pMyDisasm->Operand2, pMyDisasm);
         GV.EIP_ += GV.DECALAGE_EIP+2;
-        pMyDisasm->Operand1.OpType = REGISTER_TYPE;pMyDisasm->Operand1.Registers.type = GENERAL_REG;
+        pMyDisasm->Operand1.OpType = REGISTER_TYPE;
+        pMyDisasm->Operand1.Registers.type = GENERAL_REG;
         pMyDisasm->Operand1.Registers.gpr = REG0;
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
         pMyDisasm->Instruction.ImplicitModifiedRegs.type = GENERAL_REG;
         pMyDisasm->Instruction.ImplicitModifiedRegs.gpr = REG0+REG2;
         FillFlags(pMyDisasm, 38);

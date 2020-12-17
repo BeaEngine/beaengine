@@ -66,6 +66,7 @@ void __bea_callspec__ G2_EbIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr");
         #endif
         FillFlags(pMyDisasm, 92);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
     break;
     case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -134,6 +135,7 @@ void __bea_callspec__ G2_EvIb(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr");
         #endif
         FillFlags(pMyDisasm, 92);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
     break;
     case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -210,6 +212,7 @@ void __bea_callspec__ G2_Eb1(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr");
         #endif
         FillFlags(pMyDisasm, 91);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
     break;
     case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -294,6 +297,7 @@ void __bea_callspec__ G2_Ev1(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr");
         #endif
         FillFlags(pMyDisasm, 91);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
     break;
     case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -373,6 +377,7 @@ void __bea_callspec__ G2_EbCL(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr");
         #endif
         FillFlags(pMyDisasm, 92);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
     break;
     case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;
@@ -458,6 +463,7 @@ void __bea_callspec__ G2_EvCL(PDISASM pMyDisasm)
            (void) strcpy (pMyDisasm->Instruction.Mnemonic, "shr");
         #endif
         FillFlags(pMyDisasm, 92);
+        pMyDisasm->Operand1.AccessMode = READ + WRITE;
     break;
     case 6:
         pMyDisasm->Instruction.Category = GENERAL_PURPOSE_INSTRUCTION+SHIFT_ROTATE;

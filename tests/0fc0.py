@@ -29,8 +29,8 @@ class TestSuite:
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfc0')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xadd')
         assert_equal(myDisasm.repr(), 'xadd byte ptr [rax+44332211h], dl')
-        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
-        assert_equal(myDisasm.infos.Operand2.AccessMode, WRITE)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, READ + WRITE)
+        assert_equal(myDisasm.infos.Operand2.AccessMode, READ + WRITE)
 
         # REX + 0F C0 /r
         # XADD r/m8*, r8*
@@ -40,8 +40,8 @@ class TestSuite:
         myDisasm.read()
         assert_equal(hex(myDisasm.infos.Instruction.Opcode), '0xfc0')
         assert_equal(myDisasm.infos.Instruction.Mnemonic, b'xadd')
-        assert_equal(myDisasm.infos.Operand1.AccessMode, WRITE)
-        assert_equal(myDisasm.infos.Operand2.AccessMode, WRITE)
+        assert_equal(myDisasm.infos.Operand1.AccessMode, READ + WRITE)
+        assert_equal(myDisasm.infos.Operand2.AccessMode, READ + WRITE)
         assert_equal(myDisasm.repr(), 'xadd byte ptr [r8+44332211h], dl')
 
         # if LOCK and destination is not memory
