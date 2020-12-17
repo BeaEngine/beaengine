@@ -1,3 +1,13 @@
+# BeaEngine 5.3.0 (2020-12-17)
+- fix SecurityBlock issues on G1 instructions
+- Python Wrapper improved with a new json method
+- new headers and field ImplicitUsedRegs added
+- huge code cleanup
+- add new instructions vmfunc, xend, xtest, rdpkru, rdtscp
+- add clang support in cmake file
+- multiple fixes on some instructions representation
+- documentation updated to 1.3 version
+
 # BeaEngine 5.2.0 (2020-11-20)
 - 12 instructions from Advanced Matrix Extension (AMX) added
 - 4 instructions from Trust Domain Extension (TDX) added
@@ -13,7 +23,6 @@
 - unit tests for python3
 
 # BeaEngine 5
-
 - new instructions sets : AVX512, CET, SGX, BMI1, BMI2, SHA
 - more than 10k assertions to test the lib (BeaEngine is now implemented in some TDD style)
 - more than 20k instructions encoding listed (not yet released)

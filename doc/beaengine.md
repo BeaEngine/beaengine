@@ -1,8 +1,8 @@
 ![beaengine](./beaengine-logo.png){ width=50px }
 **BeaEngine documentation**
 
-- BEAENGINE_VERSION: 5.2
-- DOC_RELEASE: 1.2
+- BEAENGINE_VERSION: 5.3
+- DOC_RELEASE: 1.3
 
 # 1. Disasm function
 

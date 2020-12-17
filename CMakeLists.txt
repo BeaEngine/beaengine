@@ -76,7 +76,7 @@ if (BEA_COMPILER STREQUAL clang)
   set (CMAKE_CXX_COMPILER clang++)
   set (BEA_WARNINGS -Wall -W -Wextra -Wconversion -Wno-long-long
     -Wshadow  -Wpointer-arith -Wcast-qual  -Wcast-align -Wwrite-strings)
-  list (APPEND BEA_FLAGS -fsanitize=fuzzer-no-link)
+  #list (APPEND BEA_FLAGS -fsanitize=fuzzer-no-link)
 endif ()
 # =========================================
 # gcc configuration
